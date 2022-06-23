@@ -6,6 +6,7 @@ import MethodCreate from './Method';
 import Method from './MethodCreate';
 import TreeNode from './TreeNode';
 import axios from 'axios';
+import { ConnectingAirportsOutlined } from '@mui/icons-material';
 
 
 
@@ -62,35 +63,98 @@ const Content = styled.div`
 
 export default function Resource(props) {
 
+  const [AllResource, SetAllResource] = useState([]);
+  const [RootId, SetRootId] = useState(null);
   const [error, setError] = useState(null);
   const [data, setData] = useState();
-
-
-
-  const fetchResources = async () => {
+  const ServiceId = props.state.id;
+  const allresource = {
+    "stageId": "string",
+    "serviceId": "string",
+    "name": "string",
+    "backendUrl": "string",
+    "invokeUrl": "string",
+    "status": "STAGE_UNDEPLOYED",
+    "resourceList": [
+      {
+        "resourceId": "string",
+        "path": "string",
+        "serviceId": "string",
+        "resourceList": [
+          {
+            "resourceId": "string",
+            "path": "string",
+            "serviceId": "string"
+          }
+        ],   
+        "methodList": [
+          {
+            "methodId": "string",
+            "resourceId": "string",
+            "type": "GET",
+            "routeDefinitionList": [
+              {
+                "routeId": "string",
+                "uri": "string",
+                "methodId": "string",
+                "predicateDefinitionList": [
+                  {
+                    "createdAt": "2022-06-23T06:02:24.425Z",
+                    "updatedAt": "2022-06-23T06:02:24.425Z",
+                    "id": "string",
+                    "name": "string",
+                    "args": {
+                      "additionalProp1": "string",
+                      "additionalProp2": "string",
+                      "additionalProp3": "string"
+                    }
+                  }
+                ],
+                "filterDefinitionList": [
+                  {
+                    "id": "string",
+                    "name": "string",
+                    "args": {
+                      "additionalProp1": "string",
+                      "additionalProp2": "string",
+                      "additionalProp3": "string"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  
+  
+  const getAllResource = async () => {
     //get api request
     try {
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+        '/v1.0/g1/paas/Memsq07/apigw/apis/'+ServiceId+'/resources'
       );
-      setData(response.data); // 데이터는 response.data
-      // console.log(response.data);
+      SetAllResource(allresource); // 데이터는 response.data
+      // console.log(AllResource);
     } catch (e) {
       setError(e);
     }
   };
 
+
   useEffect(() => {
-    fetchResources();
+    getAllResource();
   }, []);
 
 
   return (
     <React.Fragment>
       <ResourceContainer>        
-        <TreeNode state={props.state}/>
+        <TreeNode state={props.state} data={allresource}/>
       </ResourceContainer>
     </React.Fragment>
   );

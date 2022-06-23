@@ -13,66 +13,58 @@ import Button from '../components/Button';
 import MethodCreate from './Method';
 
 const data = {
-  id: 'root',
-  name: '/',
-  children: [
+  'resourceId': 'root',
+  'path': '/',
+  'resourceList': [
     {
-      id: '1',
-      name: 'Child - 1',
-      // children: [
-      //   {
-      //     id: '2',
-      //     name: 'Child - 2',
-          // children: [
-          //   {
-          //     id: '3',
-          //     name: 'Child - 3',
-          //     children: [
-          //       {
-          //         id: '4',
-          //         name: 'Child - 4',
-          //         children: [
-          //           {
-          //             id: '5',
-          //             name: 'Child - 5',
-          //             children: [
-          //               {
-          //                 id: '6',
-          //                 name: 'Child - 6',
-          //                 children: [
-          //                   {
-          //                     id: '7',
-          //                     name: 'Child - 7',
-          //                     children: [
-          //                       {
-          //                         id: '8',
-          //                         name: 'Child - 8',
-          //                         children: [
-          //                           {
-          //                             id: '9',
-          //                             name: 'Child - 9',
-          //                           },
-          //                         ],
-          //                       },
-          //                     ],
-          //                   },
-          //                 ],
-          //               },
-          //             ],
-          //           },
-          //           {
-          //             id: '10',
-          //             name: 'Child - 10',
-          //           }
-          //         ],
-          //       },
-          //     ],
-          //   },
-          // ],
-      //   },
-      // ],
-    },
+      'resourceId': '1',
+      'path': '/test1',
+      'resourceList' : [
+        {
+          'resourceId': '2',
+          'path': '/test2'
+        }
+      ]
+    }
   ],
+  "methodList": [
+    {
+      "methodId": "string",
+      "resourceId": "string",
+      "type": "GET",
+      "routeDefinitionList": [
+        {
+          "routeId": "string",
+          "uri": "string",
+          "methodId": "string",
+          "predicateDefinitionList": [
+            {
+              "createdAt": "2022-06-23T08:28:38.288Z",
+              "updatedAt": "2022-06-23T08:28:38.288Z",
+              "id": "string",
+              "name": "string",
+              "args": {
+                "additionalProp1": "string",
+                "additionalProp2": "string",
+                "additionalProp3": "string"
+              }
+            }
+          ],
+          "filterDefinitionList": [
+            {
+              "id": "string",
+              "name": "string",
+              "args": {
+                "additionalProp1": "string",
+                "additionalProp2": "string",
+                "additionalProp3": "string"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
 };
 
 const ButtonDiv = styled.div`
@@ -109,6 +101,7 @@ const Content = styled.div`
  
   width: 100%;
   height: 100%;
+  padding: 10px 0px 0px 0px;
 `;
 
 
@@ -118,6 +111,8 @@ const Content = styled.div`
 export default function RecursiveTreeView(state) {
 
   const [content, setContent] = useState();
+  const [nodeId, setNodeId] = useState();
+  const [label, setLabel] = useState();
 
   const CustomContent = React.forwardRef(function CustomContent(props, ref) {
     const {
@@ -158,6 +153,7 @@ export default function RecursiveTreeView(state) {
       handleSelection(event);
       console.log(nodeId);
       setContent('second');
+      setLabel(label);
       console.log(content);
     };
   
@@ -186,6 +182,9 @@ export default function RecursiveTreeView(state) {
         </Typography>
       </div>
     );
+
+
+    
   });
   
   CustomContent.propTypes = {
@@ -224,8 +223,9 @@ export default function RecursiveTreeView(state) {
   );
 
   const renderTree = (nodes) => (
-    <CustomTreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
-      {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
+    <CustomTreeItem key={nodes.resourceId || nodes.methodId} nodeId={nodes.resourceId || nodes.methodId} label={nodes.path || nodes.type}>
+      {Array.isArray(nodes.resourceList) ? nodes.resourceList.map((node) => renderTree(node)) : null}
+      {Array.isArray(nodes.methodList) ? nodes.methodList.map((node) => renderTree(node)) : null}
     </CustomTreeItem>
   );
 
@@ -243,7 +243,7 @@ export default function RecursiveTreeView(state) {
   };
 
   const selectComponent = {
-    first: <ResourceCreate state={state}/>,
+    first: <ResourceCreate state={state} nodeId={nodeId}/>,
     second: <MethodCreate/>,
     // third: <MethodCreate />
   };
@@ -269,7 +269,7 @@ export default function RecursiveTreeView(state) {
           </TreeView>
         </MenuDiv> 
         <ResourceInfo>
-          경로 ID
+          <div style={{borderBottom:"1px solid #e2e2e2", padding:"0px 0px 5px 0px"}}>{label}</div>
           {content && <Content>{selectComponent[content]}</Content>}
         </ResourceInfo> 
       </ExampleDiv>      

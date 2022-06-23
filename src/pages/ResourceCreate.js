@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import ToggleSwitch from '../components/ToggleSwitch';
 import CORS from '../pages/CORS';
@@ -62,12 +62,14 @@ const ButtonDiv = styled.div`
 `;
 
 
-export default function ResourceCreate(props) {
+export default function ResourceCreate(state, nodeId) {
 
-  const ServiceId = props.state.id;
-  console.log("서비스 id :"+ServiceId);
+  const ServiceId = state.state.state.id;
+  const NodeId = nodeId;
+  console.log(nodeId);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [ResourceRoot, SetResourceRoot] = useState(null);
   const [inputs, setInputs] = useState({
     resource: '',
   });
@@ -84,28 +86,28 @@ export default function ResourceCreate(props) {
 
 
   const onClick = () => {
-    const Api = {
-      resource
-    };
+    // const Api = {
+    //   resource
+    // };
     
-    const createResource = async () => {
-      try {
-        setError(null);    
-        const response = await axios.post(
-          'http://localhost:8082/v1.0/g1/paas/Memsq07/apigw/apis/'+ServiceId+'/resources',
-          {
-            api_name: resource
-          }
-        );
-      } catch (e) {
-          setError(e);
-      }
-    };
-    createResource();
+    // const createResource = async () => {
+    //   try {
+    //     setError(null);    
+    //     const response = await axios.post(
+    //       'http://localhost:8082/v1.0/g1/paas/Memsq07/apigw/apis/'+ServiceId+'/resources'+ ,
+    //       {
+    //         api_name: resource
+    //       }
+    //     );
+    //   } catch (e) {
+    //       setError(e);
+    //   }
+    // };
+    // createResource();
   
-    setTimeout(()=>{
-      navigate(-1);     
-    }, 1000);
+    // setTimeout(()=>{
+    //   navigate(-1);     
+    // }, 1000);
   };
 
     return (

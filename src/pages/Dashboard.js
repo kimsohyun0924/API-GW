@@ -97,13 +97,14 @@ export default function Dashboard() {
       const response = await axios.get(
         '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
       );
-      setDataTemp(response.data); // 데이터는 response.data
+      setDataTemp(response.data); // 데이터는 response.data)
       setValue(response.data.length);
       // console.log(response.data);
     } catch (e) {
       setError(e);
     }
   };
+
 
   const onDelete = () => {
    //delete api request
