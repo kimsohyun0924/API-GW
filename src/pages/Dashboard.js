@@ -6,7 +6,7 @@ import { PageTitle, PageSubTitle } from '../style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
 import Button from '../components/Button';
 import TableComp from '../components/TableComp';
-import ModalPopup from '../components/ModalApiDelete';
+import ModalApiDelete from '../components/ModalApiDelete';
 import ModalApiUpdate from '../components/ModalApiUpdate';
 import { RepeatOn } from '@mui/icons-material';
 
@@ -39,11 +39,7 @@ export default function Dashboard() {
   const [error, setError] = useState(null);
   const [value, setValue] = useState(null);
   const navigate = useNavigate();
-  
 
-  const ApiCreate = () => {
-    navigate('/api/create');
-  };
 
   // const ApiOperation = (e) => {
   //   const evalue = e.target.getAttribute('value');
@@ -54,13 +50,17 @@ export default function Dashboard() {
 
   // console.log(checkedItems);
 
-  const onClick = () => {
+  const Create = () => {
+    navigate('/api/create');
+  };
+
+  const Delete = () => {
     if(!(checkedItems.length === 0)) {
       setDialog(true);
     }
   };
 
-  const update = () => {
+  const Update = () => {
     if(!(checkedItems.length === 0)) {
       setUpdateDialog(true);
     }
@@ -138,16 +138,16 @@ export default function Dashboard() {
         <PageSubTitle>API Gateway를 관리합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="medium" action={ApiCreate}>API 생성</Button>
-            <Button size="small" outline onClick={update}>수정</Button>
-            <Button size="small" outline onClick={onClick}>삭제</Button>
+            <Button size="medium" action={Create}>API 생성</Button>
+            <Button size="small" outline onClick={Update}>수정</Button>
+            <Button size="small" outline onClick={Delete}>삭제</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
           <TableComp columns={TableHeader} data={DataTemp} checkHandler={checkHandler} checkedItems={checkedItems}/>
         </TableDiv>
       </MainContainer>
-      <ModalPopup
+      <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제"
             cancelText="취소"
@@ -156,15 +156,16 @@ export default function Dashboard() {
             visible={dialog}
             >
             {checkedItemsName}  정말로 삭제하시겠습니까?
-         </ModalPopup>
-         <ModalApiUpdate
+      </ModalApiDelete>
+      <ModalApiUpdate
             title="API 수정"
             confirmText="수정"
             cancelText="취소"
             setUpdateDialog={setUpdateDialog}
             onCancel={onCancel}
             checkedItems={checkedItems}
-            visible={updatedialog}></ModalApiUpdate>
+            visible={updatedialog}>
+      </ModalApiUpdate>
     </React.Fragment>
   );
 }

@@ -49,12 +49,21 @@ const TS = styled(Tab)`
  
 export default function ApiOperation() {
 
-    const [value, setValue] = React.useState('0');
+    const [value, setValue] = useState('0');
+    const navigate = useNavigate();
     const { state } = useLocation();
+
+    // console.log(state);
   
     const handleChange = (event, newValue) => {
+        console.log(newValue);
         setValue(newValue);
     };
+
+    useEffect(() => {
+    
+    }, []);
+
     return ( 
         <React.Fragment>
             <MainContainer>
@@ -71,7 +80,8 @@ export default function ApiOperation() {
                               </TSS>
                           </Box>
                           <TabPanel sx={{padding: '5px 0px 0px 0px'}} value="0" >
-                              <Resource state={state}/>
+                              <Resource serviceInfo={state}/>  
+                              {/* { navigate('api/operation/resource', {state : state}) }  */}
                           </TabPanel>
                           <TabPanel sx={{padding: '5px 0px 0px 0px'}} value="1" >
                               <Stage/>

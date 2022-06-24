@@ -62,11 +62,12 @@ const ButtonDiv = styled.div`
 `;
 
 
-export default function ResourceCreate(state, nodeId) {
+export default function ResourceCreate(props) {
 
-  const ServiceId = state.state.state.id;
-  const NodeId = nodeId;
-  console.log(nodeId);
+  const serviceInfo = props.serviceInfo;
+  const serviceId = serviceInfo.id;
+  const nodeId = props.nodeId;
+  const label = props.label;
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [ResourceRoot, SetResourceRoot] = useState(null);
@@ -84,30 +85,33 @@ export default function ResourceCreate(state, nodeId) {
   };
   console.log(inputs);
 
+  const onCancel = () => {
+    console.log('취소');
+    window.location.reload(true);
+  }
+
 
   const onClick = () => {
-    // const Api = {
-    //   resource
-    // };
+    const Api = {
+      resource
+    };
     
-    // const createResource = async () => {
-    //   try {
-    //     setError(null);    
-    //     const response = await axios.post(
-    //       'http://localhost:8082/v1.0/g1/paas/Memsq07/apigw/apis/'+ServiceId+'/resources'+ ,
-    //       {
-    //         api_name: resource
-    //       }
-    //     );
-    //   } catch (e) {
-    //       setError(e);
-    //   }
-    // };
-    // createResource();
-  
-    // setTimeout(()=>{
-    //   navigate(-1);     
-    // }, 1000);
+    const createResource = async () => {
+      try {
+        setError(null);    
+        const response = await axios.post(
+          '/v1.0/g1/paas/Memsq07/apigw/resources'+nodeId,
+          {
+            serviceId: serviceId,
+            api_name: resource
+          }
+        );
+      } catch (e) {
+          setError(e);
+      }
+    };
+    createResource();
+    window.location.reload(true);
   };
 
     return (
@@ -129,7 +133,7 @@ export default function ResourceCreate(state, nodeId) {
             </ItemDiv>
             <ButtonDiv>
               <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                <Button size="small" onClick={onClick} noline>취소</Button>
+                <Button size="small" onClick={onCancel} noline>취소</Button>
                 <Button size="medium" onClick={onClick} >생성하기</Button>
               </ThemeProvider>
             </ButtonDiv>

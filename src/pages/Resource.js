@@ -7,6 +7,7 @@ import Method from './MethodCreate';
 import TreeNode from './TreeNode';
 import axios from 'axios';
 import { ConnectingAirportsOutlined } from '@mui/icons-material';
+import { useLocation } from "react-router";
 
 
 
@@ -63,71 +64,67 @@ const Content = styled.div`
 
 export default function Resource(props) {
 
+  const { state } = useLocation();
   const [AllResource, SetAllResource] = useState([]);
   const [RootId, SetRootId] = useState(null);
   const [error, setError] = useState(null);
   const [data, setData] = useState();
-  const ServiceId = props.state.id;
+  const serviceInfo = props.serviceInfo;
+  const serviceId = serviceInfo.id;
   const allresource = {
-    "stageId": "string",
-    "serviceId": "string",
-    "name": "string",
-    "backendUrl": "string",
-    "invokeUrl": "string",
-    "status": "STAGE_UNDEPLOYED",
-    "resourceList": [
+    'resourceId': 'root',
+    'path': '/',
+    'resourceList': [
       {
-        "resourceId": "string",
-        "path": "string",
-        "serviceId": "string",
-        "resourceList": [
+        'resourceId': '1',
+        'path': '/test1',
+        'resourceList' : [
           {
-            "resourceId": "string",
-            "path": "string",
-            "serviceId": "string"
+            'resourceId': '2',
+            'path': '/test2'
           }
-        ],   
-        "methodList": [
+        ]
+      }
+    ],
+    "methodList": [
+      {
+        "methodId": "string",
+        "resourceId": "string",
+        "type": "GET",
+        "routeDefinitionList": [
           {
+            "routeId": "string",
+            "uri": "string",
             "methodId": "string",
-            "resourceId": "string",
-            "type": "GET",
-            "routeDefinitionList": [
+            "predicateDefinitionList": [
               {
-                "routeId": "string",
-                "uri": "string",
-                "methodId": "string",
-                "predicateDefinitionList": [
-                  {
-                    "createdAt": "2022-06-23T06:02:24.425Z",
-                    "updatedAt": "2022-06-23T06:02:24.425Z",
-                    "id": "string",
-                    "name": "string",
-                    "args": {
-                      "additionalProp1": "string",
-                      "additionalProp2": "string",
-                      "additionalProp3": "string"
-                    }
-                  }
-                ],
-                "filterDefinitionList": [
-                  {
-                    "id": "string",
-                    "name": "string",
-                    "args": {
-                      "additionalProp1": "string",
-                      "additionalProp2": "string",
-                      "additionalProp3": "string"
-                    }
-                  }
-                ]
+                "createdAt": "2022-06-23T08:28:38.288Z",
+                "updatedAt": "2022-06-23T08:28:38.288Z",
+                "id": "string",
+                "name": "string",
+                "args": {
+                  "additionalProp1": "string",
+                  "additionalProp2": "string",
+                  "additionalProp3": "string"
+                }
+              }
+            ],
+            "filterDefinitionList": [
+              {
+                "id": "string",
+                "name": "string",
+                "args": {
+                  "additionalProp1": "string",
+                  "additionalProp2": "string",
+                  "additionalProp3": "string"
+                }
               }
             ]
           }
         ]
       }
     ]
-  }
+  };
   
   
   const getAllResource = async () => {
@@ -136,7 +133,7 @@ export default function Resource(props) {
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/apis/'+ServiceId+'/resources'
+        '/v1.0/g1/paas/Memsq07/apigw/resource/service/'+serviceId
       );
       SetAllResource(allresource); // 데이터는 response.data
       // console.log(AllResource);
@@ -154,7 +151,7 @@ export default function Resource(props) {
   return (
     <React.Fragment>
       <ResourceContainer>        
-        <TreeNode state={props.state} data={allresource}/>
+        <TreeNode serviceInfo={serviceInfo} data={allresource}/>
       </ResourceContainer>
     </React.Fragment>
   );
