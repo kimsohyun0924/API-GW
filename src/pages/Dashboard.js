@@ -8,7 +8,6 @@ import Button from '../components/Button';
 import TableComp from '../components/TableComp';
 import ModalApiDelete from '../components/ModalApiDelete';
 import ModalApiUpdate from '../components/ModalApiUpdate';
-import { RepeatOn } from '@mui/icons-material';
 
 
 const MenuDiv = styled.div`
@@ -36,6 +35,15 @@ export default function Dashboard() {
   const [dialog, setDialog] = useState(false);
   const [updatedialog, setUpdateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
+  const testData = [ {
+    "createdAt": "2022-06-27T04:24:57.492Z",
+    "updatedAt": "2022-06-27T04:24:57.492Z",
+    "id": "string",
+    "memSq": "string",
+    "name": "Sso",
+    "description": "Sso"
+  }];
+
   const [error, setError] = useState(null);
   const [value, setValue] = useState(null);
   const navigate = useNavigate();
@@ -144,7 +152,7 @@ export default function Dashboard() {
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableComp columns={TableHeader} data={DataTemp} checkHandler={checkHandler} checkedItems={checkedItems}/>
+          <TableComp columns={TableHeader} data={testData} checkHandler={checkHandler} checkedItems={checkedItems}/>
         </TableDiv>
       </MainContainer>
       <ModalApiDelete

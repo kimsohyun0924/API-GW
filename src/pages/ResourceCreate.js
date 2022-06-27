@@ -30,6 +30,7 @@ const ItemName = styled.div`
   margin-right: 50px;
   height: 32px;
   line-height: 32px;
+  font-size: 15px;
 `;
 
 const ItemInput = styled.div`
@@ -47,7 +48,7 @@ const InputForm = styled.input`
   border: solid 1px #b6b6c3;
   background: #ffffff;
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 14px;
   color: #333333;
 `;
 
@@ -128,7 +129,7 @@ export default function ResourceCreate(props) {
             <ItemDiv>
               <Item>
                 <ItemName>CORS 활성화</ItemName>
-                <ToggleSwitch />
+                <ToggleSwitch/>
               </Item>
             </ItemDiv>
             <ButtonDiv>

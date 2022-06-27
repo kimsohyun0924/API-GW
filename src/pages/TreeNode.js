@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import ResourceCreate from './ResourceCreate';
 import Button from '../components/Button';
-import MethodCreate from './Method';
+import Method from './Method';
 import ModalApiDelete from '../components/ModalApiDelete';
 
 
@@ -216,7 +216,7 @@ export default function RecursiveTreeView(props) {
 
   const selectComponent = {
     first: <ResourceCreate serviceInfo={serviceInfo} nodeId={nodeId} label={label}/>,
-    second: <MethodCreate/>
+    second: <Method nodeId={nodeId}/>
     // third: 
   };
 

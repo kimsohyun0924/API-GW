@@ -38,7 +38,7 @@ const Content = styled.div`
   height: 100%;
 `;
 
-export default function Switches() {
+export default function Switches(props) {
   
     const [toggle, setToggle] = useState(false);
     const [content, setContent] = useState(true);
@@ -55,7 +55,7 @@ export default function Switches() {
     };
 
     const selectComponent = {
-      false : <CORS/> 
+      false : <CORS/>
     };
 
 

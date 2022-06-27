@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 const DropdownContainer = styled.div`
-  width: 120px;
+  width: 105px;
   &:hover {
     cursor: pointer;
   }
@@ -19,29 +19,30 @@ const DropdownBody = styled.div`
   border: 1px solid #ced4da;
   box-shadow: inset 0 1px 2px rgb(0 0 0 / 8%);
   background-color: #ffffff;
-  height: 36px;
+  height: 33px;
+  font-size: 14px;
 `;
 
 const DropdownSelect = styled.p`
+  
 
 `;
 
 const DropdownMenu = styled.ul`
   display: ${(props) => (props.isActive ? `block` : `none`)};
-  width: 120px;
+  width: 105px;
   background-color: white;
   position: absolute;
   border: 1px solid #d2d2d2;
   margin-top: 0.2rem;
   overflow-y: auto;
-  padding: 0 0;
+  padding: 0 0;  
 `;
 
 const DropdownItemContainer = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 6px 12px;
   border-top: none;
   border-radius: 2px;
@@ -60,7 +61,7 @@ const ItemName = styled.span`
 `;
 
 const DropdownItemName = styled.span`
-  font-size: 15px;
+  font-size: 14px;
   ${props => props.itemName === props.selectedItem && 
     css`
       color: royalblue;
@@ -80,17 +81,12 @@ const IconSVG = styled.svg`
 `
 
 const DropdownDBServer = (props) => {
-  /* useState 같은 경우 상태가 변할 때마다 컴포넌트가 리렌더링됨.*/
-  /* select-box의 클릭 상태를 관리함 */
+
   const [isActive, setIsActive] = useState(false);
-  /* select-box가 펼쳐지고 선택되는 아이템 상태를 관리함 */
   const [selectedItem, setSelectedItem] = useState(null);
 
-  /* useRef로 관리하는 변수는 값이 바뀌어도 페이지(컴포넌트)가 리렌더링이 되지 않음*/
-  /* useRef를 사용하면 페이지가 리렌더링되어도 변수 값이 기억됨(초기화 되지 않음)
-  그냥 let으로 변수를 선언할 경우 페이지가 리렌더링될 때마다 변수가 초기화 됨*/
-  /* click(클릭이 끝나는 순간 이벤트가 동작, 클릭을 떼면 이벤트 동작하지 않음)과 다르게 element가 클릭되는 순간 이벤트 동작(클릭을 떼는 경우에도 유지)*/
   const wrapperRef = useRef(null);
+
 
   const onActiveToggle = useCallback(() => {
     setIsActive((prev) => !prev);
@@ -98,37 +94,33 @@ const DropdownDBServer = (props) => {
 
   const onSelectItem = useCallback((e, itemName) => {
 
-    console.log(props);
-
-   
-
+    // console.log(props);
     setSelectedItem(itemName);
     props.setItem(itemName);
-    props.setServerCommandValue(itemName);
+    props.setMethodCommandValue(itemName);
 
     setIsActive((prev) => !prev);
   }, []);
 
-  
 
-  const handleClickOutside = (event) => {
-    if (!wrapperRef.current.contains(event.target)) {
-      setIsActive(false);
-    }
-  }
+  // const handleClickOutside = (event) => {
+  //   if (!wrapperRef.current.contains(event.target)) {
+  //     setIsActive(false);
+  //   }
+  // }
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+  // useEffect(() => {
+  //   document.addEventListener('mousedown', handleClickOutside);
 
-    return()=>{
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
+  //   return()=>{
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   }
 
-  }, []);
+  // }, []);
 
-  useEffect(() => {
-    setSelectedItem("");
-  }, [props.serverCommand]);
+  // useEffect(() => {
+  //   setSelectedItem("");
+  // }, [props.methodCommand]);
 
   return (
     <DropdownContainer>

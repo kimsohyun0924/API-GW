@@ -1,37 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
-import DropdownDBServer from '../components/DropdownDBServer';
-import MethodComp from '../components/MethodComp';
+import DropdownMethod from '../components/DropdownMethod';
+import MethodCreate from './MethodCreate';
 
-const TreeNode = styled.div`
-  position: relative;
-  /* background: pink; */
-  width: 100%;
-  height: 33px;
-  margin-bottom:10px;
-  font-size: 20px;
-  border-bottom-color: #e2e2e2;
-  border-bottom-width: 1px;
-`;
+export default function Method(props) {
 
-export default function Method() {
+  console.log(props);
 
-    const [inputs, setInputs] = useState({
-        ApiName: ''
-    });
-    
-    const onChange = e => {
-        const { name, value } = e.target;
-        setInputs({
-          ...inputs,
-          [name]: value
-        });
-    };
-
-    const [serverCommand, setServerCommand] = useState(null);
-    const [serverCommandValue, setServerCommandValue] = useState(null);
+    const [methodCommand, setMethodCommand] = useState(null);
+    const [methodCommandValue, setMethodCommandValue] = useState(null);
     const [isOpen, setIsOpen] = useState(true);
-    const [focusServer, setFocusServer] = useState(null);
 
     const optionsCommand = [
       {
@@ -71,18 +49,22 @@ export default function Method() {
     useEffect(() => {
 
       setIsOpen(true);
-      setServerCommand("");
+      setMethodCommand("");
   
      
   
-    }, [serverCommand]);
+    }, [methodCommand]);
+
+
+    console.log(methodCommandValue);
+
 
     return (
         <React.Fragment>
-          <DropdownDBServer dropdownItems={optionsCommand} setItem={setServerCommand} serverCommand={serverCommand} setServerCommandValue={setServerCommandValue} />     
+          <DropdownMethod dropdownItems={optionsCommand} setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />    
 
-          { isOpen === true && serverCommandValue &&
-              <MethodComp isOpen={isOpen} setIsOpen={setIsOpen} serverCommandValue={serverCommandValue} setServerCommandValue={setServerCommandValue} />        
+          { isOpen === true && methodCommandValue &&
+              <MethodCreate isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} />        
             }
 
         </React.Fragment>

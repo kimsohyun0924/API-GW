@@ -34,6 +34,17 @@ const ItemInput = styled.div`
     height: 32px;
     display: flex;
     align-items: center;
+    font-size: 14px;
+`;
+
+const InputForm = styled.input`
+  width: 400px;
+  height: 32px;
+  border: solid 1px #b6b6c3;
+  background: #ffffff;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #333333;
 `;
 
 const ItemNote = styled.div`
@@ -53,16 +64,6 @@ const ItemNote = styled.div`
   }
 `;
 
-const InputForm = styled.input`
-  width: 400px;
-  height: 32px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
-  font-size: 16px;
-  color: #333333;
-`;
-
 
 const Item2 = styled.div`
   display: flex;
@@ -76,6 +77,7 @@ const ItemInput2 = styled.div`
     height: 70px;
     display: flex;
     align-items: center;
+    
 `;
 
 const InputForm2 = styled.input`
@@ -84,7 +86,7 @@ const InputForm2 = styled.input`
   border: solid 1px #b6b6c3;
   background: #ffffff;
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 14px;
   color: #333333;
 `;
 
@@ -103,18 +105,17 @@ const ButtonDiv = styled.div`
 export default function ApiCreate() {
   
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [inputs, setInputs] = useState({
+    ApiName: '',
+    ApiExplain: ''
+  });
+  const { ApiName, ApiExplain } = inputs;
 
   const onCancel = (e) => {
     console.log("onCancel");    
     navigate(-1);
   };
-
-  const [inputs, setInputs] = useState({
-    ApiName: '',
-    ApiExplain: ''
-  });
-
-  const { ApiName, ApiExplain } = inputs;
   
   const onChange = e => {
     const { name, value } = e.target;
@@ -124,9 +125,6 @@ export default function ApiCreate() {
     });
   };
   console.log(inputs);
-
-
-  const [error, setError] = useState(null);
 
   const onCreate = () => {
     const Api = {
