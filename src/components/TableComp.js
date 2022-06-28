@@ -110,7 +110,7 @@ export default function TableComp({ columns, data, onClick, checkHandler }) {
                     </TD>
                     <Hov onClick={() => onClick(item)} align='left' width='10%' >{item.name}</Hov>
                     <TD width='10%'>{item.description}</TD>
-                    <TD width='20%'>{item.id}</TD>
+                    <TD width='20%'>{item.service_id}</TD>
                     <TD width='15%'>{item.created_at}</TD>
                   </TR> 
                 </React.Fragment>

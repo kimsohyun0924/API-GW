@@ -8,58 +8,60 @@ import axios from 'axios';
 
 
 const AllDiv = styled.div`
-  min-height: 100%;
-  width: 990px;
+    /* min-height: 100%;
+    width: 990px; */
+    width:100%;
+    height: 100%;
+    /* background:pink; */
 `;
 
-
 const ItemDiv = styled.div`
-  display: block;
-  color: #555555;
-  padding: 10px 10px 10px 10px;
+    display: block;
+    color: #555555;
+    padding: 20px 0px 0px 0px;
 `;
 
 const Item = styled.div`
-  display: flex;
-  padding: 0px 0px 20px 0px;
+    display: flex;
 `;
 
 const ItemName = styled.div`
-  width: 100px;
-  /* min-width: 18px; */
-  margin-right: 50px;
-  height: 32px;
-  line-height: 32px;
-  font-size: 15px;
+    width: 17%;
+    height: 30px;
+    line-height: 15px;
+    font-size: 14px;
+    margin-right: 50px;
+    padding: 6px 12px 6px 0px;
+    /* min-width: 18px; */
+    /* margin-right: 50px; */
 `;
 
 const ItemInput = styled.div`
-    width: 650px;
-    min-width: 220px;
-    height: 32px;
     display: flex;
-    align-items: center;
-    
+    width: 78%;
+    height: 30px;
+    /* min-width: 220px; */
+    /* align-items: center; */
 `;
 
 const InputForm = styled.input`
-  width: 650px;
-  height: 32px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
-  font-size: 14px;
-  color: #333333;
+    width: 100%;
+    height: 30px;
+    border: solid 1px #b6b6c3;
+    background: #ffffff;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #333333;
 `;
 
 const Content = styled.div`
 `;
 
 const ButtonDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
-  margin: 5px 60px 5px 60px;
+    display: flex;
+    justify-content: center;
+    margin: 20px 60px 0px 60px;
+    /* align-items: center; */
 `;
 
 
@@ -67,9 +69,11 @@ export default function ResourceCreate(props) {
 
   const serviceInfo = props.serviceInfo;
   const serviceId = serviceInfo.id;
-  const nodeId = props.nodeId;
+  const resourceId = props.resourceId;
   const label = props.label;
   const navigate = useNavigate();
+  const [toggle, setToggle] = useState(false);
+  const [content, setContent] = useState(true);
   const [error, setError] = useState(null);
   const [ResourceRoot, SetResourceRoot] = useState(null);
   const [inputs, setInputs] = useState({
@@ -101,7 +105,7 @@ export default function ResourceCreate(props) {
       try {
         setError(null);    
         const response = await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/resources'+nodeId,
+          '/v1.0/g1/paas/Memsq07/apigw/resources'+resourceId,
           {
             serviceId: serviceId,
             api_name: resource
@@ -114,6 +118,22 @@ export default function ResourceCreate(props) {
     createResource();
     window.location.reload(true);
   };
+
+    const clickedToggle = () => {
+      setToggle((prev) => !prev);
+      if(toggle == true) {
+        setContent("true");
+      }
+      else {
+        setContent("false");
+      }
+      console.log(content);
+    };
+
+    const selectComponent = {
+      false : <CORS/>
+    };
+
 
     return (
         <React.Fragment>
@@ -129,9 +149,10 @@ export default function ResourceCreate(props) {
             <ItemDiv>
               <Item>
                 <ItemName>CORS 활성화</ItemName>
-                <ToggleSwitch/>
+                  <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
               </Item>
             </ItemDiv>
+            {content && <Content>{selectComponent[content]}</Content>}
             <ButtonDiv>
               <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                 <Button size="small" onClick={onCancel} noline>취소</Button>

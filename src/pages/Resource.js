@@ -12,55 +12,8 @@ import { useLocation } from "react-router";
 
 
 const ResourceContainer = styled.div`
-  position:relative;
-  width: 100%;
-  height: 100%;
-`;
-
-const ButtonDiv = styled.div`
-  display : flex;
-  padding: 10px 0px 20px 0px;
-`;
-
-const ExampleDiv = styled.div`
-  display: flex;  
-  /* background: orange;  */
-`;
-
-const MenuDiv = styled.div`
-  min-width: 200px;
-  min-height: 610px;
-  /* background:pink; */
-  /* width: 200px;
-  height: 610px; */
-  padding: 15px 15px 0px 15px;
-  border: 1px solid #e2e2e2;
-`;
-
-// const TreeNodeDiv = styled.div`
-//   width: 100%;
-//   height: 33px;
-//   margin-bottom:10px;
-//   font-size: 20px;
-//   border-bottom-color: #e2e2e2;
-//   border-bottom-width: 1px;
-// `;
-
-const ResourceInfo = styled.div`
-  height: 610px;
-  width: 100%;
-  border-bottom: 1px solid #e2e2e2;
-  border-top: 1px solid #e2e2e2;
-  border-right: 1px solid #e2e2e2;
-  
-  padding : 15px 15px 15px 15px;
-`;
-
-const Content = styled.div`
- 
-  width: 100%;
-  height: 100%;
-`;
+    
+`;  
 
 export default function Resource(props) {
 

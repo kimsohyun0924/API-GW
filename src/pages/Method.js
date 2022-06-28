@@ -5,8 +5,6 @@ import MethodCreate from './MethodCreate';
 
 export default function Method(props) {
 
-  console.log(props);
-
     const [methodCommand, setMethodCommand] = useState(null);
     const [methodCommandValue, setMethodCommandValue] = useState(null);
     const [isOpen, setIsOpen] = useState(true);
@@ -50,9 +48,7 @@ export default function Method(props) {
 
       setIsOpen(true);
       setMethodCommand("");
-  
-     
-  
+
     }, [methodCommand]);
 
 

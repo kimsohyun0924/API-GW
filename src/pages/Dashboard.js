@@ -36,12 +36,13 @@ export default function Dashboard() {
   const [updatedialog, setUpdateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
   const testData = [ {
-    "createdAt": "2022-06-27T04:24:57.492Z",
-    "updatedAt": "2022-06-27T04:24:57.492Z",
-    "id": "string",
-    "memSq": "string",
-    "name": "Sso",
-    "description": "Sso"
+    "service_id": "62bab8c1bcab4a3182743463",
+    "memsq": "memsq1",
+    "name": "api1",
+    "description": "my first api",
+    "root_resource_id": "62bab8c0bcab4a3182743462",
+    "created_at": "2022-06-28T17:16:01.038332",
+    "updated_at": "2022-06-28T17:16:01.038332"
   }];
 
   const [error, setError] = useState(null);

@@ -38,33 +38,34 @@ const Content = styled.div`
   height: 100%;
 `;
 
-export default function Switches(props) {
+export default function ToggleSwitch({ clickedToggle, toggle}) {
   
-    const [toggle, setToggle] = useState(false);
-    const [content, setContent] = useState(true);
+    // const [toggle, setToggle] = useState(false);
+    // const [content, setContent] = useState(true);
 
-    const clickedToggle = () => {
-      setToggle((prev) => !prev);
-      if(toggle == true) {
-        setContent("true");
-      }
-      else {
-        setContent("false");
-      }
-      console.log(content);
-    };
+    // const clickedToggle = () => {
+    //   setToggle((prev) => !prev);
+    //   console.log(toggle);
+    //   if(toggle == true) {
+    //     setContent("true");
+    //   }
+    //   else {
+    //     setContent("false");
+    //   }
+    //   console.log(content);
+    // };
 
-    const selectComponent = {
-      false : <CORS/>
-    };
+    // const selectComponent = {
+    //   false : <CORS/>
+    // };
 
 
     return (
      <div>
-        <ToggleBtn onClick={clickedToggle} toggle={toggle}>
+        <ToggleBtn onClick={clickedToggle} toggle={toggle} >
           <Circle toggle={toggle} />
         </ToggleBtn>
-        {content && <Content>{selectComponent[content]}</Content>}
+        {/* {content && <Content>{selectComponent[content]}</Content>} */}
      </div>
     );
   }
