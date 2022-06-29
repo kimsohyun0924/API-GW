@@ -23,9 +23,10 @@ export default function App() {
               
               <Routes>
                 {/* <Route path='/dbserver'element={<DBServer />}></Route>  */}
-                <Route path='/api/create' element={<ApiCreate />}></Route>   
-                <Route path='/api/operation/resource' element={<Resource />}></Route>              
-                <Route path='/api/operation' element={<ApiOperation />}></Route>
+                <Route path='/api/create' element={<ApiCreate />}></Route>               
+                <Route path='/api/operation' element={<ApiOperation />}>
+                  <Route path='resource' element={<Resource />}></Route> 
+                </Route>
                 <Route path='/dashboard' element={<Dashboard />}></Route> 
                 {/* <Route path='/parameter'element={<Parameter />}></Route> */}
                 {/* <Route path='/monitoring'element={<Monitoring />}></Route> */}

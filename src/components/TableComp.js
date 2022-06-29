@@ -106,7 +106,7 @@ export default function TableComp({ columns, data, onClick, checkHandler }) {
                 <React.Fragment key={index}>
                   <TR key={index}>
                     <TD width='1%'>
-                      <input type="checkbox" onChange={checkHandler} apiid={item.id} apiname={item.name}/>
+                      <input type="checkbox" onChange={checkHandler} apiid={item.service_id} apiname={item.name}/>
                     </TD>
                     <Hov onClick={() => onClick(item)} align='left' width='10%' >{item.name}</Hov>
                     <TD width='10%'>{item.description}</TD>

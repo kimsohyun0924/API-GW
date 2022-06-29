@@ -153,7 +153,7 @@ export default function Dashboard() {
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableComp columns={TableHeader} data={testData} checkHandler={checkHandler} checkedItems={checkedItems}/>
+          <TableComp columns={TableHeader} data={DataTemp} checkHandler={checkHandler} checkedItems={checkedItems}/>
         </TableDiv>
       </MainContainer>
       <ModalApiDelete
