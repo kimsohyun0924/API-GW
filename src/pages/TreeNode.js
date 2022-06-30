@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem, { useTreeItem } from '@mui/lab/TreeItem';
+import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
 import clsx from 'clsx';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,7 @@ import ResourceCreate from './ResourceCreate';
 import Button from '../components/Button';
 import Method from './Method';
 import ModalApiDelete from '../components/ModalApiDelete';
+import zIndex from '@material-ui/core/styles/zIndex';
 
 
 const AllDiv = styled.div`
@@ -137,13 +138,13 @@ export default function RecursiveTreeView(props) {
         <div onClick={handleExpansionClick} className={classes.iconContainer}>
           {icon}
         </div>
-        <Typography
+        <div
           onClick={handleSelectionClick}
           component="div"
           className={classes.label}
         >
           {label}
-        </Typography>
+        </div>
       </div>
     );
   });
@@ -183,12 +184,24 @@ export default function RecursiveTreeView(props) {
     <TreeItem ContentComponent={CustomContent} {...props} />
   );
 
+  const StyledTreeItem = styled((props) => (
+    <TreeItem ContentComponent={CustomContent} {...props} />
+  ))(() => ({
+    [`& .${treeItemClasses.content}`]: {
+      height: '35px', 
+    },
+    [`& .${treeItemClasses.label}`]: {
+      fontSize: '18px !important',
+    },
+  }));
+
   const renderTree = (nodes) => (
-    <CustomTreeItem key={nodes.resourceId || nodes.methodId} nodeId={nodes.resourceId || nodes.methodId} label={nodes.path || nodes.type}>
+    <StyledTreeItem key={nodes.resourceId || nodes.methodCode} nodeId={nodes.resourceId || nodes.methodCode} label={nodes.resourcePath || nodes.methodName}>
       {Array.isArray(nodes.resourceList) ? nodes.resourceList.map((node) => renderTree(node)) : null}
       {Array.isArray(nodes.methodList) ? nodes.methodList.map((node) => renderTree(node)) : null}
-    </CustomTreeItem>
+    </StyledTreeItem>
   );
+  
 
   
   const Create = e => {
@@ -264,7 +277,7 @@ export default function RecursiveTreeView(props) {
               onCancel={onCancel}
               visible={dialog}
               >
-              {label}  정말로 삭제하시겠습니까?
+              {label} 정말로 삭제하시겠습니까?
         </ModalApiDelete> 
       </AllDiv>     
     </React.Fragment>

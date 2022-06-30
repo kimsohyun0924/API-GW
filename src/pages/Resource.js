@@ -23,62 +23,48 @@ export default function Resource(props) {
   const [error, setError] = useState(null);
   const [data, setData] = useState();
   const serviceInfo = props.serviceInfo;
+
   const serviceId = serviceInfo.id;
   const allresource = {
-    'resourceId': 'root',
-    'path': '/',
-    'resourceList': [
-      {
-        'resourceId': '1',
-        'path': '/test1',
-        'resourceList' : [
-          {
-            'resourceId': '2',
-            'path': '/test2'
-          }
-        ]
-      }
-    ],
-    "methodList": [
-      {
-        "methodId": "string",
-        "resourceId": "string",
-        "type": "GET",
-        "routeDefinitionList": [
-          {
-            "routeId": "string",
-            "uri": "string",
-            "methodId": "string",
-            "predicateDefinitionList": [
-              {
-                "createdAt": "2022-06-23T08:28:38.288Z",
-                "updatedAt": "2022-06-23T08:28:38.288Z",
-                "id": "string",
-                "name": "string",
-                "args": {
-                  "additionalProp1": "string",
-                  "additionalProp2": "string",
-                  "additionalProp3": "string"
+    "resourceId":"kqxi35f4xb",
+    "resourcePath":"/",
+    "resourceList":[
+        {
+            "resourceId":"t9bbeivrfi",
+            "resourcePath":"/server",
+            "resourceList":[
+                {
+                    "resourceId":"vavdn0zg5t",
+                    "resourcePath":"/v2",
+                    "resourceList":[
+                        {
+                            "resourceId":"c6qoi28e15",
+                            "resourcePath":"/client",
+                            "resourceList":[
+                                {
+                                    "resourceId":"gw8e4b8pn7",
+                                    "resourcePath":"/api",
+                                    "resourceList":[],
+                                    "methodList":[
+                                        {
+                                            "methodCode":"0001",
+                                            "methodName":"GET"
+                                        }
+                                    ]
+                                }
+                             ],
+                            "methodList":[]
+                        }
+                    ],
+                    "methodList":[]
                 }
-              }
             ],
-            "filterDefinitionList": [
-              {
-                "id": "string",
-                "name": "string",
-                "args": {
-                  "additionalProp1": "string",
-                  "additionalProp2": "string",
-                  "additionalProp3": "string"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  };
-  
+            "methodList":[]
+        }
+    ],
+    "methodList":[]
+}
+    
   
   const getAllResource = async () => {
     //get api request

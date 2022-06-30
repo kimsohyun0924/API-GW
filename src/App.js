@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import ApiCreate from './pages/ApiCreate';
 import ApiOperation from './pages/ApiOperations';
 import Resource from './pages/Resource';
+import Stage from './pages/Stage';
 
 
 
@@ -24,9 +25,8 @@ export default function App() {
               <Routes>
                 {/* <Route path='/dbserver'element={<DBServer />}></Route>  */}
                 <Route path='/api/create' element={<ApiCreate />}></Route>               
-                <Route path='/api/operation' element={<ApiOperation />}>
-                  <Route path='resource' element={<Resource />}></Route> 
-                </Route>
+                <Route path='/api/operation' element={<ApiOperation />}></Route>
+                {/* <Route path='/api/operation/:value' element={<Stage />}></Route> */}
                 <Route path='/dashboard' element={<Dashboard />}></Route> 
                 {/* <Route path='/parameter'element={<Parameter />}></Route> */}
                 {/* <Route path='/monitoring'element={<Monitoring />}></Route> */}

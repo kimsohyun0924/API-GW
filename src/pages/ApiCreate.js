@@ -43,7 +43,7 @@ const InputForm = styled.input`
   border: solid 1px #b6b6c3;
   background: #ffffff;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 12px;
   color: #333333;
 `;
 
@@ -64,7 +64,6 @@ const ItemNote = styled.div`
   }
 `;
 
-
 const Item2 = styled.div`
   display: flex;
   height: 100px;
@@ -72,15 +71,14 @@ const Item2 = styled.div`
 `;
 
 const ItemInput2 = styled.div`
-    width: 500px;
+    width: 400px;
     min-width: 220px;
     height: 70px;
     display: flex;
     align-items: center;
-    
 `;
 
-const InputForm2 = styled.input`
+const InputForm2 = styled.textarea`
   width: 400px;
   height: 70px;
   border: solid 1px #b6b6c3;
@@ -88,6 +86,7 @@ const InputForm2 = styled.input`
   box-sizing: border-box;
   font-size: 14px;
   color: #333333;
+  font-family: none;  
 `;
 
 const ItemText = styled.span`

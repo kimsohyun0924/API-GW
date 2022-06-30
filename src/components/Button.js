@@ -21,8 +21,8 @@ const colorStyles = css`
           border: 0.01rem solid #333336;
           &:hover {
             background: white;
-            border: 0.01rem solid #03428e;;
-            color: #03428e;;
+            border: 0.01rem solid #03428e;
+            color: #03428e;
           }
         `}
         ${props =>
@@ -94,9 +94,6 @@ const StyledButton = styled.button`
   vertical-align: middle; */
   /* min-width: 200px; */
   box-shadow: none;
-
-  
-
 
   /* 크기 */
   ${sizeStyles}

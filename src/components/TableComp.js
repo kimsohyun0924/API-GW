@@ -73,7 +73,7 @@ const Hov = styled.td`
   }
 `;
 
-export default function TableComp({ columns, data, onClick, checkHandler }) {
+export default function TableComp({ columns, data, checkHandler }) {
 
   const navigate = useNavigate();
 
