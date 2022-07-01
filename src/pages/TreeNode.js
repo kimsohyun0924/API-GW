@@ -14,6 +14,7 @@ import Button from '../components/Button';
 import Method from './Method';
 import ModalApiDelete from '../components/ModalApiDelete';
 import zIndex from '@material-ui/core/styles/zIndex';
+import MethodUpdate from './MethodUpdate';
 
 
 const AllDiv = styled.div`
@@ -70,17 +71,19 @@ const Content = styled.div`
 
 export default function RecursiveTreeView(props) {
 
+  console.log(props);
+
   const [content, setContent] = useState(null);
   const [resourceId, setResourceId] = useState(null);
   const [label, setLabel] = useState(null);
   const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); 
   const serviceInfo = props.serviceInfo;
-  const data = props.data;
+  // const navigate = useNavigate(); 
 
   const CustomContent = React.forwardRef(function CustomContent(props, ref) {
+    // console.log(props);
     const {
       classes,
       className,
@@ -115,7 +118,13 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
-      // console.log(nodeId);
+      // console.log(props);
+      // if(doc_type == "RESOURCE") {
+      //   setContent('second');
+      // }
+      // else if(doc_type == "METHOD") {
+      //   setContent('third');
+      // }
       setContent('second');
       setLabel(label);
       setResourceId(nodeId);
@@ -178,7 +187,14 @@ export default function RecursiveTreeView(props) {
      * The id of the node.
      */
     nodeId: PropTypes.string.isRequired,
+    /**
+     * The doc_type of the node.
+     */
+    
+   
   };
+
+ 
   
   const CustomTreeItem = (props) => (
     <TreeItem ContentComponent={CustomContent} {...props} />
@@ -196,9 +212,9 @@ export default function RecursiveTreeView(props) {
   }));
 
   const renderTree = (nodes) => (
-    <StyledTreeItem key={nodes.resourceId || nodes.methodCode} nodeId={nodes.resourceId || nodes.methodCode} label={nodes.resourcePath || nodes.methodName}>
-      {Array.isArray(nodes.resourceList) ? nodes.resourceList.map((node) => renderTree(node)) : null}
-      {Array.isArray(nodes.methodList) ? nodes.methodList.map((node) => renderTree(node)) : null}
+    <StyledTreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name || nodes.path || nodes.method_type}>
+      {Array.isArray(nodes.child_resource_doc_list) ? nodes.child_resource_doc_list.map((node) => renderTree(node)) : null}
+      {Array.isArray(nodes.method_doc_list) ? nodes.method_doc_list.map((node) => renderTree(node)) : null}
     </StyledTreeItem>
   );
   
@@ -239,7 +255,7 @@ export default function RecursiveTreeView(props) {
   const selectComponent = {
     first: <ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>,
     second: <Method resourceId={resourceId}/>
-    // third: 
+    // third: <MethodUpdate/>
   };
 
   return (
@@ -261,7 +277,7 @@ export default function RecursiveTreeView(props) {
               defaultSelected={'root'}
               sx={{ height: 440, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
               >
-                {renderTree(data)}
+                {/* {renderTree(props.data)} */}
             </TreeView>
           </MenuDiv> 
           <ResourceInfoDiv>

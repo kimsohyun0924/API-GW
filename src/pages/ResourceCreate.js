@@ -75,7 +75,6 @@ export default function ResourceCreate(props) {
   const [toggle, setToggle] = useState(false);
   const [content, setContent] = useState(true);
   const [error, setError] = useState(null);
-  const [ResourceRoot, SetResourceRoot] = useState(null);
   const [inputs, setInputs] = useState({
     resource: '',
   });

@@ -16,66 +16,60 @@ const ResourceContainer = styled.div`
 `;  
 
 export default function Resource(props) {
-
-  const { state } = useLocation();
-  const [AllResource, SetAllResource] = useState([]);
-  const [RootId, SetRootId] = useState(null);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState();
   const serviceInfo = props.serviceInfo;
-
   const serviceId = serviceInfo.id;
-  const allresource = {
-    "resourceId":"kqxi35f4xb",
-    "resourcePath":"/",
-    "resourceList":[
-        {
-            "resourceId":"t9bbeivrfi",
-            "resourcePath":"/server",
-            "resourceList":[
-                {
-                    "resourceId":"vavdn0zg5t",
-                    "resourcePath":"/v2",
-                    "resourceList":[
-                        {
-                            "resourceId":"c6qoi28e15",
-                            "resourcePath":"/client",
-                            "resourceList":[
-                                {
-                                    "resourceId":"gw8e4b8pn7",
-                                    "resourcePath":"/api",
-                                    "resourceList":[],
-                                    "methodList":[
-                                        {
-                                            "methodCode":"0001",
-                                            "methodName":"GET"
-                                        }
-                                    ]
-                                }
-                             ],
-                            "methodList":[]
-                        }
-                    ],
-                    "methodList":[]
-                }
-            ],
-            "methodList":[]
-        }
-    ],
-    "methodList":[]
-}
+  const resourceId = serviceInfo.root_resource_id;
+  const [AllResource, SetAllResource] = useState(null);
+  const [error, setError] = useState(null);
+
+  // const [RootId, SetRootId] = useState(null);
+  // const [data, setData] = useState(); 
+  // const { state } = useLocation();
+  // const allresource = {
+                      
+  //                       "root_resource_doc": {
+  //                           "created_at": "2022-07-01T10:35:02.701081",
+  //                           "updated_at": "2022-07-01T10:35:02.733515",
+  //                           "id": "62be4f4657692a44c3494a46",
+  //                           "path": "/",
+  //                           "doc_type": "RESOURCE",
+  //                           "method_doc_list": null,
+  //                           "child_resource_doc_list": [
+  //                               {
+  //                                   "created_at": "2022-07-01T10:35:02.722386",
+  //                                   "updated_at": "2022-07-01T10:35:02.722386",
+  //                                   "id": "62be4f4657692a44c3494a4a",
+  //                                   "path": "/test",
+  //                                   "doc_type": "RESOURCE",
+  //                                   "method_doc_list": [
+  //                                       {
+  //                                           "created_at": "2022-07-01T10:34:57.006",
+  //                                           "updated_at": "2022-07-01T10:34:57.006",
+  //                                           "id": "62be4f4157692a44c3494a43",
+  //                                           "method_type": "GET",
+  //                                           "doc_type": "METHOD",
+  //                                           "integration_type": "HTTP",
+  //                                       }
+  //                                   ],
+  //                                   "child_resource_doc_list": null
+  //                               }
+  //                           ]
+  //                       },
+  //                       "status": "STAGE_DEPLOYED"
+  //                     }
     
   
+
+  //전체 리소스 조회
   const getAllResource = async () => {
     //get api request
     try {
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/resource/service/'+serviceId
+        '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
       );
-      SetAllResource(allresource); // 데이터는 response.data
-      // console.log(AllResource);
+      SetAllResource(response.data); // 데이터는 response.data
     } catch (e) {
       setError(e);
     }
@@ -86,11 +80,13 @@ export default function Resource(props) {
     getAllResource();
   }, []);
 
+  console.log(AllResource);
+
 
   return (
     <React.Fragment>
       <ResourceContainer>        
-        <TreeNode serviceInfo={serviceInfo} data={allresource}/>
+        <TreeNode serviceInfo={serviceInfo} data={AllResource}/>
       </ResourceContainer>
     </React.Fragment>
   );

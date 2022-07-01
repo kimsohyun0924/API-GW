@@ -66,25 +66,25 @@ export default function Resource(props) {
 }
     
   
-  const getAllResource = async () => {
-    //get api request
-    try {
-      setError(null);
+  // const getAllResource = async () => {
+  //   //get api request
+  //   try {
+  //     setError(null);
 
-      const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/resource/service/'+serviceId
-      );
-      SetAllResource(allresource); // 데이터는 response.data
-      // console.log(AllResource);
-    } catch (e) {
-      setError(e);
-    }
-  };
+  //     const response = await axios.get(
+  //       '/v1.0/g1/paas/Memsq07/apigw/resource/service/'+serviceId
+  //     );
+  //     SetAllResource(allresource); // 데이터는 response.data
+  //     // console.log(AllResource);
+  //   } catch (e) {
+  //     setError(e);
+  //   }
+  // };
 
 
-  useEffect(() => {
-    getAllResource();
-  }, []);
+  // useEffect(() => {
+  //   getAllResource();
+  // }, []);
 
 
   return (
