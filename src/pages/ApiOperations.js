@@ -56,7 +56,7 @@ export default function ApiOperation() {
     // console.log(state);
   
     const handleChange = (event, newValue) => {
-        console.log(newValue);
+        // console.log(newValue);
         setValue(newValue);
     };
 
@@ -84,10 +84,10 @@ export default function ApiOperation() {
                               {/* { navigate('api/operation/resource', {state : state}) }  */}
                           </TabPanel>
                           <TabPanel sx={{padding: '5px 0px 0px 0px'}} value="1" >
-                              <Stage/>
+                              <Stage serviceInfo={state}/> 
                           </TabPanel>
                           <TabPanel sx={{padding: '5px 0px 0px 0px'}} value="2">
-                              <div style={{width:"100%", height:"73vh", background:"pink"}}>Item Three</div>
+                              <div style={{width:"100%", height:"73vh"}}>Item Three</div>
                           </TabPanel>
                           <TabPanel sx={{padding: '5px 0px 0px 0px'}} value="3" >
                               Item Four

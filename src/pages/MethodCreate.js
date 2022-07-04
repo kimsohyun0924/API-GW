@@ -53,7 +53,6 @@ const InputForm = styled.input`
 
 const DropdownContainer = styled.div`
     width: 78%;
-    background: pink;
     &:hover {
       cursor: pointer;
     }
@@ -86,7 +85,7 @@ const IconSVG = styled.svg`
 
 const DropdownMenu = styled.ul`
     display: ${(props) => (props.isActive ? `block` : `none`)};
-    width: 45%;
+    width: 51%;
     z-index: 10;
     background-color: white;
     position: absolute;
@@ -134,20 +133,22 @@ const ButtonDiv = styled.div`
   /* align-items: center; */
 `;
 
-export default function MethodComp(props) {
+export default function MethodCreate(props) {
 
-  const { isOpen, setIsOpen, methodCommandValue, setMethodCommandValue } = props;
-  const [selectedItem, setSelectedItem] = useState(methodCommandValue);
+  const { resourceId, isOpen, setIsOpen, methodCommandValue, setMethodCommandValue } = props;
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem2, setSelectedItem2] = useState(methodCommandValue);
   const [isActive, setIsActive] = useState(false);
+  const [isActive2, setIsActive2] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
-    endpoint: '',
     urlInfo:''
   });
   const wrapperRef = useRef(null);
+  const wrapperRef2 = useRef(null);
 
-  const optionsCommand = [
+  const methodoptionsCommand = [
     {
       "name": "ANY",
       "value": "ANY"
@@ -182,7 +183,22 @@ export default function MethodComp(props) {
     }
   ];
 
-  const { endpoint, urlInfo } = inputs;
+  const endpointoptionsCommand = [
+    {
+      "name": "HTTP(S)",
+      "value": "HTTP(S)"
+    },
+    {
+      "name": "MOCK",
+      "value": "MOCK"
+    },
+    {
+      "name": "kt cloud",
+      "value": "kt cloud"
+    },
+  ];
+
+  const { urlInfo } = inputs;
 
 
   const onChange = e => {
@@ -193,12 +209,16 @@ export default function MethodComp(props) {
     });
   };
   console.log(inputs);
+  // console.log(selectedItem);
+  // console.log(selectedItem2);
+  // console.log(resourceId);
+
 
 
   const onCreate = () => {
     const Api = {
-      endpoint,
       selectedItem,
+      selectedItem2,
       urlInfo
     };
   
@@ -210,9 +230,9 @@ export default function MethodComp(props) {
         await axios.post(
           '/v1.0/g1/paas/Memsq07/apigw/method',
           {
-            resourceId: "string",
-            integrationType: endpoint,
-            type: selectedItem
+            resourceId: resourceId,
+            integrationType: selectedItem,
+            type: selectedItem2
           }
         );
       } catch (e) {
@@ -228,13 +248,19 @@ export default function MethodComp(props) {
   };
 
   const onCancel = () => {
+    console.log("취소");
     setIsOpen(false);
     setMethodCommandValue("");
   };
 
   const onActiveToggle = useCallback(() => {
-    console.log(isActive)
+    // console.log(isActive)
     setIsActive((prev) => !prev);
+  }, []);
+
+  const onActiveToggle2 = useCallback(() => {
+    // console.log(isActive2)
+    setIsActive2((prev) => !prev);
   }, []);
 
   const onSelectItem = useCallback((e, itemName) => {
@@ -244,6 +270,16 @@ export default function MethodComp(props) {
     // props.setItem(itemName);
     // props.setMethodCommandValue(itemName);
     setIsActive((prev) => !prev);
+
+  }, []);
+
+  const onSelectItem2 = useCallback((e, itemName) => {
+
+    // console.log(props);
+    setSelectedItem2(itemName);
+    // props.setItem(itemName);
+    // props.setMethodCommandValue(itemName);
+    setIsActive2((prev) => !prev);
 
   }, []);
 
@@ -268,18 +304,14 @@ export default function MethodComp(props) {
         <ItemDiv>
           <Item>
             <ItemName>엔드포인트 유형</ItemName>
-            <ItemInput>
-              <InputForm name="endpoint" onChange={onChange} value={endpoint}/>
-            </ItemInput>
-          </Item>
-        </ItemDiv>
-        <ItemDiv> 
-          <Item>
-            <ItemName>Method 종류</ItemName>
+
             <DropdownContainer>
               <DropdownBody onClick={onActiveToggle}>
           
-                <ItemName>{selectedItem}</ItemName>     
+                {/* <ItemName>{selectedItem}</ItemName>      */}
+                { selectedItem ? 
+                  <ItemName>{selectedItem}</ItemName>     
+                  : <DropdownSelect>엔드포인트 유형</DropdownSelect> }
               
                 <IconSVG
                   width="20"
@@ -297,9 +329,46 @@ export default function MethodComp(props) {
                 </IconSVG>
               </DropdownBody>
               <DropdownMenu isActive={isActive} ref={wrapperRef}>
-                {optionsCommand.map((item, index) => (
+                {endpointoptionsCommand.map((item, index) => (
                   <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem(e, item.name); }}>
                     <DropdownItemName id="item_name" itemName={item.name} selectedItem={selectedItem}>{item.name}</DropdownItemName>
+                  </DropdownItemContainer>
+                ))}
+              </DropdownMenu>
+            </DropdownContainer>
+
+            {/* <ItemInput>
+              <InputForm name="endpoint" onChange={onChange} value={endpoint}/>
+            </ItemInput> */}
+          </Item>
+        </ItemDiv>
+        <ItemDiv> 
+          <Item>
+            <ItemName>Method 종류</ItemName>
+            <DropdownContainer>
+              <DropdownBody onClick={onActiveToggle2}>
+          
+                <ItemName>{selectedItem2}</ItemName>     
+              
+                <IconSVG
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M10 14L16 6H4L10 14Z"
+                  fill="#888888"
+                />
+                </IconSVG>
+              </DropdownBody>
+              <DropdownMenu isActive={isActive2} ref={wrapperRef2}>
+                {methodoptionsCommand.map((item, index) => (
+                  <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem2(e, item.name); }}>
+                    <DropdownItemName id="item_name" itemName={item.name} selectedItem={selectedItem2}>{item.name}</DropdownItemName>
                   </DropdownItemContainer>
                 ))}
               </DropdownMenu>

@@ -14,13 +14,13 @@ const MethodDiv = styled.div`
 
 const methodcolor = {
     GET: {
-        backgroundColor: '#6482B9'
+        backgroundColor: 'royalblue'
     },
     POST: {
-        backgroundColor: '#FFC81E'
+        backgroundColor: 'green'
     },
     PUT: {
-        backgroundColor: 'green'
+        backgroundColor: 'brown'
     },
     DELETE: {
         backgroundColor: 'red'
@@ -41,8 +41,6 @@ const MethodValueDiv = styled.div`
     align-items: center;
     /* background-color: #6482B9; */
     ${methodStyles}
-   
-   
 `;
 
 const MethodValue = styled.div`
@@ -50,13 +48,6 @@ const MethodValue = styled.div`
     color: white;
     font-size: 20px;
     font-weight: bold;
-`;
-
-const MethodInfoDiv = styled.div`
-    display: inline-block;
-    width: 320px;
-    height: 100%;
-    padding: 15px 15px 15px 15px;
 `;
 
 const ButtonDiv = styled.div`
@@ -78,19 +69,43 @@ const Button = styled.button`
     &:hover {
             background: #f4f4f4;
           }
-
 `;
 
-const MethodInfo = styled.div`
+const MethodInfoDiv = styled.div`
+    display: inline-block;
+    width: 320px;
+    height: 100%;
+    padding: 15px 10px 10px 15px;
+`;
+
+const MethodInfoType = styled.div`
+    display: flex;
     padding: 0px 10px 15px 0px;
     font-size: 15px;
+`;
+
+const MethodInfoName = styled.div`
+    padding: 0px 10px 15px 0px;
+    width: 100px;
+    font-size: 15px;
+`;
+
+const MethodInfoValue = styled.div`
+    padding: 0px 0px 15px 0px;
+    width: 180px;
+    font-size: 14px;
 `;
 
 
 export default function MethodComp(props) {
 
+    const methodInfo = props.methodInfo;
+    // const methodId = methodInfo.methodId;
+    const [apikey, setApikey] = useState(null);
     const [dialog, setDialog] = useState(false);
     const [error, setError] = useState(null);
+    const [content, setContent] = useState(null);
+
 
     const Delete = () => {
         setDialog(true);
@@ -126,16 +141,25 @@ export default function MethodComp(props) {
     return (
         <React.Fragment>
             <MethodDiv>
-                <MethodValueDiv methodtype={props.methodvalue}>
-                    <MethodValue>{props.methodvalue}</MethodValue>
+                <MethodValueDiv methodtype={methodInfo.methodName}>
+                    <MethodValue>{methodInfo.methodName}</MethodValue>
                     <ButtonDiv>
                         <Button onClick={onClick}>보기</Button>
                         <Button onClick={Delete}>삭제</Button>
                     </ButtonDiv>
                 </MethodValueDiv>
                 <MethodInfoDiv>
-                    <MethodInfo>엔드포인트</MethodInfo>
-                    <MethodInfo>API Key 필요</MethodInfo>
+                    <MethodInfoType>
+                        <MethodInfoName>엔드포인트</MethodInfoName>
+                        <MethodInfoValue>{methodInfo.methodName} {methodInfo.httpEndPoint.url}</MethodInfoValue >
+                    </MethodInfoType>
+                    <MethodInfoType>
+                        <MethodInfoName>API Key 필요</MethodInfoName>
+                            {
+                                methodInfo.requiredApiKey.required? <MethodInfoValue>예</MethodInfoValue> 
+                                : <MethodInfoValue>아니요</MethodInfoValue>
+                            }
+                    </MethodInfoType>
                 </MethodInfoDiv>
             </MethodDiv> 
             <ModalApiDelete

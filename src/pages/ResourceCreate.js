@@ -18,7 +18,8 @@ const AllDiv = styled.div`
 const ItemDiv = styled.div`
     display: block;
     color: #555555;
-    padding: 20px 0px 0px 0px;
+    padding: 0px 0px 20px 0px;
+    /* background:pink; */
 `;
 
 const Item = styled.div`
@@ -68,7 +69,7 @@ const ButtonDiv = styled.div`
 export default function ResourceCreate(props) {
 
   const serviceInfo = props.serviceInfo;
-  const serviceId = serviceInfo.id;
+  const serviceId = serviceInfo.service_id;
   const resourceId = props.resourceId;
   const label = props.label;
   const navigate = useNavigate();
@@ -95,7 +96,7 @@ export default function ResourceCreate(props) {
   }
 
 
-  const onClick = () => {
+  const onCreate = () => {
     const Api = {
       resource
     };
@@ -104,10 +105,10 @@ export default function ResourceCreate(props) {
       try {
         setError(null);    
         const response = await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/resources'+resourceId,
+          '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId,
           {
-            serviceId: serviceId,
-            api_name: resource
+            service_id: serviceId,
+            path: resource
           }
         );
       } catch (e) {
@@ -155,7 +156,7 @@ export default function ResourceCreate(props) {
             <ButtonDiv>
               <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                 <Button size="small" onClick={onCancel} noline>취소</Button>
-                <Button size="medium" onClick={onClick} >생성하기</Button>
+                <Button size="medium" onClick={onCreate} >생성하기</Button>
               </ThemeProvider>
             </ButtonDiv>
           </AllDiv>   

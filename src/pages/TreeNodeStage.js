@@ -9,11 +9,9 @@ import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
 import clsx from 'clsx';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
-import ResourceCreate from './ResourceCreate';
 import Button from '../components/Button';
-import Method from './Method';
 import ModalApiDelete from '../components/ModalApiDelete';
-import MethodCreate from './MethodCreate';
+import StageCreate from './StageCreate';
 
 
 const AllDiv = styled.div`
@@ -74,10 +72,11 @@ export default function RecursiveTreeView(props) {
   const serviceInfo = props.serviceInfo;
   const [content, setContent] = useState(null);
   const [resourceId, setResourceId] = useState(null);
-  const [label, setLabel] = useState(null);
+  const [label, setLabel] = useState();
   const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [error, setError] = useState(null);
+  // const serviceInfo = props.serviceInfo;
   // const navigate = useNavigate(); 
 
   const CustomContent = React.forwardRef(function CustomContent(props, ref) {
@@ -117,15 +116,6 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
-      if(label == "GET" || label == "POST" || label == "DELETE") {
-        setContent('third');
-      }
-      else {
-        setContent('second');
-      }
-      setLabel(label);
-      setResourceId(nodeId);
-      console.log();
     };
   
     return (
@@ -228,7 +218,7 @@ export default function RecursiveTreeView(props) {
   };
 
   const Delete = e => {
-    setDialog(true);
+    // setDialog(true);
   };
 
   const onCancel = () => {
@@ -238,26 +228,25 @@ export default function RecursiveTreeView(props) {
 
   const onDelete = () => {
     //delete api request
-     const deleteResource = async () => {
-       try {
-         setError(null);
-         await axios.delete(
-           '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
-         );
-       } catch (e) {
-         setError(e);
-         console.log(error);
-       }
-     };
-     deleteResource();
-     window.location.reload(true);
-     setDialog(false);
+    //  const deleteResource = async () => {
+    //    try {
+    //      setError(null);
+    //      await axios.delete(
+    //        '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
+    //      );
+    //    } catch (e) {
+    //      setError(e);
+    //      console.log(error);
+    //    }
+    //  };
+    //  deleteResource();
+    //  window.location.reload(true);
+    //  setDialog(false);
    };
 
   const selectComponent = {
-    first: <ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>,
-    second: <Method resourceId={resourceId}/>, //method list 나태내줌
-    third: <MethodCreate/>
+    first: <StageCreate serviceInfo={serviceInfo}/>
+    
   };
 
   return (
@@ -265,8 +254,8 @@ export default function RecursiveTreeView(props) {
       <AllDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="medium" onClick={Create}>리소스 생성</Button>
-            <Button size="medium" onClick={Delete}>리소스 삭제</Button>
+            <Button size="medium" onClick={Create}>스테이지 생성</Button>
+            <Button size="medium" onClick={Delete}>스테이지 삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
         <ExampleDiv>

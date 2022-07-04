@@ -4,7 +4,7 @@ import Button from '../components/Button';
 import ResourceCreate from './ResourceCreate';
 import MethodCreate from './Method';
 import Method from './MethodCreate';
-import TreeNode from './TreeNode';
+import TreeNodeStage from './TreeNodeStage';
 import axios from 'axios';
 import { ConnectingAirportsOutlined } from '@mui/icons-material';
 import { useLocation } from "react-router";
@@ -15,54 +15,58 @@ const ResourceContainer = styled.div`
     
 `;  
 
-export default function Resource(props) {
+export default function Stage(props) {
 
-  const { state } = useLocation();
-  const [AllResource, SetAllResource] = useState([]);
-  const [RootId, SetRootId] = useState(null);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState();
   const serviceInfo = props.serviceInfo;
+  const [AllResource, SetAllResource] = useState([]);
+  const [error, setError] = useState(null);
+  // const serviceInfo = props.serviceInfo;
 
-  const serviceId = serviceInfo.id;
+  // const serviceId = serviceInfo.id;
   const allresource = {
-    "resourceId":"kqxi35f4xb",
-    "resourcePath":"/",
-    "resourceList":[
+    "type": "resource",
+    "id":"kqxi35f4xb",
+    "path":"/",
+    "child_resource_doc_list":[
         {
-            "resourceId":"t9bbeivrfi",
-            "resourcePath":"/server",
-            "resourceList":[
+            "type": "resource",
+            "id":"t9bbeivrfi",
+            "path":"/server",
+            "child_resource_doc_list":[
                 {
-                    "resourceId":"vavdn0zg5t",
-                    "resourcePath":"/v2",
-                    "resourceList":[
+                    "type": "resource",
+                    "id":"vavdn0zg5t",
+                    "path":"/v2",
+                    "child_resource_doc_list":[
                         {
-                            "resourceId":"c6qoi28e15",
-                            "resourcePath":"/client",
-                            "resourceList":[
+                            "type": "resource",
+                            "id":"c6qoi28e15",
+                            "path":"/client",
+                            "child_resource_doc_list":[
                                 {
-                                    "resourceId":"gw8e4b8pn7",
-                                    "resourcePath":"/api",
-                                    "resourceList":[],
-                                    "methodList":[
+                                    "type": "resource",
+                                    "id":"gw8e4b8pn7",
+                                    "path":"/api",
+                                    "child_resource_doc_list":[],
+                                    "method_doc_list":[
                                         {
-                                            "methodCode":"0001",
-                                            "methodName":"GET"
+                                            "type": "method",
+                                            "id":"0001",
+                                            "method_type":"GET"
                                         }
                                     ]
                                 }
                              ],
-                            "methodList":[]
+                            "method_doc_list":[]
                         }
                     ],
-                    "methodList":[]
+                    "method_doc_list":[]
                 }
             ],
-            "methodList":[]
+            "method_doc_list":[]
         }
     ],
-    "methodList":[]
+    "method_doc_list":[]
 }
     
   
@@ -90,7 +94,7 @@ export default function Resource(props) {
   return (
     <React.Fragment>
       <ResourceContainer>        
-        <TreeNode serviceInfo={serviceInfo} data={allresource}/>
+        <TreeNodeStage serviceInfo={serviceInfo} data={allresource}/>
       </ResourceContainer>
     </React.Fragment>
   );

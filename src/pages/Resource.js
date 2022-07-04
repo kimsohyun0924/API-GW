@@ -19,44 +19,57 @@ export default function Resource(props) {
   const serviceInfo = props.serviceInfo;
   const serviceId = serviceInfo.id;
   const resourceId = serviceInfo.root_resource_id;
-  const [AllResource, SetAllResource] = useState(null);
+  const [AllResource, SetAllResource] = useState({"id": "62becb8438c2e53962ab955c"});
   const [error, setError] = useState(null);
 
   // const [RootId, SetRootId] = useState(null);
   // const [data, setData] = useState(); 
   // const { state } = useLocation();
-  // const allresource = {
-                      
-  //                       "root_resource_doc": {
-  //                           "created_at": "2022-07-01T10:35:02.701081",
-  //                           "updated_at": "2022-07-01T10:35:02.733515",
-  //                           "id": "62be4f4657692a44c3494a46",
-  //                           "path": "/",
-  //                           "doc_type": "RESOURCE",
-  //                           "method_doc_list": null,
-  //                           "child_resource_doc_list": [
-  //                               {
-  //                                   "created_at": "2022-07-01T10:35:02.722386",
-  //                                   "updated_at": "2022-07-01T10:35:02.722386",
-  //                                   "id": "62be4f4657692a44c3494a4a",
-  //                                   "path": "/test",
-  //                                   "doc_type": "RESOURCE",
-  //                                   "method_doc_list": [
-  //                                       {
-  //                                           "created_at": "2022-07-01T10:34:57.006",
-  //                                           "updated_at": "2022-07-01T10:34:57.006",
-  //                                           "id": "62be4f4157692a44c3494a43",
-  //                                           "method_type": "GET",
-  //                                           "doc_type": "METHOD",
-  //                                           "integration_type": "HTTP",
-  //                                       }
-  //                                   ],
-  //                                   "child_resource_doc_list": null
-  //                               }
-  //                           ]
-  //                       },
-  //                       "status": "STAGE_DEPLOYED"
-  //                     }
+  const allresource = {
+    "type": "resource",
+    "id":"kqxi35f4xb",
+    "path":"/",
+    "child_resource_doc_list":[
+        {
+            "type": "resource",
+            "id":"t9bbeivrfi",
+            "path":"/server",
+            "child_resource_doc_list":[
+                {
+                    "type": "resource",
+                    "id":"vavdn0zg5t",
+                    "path":"/v2",
+                    "child_resource_doc_list":[
+                        {
+                            "type": "resource",
+                            "id":"c6qoi28e15",
+                            "path":"/client",
+                            "child_resource_doc_list":[
+                                {
+                                    "type": "resource",
+                                    "id":"gw8e4b8pn7",
+                                    "path":"/api",
+                                    "child_resource_doc_list":[],
+                                    "method_doc_list":[
+                                        {
+                                            "type": "method",
+                                            "id":"0001",
+                                            "method_type":"GET"
+                                        }
+                                    ]
+                                }
+                             ],
+                            "method_doc_list":[]
+                        }
+                    ],
+                    "method_doc_list":[]
+                }
+            ],
+            "method_doc_list":[]
+        }
+    ],
+    "method_doc_list":[]
+}
     
   
 
@@ -80,7 +93,7 @@ export default function Resource(props) {
     getAllResource();
   }, []);
 
-  console.log(AllResource);
+  // console.log(AllResource);
 
 
   return (

@@ -13,6 +13,7 @@ const MethodDiv = styled.div`
 
 export default function Method(props) {
 
+    const resourceId = props.resourceId;
     const [methodCommand, setMethodCommand] = useState(null);
     const [methodCommandValue, setMethodCommandValue] = useState(null);
     const [isOpen, setIsOpen] = useState(true);
@@ -81,7 +82,7 @@ export default function Method(props) {
               },
               "requiredApiKey":
               {
-                  "required":false
+                  "required":true
               }
           },
           {
@@ -129,7 +130,7 @@ export default function Method(props) {
 
 
     const fetchMethods = async () => {
-      //get api request
+      //get methods request
       try {
         setError(null);
   
@@ -141,21 +142,26 @@ export default function Method(props) {
       } catch (e) {
         setError(e);
       }
+      // window.location.reload(true);
     };
+
+    useEffect(() => {
+      fetchMethods();
+    }, []);
 
 
     return (
         <React.Fragment>
           <DropdownMethod dropdownItems={optionsCommand} setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />    
           { isOpen === true && methodCommandValue ?
-              <MethodCreate isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} /> 
+              <MethodCreate resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} /> 
               : <div>
                 { methodList && methodList.map((item, index) => {
                   return (
                     <React.Fragment key={index}>
                       <MethodDiv>
                         {/* <MethodComp/> */}
-                        <MethodComp methodvalue={item.methodName}/>
+                        <MethodComp methodInfo={item}/>
                       </MethodDiv>
                     </React.Fragment>
                   );
