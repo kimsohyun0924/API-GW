@@ -135,7 +135,7 @@ export default function Method(props) {
         setError(null);
   
         const response = await axios.get(
-          '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+          '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
         );
         setMethods(response.data); // 데이터는 response.data)
         // console.log(response.data);
@@ -149,6 +149,7 @@ export default function Method(props) {
       fetchMethods();
     }, []);
 
+    console.log(methods.method_doc_list);
 
     return (
         <React.Fragment>
@@ -156,7 +157,7 @@ export default function Method(props) {
           { isOpen === true && methodCommandValue ?
               <MethodCreate resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} /> 
               : <div>
-                { methodList && methodList.map((item, index) => {
+                { methods.method_doc_list && methods.method_doc_list.map((item, index) => {
                   return (
                     <React.Fragment key={index}>
                       <MethodDiv>

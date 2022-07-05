@@ -141,8 +141,8 @@ export default function MethodComp(props) {
     return (
         <React.Fragment>
             <MethodDiv>
-                <MethodValueDiv methodtype={methodInfo.methodName}>
-                    <MethodValue>{methodInfo.methodName}</MethodValue>
+                <MethodValueDiv methodtype={methodInfo.method_type}>
+                    <MethodValue>{methodInfo.method_type}</MethodValue>
                     <ButtonDiv>
                         <Button onClick={onClick}>보기</Button>
                         <Button onClick={Delete}>삭제</Button>
@@ -151,14 +151,14 @@ export default function MethodComp(props) {
                 <MethodInfoDiv>
                     <MethodInfoType>
                         <MethodInfoName>엔드포인트</MethodInfoName>
-                        <MethodInfoValue>{methodInfo.methodName} {methodInfo.httpEndPoint.url}</MethodInfoValue >
+                        <MethodInfoValue>{methodInfo.method_type} {methodInfo.method_type}</MethodInfoValue >
                     </MethodInfoType>
                     <MethodInfoType>
                         <MethodInfoName>API Key 필요</MethodInfoName>
-                            {
+                            {/* {
                                 methodInfo.requiredApiKey.required? <MethodInfoValue>예</MethodInfoValue> 
                                 : <MethodInfoValue>아니요</MethodInfoValue>
-                            }
+                            } */}
                     </MethodInfoType>
                 </MethodInfoDiv>
             </MethodDiv> 

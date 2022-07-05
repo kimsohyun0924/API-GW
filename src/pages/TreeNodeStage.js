@@ -62,8 +62,13 @@ const PathDiv = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  padding: 20px 20px 0px 20px;
+  /* padding: 20px 20px 0px 20px; */
   /* background:pink; */
+  background: #d9edf7;
+`;
+
+const InvokeurlDiv = styled.div`
+  background: #d9edf7;
 `;
 
 export default function RecursiveTreeView(props) {
@@ -116,6 +121,10 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
+      setLabel(label);
+      setResourceId(nodeId);
+      setContent("second");
+
     };
   
     return (
@@ -205,7 +214,7 @@ export default function RecursiveTreeView(props) {
     // console.log(nodes.doc_type);
     return (
           <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name}>
-            { console.log(nodes.root_resource) }
+            {/* { console.log(nodes.root_resource) } */}
             { renderTree2(nodes.root_resource) }
             {/* {Array.isArray(nodes.root_resource) ? null : null} */}
             {/* {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree(node)) : null}
@@ -218,7 +227,7 @@ export default function RecursiveTreeView(props) {
     // console.log(nodes.doc_type);
     return (
           <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type} doctype={nodes.doc_type}>
-            { console.log(nodes)}
+            {/* { console.log(nodes)} */}
             {/* { renderTree(nodes.root_resource)} */}
             {/* {Array.isArray(nodes.root_resource) ? null : null} */}
             {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree2(node)) : null}
@@ -244,26 +253,29 @@ export default function RecursiveTreeView(props) {
 
   const onDelete = () => {
     //delete api request
-    //  const deleteResource = async () => {
-    //    try {
-    //      setError(null);
-    //      await axios.delete(
-    //        '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
-    //      );
-    //    } catch (e) {
-    //      setError(e);
-    //      console.log(error);
-    //    }
-    //  };
-    //  deleteResource();
-    //  window.location.reload(true);
-    //  setDialog(false);
+     const deleteStage = async () => {
+       try {
+         setError(null);
+         await axios.delete(
+           '/v1.0/g1/paas/Memsq07/apigw/stage/'+resourceId
+         );
+       } catch (e) {
+         setError(e);
+         console.log(error);
+       }
+     };
+     deleteStage();
+     window.location.reload(true);
+     setDialog(false);
    };
 
   const selectComponent = {
-    first: <StageCreate serviceInfo={serviceInfo}/>
+    first: <StageCreate serviceInfo={serviceInfo}/>,
+    second: <InvokeurlDiv>62c3e78420ce5d03740bc983.apigw-test.211-252-81-86.nip.io</InvokeurlDiv>
     
   };
+
+  console.log(resourceId);
 
   return (
     <React.Fragment>

@@ -125,7 +125,7 @@ export default function RecursiveTreeView(props) {
       }
       setLabel(label);
       setResourceId(nodeId);
-      console.log();
+      // console.log();
     };
   
     return (

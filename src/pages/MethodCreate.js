@@ -185,8 +185,8 @@ export default function MethodCreate(props) {
 
   const endpointoptionsCommand = [
     {
-      "name": "HTTP(S)",
-      "value": "HTTP(S)"
+      "name": "HTTP",
+      "value": "HTTP"
     },
     {
       "name": "MOCK",
