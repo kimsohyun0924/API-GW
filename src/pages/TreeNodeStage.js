@@ -62,9 +62,9 @@ const PathDiv = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  /* padding: 20px 20px 0px 20px; */
+  padding: 20px 20px 0px 20px;
   /* background:pink; */
-  background: #d9edf7;
+  /* background: #d9edf7; */
 `;
 
 const InvokeurlDiv = styled.div`

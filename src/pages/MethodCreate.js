@@ -85,14 +85,14 @@ const IconSVG = styled.svg`
 
 const DropdownMenu = styled.ul`
     display: ${(props) => (props.isActive ? `block` : `none`)};
-    width: 51%;
+    width: 51.5%;
     z-index: 10;
     background-color: white;
     position: absolute;
     border: 1px solid #d2d2d2;
     margin-top: 0.2rem;
     overflow-y: auto;
-    padding: 0 0;  
+    padding: 0 0;
 `;
 
 const DropdownItemContainer = styled.li`
@@ -209,9 +209,9 @@ export default function MethodCreate(props) {
     });
   };
   console.log(inputs);
-  // console.log(selectedItem);
-  // console.log(selectedItem2);
-  // console.log(resourceId);
+  console.log(selectedItem);
+  console.log(selectedItem2);
+  console.log(resourceId);
 
 
 
@@ -230,8 +230,8 @@ export default function MethodCreate(props) {
         await axios.post(
           '/v1.0/g1/paas/Memsq07/apigw/method',
           {
-            resourceId: resourceId,
-            integrationType: selectedItem,
+            resource_id: resourceId,
+            integration_type: selectedItem,
             type: selectedItem2
           }
         );
@@ -241,6 +241,7 @@ export default function MethodCreate(props) {
     
     };
     createMethod();
+    window.location.reload(true);
 
     //   setTimeout(()=>{
     //   navigate('/dashboard');     
@@ -392,7 +393,7 @@ export default function MethodCreate(props) {
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
             <Button size="small" onClick={onCancel} noline>취소</Button>
-            <Button size="medium" onClick={onCreate} >생성하기</Button>
+            <Button size="medium" onClick={onCreate} >저장</Button>
           </ThemeProvider>
         </ButtonDiv>
       </AllDiv>

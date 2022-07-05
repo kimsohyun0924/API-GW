@@ -44,6 +44,7 @@ const MethodValueDiv = styled.div`
 `;
 
 const MethodValue = styled.div`
+    width: 70px;
     padding-left: 10px;
     color: white;
     font-size: 20px;
@@ -53,7 +54,7 @@ const MethodValue = styled.div`
 const ButtonDiv = styled.div`
     display: flex;
     height: 100%;
-    margin-left: 130px;
+    margin-left: 110px;
     align-items: center;
 `;
 
