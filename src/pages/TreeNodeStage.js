@@ -203,11 +203,27 @@ export default function RecursiveTreeView(props) {
 
   const renderTree = (nodes) => {
     // console.log(nodes.doc_type);
-    return(
-    <StyledTreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name || nodes.path || nodes.method_type} doctype={nodes.doc_type}>
-      {Array.isArray(nodes.child_resource_doc_list) ? nodes.child_resource_doc_list.map((node) => renderTree(node)) : null}
-      {Array.isArray(nodes.method_doc_list) ? nodes.method_doc_list.map((node) => renderTree(node)) : null}
-    </StyledTreeItem>
+    return (
+          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name}>
+            { console.log(nodes.root_resource) }
+            { renderTree2(nodes.root_resource) }
+            {/* {Array.isArray(nodes.root_resource) ? null : null} */}
+            {/* {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree(node)) : null}
+            {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree(node)) : null} */}
+          </StyledTreeItem> 
+    );
+  };
+
+  const renderTree2 = (nodes) => {
+    // console.log(nodes.doc_type);
+    return (
+          <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type} doctype={nodes.doc_type}>
+            { console.log(nodes)}
+            {/* { renderTree(nodes.root_resource)} */}
+            {/* {Array.isArray(nodes.root_resource) ? null : null} */}
+            {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree2(node)) : null}
+            {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree2(node)) : null}
+          </StyledTreeItem> 
     );
   };
   
@@ -268,7 +284,7 @@ export default function RecursiveTreeView(props) {
               defaultSelected={'root'}
               sx={{ height: 440, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
               >
-                {renderTree(props.data)}
+                {props.data.map((node) => renderTree(node)) }
             </TreeView>
           </MenuDiv> 
           <ResourceInfoDiv>

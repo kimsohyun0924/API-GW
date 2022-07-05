@@ -16,12 +16,12 @@ const ResourceContainer = styled.div`
 `;  
 
 export default function Resource(props) {
+
   const serviceInfo = props.serviceInfo;
   const serviceId = serviceInfo.id;
   const resourceId = serviceInfo.root_resource_id;
   const [AllResource, SetAllResource] = useState({"id": "62becb8438c2e53962ab955c"});
   const [error, setError] = useState(null);
-
   // const [RootId, SetRootId] = useState(null);
   // const [data, setData] = useState(); 
   // const { state } = useLocation();
