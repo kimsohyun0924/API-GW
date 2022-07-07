@@ -86,8 +86,7 @@ export default function Stage(props) {
   }, []);
 
 
-  console.log(AllResource);
-
+  // console.log(AllResource);
 
   return (
     <React.Fragment>

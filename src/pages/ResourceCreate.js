@@ -95,7 +95,6 @@ export default function ResourceCreate(props) {
     window.location.reload(true);
   }
 
-
   const onCreate = () => {
     const Api = {
       resource

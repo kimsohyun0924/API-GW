@@ -147,9 +147,9 @@ export default function Method(props) {
 
     useEffect(() => {
       fetchMethods();
-    }, []);
+    }, [resourceId]);
 
-    console.log(methods.method_doc_list);
+    console.log(methods.method_list);
 
     return (
         <React.Fragment>
@@ -157,7 +157,7 @@ export default function Method(props) {
           { isOpen === true && methodCommandValue ?
               <MethodCreate resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} /> 
               : <div>
-                { methods.method_doc_list && methods.method_doc_list.map((item, index) => {
+                { methods.method_list && methods.method_list.map((item, index) => {
                   return (
                     <React.Fragment key={index}>
                       <MethodDiv>

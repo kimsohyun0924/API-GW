@@ -226,11 +226,25 @@ export default function RecursiveTreeView(props) {
   const renderTree2 = (nodes) => {
     // console.log(nodes.doc_type);
     return (
-          <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type} doctype={nodes.doc_type}>
-            {/* { console.log(nodes)} */}
-            {/* { renderTree(nodes.root_resource)} */}
-            {/* {Array.isArray(nodes.root_resource) ? null : null} */}
-            {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree2(node)) : null}
+          <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_typ}>
+            { Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree2(node)) : null }
+            { Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null }
+          </StyledTreeItem>  
+          // <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type}>
+          //   {/* { console.log(nodes)} */}
+          //   {/* { renderTree(nodes.root_resource)} */}
+          //   {/* {Array.isArray(nodes.root_resource) ? null : null} */}
+          //   {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree2(node)) : null}
+          //   {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree2(node)) : null}
+          // </StyledTreeItem> 
+    );
+  };
+
+
+  const renderTree3 = (nodes) => {
+    // console.log(nodes.doc_type);
+    return (
+          <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type}>
             {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree2(node)) : null}
           </StyledTreeItem> 
     );
@@ -275,7 +289,7 @@ export default function RecursiveTreeView(props) {
     
   };
 
-  console.log(resourceId);
+  // console.log(resourceId);
 
   return (
     <React.Fragment>

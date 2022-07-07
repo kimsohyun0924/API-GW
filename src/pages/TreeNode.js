@@ -8,12 +8,13 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
 import clsx from 'clsx';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import ResourceCreate from './ResourceCreate';
 import Button from '../components/Button';
 import Method from './Method';
 import ModalApiDelete from '../components/ModalApiDelete';
-import MethodCreate from './MethodCreate';
+import ModalFailDelete from '../components/ModalFailDelete';
+import MethodUpdate from './MethodUpdate';
 
 
 const AllDiv = styled.div`
@@ -77,8 +78,9 @@ export default function RecursiveTreeView(props) {
   const [label, setLabel] = useState(null);
   const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
+  const [faildialog, setFailDialog] = useState(false);
   const [error, setError] = useState(null);
-  // const navigate = useNavigate(); 
+  const navigate = useNavigate(); 
 
   const CustomContent = React.forwardRef(function CustomContent(props, ref) {
     // console.log(props.label);
@@ -86,7 +88,6 @@ export default function RecursiveTreeView(props) {
       classes,
       className,
       label,
-      doctype,
       nodeId,
       icon: iconProp,
       expansionIcon,
@@ -119,9 +120,11 @@ export default function RecursiveTreeView(props) {
       handleSelection(event);
       if(label == "GET" || label == "POST" || label == "DELETE") {
         setContent('third');
+        // navigate('/api/operation/methodCreate');
       }
       else {
         setContent('second');
+        // navigate('/api/operation/method');
       }
       setLabel(label);
       setResourceId(nodeId);
@@ -180,8 +183,6 @@ export default function RecursiveTreeView(props) {
      * The tree node label.
      */
     label: PropTypes.node,
-
-    doctype: PropTypes.node,
     /**
      * The id of the node.
      */
@@ -214,9 +215,19 @@ export default function RecursiveTreeView(props) {
   const renderTree = (nodes) => {
     // console.log(nodes.doc_type);
     return(
-    <StyledTreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name || nodes.path || nodes.method_type} doctype={nodes.doc_type}>
-      {Array.isArray(nodes.child_resource_doc_list) ? nodes.child_resource_doc_list.map((node) => renderTree(node)) : null}
-      {Array.isArray(nodes.method_doc_list) ? nodes.method_doc_list.map((node) => renderTree(node)) : null}
+    <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type}>
+      {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree(node)) : null}
+      {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
+    </StyledTreeItem>
+    );
+  };
+  
+
+  const renderTree3 = (nodes) => {
+    // console.log(nodes.doc_type);
+    return(
+    <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type}>
+      {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree(node)) : null}
     </StyledTreeItem>
     );
   };
@@ -225,15 +236,22 @@ export default function RecursiveTreeView(props) {
   
   const Create = e => {
     setContent('first');
+    // navigate('/api/operation/resourceCreate');
   };
 
   const Delete = e => {
-    setDialog(true);
+    if (label != '/') {
+      setDialog(true);
+    }
+    else {
+      setFailDialog(true);
+    }
   };
 
   const onCancel = () => {
     console.log('취소');
     setDialog(false);
+    setFailDialog(false);
   };
 
   const onDelete = () => {
@@ -257,7 +275,7 @@ export default function RecursiveTreeView(props) {
   const selectComponent = {
     first: <ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>,
     second: <Method resourceId={resourceId}/>, //method list 나태내줌
-    third: <MethodCreate/>
+    third: <MethodUpdate resourceId={resourceId} methodCommandValue={label}/>
   };
 
   return (
@@ -285,6 +303,11 @@ export default function RecursiveTreeView(props) {
           <ResourceInfoDiv>
             <PathDiv>{label}</PathDiv>
              {content && <Content>{selectComponent[content]}</Content>}
+              {/* <Routes>
+                <Route path='/resourceCreate' element={<ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/> }></Route> 
+                <Route path='/method' element={ <Method resourceId={resourceId}/> }></Route> 
+                <Route path='/methodCreate' element={ <MethodCreate/> }></Route> 
+              </Routes> */}
           </ResourceInfoDiv> 
         </ExampleDiv>
         <ModalApiDelete
@@ -295,8 +318,16 @@ export default function RecursiveTreeView(props) {
               onCancel={onCancel}
               visible={dialog}
               >
-              {label} 정말로 삭제하시겠습니까?
+              {label}를 정말로 삭제하시겠습니까?
         </ModalApiDelete> 
+        <ModalFailDelete
+              // title="정말로 삭제하시겠습니까?"
+              ConfirmText="확인"
+              onConfirm={onCancel}
+              visible={faildialog}
+              >
+              최상위 리소스는 삭제할 수 없습니다.
+        </ModalFailDelete> 
       </AllDiv>     
     </React.Fragment>
   );

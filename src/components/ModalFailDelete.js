@@ -41,7 +41,7 @@ ModalApiDelete.defaultProps = {
 };
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalApiDelete( { title, children, confirmText, onConfirm, visible } ) {
+export default function ModalApiDelete( { title, children, confirmText, cancelText, onConfirm, onCancel, visible } ) {
   if (!visible) return null;
   return (
       <DarkBackground>
@@ -50,6 +50,7 @@ export default function ModalApiDelete( { title, children, confirmText, onConfir
               <p>{children}</p>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+                    <Button size="small" onClick={onCancel} noline>{cancelText}</Button>
                     <Button size="small" onClick={onConfirm}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>

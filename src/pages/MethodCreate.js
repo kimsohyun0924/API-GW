@@ -142,9 +142,9 @@ export default function MethodCreate(props) {
   const [isActive2, setIsActive2] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [error, setError] = useState(null);
-  const [inputs, setInputs] = useState({
-    urlInfo:''
-  });
+  // const [inputs, setInputs] = useState({
+  //   urlInfo:''
+  // });
   const wrapperRef = useRef(null);
   const wrapperRef2 = useRef(null);
 
@@ -198,17 +198,17 @@ export default function MethodCreate(props) {
     },
   ];
 
-  const { urlInfo } = inputs;
+  // const { urlInfo } = inputs;
 
 
-  const onChange = e => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value
-    });
-  };
-  console.log(inputs);
+  // const onChange = e => {
+  //   const { name, value } = e.target;
+  //   setInputs({
+  //     ...inputs,
+  //     [name]: value
+  //   });
+  // };
+  // console.log(inputs);
   console.log(selectedItem);
   console.log(selectedItem2);
   console.log(resourceId);
@@ -218,8 +218,8 @@ export default function MethodCreate(props) {
   const onCreate = () => {
     const Api = {
       selectedItem,
-      selectedItem2,
-      urlInfo
+      selectedItem2
+      // urlInfo
     };
   
     const createMethod = async () => {
@@ -376,14 +376,14 @@ export default function MethodCreate(props) {
             </DropdownContainer>
             </Item>
           </ItemDiv>
-          <ItemDiv> 
+          {/* <ItemDiv> 
             <Item>
               <ItemName>URL 경로</ItemName>
               <ItemInput>
                 <InputForm name="urlInfo" onChange={onChange} value={urlInfo}/>
               </ItemInput>
           </Item>
-        </ItemDiv> 
+        </ItemDiv>  */}
         <ItemDiv>
           <Item>
               <ItemName>API Key 유형</ItemName>

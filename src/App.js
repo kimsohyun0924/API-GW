@@ -25,7 +25,7 @@ export default function App() {
               <Routes>
                 {/* <Route path='/dbserver'element={<DBServer />}></Route>  */}
                 <Route path='/api/create' element={<ApiCreate />}></Route>               
-                <Route path='/api/operation' element={<ApiOperation />}></Route>
+                <Route path='/api/operation/*' element={<ApiOperation />}></Route>
                 {/* <Route path='/api/operation/:value' element={<Stage />}></Route> */}
                 <Route path='/dashboard' element={<Dashboard />}></Route> 
                 {/* <Route path='/parameter'element={<Parameter />}></Route> */}

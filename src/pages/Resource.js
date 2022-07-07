@@ -20,56 +20,30 @@ export default function Resource(props) {
   const serviceInfo = props.serviceInfo;
   const serviceId = serviceInfo.id;
   const resourceId = serviceInfo.root_resource_id;
-  const [AllResource, SetAllResource] = useState({"id": "62becb8438c2e53962ab955c"});
+  const [AllResource, SetAllResource] = useState({"resource_id": "62becb8438c2e53962ab955c"});
   const [error, setError] = useState(null);
   // const [RootId, SetRootId] = useState(null);
   // const [data, setData] = useState(); 
   // const { state } = useLocation();
   const allresource = {
-    "type": "resource",
-    "id":"kqxi35f4xb",
-    "path":"/",
-    "child_resource_doc_list":[
-        {
-            "type": "resource",
-            "id":"t9bbeivrfi",
-            "path":"/server",
-            "child_resource_doc_list":[
-                {
-                    "type": "resource",
-                    "id":"vavdn0zg5t",
-                    "path":"/v2",
-                    "child_resource_doc_list":[
-                        {
-                            "type": "resource",
-                            "id":"c6qoi28e15",
-                            "path":"/client",
-                            "child_resource_doc_list":[
-                                {
-                                    "type": "resource",
-                                    "id":"gw8e4b8pn7",
-                                    "path":"/api",
-                                    "child_resource_doc_list":[],
-                                    "method_doc_list":[
-                                        {
-                                            "type": "method",
-                                            "id":"0001",
-                                            "method_type":"GET"
-                                        }
-                                    ]
-                                }
-                             ],
-                            "method_doc_list":[]
-                        }
-                    ],
-                    "method_doc_list":[]
-                }
-            ],
-            "method_doc_list":[]
-        }
-    ],
-    "method_doc_list":[]
-}
+                          "resource_id": "62c62f1c0ae918662e916491",
+                          "doc_type": "RESOURCE",
+                          "path": "/",
+                          "method_list": null,
+                          "child_resource_list": [
+                              {
+                                  "resource_id": "62c62f3b0ae918662e916493",
+                                  "doc_type": "RESOURCE",
+                                  "path": "/test1",
+                                  "method_list": null,
+                                  "child_resource_list": null,
+                                  "created_at": "2022-07-07T09:56:27.744",
+                                  "updated_at": "2022-07-07T09:56:27.744"
+                              }
+                          ],
+                          "created_at": "2022-07-07T09:55:56.856",
+                          "updated_at": "2022-07-07T09:56:27.755"
+                      }
     
   
 
