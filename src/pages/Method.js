@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import styled, { css, ThemeProvider } from 'styled-components';
 import DropdownMethod from '../components/DropdownMethod';
 import MethodCreate from './MethodCreate';
 import MethodComp from '../components/MethodComp';
+import MethodUpdate from './MethodUpdate';
 import axios from 'axios';
-import { ImportExport } from '@material-ui/icons';
 
 const MethodDiv = styled.div`
   display: inline-block;
@@ -19,6 +20,7 @@ export default function Method(props) {
     const [isOpen, setIsOpen] = useState(true);
     const [methods, setMethods] = useState([]);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const optionsCommand = [
       {
@@ -149,7 +151,14 @@ export default function Method(props) {
       fetchMethods();
     }, [resourceId]);
 
-    console.log(methods.method_list);
+    // console.log(methods.method_list);
+
+    const onClick = () => {
+      console.log("보기");
+      navigate('/api/operation/method');
+  }
+
+
 
     return (
         <React.Fragment>
@@ -161,8 +170,10 @@ export default function Method(props) {
                   return (
                     <React.Fragment key={index}>
                       <MethodDiv>
-                        {/* <MethodComp/> */}
-                        <MethodComp methodInfo={item}/>
+                        <MethodComp methodInfo={item} onClick={onClick}/>
+                          {/* <Routes>
+                            <Route path="/method" element={<MethodUpdate resourceId={resourceId} methodCommandValue={props.label}/>}></Route>
+                          </Routes> */}
                       </MethodDiv>
                     </React.Fragment>
                   );

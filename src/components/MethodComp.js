@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled, { css } from "styled-components";
 import ModalApiDelete from './ModalApiDelete';
+import MethodUpdate from '../pages/MethodUpdate';
 
 const MethodDiv = styled.div`
     width: 320px;
@@ -116,10 +117,6 @@ export default function MethodComp(props) {
         setDialog(false);
     };
 
-    const onClick = () => {
-
-    }
-
     const onDelete = () => {
         //delete method request
         
@@ -145,7 +142,7 @@ export default function MethodComp(props) {
                 <MethodValueDiv methodtype={methodInfo.method_type}>
                     <MethodValue>{methodInfo.method_type}</MethodValue>
                     <ButtonDiv>
-                        <Button onClick={onClick}>보기</Button>
+                        <Button onClick={props.onClick}>보기</Button>
                         <Button onClick={Delete}>삭제</Button>
                     </ButtonDiv>
                 </MethodValueDiv>

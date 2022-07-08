@@ -8,7 +8,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
 import clsx from 'clsx';
 import Typography from '@mui/material/Typography';
-import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import ResourceCreate from './ResourceCreate';
 import Button from '../components/Button';
 import Method from './Method';
@@ -208,7 +208,9 @@ export default function RecursiveTreeView(props) {
       height: '35px', 
     },
     [`& .${treeItemClasses.label}`]: {
-      fontSize: '18px !important',
+
+      fontSize: '16px !important',
+      borderBottom: '1px solid #e2e2e2'
     },
   }));
 
@@ -216,8 +218,8 @@ export default function RecursiveTreeView(props) {
     // console.log(nodes.doc_type);
     return(
     <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type}>
-      {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree(node)) : null}
       {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
+      {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree(node)) : null}
     </StyledTreeItem>
     );
   };
@@ -274,7 +276,7 @@ export default function RecursiveTreeView(props) {
 
   const selectComponent = {
     first: <ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>,
-    second: <Method resourceId={resourceId}/>, //method list 나태내줌
+    second: <Method resourceId={resourceId} lable={label}/>, //method list 나태내줌
     third: <MethodUpdate resourceId={resourceId} methodCommandValue={label}/>
   };
 
@@ -304,9 +306,10 @@ export default function RecursiveTreeView(props) {
             <PathDiv>{label}</PathDiv>
              {content && <Content>{selectComponent[content]}</Content>}
               {/* <Routes>
-                <Route path='/resourceCreate' element={<ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/> }></Route> 
-                <Route path='/method' element={ <Method resourceId={resourceId}/> }></Route> 
-                <Route path='/methodCreate' element={ <MethodCreate/> }></Route> 
+                <Route path="/" element={<ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>}></Route>
+                <Route path="/resourceCreate" element={<ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>}></Route>
+                <Route path="/resource/:nodeId" element={<Method resourceId={resourceId}/>}></Route>
+                <Route path="/method" element={<MethodUpdate resourceId={resourceId} methodCommandValue={label}/>}></Route>
               </Routes> */}
           </ResourceInfoDiv> 
         </ExampleDiv>
