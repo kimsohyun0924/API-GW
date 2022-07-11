@@ -102,12 +102,11 @@ const MethodInfoValue = styled.div`
 export default function MethodComp(props) {
 
     const methodInfo = props.methodInfo;
-    // const methodId = methodInfo.methodId;
+    const methodId = methodInfo.id;
     const [apikey, setApikey] = useState(null);
     const [dialog, setDialog] = useState(false);
     const [error, setError] = useState(null);
     const [content, setContent] = useState(null);
-
 
     const Delete = () => {
         setDialog(true);
@@ -124,7 +123,7 @@ export default function MethodComp(props) {
         try {
           setError(null);
           await axios.delete(
-            '/v1.0/g1/paas/Memsq07/apigw/method/'
+            '/v1.0/g1/paas/Memsq07/apigw/method/'+methodId
           );
         } catch (e) {
           setError(e);
@@ -149,7 +148,7 @@ export default function MethodComp(props) {
                 <MethodInfoDiv>
                     <MethodInfoType>
                         <MethodInfoName>엔드포인트</MethodInfoName>
-                        <MethodInfoValue>{methodInfo.method_type} {methodInfo.method_type}</MethodInfoValue >
+                        <MethodInfoValue>{methodInfo.method_type} {methodInfo.url_path}</MethodInfoValue >
                     </MethodInfoType>
                     <MethodInfoType>
                         <MethodInfoName>API Key 필요</MethodInfoName>
@@ -157,18 +156,19 @@ export default function MethodComp(props) {
                                 methodInfo.requiredApiKey.required? <MethodInfoValue>예</MethodInfoValue> 
                                 : <MethodInfoValue>아니요</MethodInfoValue>
                             } */}
+                            <MethodInfoValue>{methodId}</MethodInfoValue>
                     </MethodInfoType>
                 </MethodInfoDiv>
             </MethodDiv> 
             <ModalApiDelete
-                // title="정말로 삭제하시겠습니까?"
+                title="메서드 삭제"
                 confirmText="삭제"
                 cancelText="취소"
                 onConfirm={onDelete}
                 onCancel={onCancel}
                 visible={dialog}
                 >
-                정말로 삭제하시겠습니까?
+                {methodInfo.method_type} 메서드를 삭제하시겠습니까?
             </ModalApiDelete>     
         </React.Fragment> 
     );

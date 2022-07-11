@@ -25,24 +25,66 @@ export default function Resource(props) {
   // const [RootId, SetRootId] = useState(null);
   // const [data, setData] = useState(); 
   // const { state } = useLocation();
-  const allresource = {
-                          "resource_id": "62c62f1c0ae918662e916491",
-                          "doc_type": "RESOURCE",
-                          "path": "/",
+  const testData = {
+                          "created_at": "2022-07-09T23:17:45.777",
+                          "updated_at": "2022-07-09T23:19:31.565",
+                          "resource_id": "62c98e09d7176c1f4f28f462",
+                          "resource_path": "/",
                           "method_list": null,
                           "child_resource_list": [
                               {
-                                  "resource_id": "62c62f3b0ae918662e916493",
-                                  "doc_type": "RESOURCE",
-                                  "path": "/test1",
+                                  "created_at": "2022-07-09T23:18:17.373",
+                                  "updated_at": "2022-07-09T23:18:58.301",
+                                  "resource_id": "62c98e29d7176c1f4f28f464",
+                                  "resource_path": "/test1",
+                                  "method_list": [
+                                    {
+                                      "method_id": "62c9966bd7176c1f4f28f47f",
+                                      "method_type": "GET",
+                                      "integration_type": "HTTP",
+                                      "url_path": "/test1",
+                                      "doc_type": "METHOD",
+                                      "created_at": "2022-07-09T23:53:31.316",
+                                      "updated_at": "2022-07-09T23:53:31.389"
+                                    },
+                                    {
+                                      "method_id": "62c99661d7176c1f4f28f47b",
+                                      "method_type": "POST",
+                                      "integration_type": "HTTP",
+                                      "url_path": "/test1",
+                                      "doc_type": "METHOD",
+                                      "created_at": "2022-07-09T23:53:21.368",
+                                      "updated_at": "2022-07-09T23:53:21.422"
+                                    }
+                                  ],
+                                  "child_resource_list": [
+                                      {
+                                          "created_at": "2022-07-09T23:18:29.277",
+                                          "updated_at": "2022-07-09T23:18:29.3",
+                                          "resource_id": "62c98e35d7176c1f4f28f465",
+                                          "resource_path": "/test2",
+                                          "method_list": null,
+                                          "child_resource_list": null
+                                      },
+                                      {
+                                          "created_at": "2022-07-09T23:18:58.258",
+                                          "updated_at": "2022-07-09T23:18:58.283",
+                                          "resource_id": "62c98e52d7176c1f4f28f466",
+                                          "resource_path": "/test3",
+                                          "method_list": null,
+                                          "child_resource_list": null
+                                      }
+                                  ]
+                              },
+                              {
+                                  "created_at": "2022-07-09T23:19:31.531",
+                                  "updated_at": "2022-07-09T23:19:31.547",
+                                  "resource_id": "62c98e73d7176c1f4f28f467",
+                                  "resource_path": "/test4",
                                   "method_list": null,
-                                  "child_resource_list": null,
-                                  "created_at": "2022-07-07T09:56:27.744",
-                                  "updated_at": "2022-07-07T09:56:27.744"
+                                  "child_resource_list": null
                               }
-                          ],
-                          "created_at": "2022-07-07T09:55:56.856",
-                          "updated_at": "2022-07-07T09:56:27.755"
+                          ]
                       }
     
   
@@ -67,6 +109,7 @@ export default function Resource(props) {
     getAllResource();
   }, []);
 
+  // console.log(resourceId);
   // console.log(AllResource);
 
 

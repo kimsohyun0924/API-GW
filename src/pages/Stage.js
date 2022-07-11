@@ -24,7 +24,7 @@ export default function Stage(props) {
   // const serviceInfo = props.serviceInfo;
 
   // const serviceId = serviceInfo.id;
-  const allresource = [
+  const testData = [
     {
       "stage_id": "62c3ce9920ce5d03740bc954",
         "name": "develop",

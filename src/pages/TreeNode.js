@@ -13,7 +13,6 @@ import ResourceCreate from './ResourceCreate';
 import Button from '../components/Button';
 import Method from './Method';
 import ModalApiDelete from '../components/ModalApiDelete';
-import ModalFailDelete from '../components/ModalFailDelete';
 import MethodUpdate from './MethodUpdate';
 
 
@@ -118,7 +117,7 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
-      if(label == "GET" || label == "POST" || label == "DELETE") {
+      if(label === "GET" || label === "POST" || label === "DELETE" || label === "PUT" || label === "ANY" || label === "PATCH" || label === "OPTIONS" || label === "HEAD") {
         setContent('third');
         // navigate('/api/operation/methodCreate');
       }
@@ -187,9 +186,6 @@ export default function RecursiveTreeView(props) {
      * The id of the node.
      */
     nodeId: PropTypes.string.isRequired,
-    /**
-     * The doc_type of the node.
-     */
   };
 
  
@@ -215,18 +211,15 @@ export default function RecursiveTreeView(props) {
   }));
 
   const renderTree = (nodes) => {
-    // console.log(nodes.doc_type);
     return(
     <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type}>
       {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
       {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree(node)) : null}
     </StyledTreeItem>
     );
-  };
-  
+  };  
 
   const renderTree3 = (nodes) => {
-    // console.log(nodes.doc_type);
     return(
     <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type}>
       {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree(node)) : null}
@@ -242,11 +235,13 @@ export default function RecursiveTreeView(props) {
   };
 
   const Delete = e => {
-    if (label != '/') {
-      setDialog(true);
-    }
-    else {
-      setFailDialog(true);
+    if(label !== null) {
+      if (label !== '/') {
+        setDialog(true);
+      }
+      else {
+        setFailDialog(true);
+      }
     }
   };
 
@@ -276,7 +271,7 @@ export default function RecursiveTreeView(props) {
 
   const selectComponent = {
     first: <ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>,
-    second: <Method resourceId={resourceId} lable={label}/>, //method list 나태내줌
+    second: <Method serviceId={serviceInfo.service_id} resourceId={resourceId} lable={label}/>, //method list 나태내줌
     third: <MethodUpdate resourceId={resourceId} methodCommandValue={label}/>
   };
 
@@ -323,14 +318,14 @@ export default function RecursiveTreeView(props) {
               >
               {label}를 정말로 삭제하시겠습니까?
         </ModalApiDelete> 
-        <ModalFailDelete
+        <ModalApiDelete
               // title="정말로 삭제하시겠습니까?"
               ConfirmText="확인"
               onConfirm={onCancel}
               visible={faildialog}
               >
               최상위 리소스는 삭제할 수 없습니다.
-        </ModalFailDelete> 
+        </ModalApiDelete> 
       </AllDiv>     
     </React.Fragment>
   );

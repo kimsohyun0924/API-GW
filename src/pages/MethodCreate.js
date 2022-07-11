@@ -135,7 +135,7 @@ const ButtonDiv = styled.div`
 
 export default function MethodCreate(props) {
 
-  const { resourceId, isOpen, setIsOpen, methodCommandValue, setMethodCommandValue } = props;
+  const { serviceId, resourceId, isOpen, setIsOpen, methodCommandValue, setMethodCommandValue } = props;
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedItem2, setSelectedItem2] = useState(methodCommandValue);
   const [isActive, setIsActive] = useState(false);
@@ -209,10 +209,11 @@ export default function MethodCreate(props) {
     });
   };
   console.log(inputs);
+  
+  console.log(serviceId);
+  console.log(resourceId);
   console.log(selectedItem);
   console.log(selectedItem2);
-  console.log(resourceId);
-
 
 
   const onCreate = () => {
@@ -230,9 +231,11 @@ export default function MethodCreate(props) {
         await axios.post(
           '/v1.0/g1/paas/Memsq07/apigw/method',
           {
+            service_id: serviceId,
             resource_id: resourceId,
+            url_path: urlInfo,
             integration_type: selectedItem,
-            type: selectedItem2
+            method_type: selectedItem2
           }
         );
       } catch (e) {

@@ -14,6 +14,9 @@ const MethodDiv = styled.div`
 
 export default function Method(props) {
 
+
+    const [update, setUpdate] = useState(false);
+    const serviceId = props.serviceId;
     const resourceId = props.resourceId;
     const [methodCommand, setMethodCommand] = useState(null);
     const [methodCommandValue, setMethodCommandValue] = useState(null);
@@ -57,66 +60,83 @@ export default function Method(props) {
       }
     ];
 
-    const methodList = [
-      
-          {
-              "methodDescription":"keypair_list",
-              "resourceId":"9cgz0mfmvx",
-              "methodName":"GET",
-              "apiId":"drc3eot3lf",
-              "endpointCode":"0006",
-              "httpEndPoint":
-              {
-                  "stream":false,
-                  "method":"GET",
-                  "url":"/d1/server/os-keypairs"
-              },
-              "useBodyWhenFormData":false,
-              "tenantId":"5a0da4775c734f48908c5194d5920418",
-              "modifier":"f96161a0-3cd9-11ea-801a-246e963c7ebc",
-              "validation":
-              {
-                  "type":"NONE"
-              },
-              "authentication":
-              {
-                  "platform":"NONE"
-              },
-              "requiredApiKey":
-              {
-                  "required":true
+    const testData = [
+            {
+              "created_at": "2022-07-09T23:53:31.316",
+              "updated_at": "2022-07-09T23:53:31.389",
+              "id": "62c9966bd7176c1f4f28f47f",
+              "url_path": "/test1",
+              "method_type": "GET",
+              "doc_type": "METHOD",
+              "integration_type": "HTTP",
+              "route_definition": {
+                  "created_at": "2022-07-09T23:53:31.316",
+                  "updated_at": "2022-07-09T23:53:31.389",
+                  "id": "62c9966bd7176c1f4f28f47e",
+                  "predicates": [
+                      {
+                          "created_at": "2022-07-09T23:53:31.375",
+                          "updated_at": "2022-07-09T23:53:31.375",
+                          "id": "62c9966bd7176c1f4f28f480",
+                          "name": "Path",
+                          "args": {
+                              "_genkey_0": "/test1"
+                          }
+                      },
+                      {
+                          "created_at": "2022-07-09T23:53:31.382",
+                          "updated_at": "2022-07-09T23:53:31.382",
+                          "id": "62c9966bd7176c1f4f28f481",
+                          "name": "Method",
+                          "args": {
+                              "_genkey_0": "GET"
+                          }
+                      }
+                  ],
+                  "filters": [],
+                  "uri": null,
+                  "metadata": {},
+                  "order": 0
               }
           },
           {
-              "methodDescription":"keypairCreate",
-              "resourceId":"9cgz0mfmvx",
-              "methodName":"POST",
-              "apiId":"drc3eot3lf",
-              "endpointCode":"0006",
-              "httpEndPoint":
-              {
-                  "stream":false,
-                  "method":"POST",
-                  "url":"/d1/server/os-keypairs"
-              },
-              "consumers":"application/json",
-              "produces":"application/json",
-              "useBodyWhenFormData":false,
-              "tenantId":"5a0da4775c734f48908c5194d5920418",
-              "modifier":"f96161a0-3cd9-11ea-801a-246e963c7ebc",
-              "validation":
-              {
-                  "type":"NONE"
-              },
-              "authentication":
-              {
-                  "platform":"NONE"
-              },
-              "requiredApiKey":
-              {
-                  "required":false
-              }
-          }
+            "created_at": "2022-07-09T23:53:21.368",
+            "updated_at": "2022-07-09T23:53:21.422",
+            "id": "62c99661d7176c1f4f28f47b",
+            "url_path": "/test1",
+            "method_type": "POST",
+            "doc_type": "METHOD",
+            "integration_type": "HTTP",
+            "route_definition": {
+                "created_at": "2022-07-09T23:53:21.368",
+                "updated_at": "2022-07-09T23:53:21.422",
+                "id": "62c99661d7176c1f4f28f47a",
+                "predicates": [
+                    {
+                        "created_at": "2022-07-09T23:53:21.409",
+                        "updated_at": "2022-07-09T23:53:21.409",
+                        "id": "62c99661d7176c1f4f28f47c",
+                        "name": "Path",
+                        "args": {
+                            "_genkey_0": "/test1"
+                        }
+                    },
+                    {
+                        "created_at": "2022-07-09T23:53:21.415",
+                        "updated_at": "2022-07-09T23:53:21.415",
+                        "id": "62c99661d7176c1f4f28f47d",
+                        "name": "Method",
+                        "args": {
+                            "_genkey_0": "POST"
+                        }
+                    }
+                ],
+                "filters": [],
+                "uri": null,
+                "metadata": {},
+                "order": 0
+            }
+        }
       ];
   
 
@@ -155,31 +175,35 @@ export default function Method(props) {
 
     const onClick = () => {
       console.log("보기");
-      navigate('/api/operation/method');
+      setUpdate(true);
   }
-
 
 
     return (
         <React.Fragment>
           <DropdownMethod dropdownItems={optionsCommand} setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />    
           { isOpen === true && methodCommandValue ?
-              <MethodCreate resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} /> 
-              : <div>
-                { methods.method_list && methods.method_list.map((item, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <MethodDiv>
-                        <MethodComp methodInfo={item} onClick={onClick}/>
-                          {/* <Routes>
-                            <Route path="/method" element={<MethodUpdate resourceId={resourceId} methodCommandValue={props.label}/>}></Route>
-                          </Routes> */}
-                      </MethodDiv>
-                    </React.Fragment>
-                  );
-                })}
-                </div>     
-          }
+              <MethodCreate serviceId={serviceId} resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} /> 
+              : <React.Fragment>
+                  { update === false ? 
+                    <React.Fragment>
+                      { methods.method_list && methods.method_list.map((item, index) => {
+                          return (
+                            <React.Fragment key={index}>
+                              <MethodDiv>
+                                <MethodComp methodInfo={item} onClick={onClick}/>
+                                  {/* <Routes>
+                                    <Route path="/method" element={<MethodUpdate resourceId={resourceId} methodCommandValue={props.label}/>}></Route>
+                                    </Routes> */}
+                              </MethodDiv>
+                            </React.Fragment>
+                          );
+                      })}
+                    </React.Fragment> 
+                    : <MethodUpdate resourceId={resourceId} methodCommandValue={methodCommandValue}/>
+                  }
+                </React.Fragment>
+            }
         </React.Fragment>
     );
 }

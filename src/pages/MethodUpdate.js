@@ -135,6 +135,9 @@ const ButtonDiv = styled.div`
 
 export default function MethodUpdate(props) {
 
+
+  console.log(props);
+
   const { resourceId, methodCommandValue }= props;
   const [selectedItem, setSelectedItem] = useState();
   const [selectedItem2, setSelectedItem2] = useState(methodCommandValue);
@@ -209,10 +212,10 @@ export default function MethodUpdate(props) {
       [name]: value
     });
   };
-  console.log(inputs);
-  console.log(selectedItem);
-  console.log(selectedItem2);
-  console.log(resourceId);
+  // console.log(inputs);
+  // console.log(selectedItem);
+  // console.log(selectedItem2);
+  // console.log(resourceId);
 
 
   const getMethod = async () => {

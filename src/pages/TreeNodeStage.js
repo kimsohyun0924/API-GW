@@ -90,7 +90,6 @@ export default function RecursiveTreeView(props) {
       classes,
       className,
       label,
-      doctype,
       nodeId,
       icon: iconProp,
       expansionIcon,
@@ -121,8 +120,10 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
+  
       setLabel(label);
       setResourceId(nodeId);
+
       setContent("second");
 
     };
@@ -179,15 +180,10 @@ export default function RecursiveTreeView(props) {
      * The tree node label.
      */
     label: PropTypes.node,
-
-    doctype: PropTypes.node,
     /**
      * The id of the node.
      */
     nodeId: PropTypes.string.isRequired,
-    /**
-     * The doc_type of the node.
-     */
   };
 
  
@@ -211,58 +207,37 @@ export default function RecursiveTreeView(props) {
   }));
 
   const renderTree = (nodes) => {
-    // console.log(nodes.doc_type);
     return (
           <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name}>
-            {/* { console.log(nodes.root_resource) } */}
-            { renderTree2(nodes.root_resource) }
-            {/* {Array.isArray(nodes.root_resource) ? null : null} */}
-            {/* {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree(node)) : null}
-            {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree(node)) : null} */}
+            { renderTree2(nodes.root_resource) }   
           </StyledTreeItem> 
     );
   };
 
   const renderTree2 = (nodes) => {
-    // console.log(nodes.doc_type);
     return (
           <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_typ}>
             { Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree2(node)) : null }
             { Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null }
           </StyledTreeItem>  
-          // <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type}>
-          //   {/* { console.log(nodes)} */}
-          //   {/* { renderTree(nodes.root_resource)} */}
-          //   {/* {Array.isArray(nodes.root_resource) ? null : null} */}
-          //   {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree2(node)) : null}
-          //   {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree2(node)) : null}
-          // </StyledTreeItem> 
     );
   };
 
 
   const renderTree3 = (nodes) => {
-    // console.log(nodes.doc_type);
     return (
           <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type}>
             {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree2(node)) : null}
           </StyledTreeItem> 
     );
   };
-  
 
-  
+  console.log(serviceInfo.service_id);
+  console.log(resourceId);
+
+
   const Create = e => {
     setContent('first');
-  };
-
-  const Delete = e => {
-    // setDialog(true);
-  };
-
-  const onCancel = () => {
-    console.log('취소');
-    setDialog(false);
   };
 
   const onDelete = () => {
@@ -271,7 +246,12 @@ export default function RecursiveTreeView(props) {
        try {
          setError(null);
          await axios.delete(
-           '/v1.0/g1/paas/Memsq07/apigw/stage/'+resourceId
+           '/v1.0/g1/paas/Memsq07/apigw/stage', {
+              data : {
+                service_id: serviceInfo.service_id,
+                stage_id: resourceId
+              }
+            }
          );
        } catch (e) {
          setError(e);
@@ -279,17 +259,26 @@ export default function RecursiveTreeView(props) {
        }
      };
      deleteStage();
-     window.location.reload(true);
      setDialog(false);
+    window.location.reload(true);
    };
+
+   const Delete = e => {
+    if (label != null) {
+      setDialog(true);
+    }
+  };
+
+  const onCancel = () => {
+    console.log('취소');
+    setDialog(false);
+  };
 
   const selectComponent = {
     first: <StageCreate serviceInfo={serviceInfo}/>,
     second: <InvokeurlDiv>62c3e78420ce5d03740bc983.apigw-test.211-252-81-86.nip.io</InvokeurlDiv>
     
   };
-
-  // console.log(resourceId);
 
   return (
     <React.Fragment>
