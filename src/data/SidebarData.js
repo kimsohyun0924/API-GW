@@ -101,29 +101,29 @@ export const SidebarData = [
     ]
   },
   {
-    title: 'DBaas for MySQL',
+    title: 'API Gateway',
     icon: <LNBDBaas />,
     iconClosed: <RiIcons.RiArrowRightSLine />,
     iconOpened: <RiIcons.RiArrowDownSLine />,
 
     subNav: [
       {
-        title: 'Dashboard',
+        title: 'My APIs',
         path: '/dashboard',
         cName: 'sub-nav'
       },
       {
-        title: 'DB Server',
+        title: 'Usage Plans',
         path: '/dbserver',
         cName: 'sub-nav'
       },
       {
-        title: 'Backup',
+        title: 'API Keys',
         path: '/backup',
         cName: 'sub-nav'
       },
       {
-        title: 'Parameter Group',
+        title: 'Dashboard',
         path: '/parametergroup',
         cName: 'sub-nav'
       },

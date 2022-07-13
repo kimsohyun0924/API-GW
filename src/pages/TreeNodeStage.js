@@ -74,6 +74,12 @@ const InvokeurlDiv = styled.div`
   padding: 15px 20px 15px 20px;
 `;
 
+const CopyButtonDiv = styled.button`
+  margin: 0px 0px 0px 10px;
+  cursor: pointer;
+
+`;
+
 export default function RecursiveTreeView(props) {
   // console.log(props);
 
@@ -286,7 +292,7 @@ export default function RecursiveTreeView(props) {
    
       <InvokeurlDiv>{resourceId}.ktcloud.io
         <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
-          <button>주소 복사</button>
+          <CopyButtonDiv>주소 복사</CopyButtonDiv>
         </CopyToClipboard>
       </InvokeurlDiv>
 
