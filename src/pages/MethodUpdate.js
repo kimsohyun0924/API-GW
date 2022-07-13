@@ -47,7 +47,7 @@ const InputForm = styled.input`
     border: solid 1px #b6b6c3;
     background: #ffffff;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 15px;
     color: #333333;
 `;
 
@@ -138,7 +138,7 @@ export default function MethodUpdate(props) {
 
   console.log(props);
 
-  const { resourceId, methodCommandValue }= props;
+  const { resourceId, methodCommandValue, isOpen, setIsOpen}= props;
   const [selectedItem, setSelectedItem] = useState();
   const [selectedItem2, setSelectedItem2] = useState(methodCommandValue);
   const [isActive, setIsActive] = useState(false);
@@ -147,7 +147,7 @@ export default function MethodUpdate(props) {
   const [error, setError] = useState(null);
   const [dataTemp, setDataTemp] = useState(null);
   const [inputs, setInputs] = useState({
-    urlInfo:''
+    url_path: ''
   });
   const wrapperRef = useRef(null);
   const wrapperRef2 = useRef(null);
@@ -202,7 +202,7 @@ export default function MethodUpdate(props) {
     },
   ];
 
-  const { urlInfo } = inputs;
+  const { url_path } = inputs;
 
 
   const onChange = e => {
@@ -228,10 +228,8 @@ export default function MethodUpdate(props) {
       );
       setDataTemp(response.data); // 데이터는 response.data)
       setSelectedItem(response.data.integration_type);
-      // setInputs({
-      //   urlInfo: response.data.
-      // });
-
+      setInputs({
+        url_path : '   '+response.data.url_path });
     } catch (e) {
       setError(e);
     }
@@ -245,7 +243,7 @@ export default function MethodUpdate(props) {
     const Api = {
       selectedItem,
       selectedItem2,
-      urlInfo
+      url_path
     };
   
     const createMethod = async () => {
@@ -405,7 +403,7 @@ export default function MethodUpdate(props) {
             <Item>
               <ItemName>URL 경로</ItemName>
               <ItemInput>
-                <InputForm name="urlInfo" onChange={onChange} value={urlInfo}/>
+                <InputForm name="url_path" onChange={onChange} value={url_path}/>
               </ItemInput>
           </Item>
         </ItemDiv> 

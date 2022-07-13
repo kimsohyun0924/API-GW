@@ -10,6 +10,7 @@ const AllDiv = styled.div`
     width:100%;
     height: 100%;
     /* background:pink; */
+    padding : 20px 20px 0px 20px;
 `;
 
 const ItemDiv = styled.div`
@@ -122,28 +123,30 @@ export default function ResourceCreate(props) {
 
     return (
         <React.Fragment>
-          <ItemDiv>
-            <Item>
-              <ItemName>스테이지 이름</ItemName>
-              <ItemInput>
-                <InputForm name="stage_name" placeholder=" 스테이지 이름" onChange={onChange} />
-              </ItemInput>
-            </Item>
-          </ItemDiv>
-          <ItemDiv>
-            <Item>
-              <ItemName>Endpoint 도메인</ItemName>
-              <ItemInput>
-                <InputForm name="backend_url" placeholder=" Endpoint 도메인" onChange={onChange} />
-              </ItemInput>
-            </Item>
-          </ItemDiv>
-          <ButtonDiv>
-            <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-              <Button size="small" onClick={onCancel} noline>취소</Button>
-              <Button size="medium" onClick={onCreate}>생성하기</Button>
-            </ThemeProvider>
-          </ButtonDiv>   
+          <AllDiv>
+            <ItemDiv>
+              <Item>
+                <ItemName>스테이지 이름</ItemName>
+                <ItemInput>
+                  <InputForm name="stage_name" placeholder=" 스테이지 이름" onChange={onChange} />
+                </ItemInput>
+              </Item>
+            </ItemDiv>
+            <ItemDiv>
+              <Item>
+                <ItemName>Endpoint 도메인</ItemName>
+                <ItemInput>
+                  <InputForm name="backend_url" placeholder=" Endpoint 도메인" onChange={onChange} />
+                </ItemInput>
+              </Item>
+            </ItemDiv>
+            <ButtonDiv>
+              <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+                <Button size="small" onClick={onCancel} noline>취소</Button>
+                <Button size="medium" onClick={onCreate}>생성하기</Button>
+              </ThemeProvider>
+            </ButtonDiv>
+          </AllDiv>   
         </React.Fragment>
     );
 }

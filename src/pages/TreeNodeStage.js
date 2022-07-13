@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import ModalApiDelete from '../components/ModalApiDelete';
 import StageCreate from './StageCreate';
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 
 const AllDiv = styled.div`
@@ -62,13 +63,15 @@ const PathDiv = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  padding: 20px 20px 0px 20px;
+  /* padding: 20px 20px 0px 20px; */
   /* background:pink; */
   /* background: #d9edf7; */
 `;
 
 const InvokeurlDiv = styled.div`
   background: #d9edf7;
+  font-size : 17px;
+  padding: 15px 20px 15px 20px;
 `;
 
 export default function RecursiveTreeView(props) {
@@ -120,12 +123,10 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
-  
+
       setLabel(label);
       setResourceId(nodeId);
-
       setContent("second");
-
     };
   
     return (
@@ -203,6 +204,7 @@ export default function RecursiveTreeView(props) {
     },
     [`& .${treeItemClasses.label}`]: {
       fontSize: '18px !important',
+      borderBottom: '1px solid #e2e2e2'
     },
   }));
 
@@ -232,7 +234,7 @@ export default function RecursiveTreeView(props) {
     );
   };
 
-  console.log(serviceInfo.service_id);
+  // console.log(serviceInfo.service_id);
   console.log(resourceId);
 
 
@@ -246,12 +248,7 @@ export default function RecursiveTreeView(props) {
        try {
          setError(null);
          await axios.delete(
-           '/v1.0/g1/paas/Memsq07/apigw/stage', {
-              data : {
-                service_id: serviceInfo.service_id,
-                stage_id: resourceId
-              }
-            }
+           '/v1.0/g1/paas/Memsq07/apigw/stage'+resourceId
          );
        } catch (e) {
          setError(e);
@@ -274,9 +271,29 @@ export default function RecursiveTreeView(props) {
     setDialog(false);
   };
 
+  const copy = () => {
+    const el = textInput.current
+    el.select()
+    document.execCommand("copy")
+  }   
+
+  const textInput = useRef();
+
   const selectComponent = {
     first: <StageCreate serviceInfo={serviceInfo}/>,
-    second: <InvokeurlDiv>62c3e78420ce5d03740bc983.apigw-test.211-252-81-86.nip.io</InvokeurlDiv>
+    second:
+    
+   
+      <InvokeurlDiv>{resourceId}.ktcloud.io
+        <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
+          <button>주소 복사</button>
+        </CopyToClipboard>
+      </InvokeurlDiv>
+
+    
+   
+  
+    
     
   };
 

@@ -15,9 +15,12 @@ const MethodDiv = styled.div`
 export default function Method(props) {
 
 
+  // console.log(props);
+
     const [update, setUpdate] = useState(false);
     const serviceId = props.serviceId;
     const resourceId = props.resourceId;
+    const [methodId, setMethodId] = useState(null);
     const [methodCommand, setMethodCommand] = useState(null);
     const [methodCommandValue, setMethodCommandValue] = useState(null);
     const [isOpen, setIsOpen] = useState(true);
@@ -184,7 +187,8 @@ export default function Method(props) {
           <DropdownMethod dropdownItems={optionsCommand} setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />    
           { isOpen === true && methodCommandValue ?
               <MethodCreate serviceId={serviceId} resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} /> 
-              : <React.Fragment>
+            
+              :   <React.Fragment>
                   { update === false ? 
                     <React.Fragment>
                       { methods.method_list && methods.method_list.map((item, index) => {
@@ -200,7 +204,7 @@ export default function Method(props) {
                           );
                       })}
                     </React.Fragment> 
-                    : <MethodUpdate resourceId={resourceId} methodCommandValue={methodCommandValue}/>
+                    : <MethodUpdate methodId={methodId} methodCommandValue={methodCommandValue} />
                   }
                 </React.Fragment>
             }

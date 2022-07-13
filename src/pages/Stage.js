@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
-import Button from '../components/Button';
-import ResourceCreate from './ResourceCreate';
-import MethodCreate from './Method';
-import Method from './MethodCreate';
 import TreeNodeStage from './TreeNodeStage';
 import axios from 'axios';
 import { ConnectingAirportsOutlined } from '@mui/icons-material';
