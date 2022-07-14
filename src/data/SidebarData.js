@@ -109,12 +109,12 @@ export const SidebarData = [
     subNav: [
       {
         title: 'My APIs',
-        path: '/dashboard',
+        path: '/myapis',
         cName: 'sub-nav'
       },
       {
         title: 'Usage Plans',
-        path: '/dbserver',
+        path: '/usageplans',
         cName: 'sub-nav'
       },
       {

@@ -5,6 +5,7 @@ import { PageTitle } from '../style/PageStyle';
 import styled, { css, ThemeProvider } from "styled-components";
 import Button from '../components/Button';
 import axios from 'axios';
+import ToggleSwitch from '../components/ToggleSwitch';
 
 const ItemDiv = styled.div`
   display: block;
@@ -108,6 +109,8 @@ export default function ApiCreate() {
     ApiExplain: ''
   });
   const { ApiName, ApiExplain } = inputs;
+  const [toggle, setToggle] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
 
   const onCancel = (e) => {
     console.log("onCancel");    
@@ -153,39 +156,59 @@ export default function ApiCreate() {
     }, 1000);
   };
 
+
+  const clickedToggle = () => {
+    setToggle((prev) => !prev);
+    console.log(toggle);
+  };
+
+  const clickedToggle2 = () => {
+    setToggle2((prev) => !prev);
+    console.log(toggle2);
+  };
+
   return (
     <React.Fragment>
         <MainContainer>
-            <PageTitle>API 생성</PageTitle>
+            <PageTitle>Usage Plan 생성</PageTitle>
                 <ItemDiv>
                     <Item>
-                        <ItemName>API 생성</ItemName>
+                        <ItemName>이름</ItemName>
                         <ItemInput>
-                        <div>
-                            <input type='radio'></input>
-                            <ItemText>새로운 API</ItemText> 
-                            <input type='radio' ></input>
-                            <ItemText>API 복사</ItemText>
-                            <input type='radio' ></input>
-                            <ItemText>Swagger에서 가져오기</ItemText>
-                        </div>
-                        </ItemInput>
-                        <ItemNote></ItemNote>
-                    </Item>
-                    <Item>
-                        <ItemName>API 이름</ItemName>
-                        <ItemInput>
-                            <InputForm name="ApiName" placeholder=" API 이름을 입력하세요" onChange={onChange} value={ApiName}/>
+                          <InputForm name="ApiName" placeholder=" Usage Plan의 이름을 입력하세요" onChange={onChange} value={ApiName}/>
                         </ItemInput>
                         <ItemNote></ItemNote>
                     </Item>
                     <Item2>
-                        <ItemName>API 설명</ItemName>
+                        <ItemName>설명</ItemName>
                         <ItemInput2>
-                            <InputForm2 name="ApiExplain" placeholder=" API 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
+                            <InputForm2 name="ApiExplain" placeholder=" Usage Plan의 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
                         </ItemInput2>
                         <ItemNote></ItemNote>
                     </Item2>
+                    <Item>
+                        <ItemName>요청 할당량</ItemName>
+                        <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+                        <ItemNote></ItemNote>
+                        { toggle === true ? 
+                            <React.Fragment>
+                              <input/> 건/일
+                              <input/> 건/월
+                            </React.Fragment>
+                          : null
+                        }
+                    </Item>
+                    <Item>
+                        <ItemName>요청 처리량</ItemName>
+                        <ToggleSwitch clickedToggle={clickedToggle2} toggle={toggle2}/>
+                        <ItemNote></ItemNote>
+                        { toggle2 === true ? 
+                            <React.Fragment>
+                              <input/> 건/초
+                            </React.Fragment>
+                          : null
+                        }
+                    </Item>
                 </ItemDiv>
                 <ButtonDiv>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

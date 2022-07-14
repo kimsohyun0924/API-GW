@@ -7,7 +7,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
 import clsx from 'clsx';
-import Typography from '@mui/material/Typography';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import ResourceCreate from './ResourceCreate';
 import Button from '../components/Button';

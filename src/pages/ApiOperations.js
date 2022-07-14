@@ -1,16 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import MainContainer from '../layouts/MainContainer';
-import { PageTitle, Content, HR } from '../style/PageStyle';
 import Box from '@mui/material/Box';
-import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Resource from './Resource';
 import Stage from './Stage';
-import { style } from '@mui/system';
 import { useLocation } from "react-router";
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';

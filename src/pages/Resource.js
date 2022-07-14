@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import TreeNode from './TreeNode';
 import axios from 'axios';
-import { ConnectingAirportsOutlined } from '@mui/icons-material';
 import { useLocation } from "react-router";
 
 

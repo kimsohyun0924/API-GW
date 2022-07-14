@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
-import styled, { css, ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import DropdownMethod from '../components/DropdownMethod';
 import MethodCreate from './MethodCreate';
 import MethodComp from '../components/MethodComp';

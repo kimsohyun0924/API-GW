@@ -55,8 +55,8 @@ const colorStyles = css`
 
 const sizes = {
   large: {
-    minWidth: '200px',
-    height: '3rem',
+    minWidth: '135px',
+    height: '2.25rem',
     fontSize: '14px'
   },
   medium: {

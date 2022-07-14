@@ -387,7 +387,7 @@ export default function MethodCreate(props) {
         </ItemDiv> 
         <ItemDiv>
           <Item>
-              <ItemName>API Key 유형</ItemName>
+              <ItemName>API Key 활성화</ItemName>
               <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
           </Item>
         </ItemDiv>

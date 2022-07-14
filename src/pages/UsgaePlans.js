@@ -21,13 +21,16 @@ const TableDiv = styled.div`
 `;
 
 const TableHeader = [
-  "API 이름",
-  "API 설명",
-  "API ID",
+  "Usage Plan 이름",
+  "설명",
+  "ID",
+  "요청 처리량",
+  "일 요청 처리 한도",
+  "월 요청 처리 한도",
   "생성일시"
 ];
 
-export default function Dashboard() {
+export default function UsagePlans() {
 
   const [bChecked, setChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]); //개별 체크된 아이템을 저장함
@@ -62,7 +65,7 @@ export default function Dashboard() {
   // console.log(checkedItems);
 
   const Create = () => {
-    navigate('/api/create');
+    navigate('/usageplans/create');
   };
 
   const Delete = () => {
@@ -144,17 +147,17 @@ export default function Dashboard() {
   return (
     <React.Fragment>
       <MainContainer>
-        <PageTitle>My APIs</PageTitle>
-        <PageSubTitle>API Gateway를 관리합니다.</PageSubTitle>
+        <PageTitle>Usage Plans</PageTitle>
+        <PageSubTitle>API의 사용량을 계획합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="medium" action={Create}>API 생성</Button>
+            <Button size="large" action={Create}>Usage Plan 생성</Button>
             <Button size="small" outline onClick={Update}>수정</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableComp columns={TableHeader} data={DataTemp} checkHandler={checkHandler}/>
+          <TableComp columns={TableHeader} data={testData} checkHandler={checkHandler}/>
         </TableDiv>
       </MainContainer>
       <ModalApiDelete

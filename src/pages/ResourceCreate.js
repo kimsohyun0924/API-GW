@@ -121,18 +121,18 @@ export default function ResourceCreate(props) {
 
     const clickedToggle = () => {
       setToggle((prev) => !prev);
-      if(toggle == true) {
-        setContent("true");
-      }
-      else {
-        setContent("false");
-      }
-      console.log(content);
+      // if(toggle == true) {
+      //   setContent("true");
+      // }
+      // else {
+      //   setContent("false");
+      // }
+      // console.log(content);
     };
 
-    const selectComponent = {
-      false : <CORS/>
-    };
+    // const selectComponent = {
+    //   false : <CORS/>
+    // };
 
 
     return (
@@ -152,7 +152,12 @@ export default function ResourceCreate(props) {
                   <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
               </Item>
             </ItemDiv>
-            {content && <Content>{selectComponent[content]}</Content>}
+            {
+              toggle === true ? 
+              <CORS/>
+              : null
+            }
+            {/* {content && <Content>{selectComponent[content]}</Content>} */}
             <ButtonDiv>
               <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                 <Button size="small" onClick={onCancel} noline>취소</Button>
