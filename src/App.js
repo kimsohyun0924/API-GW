@@ -11,6 +11,7 @@ import Resource from './pages/Resource';
 import Stage from './pages/Stage';
 import UsagePlans from './pages/UsgaePlans';
 import UsagePlansCreate from './pages/UsagePlansCreate';
+import UsagePlansStage from './pages/UsagePlansStage';
 
 
 
@@ -30,6 +31,7 @@ export default function App() {
                 <Route path='/api/operation/*' element={<ApiOperation />}></Route>
                 <Route path='/usageplans' element={<UsagePlans />}></Route>
                 <Route path='/usageplans/create' element={<UsagePlansCreate />}></Route>
+                <Route path='/usageplans/stage' element={<UsagePlansStage />}></Route>
 
                 {/* <Route path='/api/operation/:value' element={<Stage />}></Route> */}
                 {/* <Route path='/parameter'element={<Parameter />}></Route> */}

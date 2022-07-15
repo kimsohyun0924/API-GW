@@ -5,7 +5,7 @@ import MainContainer from '../layouts/MainContainer';
 import { PageTitle, PageSubTitle } from '../style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
 import Button from '../components/Button';
-import TableComp from '../components/TableComp';
+import TableCompUsagePlans from '../components/TableCompUsagePlans';
 import ModalApiDelete from '../components/ModalApiDelete';
 import ModalApiUpdate from '../components/ModalApiUpdate';
 
@@ -54,16 +54,6 @@ export default function UsagePlans() {
   const [value, setValue] = useState(null);
   const navigate = useNavigate();
 
-
-  // const ApiOperation = (e) => {
-  //   const evalue = e.target.getAttribute('value');
-  //   console.log(e);
-  //   // getElementById( 'xyz' ).getAttribute( 'title' );
-  //   navigate('/api/operation', { state: e.target.value });
-  // };
-
-  // console.log(checkedItems);
-
   const Create = () => {
     navigate('/usageplans/create');
   };
@@ -71,6 +61,13 @@ export default function UsagePlans() {
   const Delete = () => {
     if(!(checkedItems.length === 0)) {
       setDialog(true);
+    }
+  };
+
+
+  const Stage = () => {
+    if(!(checkedItems.length === 0)) {
+      navigate('/usageplans/stage');
     }
   };
 
@@ -154,10 +151,11 @@ export default function UsagePlans() {
             <Button size="large" action={Create}>Usage Plan 생성</Button>
             <Button size="small" outline onClick={Update}>수정</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
+            <Button size="small" outline onClick={Stage}>Stage</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableComp columns={TableHeader} data={testData} checkHandler={checkHandler}/>
+          <TableCompUsagePlans columns={TableHeader} data={testData} checkHandler={checkHandler}/>
         </TableDiv>
       </MainContainer>
       <ModalApiDelete

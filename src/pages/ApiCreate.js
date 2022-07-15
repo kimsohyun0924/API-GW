@@ -149,7 +149,7 @@ export default function ApiCreate() {
     createApi();
 
       setTimeout(()=>{
-      navigate('/dashboard');     
+      navigate('/myapis');     
     }, 1000);
   };
 

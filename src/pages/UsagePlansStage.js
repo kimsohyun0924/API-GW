@@ -5,10 +5,9 @@ import MainContainer from '../layouts/MainContainer';
 import { PageTitle, PageSubTitle } from '../style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
 import Button from '../components/Button';
-import TableComp from '../components/TableComp';
+import TableCompUsagePlan from '../components/TableCompUsageStage';
 import ModalApiDelete from '../components/ModalApiDelete';
 import ModalApiUpdate from '../components/ModalApiUpdate';
-
 
 const MenuDiv = styled.div`
 /* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */
@@ -22,13 +21,11 @@ const TableDiv = styled.div`
 
 const TableHeader = [
   "API 이름",
-  "API 설명",
-  "API ID",
-  "생성일시"
+  "Stage 이름"
 ];
 
-export default function MyApis() {
-
+export default function ApiCreate() {
+  
   const [bChecked, setChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]); //개별 체크된 아이템을 저장함
   const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
@@ -37,43 +34,26 @@ export default function MyApis() {
   const [DataTemp, setDataTemp] = useState([]);
   const testData = [
     {
-        "service_id": "62c98e09d7176c1f4f28f463",
-        "mem_sq": "Memsq07",
-        "name": "Sso",
-        "description": "Sso",
-        "root_resource_id": "62c98e09d7176c1f4f28f462",
-        "created_at": "2022-07-09T23:17:45.777",
-        "updated_at": "2022-07-09T23:17:45.777"
-    }
+      "api_name": "api_test1",
+      "stage_name": "stage_test1",
+    },
+    {
+      "api_name": "api_test2",
+      "stage_name": "stage_test2",
+    },
 ]
 
   const [error, setError] = useState(null);
   const [value, setValue] = useState(null);
   const navigate = useNavigate();
 
-
-  // const ApiOperation = (e) => {
-  //   const evalue = e.target.getAttribute('value');
-  //   console.log(e);
-  //   // getElementById( 'xyz' ).getAttribute( 'title' );
-  //   navigate('/api/operation', { state: e.target.value });
-  // };
-
-  // console.log(checkedItems);
-
   const Create = () => {
-    navigate('/api/create');
+    navigate('/usageplans/create');
   };
 
   const Delete = () => {
     if(!(checkedItems.length === 0)) {
       setDialog(true);
-    }
-  };
-
-  const Update = () => {
-    if(!(checkedItems.length === 0)) {
-      setUpdateDialog(true);
     }
   };
 
@@ -131,32 +111,39 @@ export default function MyApis() {
       }
     };
     deleteApi();
-    // window.location.reload(true);
+    window.location.reload(true);
     setDialog(false);
   };
 
 
   useEffect(() => {
     fetchApis();
-  }, [DataTemp]);
-
+  }, []);
 
   return (
     <React.Fragment>
       <MainContainer>
-        <PageTitle>My APIs</PageTitle>
-        <PageSubTitle>API Gateway를 관리합니다.</PageSubTitle>
+        <PageTitle>Usage Plans - Stage 연결 목록</PageTitle>
+        <PageSubTitle>API의 사용량을 계획합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="medium" action={Create}>API 생성</Button>
-            <Button size="small" outline onClick={Update}>수정</Button>
+            <Button size="medium" action={Create}>Stage 연결</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableComp columns={TableHeader} data={DataTemp} checkHandler={checkHandler}/>
+          <TableCompUsagePlan columns={TableHeader} data={testData} checkHandler={checkHandler}/>
         </TableDiv>
       </MainContainer>
+      <ModalApiUpdate
+            title="API 수정"
+            confirmText="수정"
+            cancelText="취소"
+            setUpdateDialog={setUpdateDialog}
+            onCancel={onCancel}
+            checkedItems={checkedItems}
+            visible={updatedialog}>
+      </ModalApiUpdate>
       <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제"
@@ -167,15 +154,8 @@ export default function MyApis() {
             >
             {checkedItemsName}  정말로 삭제하시겠습니까?
       </ModalApiDelete>
-      <ModalApiUpdate
-            title="API 수정"
-            confirmText="수정"
-            cancelText="취소"
-            setUpdateDialog={setUpdateDialog}
-            onCancel={onCancel}
-            checkedItems={checkedItems}
-            visible={updatedialog}>
-      </ModalApiUpdate>
     </React.Fragment>
   );
 }
+
+
