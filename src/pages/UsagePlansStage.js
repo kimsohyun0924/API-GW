@@ -5,7 +5,7 @@ import MainContainer from '../layouts/MainContainer';
 import { PageTitle, PageSubTitle } from '../style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
 import Button from '../components/Button';
-import TableCompUsagePlan from '../components/TableCompUsageStage';
+import TableCompUsageStage from '../components/TableCompUsageStage';
 import ModalApiDelete from '../components/ModalApiDelete';
 import ModalApiUpdate from '../components/ModalApiUpdate';
 
@@ -132,7 +132,7 @@ export default function ApiCreate() {
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableCompUsagePlan columns={TableHeader} data={testData} checkHandler={checkHandler}/>
+          <TableCompUsageStage columns={TableHeader} data={testData} checkHandler={checkHandler}/>
         </TableDiv>
       </MainContainer>
       <ModalApiUpdate

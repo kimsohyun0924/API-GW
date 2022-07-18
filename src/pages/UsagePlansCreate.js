@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import MainContainer from '../layouts/MainContainer';
 import { useNavigate } from 'react-router';
 import { PageTitle } from '../style/PageStyle';
@@ -6,11 +6,13 @@ import styled, { css, ThemeProvider } from "styled-components";
 import Button from '../components/Button';
 import axios from 'axios';
 import ToggleSwitch from '../components/ToggleSwitch';
+import TableCompUsageStage from '../components/TableCompUsageStage';
 
 const ItemDiv = styled.div`
   display: block;
   color: #555555;
   padding: 10px 60px 10px 60px;
+  
 
 `;
 
@@ -88,17 +90,47 @@ const InputForm2 = styled.textarea`
   font-family: none;  
 `;
 
-const ItemText = styled.span`
-  padding-right: 1rem;
-  padding-left: 0.3rem;
-`;
-
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
   /* align-items: center; */
   margin: 5px 60px 5px 60px;
 `;
+
+const VisiablDiv = styled.div`
+
+  padding: 10px 60px 10px 60px;
+  background: pink;
+`;
+
+const VisiablText = styled.span`
+    
+    border-bottom: 1px solid black;
+    font-size: 20px;
+    cursor: pointer;
+
+    /* ${props => props.state &&
+    css`
+      color: red;
+    `
+  } */
+`;
+
+const TableHeader = [
+  "API 이름",
+  "Stage 이름"
+];
+
+const testData = [
+  {
+    "api_name": "api_test1",
+    "stage_name": "stage_test1",
+  },
+  {
+    "api_name": "api_test2",
+    "stage_name": "stage_test2",
+  },
+]
 
 export default function ApiCreate() {
   
@@ -111,6 +143,7 @@ export default function ApiCreate() {
   const { ApiName, ApiExplain } = inputs;
   const [toggle, setToggle] = useState(false);
   const [toggle2, setToggle2] = useState(false);
+  const [stageConnect, setStageConnect] = useState(false);
 
   const onCancel = (e) => {
     console.log("onCancel");    
@@ -167,6 +200,12 @@ export default function ApiCreate() {
     console.log(toggle2);
   };
 
+  const onClick = () => {
+    // console.log(isActive2)
+    setStageConnect((prev) => !prev);
+  }
+    
+
   return (
     <React.Fragment>
         <MainContainer>
@@ -210,6 +249,18 @@ export default function ApiCreate() {
                         }
                     </Item>
                 </ItemDiv>
+                <VisiablDiv>
+                    <VisiablText onClick={onClick}>Stage 연결</VisiablText>
+                    { stageConnect === true ?
+                    <div>
+                      <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+                        <Button size="medium">Stage 연결 추가</Button>
+                        <TableCompUsageStage columns={TableHeader} data={testData}/>
+                      </ThemeProvider>
+                    </div>
+                    
+                  : null}
+                </VisiablDiv>
                 <ButtonDiv>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <Button size="small" onClick={onCancel} noline>취소</Button>
