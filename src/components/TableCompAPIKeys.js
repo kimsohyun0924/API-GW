@@ -8,7 +8,7 @@ const TableWrapper = styled.div`
   overflow-x:auto;
   font-size: 15px;
   color: #333333;
-  height: calc(100vh - 362px);
+  /* height: calc(100vh - 362px); */
 `;
 
 const Table = styled.table`
@@ -73,7 +73,7 @@ const Hov = styled.td`
   } */
 `;
 
-export default function TableCompUsagePlans({ columns, data, checkHandler }) {
+export default function TableCompAPIKeys({ columns, data, checkHandler }) {
 
   const navigate = useNavigate();
 
@@ -100,16 +100,11 @@ export default function TableCompUsagePlans({ columns, data, checkHandler }) {
               return (
                 <React.Fragment key={index}>
                   <TR key={index}>
-                  <TD width='1%'>
-                      <input type="checkbox" onChange={checkHandler} apiid={item.usagePlan_id} apiname={item.usagePlan_name}/>
+                    <TD width='1%'>
+                      <input type="checkbox" onChange={checkHandler}/>
                     </TD>
-                    <Hov align='left' width='10%' >{item.usagePlan_name}</Hov>
-                    <TD width='10%'>{item.usagePlan_description}</TD>
-                    <TD width='15%'>{item.usagePlan_id}</TD>
-                    <TD width='10%'>{item.rateRps}</TD>
-                    <TD width='10%'>{item.dayQuotaRequest}</TD>
-                    <TD width='10%'>{item.monthQuotaRequest}</TD>
-                    <TD width='15%'>{item.created_at}</TD>
+                    <TD width='20%'>{item.api_name}</TD>
+                    <TD width='20%'>{item.stage_name}</TD>
                   </TR> 
                 </React.Fragment>
               );

@@ -132,7 +132,7 @@ const testData = [
   },
 ]
 
-export default function UsagePlansCreate() {
+export default function UsagePlansEdit() {
   
   const navigate = useNavigate();
   const [error, setError] = useState(null);
@@ -165,7 +165,7 @@ export default function UsagePlansCreate() {
       ApiExplain
     };
   
-    const createApi = async () => {
+    const updateApi = async () => {
       try {
         
         setError(null);
@@ -182,10 +182,10 @@ export default function UsagePlansCreate() {
       }
     
     };
-    createApi();
+    updateApi();
 
       setTimeout(()=>{
-      navigate('/dashboard');     
+      navigate('/usageplans');     
     }, 1000);
   };
 
@@ -264,7 +264,7 @@ export default function UsagePlansCreate() {
                 <ButtonDiv>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <Button size="small" onClick={onCancel} noline>취소</Button>
-                    <Button size="medium" onClick={onCreate}>생성하기</Button>
+                    <Button size="medium" onClick={onCreate}>저장</Button>
                   </ThemeProvider>
                 </ButtonDiv>
         </MainContainer>

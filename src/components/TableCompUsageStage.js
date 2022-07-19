@@ -8,7 +8,7 @@ const TableWrapper = styled.div`
   overflow-x:auto;
   font-size: 15px;
   color: #333333;
-  height: calc(100vh - 362px);
+  /* height: calc(100vh - 362px); */
 `;
 
 const Table = styled.table`
@@ -73,7 +73,7 @@ const Hov = styled.td`
   } */
 `;
 
-export default function TableComp({ columns, data, checkHandler }) {
+export default function TableCompUsageStage({ columns, data, checkHandler }) {
 
   const navigate = useNavigate();
 

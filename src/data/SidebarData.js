@@ -119,7 +119,7 @@ export const SidebarData = [
       },
       {
         title: 'API Keys',
-        path: '/backup',
+        path: '/apikeys',
         cName: 'sub-nav'
       },
       {

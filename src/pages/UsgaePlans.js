@@ -35,35 +35,51 @@ export default function UsagePlans() {
   const [bChecked, setChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]); //개별 체크된 아이템을 저장함
   const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
-  const [dialog, setDialog] = useState(false);
-  const [updatedialog, setUpdateDialog] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  // const [updateDialog, setUpdateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
-  const testData = [
-    {
-        "service_id": "62c98e09d7176c1f4f28f463",
-        "mem_sq": "Memsq07",
-        "name": "Sso",
-        "description": "Sso",
-        "root_resource_id": "62c98e09d7176c1f4f28f462",
-        "created_at": "2022-07-09T23:17:45.777",
-        "updated_at": "2022-07-09T23:17:45.777"
-    }
-]
-
   const [error, setError] = useState(null);
   const [value, setValue] = useState(null);
   const navigate = useNavigate();
+  const testData = [
+    {
+        "usagePlan_id": "62c98e09d7176c1f4f28f463",
+        "mem_sq": "Memsq07",
+        "usagePlan_name": "usagePlan_01",
+        "usagePlan_description": "usagePlan_01",
+        "rateRps" : 10, //초당 요청 처리량
+        "dayQuotaRequest" : 1000, // 일 요청 처리 한도
+        "monthQuotaRequest" : 30000, //월 요청 처리 한도
+        "created_at": "2022-07-09T23:17:45.777",
+    },
+    {
+        "usagePlan_id": "62c98e09d7176c1f4f28f463",
+        "mem_sq": "Memsq07",
+        "usagePlan_name" : "usagePlan_02",
+        "usagePlan_description" : "usagePlan_02",
+        "rateRps" : 1, //초당 요청 처리량
+        "dayQuotaRequest" : 500, // 일 요청 처리 한도
+        "monthQuotaRequest" : 15000, //월 요청 처리 한도
+        "created_at": "2022-07-09T23:17:45.777",
+    }
+]
 
+  
   const Create = () => {
     navigate('/usageplans/create');
   };
 
-  const Delete = () => {
+  const Update = () => {
     if(!(checkedItems.length === 0)) {
-      setDialog(true);
+      navigate('/usageplans/edit');
     }
   };
 
+  const Delete = () => {
+    if(!(checkedItems.length === 0)) {
+      setDeleteDialog(true);
+    }
+  };
 
   const Stage = () => {
     if(!(checkedItems.length === 0)) {
@@ -71,16 +87,10 @@ export default function UsagePlans() {
     }
   };
 
-  const Update = () => {
-    if(!(checkedItems.length === 0)) {
-      setUpdateDialog(true);
-    }
-  };
-
   const onCancel = () => {
     console.log('취소');
-    setDialog(false);
-    setUpdateDialog(false);
+    setDeleteDialog(false);
+    // setUpdateDialog(false);
   };
 
  
@@ -90,13 +100,13 @@ export default function UsagePlans() {
     const apiname = e.target.getAttribute('apiname');
 
     if (e.target.checked) {
-      checkedItems.push(apiid);
-      checkedItemsName.push(apiname)
-      setCheckedItems(checkedItems);
-      setCheckedItemsName(checkedItemsName);
+        checkedItems.push(apiid);
+        checkedItemsName.push(apiname)
+        setCheckedItems(checkedItems);
+        setCheckedItemsName(checkedItemsName);
     } else if (!e.target.checked) {
-      setCheckedItems(checkedItems.filter(checkedItem => checkedItem !== apiid));
-      setCheckedItemsName(checkedItemsName.filter(checkedItemName => checkedItemName !== apiname));
+        setCheckedItems(checkedItems.filter(checkedItem => checkedItem !== apiid));
+        setCheckedItemsName(checkedItemsName.filter(checkedItemName => checkedItemName !== apiname));
     }
   };
 
@@ -132,7 +142,7 @@ export default function UsagePlans() {
     };
     deleteApi();
     window.location.reload(true);
-    setDialog(false);
+    setDeleteDialog(false);
   };
 
 
@@ -164,19 +174,19 @@ export default function UsagePlans() {
             cancelText="취소"
             onConfirm={onDelete}
             onCancel={onCancel}
-            visible={dialog}
+            visible={deleteDialog}
             >
             {checkedItemsName}  정말로 삭제하시겠습니까?
       </ModalApiDelete>
-      <ModalApiUpdate
+      {/* <ModalApiUpdate
             title="API 수정"
             confirmText="수정"
             cancelText="취소"
             setUpdateDialog={setUpdateDialog}
             onCancel={onCancel}
             checkedItems={checkedItems}
-            visible={updatedialog}>
-      </ModalApiUpdate>
+            visible={updateDialog}>
+      </ModalApiUpdate> */}
     </React.Fragment>
   );
 }
