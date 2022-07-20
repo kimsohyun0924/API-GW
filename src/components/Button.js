@@ -68,6 +68,11 @@ const sizes = {
     minWidth: '60px',
     height: '2.25rem',
     fontSize: '14px'
+  },
+  supersmall: {
+    minWidth: '45px',
+    height: '25px',
+    fontSize: '14px'
   }
 };
 

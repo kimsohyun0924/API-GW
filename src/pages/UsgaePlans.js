@@ -39,7 +39,6 @@ export default function UsagePlans() {
   // const [updateDialog, setUpdateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
-  const [value, setValue] = useState(null);
   const navigate = useNavigate();
   const testData = [
     {
@@ -119,7 +118,6 @@ export default function UsagePlans() {
         '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
       );
       setDataTemp(response.data); // 데이터는 response.data)
-      setValue(response.data.length);
       // console.log(response.data);
     } catch (e) {
       setError(e);
@@ -134,7 +132,6 @@ export default function UsagePlans() {
         await axios.delete(
           '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItems
         );
-        setValue(value-1);
       } catch (e) {
         setError(e);
         console.log(error);
@@ -148,7 +145,7 @@ export default function UsagePlans() {
 
   useEffect(() => {
     fetchApis();
-  }, []);
+  }, [DataTemp]);
 
 
   return (
@@ -161,7 +158,7 @@ export default function UsagePlans() {
             <Button size="large" action={Create}>Usage Plan 생성</Button>
             <Button size="small" outline onClick={Update}>수정</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
-            <Button size="small" outline onClick={Stage}>Stage</Button>
+            <Button size="medium" outline onClick={Stage}>Stage 연결 관리</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>

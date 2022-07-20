@@ -1,7 +1,10 @@
 import React, { useState, useEffect} from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, ThemeProvider } from 'styled-components';
 import TableLine from '../image/tableline.svg';
 import { useNavigate } from 'react-router-dom';
+import Button from './Button';
+import ModalApiDelete from '../components/ModalApiDelete';
+import ModalAPIKey from '../components/ModalAPIKey';
 
 const TableWrapper = styled.div`
   padding: 0px 60px 0px 60px;
@@ -76,6 +79,17 @@ const Hov = styled.td`
 export default function TableCompAPIKeys({ columns, data, checkHandler }) {
 
   const navigate = useNavigate();
+  const [dialog, setDialog] = useState(false);
+  const [key, setKey] = useState(null);
+
+  const onClick = e => {
+    setKey(e.target.value);
+    setDialog(true);
+  }
+
+  const onCancel = () => {
+    setDialog(false);
+  };
 
   return (
     <React.Fragment>
@@ -103,8 +117,20 @@ export default function TableCompAPIKeys({ columns, data, checkHandler }) {
                     <TD width='1%'>
                       <input type="checkbox" onChange={checkHandler}/>
                     </TD>
-                    <TD width='20%'>{item.api_name}</TD>
-                    <TD width='20%'>{item.stage_name}</TD>
+                    <TD width='10%'>{item.apiKey_name}</TD>
+                    <TD width='10%'>{item.apiKey_description}</TD>
+                    <TD width='10%'>{item.apiKey_id}</TD>
+                    <TD width='10%'>{item.isEnabled === true ? "활성":"비활성"}</TD>
+                    <TD width='10%'>
+                      <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+                        <Button size="supersmall" outline onClick={onClick} value={item.primaryKey}>
+                          {/* { dialog === true ? item.primaryKey : <div>보기</div>} */}
+                          보기
+                          </Button>
+                          
+                      </ThemeProvider>
+                    </TD>
+                    <TD width='10%'>{item.created_at}</TD>
                   </TR> 
                 </React.Fragment>
               );
@@ -112,6 +138,16 @@ export default function TableCompAPIKeys({ columns, data, checkHandler }) {
           </TBody>
         </Table>
       </TableWrapper>
+      <ModalAPIKey
+            title="API Key 보기"
+            confirmText="삭제"
+            cancelText="취소"
+            onCancel={onCancel}
+            visible={dialog}
+       
+            >
+            {key}
+      </ModalAPIKey>
     </React.Fragment>
   );
 }

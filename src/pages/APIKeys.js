@@ -5,9 +5,9 @@ import MainContainer from '../layouts/MainContainer';
 import { PageTitle, PageSubTitle } from '../style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
 import Button from '../components/Button';
-import TableCompUsagePlans from '../components/TableCompUsagePlans';
 import ModalApiDelete from '../components/ModalApiDelete';
 import ModalApiUpdate from '../components/ModalApiUpdate';
+import TableCompAPIKeys from '../components/TableCompAPIKeys';
 
 
 const MenuDiv = styled.div`
@@ -38,7 +38,6 @@ export default function APIKeys() {
   // const [updateDialog, setUpdateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
-  const [value, setValue] = useState(null);
   const navigate = useNavigate();
   const testData = [
     {
@@ -47,7 +46,6 @@ export default function APIKeys() {
         "apiKey_name" : "apiKey_01",
         "apiKey_description" : "apiKey_01", 
         "primaryKey" : "IG8BNS1fMLcDMUPQ015Nl8fRPgta06QmPRvXejAq",
-        "secondaryKey" : "QSsbo0BPBRIx7KP4hB3jVCEom7B8AS624mPuIqRY",
         "isEnabled" : true,
         "created_at" : "2022-07-20T04:56:07.000"
     },
@@ -57,8 +55,7 @@ export default function APIKeys() {
         "apiKey_name" : "apiKey_02",
         "apiKey_description" : "apiKey_02", 
         "primaryKey" : "pdeSirg4VFJUAacg2uUbSz3IfrN1gPpyjamHhLW6",
-        "secondaryKey" : "9RxeeetzPh11UIFTCwjFWnlwpRwpiQGfdUuv1VDT",
-        "isEnabled" : true,
+        "isEnabled" : false,
         "created_at" : "2022-07-20T04:56:07.000"
     }
 ]
@@ -118,7 +115,6 @@ export default function APIKeys() {
         '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
       );
       setDataTemp(response.data); // 데이터는 response.data)
-      setValue(response.data.length);
       // console.log(response.data);
     } catch (e) {
       setError(e);
@@ -133,7 +129,6 @@ export default function APIKeys() {
         await axios.delete(
           '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItems
         );
-        setValue(value-1);
       } catch (e) {
         setError(e);
         console.log(error);
@@ -147,7 +142,7 @@ export default function APIKeys() {
 
   useEffect(() => {
     fetchApis();
-  }, []);
+  }, [DataTemp]);
 
 
   return (
@@ -157,14 +152,14 @@ export default function APIKeys() {
         <PageSubTitle>API Key를 관리합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="large" action={Create}>Usage Plan 생성</Button>
+            <Button size="medium" onClick={Create}>API Key 생성</Button>
             <Button size="small" outline onClick={Update}>수정</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
             <Button size="small" outline onClick={Stage}>Stage</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableCompUsagePlans columns={TableHeader} data={testData} checkHandler={checkHandler}/>
+          <TableCompAPIKeys columns={TableHeader} data={testData} checkHandler={checkHandler}/>
         </TableDiv>
       </MainContainer>
       <ModalApiDelete

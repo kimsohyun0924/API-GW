@@ -48,7 +48,6 @@ export default function MyApis() {
 ]
 
   const [error, setError] = useState(null);
-  const [value, setValue] = useState(null);
   const navigate = useNavigate();
 
 
@@ -109,7 +108,6 @@ export default function MyApis() {
         '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
       );
       setDataTemp(response.data); // 데이터는 response.data)
-      setValue(response.data.length);
       // console.log(response.data);
     } catch (e) {
       setError(e);
@@ -124,7 +122,6 @@ export default function MyApis() {
         await axios.delete(
           '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItems
         );
-        setValue(value-1);
       } catch (e) {
         setError(e);
         console.log(error);
