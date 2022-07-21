@@ -7,6 +7,8 @@ import styled, { ThemeProvider } from "styled-components";
 import Button from '../components/Button';
 import ModalApiDelete from '../components/ModalApiDelete';
 import ModalApiUpdate from '../components/ModalApiUpdate';
+import ModalAPIKeysCreate from '../components/ModalAPIKeysCreate';
+import ModalAPIKeysUpdate from '../components/ModalAPIKeysUpdate';
 import TableCompAPIKeys from '../components/TableCompAPIKeys';
 
 
@@ -32,16 +34,17 @@ const TableHeader = [
 export default function APIKeys() {
 
   const [bChecked, setChecked] = useState(false);
-  const [checkedItems, setCheckedItems] = useState([]); //개별 체크된 아이템을 저장함
-  const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
+  const [checkedItem, setCheckedItem] = useState([]); //개별 체크된 아이템을 저장함
+  // const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
+  const [createDialog, setCreateDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
-  // const [updateDialog, setUpdateDialog] = useState(false);
+  const [updateDialog, setUpdateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const testData = [
     {
-        "apiKey_id" : "apiKeyId",
+        "apiKey_id" : "apiKeyId_01",
         "mem_sq": "Memsq07",
         "apiKey_name" : "apiKey_01",
         "apiKey_description" : "apiKey_01", 
@@ -50,7 +53,7 @@ export default function APIKeys() {
         "created_at" : "2022-07-20T04:56:07.000"
     },
     {
-        "apiKey_id" : "apiKeyId",
+        "apiKey_id" : "apiKeyId_02",
         "mem_sq": "Memsq07",
         "apiKey_name" : "apiKey_02",
         "apiKey_description" : "apiKey_02", 
@@ -62,51 +65,52 @@ export default function APIKeys() {
 
   
   const Create = () => {
-    navigate('/usageplans/create');
+    // navigate('/usageplans/create');
+    setCreateDialog(true);
   };
 
   const Update = () => {
-    if(!(checkedItems.length === 0)) {
-      navigate('/usageplans/edit');
+    console.log(checkedItem);
+    if(!(checkedItem.length === 0)) {
+      setUpdateDialog(true);
     }
   };
 
   const Delete = () => {
-    if(!(checkedItems.length === 0)) {
+    if(!(checkedItem.length === 0)) {
       setDeleteDialog(true);
     }
   };
 
   const Stage = () => {
-    if(!(checkedItems.length === 0)) {
+    if(!(checkedItem.length === 0)) {
       navigate('/usageplans/stage');
     }
   };
 
   const onCancel = () => {
     console.log('취소');
+    setCreateDialog(false);
+    setUpdateDialog(false);
     setDeleteDialog(false);
-    // setUpdateDialog(false);
   };
 
  
-  const checkHandler = (e) => {
-    setChecked(!bChecked);
-    const apiid = e.target.getAttribute('apiid');
-    const apiname = e.target.getAttribute('apiname');
-
-    if (e.target.checked) {
-        checkedItems.push(apiid);
-        checkedItemsName.push(apiname)
-        setCheckedItems(checkedItems);
-        setCheckedItemsName(checkedItemsName);
-    } else if (!e.target.checked) {
-        setCheckedItems(checkedItems.filter(checkedItem => checkedItem !== apiid));
-        setCheckedItemsName(checkedItemsName.filter(checkedItemName => checkedItemName !== apiname));
+  const checkHandler = (checkThis) => {
+    
+    
+    const checkboxes = document.getElementsByName('test');
+    setCheckedItem(checkThis.id);
+    
+    for (let i = 0; i < checkboxes.length; i++) { 
+      if (checkboxes[i] !== checkThis) {
+        checkboxes[i].checked = false
+        console.log(checkedItem);
+      }
     }
   };
 
-  const fetchApis = async () => {
+  const fetchAPIKey = async () => {
     //get api request
     try {
       setError(null);
@@ -123,25 +127,25 @@ export default function APIKeys() {
 
   const onDelete = () => {
    //delete api request
-    const deleteApi = async () => {
+    const deleteAPIKey = async () => {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItems
+          '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItem
         );
       } catch (e) {
         setError(e);
         console.log(error);
       }
     };
-    deleteApi();
-    window.location.reload(true);
+    deleteAPIKey();
+    // window.location.reload(true);
     setDeleteDialog(false);
   };
 
 
   useEffect(() => {
-    fetchApis();
+    fetchAPIKey();
   }, [DataTemp]);
 
 
@@ -152,17 +156,35 @@ export default function APIKeys() {
         <PageSubTitle>API Key를 관리합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="medium" onClick={Create}>API Key 생성</Button>
-            <Button size="small" outline onClick={Update}>수정</Button>
+            <Button size="large" onClick={Create}>API Key 생성</Button>
+            <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
-            <Button size="small" outline onClick={Stage}>Stage</Button>
+            <Button size="medium" outline onClick={Stage}>Stage 연결</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
           <TableCompAPIKeys columns={TableHeader} data={testData} checkHandler={checkHandler}/>
         </TableDiv>
       </MainContainer>
-      <ModalApiDelete
+      <ModalAPIKeysCreate
+            title="API Key를 생성합니다."
+            confirmText="생성하기"
+            cancelText="취소"
+            // onConfirm={onDelete}
+            onCancel={onCancel}
+            visible={createDialog}
+            >
+      </ModalAPIKeysCreate>
+      <ModalAPIKeysUpdate
+            title="API Key를 변경합니다."
+            confirmText="변경하기"
+            cancelText="취소"
+            // onConfirm={setUpdateDialog}
+            onCancel={onCancel}
+            checkedItem={checkedItem}
+            visible={updateDialog}>
+      </ModalAPIKeysUpdate>
+      {/* <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제"
             cancelText="취소"
@@ -170,17 +192,8 @@ export default function APIKeys() {
             onCancel={onCancel}
             visible={deleteDialog}
             >
-            {checkedItemsName}  정말로 삭제하시겠습니까?
-      </ModalApiDelete>
-      {/* <ModalApiUpdate
-            title="API 수정"
-            confirmText="수정"
-            cancelText="취소"
-            setUpdateDialog={setUpdateDialog}
-            onCancel={onCancel}
-            checkedItems={checkedItems}
-            visible={updateDialog}>
-      </ModalApiUpdate> */}
+            {checkedItemName}  정말로 삭제하시겠습니까?
+      </ModalApiDelete> */}
     </React.Fragment>
   );
 }

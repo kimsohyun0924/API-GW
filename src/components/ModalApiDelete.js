@@ -13,7 +13,7 @@ const DarkBackground = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(153,153,153,0.5);
 `;
 
 const DialogBlock = styled.div`
@@ -21,6 +21,7 @@ const DialogBlock = styled.div`
   padding: 1.5rem;
   background: white;
   border-radius: 2px;
+  border : 1px solid black;
   h3 {
     margin: 0;
     font-size: 1.5rem;
@@ -33,7 +34,7 @@ const DialogBlock = styled.div`
 const ButtonGroup = styled.div`
   margin-top: 3rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 `;
 
 ModalApiDelete.defaultProps = {

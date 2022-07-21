@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
 import axios from 'axios';
 import Button from './Button';
-
+import Logo from '../image/Cancel.svg';
 
 const DarkBackground = styled.div`
   position: fixed;
@@ -20,22 +20,22 @@ const DarkBackground = styled.div`
 const DialogBlock = styled.div`
   width: 600px;
   height: 320px;
-  padding: 1.5rem;
+  padding: 20px 30px 20px 30px;
   background: white;
   border-radius: 2px;
   border : 1px solid black;
-  h3 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-  p {
-    font-size: 1.125rem;
-  }
+`;
+
+const ImgDiv = styled.div`
+  display: flex;
+  margin-left: 530px;
+  justify-content: flex-end;
+  cursor: pointer;
 `;
 
 const TitleDiv = styled.div`
-  font-size : 20px;
-  padding-bottom : 30px;
+  font-size : 17px;
+  padding : 10px 0px 30px 0px;
 
 `;
 
@@ -61,7 +61,6 @@ const ItemInput = styled.div`
 const ItemNote = styled.div`
   font-size: 12px;
   color: #777777;
-  padding: 0 10px;
   height: 32px;
   text-align: left;
   display : flex;
@@ -88,12 +87,12 @@ const InputForm = styled.input`
 
 const Item2 = styled.div`
   display: flex;
-  height: 100px;
-  padding: 0px 0px 30px 0px;
+  height: 90px;
+  padding: 0px 0px 20px 0px;
 `;
 
 const ItemInput2 = styled.div`
-    width: 380px;
+    width: 280;
     height: 70px;
     display: flex;
     align-items: center;
@@ -110,31 +109,26 @@ const InputForm2 = styled.input`
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 15px;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
 `;
 
-const ItemText = styled.span`
-  padding-right: 1rem;
-  padding-left: 0.3rem;
-`;
-
-ModalPopup.defaultProps = {
+ModalAPIKeysCreate.defaultProps = {
   confirmText: '확인'
 };
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalPopup( { title, children, confirmText, cancelText, onCancel, visible, setUpdateDialog, checkedItems } ) {
+export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onConfirm, onCancel, visible, setUpdateDialog, checkedItems } ) {
 
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
-    ApiName: '',
-    ApiExplain: ''
+    APIKeyName: '',
+    APIKeyExplain: ''
   });
   
-  const { ApiName, ApiExplain } = inputs;
+  const { APIKeyName, APIKeyExplain } = inputs;
   
   const onChange = e => {
     const { name, value } = e.target;
@@ -145,28 +139,24 @@ export default function ModalPopup( { title, children, confirmText, cancelText, 
   };
   // console.log(inputs);
 
-  const onUpdate = () => {
-    const Api = {
-      ApiName,
-      ApiExplain
-    };
+  const onCreate = () => {
   
-    const updateApi = async () => {
+    const createAPIKey = async () => {
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItems,
+          '/v1.0/g1/paas/Memsq07/apigw/apikey/'+checkedItems,
           {
-            api_name: ApiName,
-            description: ApiExplain
+            apikey_name: APIKeyName,
+            apikey_description: APIKeyExplain
           }
         );
       } catch (e) {
         setError(e);
       }
     };
-    updateApi();
-    window.location.reload(true);
+    createAPIKey();
+    // window.location.reload(true);
     setUpdateDialog(false);
   };
 
@@ -174,25 +164,28 @@ export default function ModalPopup( { title, children, confirmText, cancelText, 
   return (
       <DarkBackground>
            <DialogBlock>
+              <ImgDiv onClick={onCancel}>
+                <img src={Logo}/>
+              </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
               <Item>
-                <ItemName>API 이름</ItemName>
-                    <ItemInput>
-                            <InputForm name="ApiName" placeholder=" API 이름을 입력하세요" onChange={onChange} value={ApiName}/>
-                        </ItemInput>
-                        <ItemNote></ItemNote>
-                    </Item>
-                    <Item2>
-                        <ItemName>API 설명</ItemName>
-                        <ItemInput2>
-                            <InputForm2 name="ApiExplain" placeholder=" API 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
-                        </ItemInput2>
-                        <ItemNote></ItemNote>
-                    </Item2>
+                  <ItemName>API Key 이름</ItemName>
+                  <ItemInput>
+                      <InputForm name="APIKeyName" placeholder=" API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName}/>
+                  </ItemInput>
+                  <ItemNote></ItemNote>
+              </Item>
+              <Item2>
+                  <ItemName>API Key 설명</ItemName>
+                  <ItemInput2>
+                      <InputForm2 name="APIKeyExplain" placeholder=" API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain}/>
+                  </ItemInput2>
+                  <ItemNote></ItemNote>
+              </Item2>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <Button size="small" color="gray" onClick={onCancel} noline>{cancelText}</Button>
-                    <Button size="medium" onClick={onUpdate}>{confirmText}</Button>
+                    <Button size="medium" onClick={onCreate}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>

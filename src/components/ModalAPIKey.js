@@ -13,7 +13,7 @@ const DarkBackground = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(153,153,153,0.5);
 `;
 
 const DialogBlock = styled.div`
@@ -21,19 +21,26 @@ const DialogBlock = styled.div`
   padding: 1.5rem;
   background: white;
   border-radius: 2px;
+  border : 1px solid black;
   h3 {
     margin: 0;
     font-size: 1.5rem;
   }
   p {
-    font-size: 1.125rem;
+    font-size: 15px;
   }
+`;
+
+const TitleDiv = styled.div`
+  font-size : 20px;
+  padding-bottom : 30px;
+
 `;
 
 const ButtonGroup = styled.div`
   margin-top: 3rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 `;
 
 ModalApiDelete.defaultProps = {
@@ -46,7 +53,7 @@ export default function ModalApiDelete( { title, children, confirmText, cancelTe
   return (
       <DarkBackground>
            <DialogBlock>
-              <h3>{title}</h3>
+              <TitleDiv>{title}</TitleDiv>
               <p>{children}</p>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

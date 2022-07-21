@@ -48,6 +48,12 @@ const TBody = styled.tbody`
 
 const TR = styled.tr`
   border-bottom: 1px solid #ddd;
+
+  ${props => props.sh === true &&
+    css`
+      background: #c7dff4;
+    `
+  }
 `;
 
 const TD = styled.td`
@@ -98,7 +104,7 @@ export default function TableCompAPIKeys({ columns, data, checkHandler }) {
           <THead>  
             <tr>
               <TH width='1%'>
-                <input type="checkbox"/>
+                {/* <input type="checkbox"/> */}
               </TH>
               { columns.map((item, index) => {
                 return (
@@ -115,7 +121,7 @@ export default function TableCompAPIKeys({ columns, data, checkHandler }) {
                 <React.Fragment key={index}>
                   <TR key={index}>
                     <TD width='1%'>
-                      <input type="checkbox" onChange={checkHandler}/>
+                      <input type="checkbox" name="test" id={item.apiKey_id} onChange={(e) => checkHandler(e.target)}/>
                     </TD>
                     <TD width='10%'>{item.apiKey_name}</TD>
                     <TD width='10%'>{item.apiKey_description}</TD>

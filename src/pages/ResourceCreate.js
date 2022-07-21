@@ -96,9 +96,6 @@ export default function ResourceCreate(props) {
   }
 
   const onCreate = () => {
-    const Api = {
-      resource
-    };
     
     const createResource = async () => {
       try {

@@ -92,10 +92,6 @@ export default function ResourceCreate(props) {
     };
 
     const onCreate = e => {
-      const Api = {
-        stage_name,
-        backend_url
-      };
     
       const createStage = async () => {
         try {

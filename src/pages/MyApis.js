@@ -146,12 +146,12 @@ export default function MyApis() {
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
             <Button size="medium" action={Create}>API 생성</Button>
-            <Button size="small" outline onClick={Update}>수정</Button>
+            <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableComp columns={TableHeader} data={DataTemp} checkHandler={checkHandler}/>
+          <TableComp columns={TableHeader} data={testData} checkHandler={checkHandler}/>
         </TableDiv>
       </MainContainer>
       <ModalApiDelete
@@ -165,8 +165,8 @@ export default function MyApis() {
             {checkedItemsName}  정말로 삭제하시겠습니까?
       </ModalApiDelete>
       <ModalApiUpdate
-            title="API 수정"
-            confirmText="수정"
+            title="API 변경"
+            confirmText="변경하기"
             cancelText="취소"
             setUpdateDialog={setUpdateDialog}
             onCancel={onCancel}

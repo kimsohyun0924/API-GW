@@ -15,7 +15,7 @@ const MethodDiv = styled.div`
 export default function Method(props) {
 
 
-  // console.log(props);
+  console.log(props);
 
     const [update, setUpdate] = useState(false);
     const serviceId = props.serviceId;

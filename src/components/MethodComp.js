@@ -101,8 +101,11 @@ const MethodInfoValue = styled.div`
 
 export default function MethodComp(props) {
 
+
+    // console.log(props.methodInfo);
+
     const methodInfo = props.methodInfo;
-    const methodId = methodInfo.id;
+    const methodId = methodInfo.method_id;
     const [apikey, setApikey] = useState(null);
     const [dialog, setDialog] = useState(false);
     const [error, setError] = useState(null);

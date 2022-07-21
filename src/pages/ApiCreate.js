@@ -124,11 +124,7 @@ export default function ApiCreate() {
   console.log(inputs);
 
   const onCreate = () => {
-    const Api = {
-      ApiName,
-      ApiExplain
-    };
-  
+      
     const createApi = async () => {
       try {
         

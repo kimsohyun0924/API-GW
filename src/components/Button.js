@@ -55,12 +55,12 @@ const colorStyles = css`
 
 const sizes = {
   large: {
-    minWidth: '135px',
+    minWidth: '130px',
     height: '2.25rem',
     fontSize: '14px'
   },
   medium: {
-    minWidth: '100px',
+    minWidth: '80px',
     height: '2.25rem',
     fontSize: '14px'
   },
@@ -70,9 +70,9 @@ const sizes = {
     fontSize: '14px'
   },
   supersmall: {
-    minWidth: '45px',
-    height: '25px',
-    fontSize: '14px'
+    minWidth: '40px',
+    height: '20px',
+    fontSize: '13px'
   }
 };
 

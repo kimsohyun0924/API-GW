@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
+import ToggleSwitch from './ToggleSwitch';
 import axios from 'axios';
 import Button from './Button';
 
@@ -19,7 +20,7 @@ const DarkBackground = styled.div`
 
 const DialogBlock = styled.div`
   width: 600px;
-  height: 320px;
+  height: 350px;
   padding: 1.5rem;
   background: white;
   border-radius: 2px;
@@ -88,8 +89,8 @@ const InputForm = styled.input`
 
 const Item2 = styled.div`
   display: flex;
-  height: 100px;
-  padding: 0px 0px 30px 0px;
+  height: 90px;
+  padding: 0px 0px 20px 0px;
 `;
 
 const ItemInput2 = styled.div`
@@ -120,21 +121,22 @@ const ItemText = styled.span`
   padding-left: 0.3rem;
 `;
 
-ModalPopup.defaultProps = {
+ModalAPIKeysCreate.defaultProps = {
   confirmText: '확인'
 };
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalPopup( { title, children, confirmText, cancelText, onCancel, visible, setUpdateDialog, checkedItems } ) {
+export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onConfirm, onCancel, visible, setUpdateDialog, checkedItems } ) {
 
   const [error, setError] = useState(null);
+  const [toggle, setToggle] = useState(false);
   const [inputs, setInputs] = useState({
-    ApiName: '',
-    ApiExplain: ''
+    APIKeyName: '',
+    APIKeyExplain: ''
   });
   
-  const { ApiName, ApiExplain } = inputs;
+  const { APIKeyName, APIKeyExplain } = inputs;
   
   const onChange = e => {
     const { name, value } = e.target;
@@ -145,54 +147,63 @@ export default function ModalPopup( { title, children, confirmText, cancelText, 
   };
   // console.log(inputs);
 
-  const onUpdate = () => {
-    const Api = {
-      ApiName,
-      ApiExplain
-    };
+  const onCreate = () => {
   
-    const updateApi = async () => {
+    const createAPIKey = async () => {
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItems,
+          '/v1.0/g1/paas/Memsq07/apigw/apikey/'+checkedItems,
           {
-            api_name: ApiName,
-            description: ApiExplain
+            apikey_name: APIKeyName,
+            apikey_description: APIKeyExplain
           }
         );
       } catch (e) {
         setError(e);
       }
     };
-    updateApi();
-    window.location.reload(true);
+    createAPIKey();
+    // window.location.reload(true);
     setUpdateDialog(false);
   };
 
+  const clickedToggle = () => {
+    setToggle((prev) => !prev);
+    console.log(toggle);
+  };
+
   if (!visible) return null;
+
   return (
       <DarkBackground>
            <DialogBlock>
               <TitleDiv>{title}</TitleDiv>
               <Item>
-                <ItemName>API 이름</ItemName>
-                    <ItemInput>
-                            <InputForm name="ApiName" placeholder=" API 이름을 입력하세요" onChange={onChange} value={ApiName}/>
-                        </ItemInput>
-                        <ItemNote></ItemNote>
-                    </Item>
-                    <Item2>
-                        <ItemName>API 설명</ItemName>
-                        <ItemInput2>
-                            <InputForm2 name="ApiExplain" placeholder=" API 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
-                        </ItemInput2>
-                        <ItemNote></ItemNote>
-                    </Item2>
+                  <ItemName>API Key 이름</ItemName>
+                  <ItemInput>
+                      <InputForm name="APIKeyName" placeholder=" API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName}/>
+                  </ItemInput>
+                  <ItemNote></ItemNote>
+              </Item>
+              <Item2>
+                  <ItemName>API Key 설명</ItemName>
+                  <ItemInput2>
+                      <InputForm2 name="APIKeyExplain" placeholder=" API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain}/>
+                  </ItemInput2>
+                  <ItemNote></ItemNote>
+              </Item2>
+              <Item>
+                  <ItemName>API Key 이름</ItemName>
+                  <ItemInput>
+                      <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+                  </ItemInput>
+                  <ItemNote></ItemNote>
+              </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <Button size="small" color="gray" onClick={onCancel} noline>{cancelText}</Button>
-                    <Button size="medium" onClick={onUpdate}>{confirmText}</Button>
+                    <Button size="medium" onClick={onCreate}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>

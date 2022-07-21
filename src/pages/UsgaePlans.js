@@ -156,9 +156,9 @@ export default function UsagePlans() {
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
             <Button size="large" action={Create}>Usage Plan 생성</Button>
-            <Button size="small" outline onClick={Update}>수정</Button>
+            <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
-            <Button size="medium" outline onClick={Stage}>Stage 연결 관리</Button>
+            <Button size="medium" outline onClick={Stage}>Stage 연결</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
@@ -176,8 +176,8 @@ export default function UsagePlans() {
             {checkedItemsName}  정말로 삭제하시겠습니까?
       </ModalApiDelete>
       {/* <ModalApiUpdate
-            title="API 수정"
-            confirmText="수정"
+            title="API 변경"
+            confirmText="변경하기"
             cancelText="취소"
             setUpdateDialog={setUpdateDialog}
             onCancel={onCancel}

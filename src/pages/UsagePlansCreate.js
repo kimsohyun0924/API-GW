@@ -160,10 +160,6 @@ export default function UsagePlansCreate() {
   console.log(inputs);
 
   const onCreate = () => {
-    const Api = {
-      ApiName,
-      ApiExplain
-    };
   
     const createApi = async () => {
       try {

@@ -217,11 +217,6 @@ export default function MethodCreate(props) {
 
 
   const onCreate = () => {
-    const Api = {
-      selectedItem,
-      selectedItem2,
-      urlInfo
-    };
   
     const createMethod = async () => {
       try {
