@@ -3,7 +3,7 @@ import styled, { css, ThemeProvider } from "styled-components";
 import ToggleSwitch from './ToggleSwitch';
 import axios from 'axios';
 import Button from './Button';
-
+import Logo from '../image/Cancel.svg';
 
 const DarkBackground = styled.div`
   position: fixed;
@@ -20,24 +20,23 @@ const DarkBackground = styled.div`
 
 const DialogBlock = styled.div`
   width: 600px;
-  height: 350px;
-  padding: 1.5rem;
+  height: 370px;
+  padding: 20px 30px 20px 30px;
   background: white;
   border-radius: 2px;
   border : 1px solid black;
-  h3 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-  p {
-    font-size: 1.125rem;
-  }
+`;
+
+const ImgDiv = styled.div`
+  display: flex;
+  margin-left: 530px;
+  justify-content: flex-end;
+  cursor: pointer;
 `;
 
 const TitleDiv = styled.div`
-  font-size : 20px;
-  padding-bottom : 30px;
-
+  font-size : 17px;
+  padding : 10px 0px 30px 0px;
 `;
 
 const Item = styled.div`
@@ -62,7 +61,6 @@ const ItemInput = styled.div`
 const ItemNote = styled.div`
   font-size: 12px;
   color: #777777;
-  padding: 0 10px;
   height: 32px;
   text-align: left;
   display : flex;
@@ -111,14 +109,9 @@ const InputForm2 = styled.input`
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 15px;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
-`;
-
-const ItemText = styled.span`
-  padding-right: 1rem;
-  padding-left: 0.3rem;
 `;
 
 ModalAPIKeysCreate.defaultProps = {
@@ -178,6 +171,9 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
   return (
       <DarkBackground>
            <DialogBlock>
+              <ImgDiv onClick={onCancel}>
+                <img src={Logo}/>
+              </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
               <Item>
                   <ItemName>API Key 이름</ItemName>

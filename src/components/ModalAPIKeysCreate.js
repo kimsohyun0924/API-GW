@@ -92,7 +92,7 @@ const Item2 = styled.div`
 `;
 
 const ItemInput2 = styled.div`
-    width: 280;
+    width: 380;
     height: 70px;
     display: flex;
     align-items: center;

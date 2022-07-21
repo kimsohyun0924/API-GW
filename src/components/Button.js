@@ -59,6 +59,11 @@ const sizes = {
     height: '2.25rem',
     fontSize: '14px'
   },
+  large_medium: {
+    minWidth: '100px',
+    height: '2.25rem',
+    fontSize: '14px'
+  },
   medium: {
     minWidth: '80px',
     height: '2.25rem',

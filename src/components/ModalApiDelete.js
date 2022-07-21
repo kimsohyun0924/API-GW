@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
 import Button from './Button';
+import Logo from '../image/Cancel.svg';
 
 
 const DarkBackground = styled.div`
@@ -17,8 +18,9 @@ const DarkBackground = styled.div`
 `;
 
 const DialogBlock = styled.div`
-  width: 350px;
-  padding: 1.5rem;
+  width: 500px;
+  height: 248px;
+  padding: 20px 30px 20px 30px;
   background: white;
   border-radius: 2px;
   border : 1px solid black;
@@ -29,6 +31,13 @@ const DialogBlock = styled.div`
   p {
     font-size: 1.125rem;
   }
+`;
+
+const ImgDiv = styled.div`
+  display: flex;
+  margin-left: 280px;
+  justify-content: flex-end;
+  cursor: pointer;
 `;
 
 const ButtonGroup = styled.div`
@@ -47,12 +56,15 @@ export default function ModalApiDelete( { title, children, confirmText, cancelTe
   return (
       <DarkBackground>
            <DialogBlock>
+              <ImgDiv onClick={onCancel}>
+                <img src={Logo}/>
+              </ImgDiv>
               <h3>{title}</h3>
               <p>{children}</p>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <Button size="small" onClick={onCancel} noline>{cancelText}</Button>
-                    <Button size="small" onClick={onConfirm}>{confirmText}</Button>
+                    <Button size="medium" onClick={onConfirm}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>

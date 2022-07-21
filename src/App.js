@@ -14,6 +14,7 @@ import UsagePlansCreate from './pages/UsagePlansCreate';
 import UsagePlansEdit from './pages/UsagePlansEdit';
 import UsagePlansStage from './pages/UsagePlansStage';
 import APIKeys from './pages/APIKeys';
+import APIKeysStage from './pages/APIKeysStage';
 
 
 
@@ -36,6 +37,7 @@ export default function App() {
                 <Route path='/usageplans/edit' element={<UsagePlansEdit />}></Route>
                 <Route path='/usageplans/stage' element={<UsagePlansStage />}></Route>
                 <Route path='/apikeys' element={<APIKeys />}></Route>
+                <Route path='/apikeys/stage' element={<APIKeysStage />}></Route>
   
 
                 {/* <Route path='/api/operation/:value' element={<Stage />}></Route> */}

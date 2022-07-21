@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const PageTitle = styled.div`
-  padding: 70px 60px 5px 60px;
+  padding: 70px 60px 0px 60px;
   font-size: 32px;
-  font-weight: 500;
+  font-weight: bold;
 `;
 
 export const PageSubTitle = styled.div`

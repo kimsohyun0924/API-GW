@@ -126,7 +126,7 @@ export default function UsagePlanStage() {
     <React.Fragment>
       <MainContainer>
         <PageTitle>Usage Plans - Stage 연결 목록</PageTitle>
-        <PageSubTitle>API의 사용량을 계획합니다.</PageSubTitle>
+        <PageSubTitle>Usage Plans에 연결된 Stage를 관리합니다</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
             <Button size="medium" action={Create}>Stage 연결</Button>

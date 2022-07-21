@@ -92,7 +92,7 @@ const InputForm2 = styled.textarea`
 
 const ButtonDiv = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   /* align-items: center; */
   margin: 5px 60px 5px 60px;
 `;

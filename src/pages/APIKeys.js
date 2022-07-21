@@ -84,7 +84,7 @@ export default function APIKeys() {
 
   const Stage = () => {
     if(!(checkedItem.length === 0)) {
-      navigate('/usageplans/stage');
+      navigate('/apikeys/stage');
     }
   };
 
@@ -156,10 +156,10 @@ export default function APIKeys() {
         <PageSubTitle>API Key를 관리합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="large" onClick={Create}>API Key 생성</Button>
+            <Button size="large_medium" onClick={Create}>API Key 생성</Button>
             <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
-            <Button size="medium" outline onClick={Stage}>Stage 연결</Button>
+            <Button size="large_medium" outline onClick={Stage}>연결된 Stage</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
@@ -184,16 +184,16 @@ export default function APIKeys() {
             checkedItem={checkedItem}
             visible={updateDialog}>
       </ModalAPIKeysUpdate>
-      {/* <ModalApiDelete
+      <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
-            confirmText="삭제"
+            confirmText="삭제하기"
             cancelText="취소"
             onConfirm={onDelete}
             onCancel={onCancel}
             visible={deleteDialog}
             >
-            {checkedItemName}  정말로 삭제하시겠습니까?
-      </ModalApiDelete> */}
+            정말로 삭제하시겠습니까?
+      </ModalApiDelete>
     </React.Fragment>
   );
 }
