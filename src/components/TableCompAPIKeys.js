@@ -19,7 +19,7 @@ const Table = styled.table`
   border-spacing: 0;
   width: 100%;
   line-height: 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
 `;
 
 const THead = styled.thead`
@@ -31,8 +31,8 @@ const TH = styled.th`
   text-align: center;
   vertical-align: middle;
   padding: 10px 10px;
-  border-right: 0 solid #b6b6c3;
-  border-left: 0 solid #b6b6c3;
+  border-right: 0 solid #ccc;
+  border-left: 0 solid #ccc;
   font-weight: 400;
   font-size: 13px;
   text-align: left;
@@ -43,15 +43,16 @@ const TH = styled.th`
 `;
 
 const TBody = styled.tbody`
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
 `;
 
 const TR = styled.tr`
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ccc;
 
-  ${props => props.sh === true &&
+  ${props => props.clickId === props.Id && props.bChecked === true &&
     css`
-      background: #c7dff4;
+      background: #c7dff4;;
+      /* font-weight: 500; */
     `
   }
 `;
@@ -82,7 +83,7 @@ const Hov = styled.td`
   } */
 `;
 
-export default function TableCompAPIKeys({ columns, data, checkHandler }) {
+export default function TableCompAPIKeys({ columns, data, checkHandler, clickId, setClickId, bChecked, setChecked }) {
 
   const navigate = useNavigate();
   const [dialog, setDialog] = useState(false);
@@ -91,6 +92,13 @@ export default function TableCompAPIKeys({ columns, data, checkHandler }) {
   const onClick = e => {
     setKey(e.target.value);
     setDialog(true);
+  }
+
+  const onClick2 = (Id) => {
+    setClickId(Id);
+    if(clickId === Id) {
+      setChecked(true);
+    }
   }
 
   const onCancel = () => {
@@ -119,9 +127,9 @@ export default function TableCompAPIKeys({ columns, data, checkHandler }) {
             { data && data.map((item, index) => {
               return (
                 <React.Fragment key={index}>
-                  <TR key={index}>
+                  <TR key={index} onClick={() => { onClick2(item.apiKey_id) }} clickId={clickId} Id={item.apiKey_id} bChecked={bChecked}>
                     <TD width='1%'>
-                      <input type="checkbox" name="test" id={item.apiKey_id} onChange={(e) => checkHandler(e.target)}/>
+                      <input type="checkbox" checked={clickId === item.apiKey_id ? bChecked : null} onChange={checkHandler}/>
                     </TD>
                     <TD width='10%'>{item.apiKey_name}</TD>
                     <TD width='10%'>{item.apiKey_description}</TD>

@@ -34,7 +34,9 @@ const TableHeader = [
 export default function APIKeys() {
 
   const [bChecked, setChecked] = useState(false);
-  const [checkedItem, setCheckedItem] = useState([]); //개별 체크된 아이템을 저장함
+  const [clickId, setClickId] = useState(false);
+
+  // const [checkedItem, setCheckedItem] = useState([]); //개별 체크된 아이템을 저장함
   // const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
   const [createDialog, setCreateDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -70,20 +72,20 @@ export default function APIKeys() {
   };
 
   const Update = () => {
-    console.log(checkedItem);
-    if(!(checkedItem.length === 0)) {
+
+    if(bChecked === true) {
       setUpdateDialog(true);
     }
   };
 
   const Delete = () => {
-    if(!(checkedItem.length === 0)) {
+    if(bChecked === true) {
       setDeleteDialog(true);
     }
   };
 
   const Stage = () => {
-    if(!(checkedItem.length === 0)) {
+    if(bChecked === true) {
       navigate('/apikeys/stage');
     }
   };
@@ -96,18 +98,17 @@ export default function APIKeys() {
   };
 
  
-  const checkHandler = (checkThis) => {
-    
-    
-    const checkboxes = document.getElementsByName('test');
-    setCheckedItem(checkThis.id);
-    
-    for (let i = 0; i < checkboxes.length; i++) { 
-      if (checkboxes[i] !== checkThis) {
-        checkboxes[i].checked = false
-        console.log(checkedItem);
-      }
-    }
+  const checkHandler = () => {
+    setChecked(!bChecked);
+
+    // const checkboxes = document.getElementsByName('test');
+    // setCheckedItem(checkThis.id);
+
+    // for (let i = 0; i < checkboxes.length; i++) { 
+    //   if (checkboxes[i] !== checkThis) {
+    //     checkboxes[i].checked = false
+    //   }
+    // }
   };
 
   const fetchAPIKey = async () => {
@@ -131,7 +132,7 @@ export default function APIKeys() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItem
+          '/v1.0/g1/paas/Memsq07/apigw/service/'+clickId
         );
       } catch (e) {
         setError(e);
@@ -163,7 +164,7 @@ export default function APIKeys() {
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableCompAPIKeys columns={TableHeader} data={testData} checkHandler={checkHandler}/>
+          <TableCompAPIKeys columns={TableHeader} data={testData} checkHandler={checkHandler} clickId={clickId} setClickId={setClickId} bChecked={bChecked} setChecked={setChecked}/>
         </TableDiv>
       </MainContainer>
       <ModalAPIKeysCreate
@@ -181,7 +182,7 @@ export default function APIKeys() {
             cancelText="취소"
             // onConfirm={setUpdateDialog}
             onCancel={onCancel}
-            checkedItem={checkedItem}
+            checkedItem={clickId}
             visible={updateDialog}>
       </ModalAPIKeysUpdate>
       <ModalApiDelete
@@ -192,7 +193,7 @@ export default function APIKeys() {
             onCancel={onCancel}
             visible={deleteDialog}
             >
-            정말로 삭제하시겠습니까?
+            API Key를 삭제합니다.
       </ModalApiDelete>
     </React.Fragment>
   );

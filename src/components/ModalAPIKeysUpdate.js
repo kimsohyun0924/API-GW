@@ -35,7 +35,7 @@ const ImgDiv = styled.div`
 `;
 
 const TitleDiv = styled.div`
-  font-size : 17px;
+  font-size : 16px;
   padding : 10px 0px 30px 0px;
 `;
 

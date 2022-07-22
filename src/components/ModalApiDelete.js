@@ -19,7 +19,7 @@ const DarkBackground = styled.div`
 
 const DialogBlock = styled.div`
   width: 500px;
-  height: 248px;
+  height: 289px;
   padding: 20px 30px 20px 30px;
   background: white;
   border-radius: 2px;
@@ -40,8 +40,20 @@ const ImgDiv = styled.div`
   cursor: pointer;
 `;
 
+const TitleDiv = styled.div`
+  font-size : 16px;
+  padding : 20px 0px 20px 0px;
+`;
+
+const ContentDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size : 16px;
+  padding : 30px 0px 30px 0px;
+`;
+
 const ButtonGroup = styled.div`
-  margin-top: 3rem;
+  margin-top: 65px;
   display: flex;
   justify-content: center;
 `;
@@ -59,8 +71,8 @@ export default function ModalApiDelete( { title, children, confirmText, cancelTe
               <ImgDiv onClick={onCancel}>
                 <img src={Logo}/>
               </ImgDiv>
-              <h3>{title}</h3>
-              <p>{children}</p>
+              <TitleDiv>{title}</TitleDiv>
+              <ContentDiv>{children}</ContentDiv>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <Button size="small" onClick={onCancel} noline>{cancelText}</Button>

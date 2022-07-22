@@ -16,7 +16,7 @@ const Table = styled.table`
   border-spacing: 0;
   width: 100%;
   line-height: 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
 `;
 
 const THead = styled.thead`
@@ -28,8 +28,8 @@ const TH = styled.th`
   text-align: center;
   vertical-align: middle;
   padding: 10px 10px;
-  border-right: 0 solid #b6b6c3;
-  border-left: 0 solid #b6b6c3;
+  border-right: 0 solid #ccc;
+  border-left: 0 solid #ccc;
   font-weight: 400;
   font-size: 13px;
   text-align: left;
@@ -40,11 +40,11 @@ const TH = styled.th`
 `;
 
 const TBody = styled.tbody`
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
 `;
 
 const TR = styled.tr`
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ccc;
 `;
 
 const TD = styled.td`
