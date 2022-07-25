@@ -34,7 +34,7 @@ const TableHeader = [
 export default function APIKeys() {
 
   const [bChecked, setChecked] = useState(false);
-  const [clickId, setClickId] = useState(false);
+  const [clickId, setClickId] = useState();
 
   // const [checkedItem, setCheckedItem] = useState([]); //개별 체크된 아이템을 저장함
   // const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
@@ -72,7 +72,6 @@ export default function APIKeys() {
   };
 
   const Update = () => {
-
     if(bChecked === true) {
       setUpdateDialog(true);
     }
@@ -98,20 +97,20 @@ export default function APIKeys() {
   };
 
  
-  const checkHandler = () => {
-    setChecked(!bChecked);
+  // const checkHandler = () => {
+  //   setChecked(!bChecked);
 
-    // const checkboxes = document.getElementsByName('test');
-    // setCheckedItem(checkThis.id);
+  //   // const checkboxes = document.getElementsByName('test');
+  //   // setCheckedItem(checkThis.id);
 
-    // for (let i = 0; i < checkboxes.length; i++) { 
-    //   if (checkboxes[i] !== checkThis) {
-    //     checkboxes[i].checked = false
-    //   }
-    // }
-  };
+  //   // for (let i = 0; i < checkboxes.length; i++) { 
+  //   //   if (checkboxes[i] !== checkThis) {
+  //   //     checkboxes[i].checked = false
+  //   //   }
+  //   // }
+  // };
 
-  const fetchAPIKey = async () => {
+  const fetchAPIKeys = async () => {
     //get api request
     try {
       setError(null);
@@ -146,7 +145,7 @@ export default function APIKeys() {
 
 
   useEffect(() => {
-    fetchAPIKey();
+    fetchAPIKeys();
   }, [DataTemp]);
 
 
@@ -164,7 +163,7 @@ export default function APIKeys() {
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableCompAPIKeys columns={TableHeader} data={testData} checkHandler={checkHandler} clickId={clickId} setClickId={setClickId} bChecked={bChecked} setChecked={setChecked}/>
+          <TableCompAPIKeys columns={TableHeader} data={testData} clickId={clickId} setClickId={setClickId} bChecked={bChecked} setChecked={setChecked}/>
         </TableDiv>
       </MainContainer>
       <ModalAPIKeysCreate

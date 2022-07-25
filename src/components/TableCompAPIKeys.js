@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import ModalApiDelete from '../components/ModalApiDelete';
 import ModalAPIKey from '../components/ModalAPIKey';
+import { click } from '@testing-library/user-event/dist/click';
 
 const TableWrapper = styled.div`
   padding: 0px 60px 0px 60px;
@@ -83,7 +84,7 @@ const Hov = styled.td`
   } */
 `;
 
-export default function TableCompAPIKeys({ columns, data, checkHandler, clickId, setClickId, bChecked, setChecked }) {
+export default function TableCompAPIKeys({ columns, data, clickId, setClickId, bChecked, setChecked }) {
 
   const navigate = useNavigate();
   const [dialog, setDialog] = useState(false);
@@ -103,6 +104,10 @@ export default function TableCompAPIKeys({ columns, data, checkHandler, clickId,
 
   const onCancel = () => {
     setDialog(false);
+  };
+
+  const checkHandler = () => {
+    setChecked(!bChecked);
   };
 
   return (

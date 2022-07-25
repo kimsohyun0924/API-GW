@@ -138,7 +138,7 @@ export default function UsagePlanStage() {
         </TableDiv>
       </MainContainer>
       <ModalStageConnect
-            title="Stage 연결"
+            title="Stage 연결를 연결합니다."
             confirmText="연결"
             cancelText="취소"
             setUpdateDialog={setUpdateDialog}

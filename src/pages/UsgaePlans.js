@@ -35,10 +35,10 @@ export default function UsagePlans() {
   const [bChecked, setChecked] = useState(false);
   const [clickId, setClickId] = useState(false);
 
-  const [checkedItem, setCheckedItem] = useState([]); //개별 체크된 아이템을 저장함
+  // const [checkedItem, setCheckedItem] = useState([]); //개별 체크된 아이템을 저장함
   // const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
   const [deleteDialog, setDeleteDialog] = useState(false);
-  // const [updateDialog, setUpdateDialog] = useState(false);
+  const [updateDialog, setUpdateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -71,47 +71,47 @@ export default function UsagePlans() {
   };
 
   const Update = () => {
-    if(!(checkedItem.length === 0)) {
+    if(bChecked === true) {
       navigate('/usageplans/edit');
     }
   };
 
   const Delete = () => {
-    if(!(checkedItem.length === 0)) {
+    if(bChecked === true) {
       setDeleteDialog(true);
     }
   };
 
   const Stage = () => {
-    if(!(checkedItem.length === 0)) {
+    if(bChecked === true) {
       navigate('/usageplans/stage');
     }
   };
 
   const onCancel = () => {
     console.log('취소');
+    setUpdateDialog(false);
     setDeleteDialog(false);
-    // setUpdateDialog(false);
   };
 
  
-  const checkHandler = () => {
-    setChecked(!bChecked);
-    // const apiid = e.target.getAttribute('apiid');
-    // const apiname = e.target.getAttribute('apiname');
+  // const checkHandler = () => {
+  //   setChecked(!bChecked);
+  //   // const apiid = e.target.getAttribute('apiid');
+  //   // const apiname = e.target.getAttribute('apiname');
 
-    // if (e.target.checked) {
-    //     checkedItems.push(apiid);
-    //     checkedItemsName.push(apiname)
-    //     setCheckedItems(checkedItems);
-    //     setCheckedItemsName(checkedItemsName);
-    // } else if (!e.target.checked) {
-    //     setCheckedItems(checkedItems.filter(checkedItem => checkedItem !== apiid));
-    //     setCheckedItemsName(checkedItemsName.filter(checkedItemName => checkedItemName !== apiname));
-    // }
-  };
+  //   // if (e.target.checked) {
+  //   //     checkedItems.push(apiid);
+  //   //     checkedItemsName.push(apiname)
+  //   //     setCheckedItems(checkedItems);
+  //   //     setCheckedItemsName(checkedItemsName);
+  //   // } else if (!e.target.checked) {
+  //   //     setCheckedItems(checkedItems.filter(checkedItem => checkedItem !== apiid));
+  //   //     setCheckedItemsName(checkedItemsName.filter(checkedItemName => checkedItemName !== apiname));
+  //   // }
+  // };
 
-  const fetchApis = async () => {
+  const fetchUsagePlans = async () => {
     //get api request
     try {
       setError(null);
@@ -128,25 +128,25 @@ export default function UsagePlans() {
 
   const onDelete = () => {
    //delete api request
-    const deleteApi = async () => {
+    const deleteUsagePlan = async () => {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItem
+          '/v1.0/g1/paas/Memsq07/apigw/service/'+clickId
         );
       } catch (e) {
         setError(e);
         console.log(error);
       }
     };
-    deleteApi();
-    window.location.reload(true);
+    deleteUsagePlan();
+    // window.location.reload(true);
     setDeleteDialog(false);
   };
 
 
   useEffect(() => {
-    fetchApis();
+    fetchUsagePlans();
   }, [DataTemp]);
 
 
@@ -164,7 +164,7 @@ export default function UsagePlans() {
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableCompUsagePlans columns={TableHeader} data={testData} checkHandler={checkHandler} clickId={clickId} setClickId={setClickId} bChecked={bChecked} setChecked={setChecked}/>
+          <TableCompUsagePlans columns={TableHeader} data={testData} clickId={clickId} setClickId={setClickId} bChecked={bChecked} setChecked={setChecked}/>
         </TableDiv>
       </MainContainer>
       <ModalApiDelete

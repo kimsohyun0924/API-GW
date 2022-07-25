@@ -74,7 +74,7 @@ const Hov = styled.td`
   } */
 `;
 
-export default function TableCompUsagePlans({ columns, data, checkHandler, clickId, setClickId, bChecked, setChecked }) {
+export default function TableCompUsagePlans({ columns, data, clickId, setClickId, bChecked, setChecked }) {
 
   const navigate = useNavigate();
 
@@ -84,6 +84,10 @@ export default function TableCompUsagePlans({ columns, data, checkHandler, click
       setChecked(true);
     }
   }
+
+  const checkHandler = () => {
+    setChecked(!bChecked);
+  };
 
   return (
     <React.Fragment>
