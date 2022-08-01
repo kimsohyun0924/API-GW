@@ -15,14 +15,12 @@ const ItemDiv = styled.div`
 
 const Item = styled.div`
   display: flex;
-  padding: 0px 0px 20px 0px;
 `;
 
 const ItemName = styled.div`
   width: 180px;
-  min-width: 180px;
   height: 32px;
-  line-height: 32px;
+  /* line-height: 32px; */
   font-size: 15px;
 `;
 
@@ -64,13 +62,11 @@ const ItemNote = styled.div`
 
 const Item2 = styled.div`
   display: flex;
-  height: 100px;
-  padding: 0px 0px 30px 0px;
+  padding: 0px 0px 20px 0px;
 `;
 
 const ItemInput2 = styled.div`
     width: 400px;
-    min-width: 220px;
     height: 70px;
     display: flex;
     align-items: center;
@@ -168,6 +164,8 @@ export default function ApiCreate() {
                         </ItemInput>
                         <ItemNote></ItemNote>
                     </Item>
+                </ItemDiv>
+                <ItemDiv>
                     <Item>
                         <ItemName>API 이름</ItemName>
                         <ItemInput>
@@ -175,6 +173,8 @@ export default function ApiCreate() {
                         </ItemInput>
                         <ItemNote></ItemNote>
                     </Item>
+                </ItemDiv>
+                <ItemDiv>
                     <Item2>
                         <ItemName>API 설명</ItemName>
                         <ItemInput2>

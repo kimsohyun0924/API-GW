@@ -151,7 +151,7 @@ export default function MethodComp(props) {
                 <MethodInfoDiv>
                     <MethodInfoType>
                         <MethodInfoName>엔드포인트</MethodInfoName>
-                        <MethodInfoValue>{methodInfo.method_type} {methodInfo.url_path}</MethodInfoValue >
+                        <MethodInfoValue>{methodInfo.method_type} {"/"+methodInfo.url_path}</MethodInfoValue >
                     </MethodInfoType>
                     <MethodInfoType>
                         <MethodInfoName>API Key 필요</MethodInfoName>
@@ -164,7 +164,7 @@ export default function MethodComp(props) {
                 </MethodInfoDiv>
             </MethodDiv> 
             <ModalApiDelete
-                title="메서드 삭제"
+                // title="메서드 삭제"
                 confirmText="삭제"
                 cancelText="취소"
                 onConfirm={onDelete}

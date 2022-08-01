@@ -12,20 +12,16 @@ const ItemDiv = styled.div`
   display: block;
   color: #555555;
   padding: 10px 60px 10px 60px;
-  
-
 `;
 
 const Item = styled.div`
   display: flex;
-  padding: 0px 0px 20px 0px;
 `;
 
 const ItemName = styled.div`
   width: 180px;
-  min-width: 180px;
   height: 32px;
-  line-height: 32px;
+  /* line-height: 32px; */
   font-size: 15px;
 `;
 
@@ -67,13 +63,11 @@ const ItemNote = styled.div`
 
 const Item2 = styled.div`
   display: flex;
-  height: 100px;
-  padding: 0px 0px 30px 0px;
+  padding: 0px 0px 20px 0px;
 `;
 
 const ItemInput2 = styled.div`
     width: 400px;
-    min-width: 220px;
     height: 70px;
     display: flex;
     align-items: center;
@@ -114,6 +108,21 @@ const VisiablText = styled.span`
       color: red;
     `
   } */
+`;
+
+const RequestDiv = styled.div`
+    display: flex;
+    padding: 0px 0px 20px 0px;
+`;
+
+const RequestForm = styled.input`
+  width: 150px;
+  height: 32px;
+  border: solid 1px #b6b6c3;
+  background: #ffffff;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: #333333;
 `;
 
 const TableHeader = [
@@ -214,6 +223,8 @@ export default function UsagePlansCreate() {
                         </ItemInput>
                         <ItemNote></ItemNote>
                     </Item>
+                </ItemDiv>
+                <ItemDiv>
                     <Item2>
                         <ItemName>설명</ItemName>
                         <ItemInput2>
@@ -221,36 +232,44 @@ export default function UsagePlansCreate() {
                         </ItemInput2>
                         <ItemNote></ItemNote>
                     </Item2>
+                </ItemDiv>
+                <ItemDiv>
                     <Item>
                         <ItemName>요청 할당량</ItemName>
                         <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
                         <ItemNote></ItemNote>
-                        { toggle === true ? 
-                            <React.Fragment>
-                              <input/> 건/일
-                              <input/> 건/월
-                            </React.Fragment>
-                          : null
-                        }
                     </Item>
+                </ItemDiv>
+                { toggle === true ? 
+                    <React.Fragment>
+                        <ItemDiv>
+                          <RequestDiv><RequestForm/> 건/일 </RequestDiv>
+                          <RequestDiv><RequestForm/> 건/월 </RequestDiv>
+                        </ItemDiv>
+                    </React.Fragment>
+                  : null
+                }
+                <ItemDiv>
                     <Item>
                         <ItemName>요청 처리량</ItemName>
                         <ToggleSwitch clickedToggle={clickedToggle2} toggle={toggle2}/>
                         <ItemNote></ItemNote>
-                        { toggle2 === true ? 
-                            <React.Fragment>
-                              <input/> 건/초
-                            </React.Fragment>
-                          : null
-                        }
                     </Item>
                 </ItemDiv>
+                { toggle2 === true ? 
+                    <React.Fragment>
+                      <ItemDiv>
+                        <Item><RequestForm/> 건/초</Item>
+                      </ItemDiv>
+                    </React.Fragment>
+                  : null
+                }
                 <VisiablDiv>
                     <VisiablText onClick={onClick}>Stage 연결</VisiablText>
                     { stageConnect === true ?
                     <div>
                       <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                        <Button size="medium">Stage 연결 추가</Button>
+                        <Button size="large">Stage 연결 추가</Button>
                         <TableCompUsageStage columns={TableHeader} data={testData}/>
                       </ThemeProvider>
                     </div>

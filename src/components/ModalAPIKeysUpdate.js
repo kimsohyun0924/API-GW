@@ -87,7 +87,6 @@ const InputForm = styled.input`
 
 const Item2 = styled.div`
   display: flex;
-  height: 90px;
   padding: 0px 0px 20px 0px;
 `;
 

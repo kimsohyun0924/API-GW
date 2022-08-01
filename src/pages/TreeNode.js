@@ -81,11 +81,11 @@ export default function RecursiveTreeView(props) {
   const navigate = useNavigate(); 
 
   const CustomContent = React.forwardRef(function CustomContent(props, ref) {
-    // console.log(props.label);
     const {
       classes,
       className,
       label,
+      doc_type,
       nodeId,
       icon: iconProp,
       expansionIcon,
@@ -116,6 +116,8 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
+      console.log(event.target);
+      console.log(event.target.getAttribute('value'));
       if(label === "GET" || label === "POST" || label === "DELETE" || label === "PUT" || label === "ANY" || label === "PATCH" || label === "OPTIONS" || label === "HEAD") {
         setContent('third');
         // navigate('/api/operation/methodCreate');
@@ -149,6 +151,7 @@ export default function RecursiveTreeView(props) {
           onClick={handleSelectionClick}
           component="div"
           className={classes.label}
+          value={doc_type}
         >
           {label}
         </div>
@@ -181,6 +184,8 @@ export default function RecursiveTreeView(props) {
      * The tree node label.
      */
     label: PropTypes.node,
+
+    doc_type: PropTypes.node,
     /**
      * The id of the node.
      */
@@ -211,7 +216,7 @@ export default function RecursiveTreeView(props) {
 
   const renderTree = (nodes) => {
     return(
-    <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type}>
+    <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
       {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
       {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree(node)) : null}
     </StyledTreeItem>
@@ -220,7 +225,7 @@ export default function RecursiveTreeView(props) {
 
   const renderTree3 = (nodes) => {
     return(
-    <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type}>
+    <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
       {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree(node)) : null}
     </StyledTreeItem>
     );

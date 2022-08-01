@@ -136,7 +136,7 @@ const ButtonDiv = styled.div`
 export default function MethodUpdate(props) {
 
 
-  console.log(props);
+  // console.log(props);
 
   const { resourceId, methodCommandValue, isOpen, setIsOpen}= props;
   const [selectedItem, setSelectedItem] = useState();
@@ -310,7 +310,7 @@ export default function MethodUpdate(props) {
 
 
   const clickedToggle = () => {
-    setToggle((prev) => !prev);
+    setToggle(!toggle);
     console.log(toggle);
   };
 

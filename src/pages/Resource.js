@@ -21,66 +21,44 @@ export default function Resource(props) {
   // const [data, setData] = useState(); 
   // const { state } = useLocation();
   const testData = {
-                          "created_at": "2022-07-09T23:17:45.777",
-                          "updated_at": "2022-07-09T23:19:31.565",
-                          "resource_id": "62c98e09d7176c1f4f28f462",
-                          "resource_path": "/",
-                          "method_list": null,
-                          "child_resource_list": [
-                              {
-                                  "created_at": "2022-07-09T23:18:17.373",
-                                  "updated_at": "2022-07-09T23:18:58.301",
-                                  "resource_id": "62c98e29d7176c1f4f28f464",
-                                  "resource_path": "/test1",
-                                  "method_list": [
-                                    {
-                                      "method_id": "62c9966bd7176c1f4f28f47f",
-                                      "method_type": "GET",
-                                      "integration_type": "HTTP",
-                                      "url_path": "/test1",
-                                      "doc_type": "METHOD",
-                                      "created_at": "2022-07-09T23:53:31.316",
-                                      "updated_at": "2022-07-09T23:53:31.389"
-                                    },
-                                    {
-                                      "method_id": "62c99661d7176c1f4f28f47b",
-                                      "method_type": "POST",
-                                      "integration_type": "HTTP",
-                                      "url_path": "/test1",
-                                      "doc_type": "METHOD",
-                                      "created_at": "2022-07-09T23:53:21.368",
-                                      "updated_at": "2022-07-09T23:53:21.422"
-                                    }
-                                  ],
-                                  "child_resource_list": [
-                                      {
-                                          "created_at": "2022-07-09T23:18:29.277",
-                                          "updated_at": "2022-07-09T23:18:29.3",
-                                          "resource_id": "62c98e35d7176c1f4f28f465",
-                                          "resource_path": "/test2",
-                                          "method_list": null,
-                                          "child_resource_list": null
-                                      },
-                                      {
-                                          "created_at": "2022-07-09T23:18:58.258",
-                                          "updated_at": "2022-07-09T23:18:58.283",
-                                          "resource_id": "62c98e52d7176c1f4f28f466",
-                                          "resource_path": "/test3",
-                                          "method_list": null,
-                                          "child_resource_list": null
-                                      }
-                                  ]
-                              },
-                              {
-                                  "created_at": "2022-07-09T23:19:31.531",
-                                  "updated_at": "2022-07-09T23:19:31.547",
-                                  "resource_id": "62c98e73d7176c1f4f28f467",
-                                  "resource_path": "/test4",
-                                  "method_list": null,
-                                  "child_resource_list": null
-                              }
-                          ]
-                      }
+                      "resource_id": "62e7767ca5756863db928d40",
+                      "doc_type": "RESOURCE",
+                      "path": "/",
+                      "method_list": null,
+                      "child_resource_list": [
+                          {
+                              "resource_id": "62e776a0a5756863db928d42",
+                              "doc_type": "RESOURCE",
+                              "path": "/test",
+                              "method_list": null,
+                              "child_resource_list": [
+                                  {
+                                      "resource_id": "62e776aba5756863db928d43",
+                                      "doc_type": "RESOURCE",
+                                      "path": "/test2",
+                                      "method_list": [
+                                          {
+                                              "method_id": "62e776d2a5756863db928d47",
+                                              "url_path": "/MethodTest",
+                                              "doc_type": "METHOD",
+                                              "method_type": "POST",
+                                              "integration_type": "HTTP",
+                                              "created_at": "2022-08-01T15:46:42.829",
+                                              "updated_at": "2022-08-01T15:46:42.829"
+                                          }
+                                      ],
+                                      "child_resource_list": null,
+                                      "created_at": "2022-08-01T15:46:03.433",
+                                      "updated_at": "2022-08-01T15:46:42.835"
+                                  }
+                              ],
+                              "created_at": "2022-08-01T15:45:52.418",
+                              "updated_at": "2022-08-01T15:46:03.444"
+                          }
+                      ],
+                      "created_at": "2022-08-01T15:45:16.537",
+                      "updated_at": "2022-08-01T15:45:52.426"
+                  }
     
   
 

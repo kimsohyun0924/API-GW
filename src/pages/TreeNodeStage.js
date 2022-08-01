@@ -12,6 +12,7 @@ import Button from '../components/Button';
 import ModalApiDelete from '../components/ModalApiDelete';
 import StageCreate from './StageCreate';
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import StageInfo from "./StageInfo";
 
 
 const AllDiv = styled.div`
@@ -98,6 +99,7 @@ export default function RecursiveTreeView(props) {
       classes,
       className,
       label,
+      doc_type,
       nodeId,
       icon: iconProp,
       expansionIcon,
@@ -128,10 +130,20 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
+      console.log(event.target.getAttribute('value'));
+
+      if(event.target.getAttribute('value') === "RESOURCE") {
+        setContent("third");
+      }
+      else if(event.target.getAttribute('value') === "METHOD") {
+        setContent("fourth");
+      } 
+      else {
+        setContent("second");
+      }
 
       setLabel(label);
       setResourceId(nodeId);
-      setContent("second");
     };
   
     return (
@@ -154,6 +166,7 @@ export default function RecursiveTreeView(props) {
           onClick={handleSelectionClick}
           component="div"
           className={classes.label}
+          value={doc_type}
         >
           {label}
         </div>
@@ -186,6 +199,8 @@ export default function RecursiveTreeView(props) {
      * The tree node label.
      */
     label: PropTypes.node,
+
+    doc_type: PropTypes.node,
     /**
      * The id of the node.
      */
@@ -215,7 +230,7 @@ export default function RecursiveTreeView(props) {
 
   const renderTree = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name}>
+          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{doc_type : nodes.doc_type}}>
             { renderTree2(nodes.root_resource) }   
           </StyledTreeItem> 
     );
@@ -223,7 +238,7 @@ export default function RecursiveTreeView(props) {
 
   const renderTree2 = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_typ}>
+          <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_typ} ContentProps={{doc_type : nodes.doc_type}}>
             { Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree2(node)) : null }
             { Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null }
           </StyledTreeItem>  
@@ -233,14 +248,14 @@ export default function RecursiveTreeView(props) {
 
   const renderTree3 = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type}>
+          <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
             {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree2(node)) : null}
           </StyledTreeItem> 
     );
   };
 
   // console.log(serviceInfo.service_id);
-  console.log(resourceId);
+  // console.log(resourceId);
 
 
   const Create = e => {
@@ -286,19 +301,14 @@ export default function RecursiveTreeView(props) {
 
   const selectComponent = {
     first: <StageCreate serviceInfo={serviceInfo}/>,
-    second:
+    second: <StageInfo resourceId={resourceId}/>
     
    
-      <InvokeurlDiv>{resourceId}.ktcloud.io
-        <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
-          <CopyButtonDiv>주소 복사</CopyButtonDiv>
-        </CopyToClipboard>
-      </InvokeurlDiv>
-
-    
-   
-  
-    
+      // <InvokeurlDiv>{resourceId}.ktcloud.io
+      //   <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
+      //     <CopyButtonDiv>주소 복사</CopyButtonDiv>
+      //   </CopyToClipboard>
+      // </InvokeurlDiv>
     
   };
 
@@ -307,8 +317,8 @@ export default function RecursiveTreeView(props) {
       <AllDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="medium" onClick={Create}>스테이지 생성</Button>
-            <Button size="medium" onClick={Delete}>스테이지 삭제</Button>
+            <Button size="large_medium" onClick={Create}>스테이지 생성</Button>
+            <Button size="large_medium" onClick={Delete}>스테이지 삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
         <ExampleDiv>

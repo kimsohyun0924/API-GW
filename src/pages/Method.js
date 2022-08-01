@@ -3,7 +3,7 @@ import { useNavigate, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import DropdownMethod from '../components/DropdownMethod';
 import MethodCreate from './MethodCreate';
-import MethodComp from '../components/MethodComp';
+import ResourceMethodComp from '../components/ResourceMethodComp';
 import MethodUpdate from './MethodUpdate';
 import axios from 'axios';
 
@@ -15,7 +15,7 @@ const MethodDiv = styled.div`
 export default function Method(props) {
 
 
-  console.log(props);
+  // console.log(props);
 
     const [update, setUpdate] = useState(false);
     const serviceId = props.serviceId;
@@ -195,7 +195,7 @@ export default function Method(props) {
                           return (
                             <React.Fragment key={index}>
                               <MethodDiv>
-                                <MethodComp methodInfo={item} onClick={onClick}/>
+                                <ResourceMethodComp methodInfo={item} onClick={onClick}/>
                                   {/* <Routes>
                                     <Route path="/method" element={<MethodUpdate resourceId={resourceId} methodCommandValue={props.label}/>}></Route>
                                     </Routes> */}

@@ -160,7 +160,7 @@ export default function MyApis() {
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableComp columns={TableHeader} data={testData} checkHandler={checkHandler}/>
+          <TableComp columns={TableHeader} data={DataTemp} checkHandler={checkHandler}/>
         </TableDiv>
       </MainContainer>
       <ModalApiDelete
@@ -174,7 +174,7 @@ export default function MyApis() {
             {checkedItemsName}  정말로 삭제하시겠습니까?
       </ModalApiDelete>
       <ModalApiUpdate
-            title="API 변경"
+            title="APIf를 변경합니다."
             confirmText="변경하기"
             cancelText="취소"
             setUpdateDialog={setUpdateDialog}

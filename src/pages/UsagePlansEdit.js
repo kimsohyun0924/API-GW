@@ -18,7 +18,6 @@ const ItemDiv = styled.div`
 
 const Item = styled.div`
   display: flex;
-  padding: 0px 0px 20px 0px;
 `;
 
 const ItemName = styled.div`

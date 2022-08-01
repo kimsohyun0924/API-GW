@@ -13,7 +13,7 @@ const AllDiv = styled.div`
 const ItemDiv = styled.div`
     display: block;
     color: #555555;
-    padding: 20px 0px 0px 0px;
+    padding: 0px 0px 20px 0px;
 `;
 
 const Item = styled.div`
