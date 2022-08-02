@@ -13,6 +13,7 @@ import ModalApiDelete from '../components/ModalApiDelete';
 import StageCreate from './StageCreate';
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import StageInfo from "./StageInfo";
+import StageResourceInfo from "./StageResourceInfo";
 
 
 const AllDiv = styled.div`
@@ -301,7 +302,8 @@ export default function RecursiveTreeView(props) {
 
   const selectComponent = {
     first: <StageCreate serviceInfo={serviceInfo}/>,
-    second: <StageInfo resourceId={resourceId}/>
+    second: <StageInfo resourceId={resourceId}/>,
+    third: <StageResourceInfo resourceId={resourceId}/>,
     
    
       // <InvokeurlDiv>{resourceId}.ktcloud.io

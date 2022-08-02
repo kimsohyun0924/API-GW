@@ -3,6 +3,7 @@ import styled, { css, ThemeProvider } from "styled-components";
 import axios from 'axios';
 import Button from './Button';
 import Logo from '../image/Cancel.svg';
+import DropdownMethod from '../components/DropdownMethod';
 
 const DarkBackground = styled.div`
   position: fixed;
@@ -83,30 +84,6 @@ const InputForm = styled.input`
   color: #333333;
 `;
 
-
-const Item2 = styled.div`
-  display: flex;
-  height: 90px;
-  padding: 0px 0px 20px 0px;
-`;
-
-const ItemInput2 = styled.div`
-    width: 380;
-    height: 70px;
-    display: flex;
-    align-items: center;
-`;
-
-const InputForm2 = styled.input`
-  width: 380px;
-  height: 70px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
-  font-size: 13px;
-  color: #333333;
-`;
-
 const ButtonGroup = styled.div`
   margin-top: 10px;
   display: flex;
@@ -122,6 +99,12 @@ ModalAPIKeysCreate.defaultProps = {
 export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onConfirm, onCancel, visible, setUpdateDialog, checkedItems } ) {
 
   const [error, setError] = useState(null);
+
+  const [methodCommand, setMethodCommand] = useState(null);
+  const [methodCommandValue, setMethodCommandValue] = useState(null);
+  const [isOpen, setIsOpen] = useState(true);
+
+
   const [inputs, setInputs] = useState({
     APIKeyName: '',
     APIKeyExplain: ''
@@ -159,6 +142,42 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
     setUpdateDialog(false);
   };
 
+  const optionsCommand = [
+    {
+      "name": "ANY",
+      "value": "ANY"
+    },
+    {
+      "name": "DELETE",
+      "value": "DELETE"
+    },
+    {
+      "name": "GET",
+      "value": "GET"
+    },
+    {
+      "name": "HEAD",
+      "value": "HEAD"
+    },
+    {
+      "name": "OPTIONS",
+      "value": "OPTIONS"
+    },
+    {
+      "name": "PATCH",
+      "value": "PATCH"
+    },
+    {
+      "name": "POST",
+      "value": "POST"
+    },
+    {
+      "name": "PUT",
+      "value": "PUT"
+    }
+  ];
+
+
   if (!visible) return null;
   return (
       <DarkBackground>
@@ -168,19 +187,13 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
               </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
               <Item>
-                  <ItemName>API Key 이름</ItemName>
-                  <ItemInput>
-                      <InputForm name="APIKeyName" placeholder=" API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName}/>
-                  </ItemInput>
-                  <ItemNote></ItemNote>
+                  <ItemName>API</ItemName>
+                  <DropdownMethod dropdownItems={optionsCommand} default="API 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} /> 
               </Item>
-              <Item2>
-                  <ItemName>API Key 설명</ItemName>
-                  <ItemInput2>
-                      <InputForm2 name="APIKeyExplain" placeholder=" API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain}/>
-                  </ItemInput2>
-                  <ItemNote></ItemNote>
-              </Item2>
+              <Item>
+                  <ItemName>Stage</ItemName>
+                  <DropdownMethod dropdownItems={optionsCommand} default="Stage 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />     
+              </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <Button size="small" color="gray" onClick={onCancel} noline>{cancelText}</Button>

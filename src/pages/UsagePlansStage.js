@@ -143,7 +143,6 @@ export default function UsagePlanStage() {
             cancelText="취소"
             setUpdateDialog={setUpdateDialog}
             onCancel={onCancel}
-            checkedItems={checkedItems}
             visible={updatedialog}>
       </ModalStageConnect>
       <ModalApiDelete

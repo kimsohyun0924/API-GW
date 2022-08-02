@@ -116,8 +116,6 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
-      console.log(event.target);
-      console.log(event.target.getAttribute('value'));
       if(label === "GET" || label === "POST" || label === "DELETE" || label === "PUT" || label === "ANY" || label === "PATCH" || label === "OPTIONS" || label === "HEAD") {
         setContent('third');
         // navigate('/api/operation/methodCreate');
@@ -225,7 +223,7 @@ export default function RecursiveTreeView(props) {
 
   const renderTree3 = (nodes) => {
     return(
-    <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
+    <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} doc_type={nodes.doc_type}>
       {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree(node)) : null}
     </StyledTreeItem>
     );

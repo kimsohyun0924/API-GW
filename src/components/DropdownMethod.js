@@ -3,7 +3,19 @@ import { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 const DropdownContainer = styled.div`
-  width: 105px;
+  /* width: 105px; */
+  
+  ${props =>
+    props.size === "small" &&
+      css`
+      width: 105px;
+  `}
+  ${props =>
+    props.size === "medium" &&
+      css`
+      width: 380px;
+  `}
+
   &:hover {
     cursor: pointer;
   }
@@ -30,13 +42,24 @@ const DropdownSelect = styled.p`
 
 const DropdownMenu = styled.ul`
   display: ${(props) => (props.isActive ? `block` : `none`)};
-  width: 105px;
+  /* width: 105px; */
   background-color: white;
   position: absolute;
   border: 1px solid #d2d2d2;
   margin-top: 0.2rem;
   overflow-y: auto;
   padding: 0 0;  
+
+  ${props =>
+    props.size === "small" &&
+      css`
+      width: 105px;
+  `}
+  ${props =>
+    props.size === "medium" &&
+      css`
+      width: 380px;
+  `}
 `;
 
 const DropdownItemContainer = styled.li`
@@ -123,12 +146,12 @@ const DropdownDBServer = (props) => {
   // }, [props.methodCommand]);
 
   return (
-    <DropdownContainer>
+    <DropdownContainer size={props.size}>
       <DropdownBody onClick={onActiveToggle}>
       
         { selectedItem ? 
           <ItemName>{selectedItem}</ItemName>     
-          : <DropdownSelect>메서드 생성</DropdownSelect>
+          : <DropdownSelect>{props.default}</DropdownSelect>
         }
         <IconSVG
         /* 화살표 아이콘 삽입*/
@@ -147,7 +170,7 @@ const DropdownDBServer = (props) => {
         </IconSVG>
       </DropdownBody>
       
-      <DropdownMenu isActive={isActive} ref={wrapperRef}>
+      <DropdownMenu isActive={isActive} ref={wrapperRef} size={props.size}>
         {props.dropdownItems.map((item, index) => (
           <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem(e, item.name); }}>
             <DropdownItemName id="item_name" itemName={item.name} selectedItem={selectedItem}>{item.name}</DropdownItemName>
