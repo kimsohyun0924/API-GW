@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import MainContainer from '../layouts/MainContainer';
+import MainContainer from 'layouts/MainContainer';
 import { useNavigate } from 'react-router';
-import { PageTitle } from '../style/PageStyle';
+import { PageTitle } from 'style/PageStyle';
 import styled, { css, ThemeProvider } from "styled-components";
-import Button from '../components/Button';
+import Button from 'components/Button';
 import axios from 'axios';
 
 const ItemDiv = styled.div`

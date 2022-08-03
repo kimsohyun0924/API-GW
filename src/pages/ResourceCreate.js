@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
-import ToggleSwitch from '../components/ToggleSwitch';
-import CORS from '../pages/CORS';
-import Button from '../components/Button';
+import ToggleSwitch from 'components/ToggleSwitch';
+import CORS from 'pages/CORS';
+import Button from 'components/Button';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 

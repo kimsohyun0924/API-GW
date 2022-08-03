@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import MainContainer from '../layouts/MainContainer';
-import { PageTitle, PageSubTitle } from '../style/PageStyle';
+import MainContainer from 'layouts/MainContainer';
+import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
-import Button from '../components/Button';
-import TableComp from '../components/TableComp';
-import ModalApiDelete from '../components/ModalApiDelete';
-import ModalApiUpdate from '../components/ModalApiUpdate';
+import Button from 'components/Button';
+import TableComp from 'components/TableComp';
+import ModalApiDelete from 'components/ModalApiDelete';
+import ModalApiUpdate from 'components/ModalApiUpdate';
 
 
 const MenuDiv = styled.div`
@@ -154,7 +154,7 @@ export default function MyApis() {
         <PageSubTitle>API Gateway를 관리합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="medium" action={Create}>API 생성</Button>
+            <Button size="small" action={Create}>API 생성</Button>
             <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
           </ThemeProvider>

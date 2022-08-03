@@ -1,23 +1,22 @@
 import React, { useState, useCallback } from 'react';
-import MainContainer from '../layouts/MainContainer';
+import MainContainer from 'layouts/MainContainer';
 import { useNavigate } from 'react-router';
-import { PageTitle } from '../style/PageStyle';
+import { PageTitle } from 'style/PageStyle';
 import styled, { css, ThemeProvider } from "styled-components";
-import Button from '../components/Button';
+import Button from 'components/Button';
 import axios from 'axios';
-import ToggleSwitch from '../components/ToggleSwitch';
-import TableCompUsageStage from '../components/TableCompUsageStage';
+import ToggleSwitch from 'components/ToggleSwitch';
+import TableCompUsageStage from 'components/TableCompUsageStage';
 
 const ItemDiv = styled.div`
   display: block;
   color: #555555;
   padding: 10px 60px 10px 60px;
-  
-
 `;
 
 const Item = styled.div`
   display: flex;
+  padding: 0px 0px 20px 0px;
 `;
 
 const ItemName = styled.div`

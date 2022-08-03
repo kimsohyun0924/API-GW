@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import DropdownMethod from '../components/DropdownMethod';
+import DropdownMethod from 'components/DropdownMethod';
 import MethodCreate from './MethodCreate';
-import ResourceMethodComp from '../components/ResourceMethodComp';
+import ResourceMethodComp from 'components/ResourceMethodComp';
 import MethodUpdate from './MethodUpdate';
 import axios from 'axios';
 

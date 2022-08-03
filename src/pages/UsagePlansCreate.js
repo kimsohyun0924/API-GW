@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import MainContainer from '../layouts/MainContainer';
+import MainContainer from 'layouts/MainContainer';
 import { useNavigate } from 'react-router';
-import { PageTitle } from '../style/PageStyle';
+import { PageTitle } from 'style/PageStyle';
 import styled, { css, ThemeProvider } from "styled-components";
-import Button from '../components/Button';
+import Button from 'components/Button';
 import axios from 'axios';
-import ToggleSwitch from '../components/ToggleSwitch';
-import TableCompUsageStage from '../components/TableCompUsageStage';
+import ToggleSwitch from 'components/ToggleSwitch';
+import TableCompUsageStage from 'components/TableCompUsageStage';
 
 const ItemDiv = styled.div`
   display: block;
@@ -266,6 +266,18 @@ export default function UsagePlansCreate() {
                 }
                 <VisiablDiv>
                     <VisiablText onClick={onClick}>Stage 연결</VisiablText>
+                    { stageConnect === true ?
+                    <div>
+                      <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+                        <Button size="large">Stage 연결 추가</Button>
+                        <TableCompUsageStage columns={TableHeader} data={testData}/>
+                      </ThemeProvider>
+                    </div>
+                    
+                  : null}
+                </VisiablDiv>
+                <VisiablDiv>
+                    <VisiablText onClick={onClick}>API Key 연결</VisiablText>
                     { stageConnect === true ?
                     <div>
                       <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

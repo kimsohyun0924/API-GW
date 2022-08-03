@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
-import Button from '../components/Button';
+import Button from 'components/Button';
 import axios from 'axios';
 import { useLocation } from "react-router";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import img1 from "../image/Advanced_pre.svg";
-import img2 from "../image/Advanced.svg";
+import img1 from "image/Advanced_pre.svg";
+import img2 from "image/Advanced.svg";
 
 const InvokeurlDiv = styled.div`
   background: #eff4fb;
@@ -22,7 +22,7 @@ const CopyButtonDiv = styled.button`
 
 const VisiablDiv = styled.div`
   margin: 0px 20px 0px 20px;
-  padding: 5px 0px 5px 0px;
+  padding: 20px 0px 5px 0px;
   border-bottom: 0.5px solid black;
   /* #e2e2e2 */
   /* background: pink; */
@@ -69,8 +69,8 @@ export default function StageInfo(props) {
       { stageConnect === true ?
             <UsagePlanDiv>
               <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                <Button size="large">Usage Plan 연결 </Button>
-                <Button size="medium">연결 해제 </Button>
+                <Button size="supersmall">Usage Plan 연결 </Button>
+                <Button size="supersmall">연결 해제 </Button>
               </ThemeProvider>
             </UsagePlanDiv>
             : null}

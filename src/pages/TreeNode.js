@@ -9,9 +9,9 @@ import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
 import clsx from 'clsx';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import ResourceCreate from './ResourceCreate';
-import Button from '../components/Button';
+import Button from 'components/Button';
 import Method from './Method';
-import ModalApiDelete from '../components/ModalApiDelete';
+import ModalApiDelete from 'components/ModalApiDelete';
 import MethodUpdate from './MethodUpdate';
 
 
@@ -71,10 +71,10 @@ export default function RecursiveTreeView(props) {
   // console.log(props);
 
   const serviceInfo = props.serviceInfo;
+  const resourceInfo = props.data;
   const [content, setContent] = useState(null);
   const [resourceId, setResourceId] = useState(null);
   const [label, setLabel] = useState(null);
-  const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [faildialog, setFailDialog] = useState(false);
   const [error, setError] = useState(null);
@@ -254,7 +254,7 @@ export default function RecursiveTreeView(props) {
   };
 
   const onDelete = () => {
-    //delete api request
+    //delete resource request
      const deleteResource = async () => {
        try {
          setError(null);
@@ -282,8 +282,8 @@ export default function RecursiveTreeView(props) {
       <AllDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="medium" onClick={Create}>리소스 생성</Button>
-            <Button size="medium" onClick={Delete}>리소스 삭제</Button>
+            <Button size="small" onClick={Create}>리소스 생성</Button>
+            <Button size="small" onClick={Delete}>리소스 삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
         <ExampleDiv>
@@ -296,7 +296,7 @@ export default function RecursiveTreeView(props) {
               defaultSelected={'root'}
               sx={{ height: 440, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
               >
-                {renderTree(props.data)}
+                {renderTree(resourceInfo)}
             </TreeView>
           </MenuDiv> 
           <ResourceInfoDiv>

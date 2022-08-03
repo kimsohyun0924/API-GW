@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import MainContainer from '../layouts/MainContainer';
-import { PageTitle, PageSubTitle } from '../style/PageStyle';
+import MainContainer from 'layouts/MainContainer';
+import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
-import Button from '../components/Button';
-import TableCompUsageStage from '../components/TableCompUsageStage';
-import ModalApiDelete from '../components/ModalApiDelete';
-import ModalApiUpdate from '../components/ModalApiUpdate';
-import ModalStageConnect from '../components/ModalStageConnect';
+import Button from 'components/Button';
+import TableCompUsageStage from 'components/TableCompUsageStage';
+import ModalApiDelete from 'components/ModalApiDelete';
+import ModalStageConnect from 'components/ModalStageConnect';
 
 const MenuDiv = styled.div`
 /* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */

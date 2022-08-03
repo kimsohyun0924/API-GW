@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
-import Button from '../components/Button';
+import Button from 'components/Button';
 import axios from 'axios';
 import { useLocation } from "react-router";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import ResourceMethodComp from '../components/ResourceMethodComp';
+import ResourceMethodComp from 'components/ResourceMethodComp';
 
 const InvokeurlDiv = styled.div`
   background: #eff4fb;

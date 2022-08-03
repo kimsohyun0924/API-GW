@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router';
 import MainContainer from '../layouts/MainContainer';
-import { PageTitle, Content, HR } from '../style/PageStyle';
+import { PageTitle, Content, HR } from 'style/PageStyle';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';

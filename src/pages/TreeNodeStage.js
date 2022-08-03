@@ -8,8 +8,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
-import ModalApiDelete from '../components/ModalApiDelete';
+import Button from 'components/Button';
+import ModalApiDelete from 'components/ModalApiDelete';
 import StageCreate from './StageCreate';
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import StageInfo from "./StageInfo";
@@ -264,12 +264,12 @@ export default function RecursiveTreeView(props) {
   };
 
   const onDelete = () => {
-    //delete api request
+    //delete stage request
      const deleteStage = async () => {
        try {
          setError(null);
          await axios.delete(
-           '/v1.0/g1/paas/Memsq07/apigw/stage'+resourceId
+           '/v1.0/g1/paas/Memsq07/apigw/stage/'+resourceId
          );
        } catch (e) {
          setError(e);
@@ -319,8 +319,8 @@ export default function RecursiveTreeView(props) {
       <AllDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="large_medium" onClick={Create}>스테이지 생성</Button>
-            <Button size="large_medium" onClick={Delete}>스테이지 삭제</Button>
+            <Button size="small" onClick={Create}>스테이지 생성</Button>
+            <Button size="small" onClick={Delete}>스테이지 삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
         <ExampleDiv>

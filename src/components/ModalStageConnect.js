@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
 import axios from 'axios';
 import Button from './Button';
@@ -90,36 +90,37 @@ const ButtonGroup = styled.div`
   justify-content: center;
 `;
 
-ModalAPIKeysCreate.defaultProps = {
+ModalStageConnect.defaultProps = {
   confirmText: '확인'
 };
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onConfirm, onCancel, visible, setUpdateDialog, checkedItems } ) {
+export default function ModalStageConnect( { title, children, confirmText, cancelText, onConfirm, onCancel, visible, setUpdateDialog, checkedItems } ) {
 
   const [error, setError] = useState(null);
 
   const [methodCommand, setMethodCommand] = useState(null);
   const [methodCommandValue, setMethodCommandValue] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
+  const [optionsCommand, serOptionsCommand] = useState(null);
 
 
-  const [inputs, setInputs] = useState({
-    APIKeyName: '',
-    APIKeyExplain: ''
-  });
-  
-  const { APIKeyName, APIKeyExplain } = inputs;
-  
-  const onChange = e => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value
-    });
+  const fetchApis = async () => {
+    //get api request
+    try {
+      setError(null);
+
+      const response = await axios.get(
+        '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+      );
+      serOptionsCommand(response.data); // 데이터는 response.data)
+      // console.log(response.data);
+    } catch (e) {
+      setError(e);
+    }
   };
-  // console.log(inputs);
+
 
   const onCreate = () => {
   
@@ -129,8 +130,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
         await axios.put(
           '/v1.0/g1/paas/Memsq07/apigw/apikey/'+checkedItems,
           {
-            apikey_name: APIKeyName,
-            apikey_description: APIKeyExplain
+
           }
         );
       } catch (e) {
@@ -142,41 +142,10 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
     setUpdateDialog(false);
   };
 
-  const optionsCommand = [
-    {
-      "name": "ANY",
-      "value": "ANY"
-    },
-    {
-      "name": "DELETE",
-      "value": "DELETE"
-    },
-    {
-      "name": "GET",
-      "value": "GET"
-    },
-    {
-      "name": "HEAD",
-      "value": "HEAD"
-    },
-    {
-      "name": "OPTIONS",
-      "value": "OPTIONS"
-    },
-    {
-      "name": "PATCH",
-      "value": "PATCH"
-    },
-    {
-      "name": "POST",
-      "value": "POST"
-    },
-    {
-      "name": "PUT",
-      "value": "PUT"
-    }
-  ];
 
+  useEffect(() => {
+    fetchApis();
+  }, [optionsCommand]);
 
   if (!visible) return null;
   return (

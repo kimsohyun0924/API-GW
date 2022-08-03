@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
-import ToggleSwitch from '../components/ToggleSwitch';
-import Button from '../components/Button';
+import ToggleSwitch from 'components/ToggleSwitch';
+import Button from 'components/Button';
 import axios from 'axios';
 
 const AllDiv = styled.div`
@@ -416,7 +416,7 @@ export default function MethodUpdate(props) {
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
             <Button size="small" onClick={onCancel} noline>취소</Button>
-            <Button size="medium" onClick={onCreate} >저장</Button>
+            <Button size="small" onClick={onCreate} >저장</Button>
           </ThemeProvider>
         </ButtonDiv>
       </AllDiv>

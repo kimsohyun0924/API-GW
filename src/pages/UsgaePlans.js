@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import MainContainer from '../layouts/MainContainer';
-import { PageTitle, PageSubTitle } from '../style/PageStyle';
+import MainContainer from 'layouts/MainContainer';
+import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
-import Button from '../components/Button';
-import TableCompUsagePlans from '../components/TableCompUsagePlans';
-import ModalApiDelete from '../components/ModalApiDelete';
-import ModalApiUpdate from '../components/ModalApiUpdate';
+import Button from 'components/Button';
+import TableCompUsagePlans from 'components/TableCompUsagePlans';
+import ModalApiDelete from 'components/ModalApiDelete';
+import ModalApiUpdate from 'components/ModalApiUpdate';
 
 
 const MenuDiv = styled.div`
@@ -160,7 +160,7 @@ export default function UsagePlans() {
             <Button size="large" action={Create}>Usage Plan 생성</Button>
             <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
-            <Button size="large_medium" outline onClick={Stage}>연결된 Stage</Button>
+            <Button size="large" outline onClick={Stage}>연결된 Stage</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>

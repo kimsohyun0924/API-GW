@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import MainContainer from '../layouts/MainContainer';
-import { PageTitle, PageSubTitle } from '../style/PageStyle';
+import MainContainer from 'layouts/MainContainer';
+import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
-import Button from '../components/Button';
-import ModalApiDelete from '../components/ModalApiDelete';
-import ModalApiUpdate from '../components/ModalApiUpdate';
-import ModalAPIKeysCreate from '../components/ModalAPIKeysCreate';
-import ModalAPIKeysUpdate from '../components/ModalAPIKeysUpdate';
-import TableCompAPIKeys from '../components/TableCompAPIKeys';
+import Button from 'components/Button';
+import ModalApiDelete from 'components/ModalApiDelete';
+import ModalAPIKeysCreate from 'components/ModalAPIKeysCreate';
+import ModalAPIKeysUpdate from 'components/ModalAPIKeysUpdate';
+import TableCompAPIKeys from 'components/TableCompAPIKeys';
 
 
 const MenuDiv = styled.div`
@@ -156,10 +155,10 @@ export default function APIKeys() {
         <PageSubTitle>API Key를 관리합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="large_medium" onClick={Create}>API Key 생성</Button>
+            <Button size="small" onClick={Create}>API Key 생성</Button>
             <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
-            <Button size="large_medium" outline onClick={Stage}>연결된 Stage</Button>
+            <Button size="small" outline onClick={Stage}>연결된 Stage</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>

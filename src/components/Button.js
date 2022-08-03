@@ -18,6 +18,7 @@ const colorStyles = css`
         css`
           color: #333336;
           background: none;
+          padding: 7px 10px 7px 10px;
           border: 0.01rem solid #333336;
           &:hover {
             background: white;
@@ -55,36 +56,21 @@ const colorStyles = css`
 
 const sizes = {
   large: {
-    minWidth: '130px',
-    height: '2.25rem',
-    fontSize: '14px'
-  },
-  large_medium: {
-    minWidth: '100px',
-    height: '2.25rem',
-    fontSize: '14px'
+    fontSize: '16px'
   },
   medium: {
-    minWidth: '80px',
-    height: '2.25rem',
-    fontSize: '14px'
+    fontSize: '15px'
   },
   small: {
-    minWidth: '60px',
-    height: '2.25rem',
     fontSize: '14px'
   },
   supersmall: {
-    minWidth: '40px',
-    height: '20px',
     fontSize: '13px'
   }
 };
 
 const sizeStyles = css`
   ${({ size }) => css`
-    min-width: ${sizes[size].minWidth};
-    height: ${sizes[size].height};
     font-size: ${sizes[size].fontSize};
   `}
 `;
@@ -104,6 +90,7 @@ const StyledButton = styled.button`
   vertical-align: middle; */
   /* min-width: 200px; */
   box-shadow: none;
+  padding: 10px 20px 10px 20px;
 
   /* 크기 */
   ${sizeStyles}
