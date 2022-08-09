@@ -62,7 +62,8 @@ const ItemNote = styled.div`
 
 const Item2 = styled.div`
   display: flex;
-  padding: 0px 0px 20px 0px;
+  /* padding: 0px 0px 20px 0px; */
+  /* background: pink; */
 `;
 
 const ItemInput2 = styled.div`
@@ -92,7 +93,7 @@ const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
   /* align-items: center; */
-  margin: 5px 60px 5px 60px;
+  margin: 10px 60px 5px 60px;
 `;
 
 export default function ApiCreate() {

@@ -160,7 +160,7 @@ export default function UsagePlans() {
             <Button size="large" action={Create}>Usage Plan 생성</Button>
             <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
-            <Button size="large" outline onClick={Stage}>연결된 Stage</Button>
+            <Button size="small" outline onClick={Stage}>연결된 Stage</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>

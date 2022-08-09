@@ -58,7 +58,8 @@ export default function MyApis() {
 
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  
+  console.log(DataTemp);
 
   // const ApiOperation = (e) => {
   //   const evalue = e.target.getAttribute('value');
@@ -137,14 +138,14 @@ export default function MyApis() {
       }
     };
     deleteApi();
-    // window.location.reload(true);
+    window.location.reload(true);
     setDialog(false);
   };
 
 
   useEffect(() => {
     fetchApis();
-  }, [DataTemp]);
+  }, []);
 
 
   return (

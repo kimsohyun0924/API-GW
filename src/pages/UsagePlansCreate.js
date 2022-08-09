@@ -7,6 +7,7 @@ import Button from 'components/Button';
 import axios from 'axios';
 import ToggleSwitch from 'components/ToggleSwitch';
 import TableCompUsageStage from 'components/TableCompUsageStage';
+import TableCompAPIKeysStage from 'components/TableCompAPIKeysStage';
 
 const ItemDiv = styled.div`
   display: block;
@@ -45,8 +46,8 @@ const InputForm = styled.input`
 `;
 
 const ItemNote = styled.div`
-  font-size: 12px;
-  color: #777777;
+  font-size: 16px;
+  color: black;
   padding: 0 10px;
   height: 32px;
   text-align: left;
@@ -63,7 +64,7 @@ const ItemNote = styled.div`
 
 const Item2 = styled.div`
   display: flex;
-  padding: 0px 0px 20px 0px;
+  /* padding: 0px 0px 20px 0px; */
 `;
 
 const ItemInput2 = styled.div`
@@ -112,7 +113,7 @@ const VisiablText = styled.span`
 
 const RequestDiv = styled.div`
     display: flex;
-    padding: 0px 0px 20px 0px;
+    padding: 0px 0px 15px 0px;
 `;
 
 const RequestForm = styled.input`
@@ -153,6 +154,7 @@ export default function UsagePlansCreate() {
   const [toggle, setToggle] = useState(false);
   const [toggle2, setToggle2] = useState(false);
   const [stageConnect, setStageConnect] = useState(false);
+  const [APIKeyConnect, setAPIKeyConnect] = useState(false);
 
   const onCancel = (e) => {
     console.log("onCancel");    
@@ -209,6 +211,11 @@ export default function UsagePlansCreate() {
     // console.log(isActive2)
     setStageConnect((prev) => !prev);
   }
+
+  const onClick2 = () => {
+    // console.log(isActive2)
+    setAPIKeyConnect((prev) => !prev);
+  }
     
 
   return (
@@ -242,10 +249,16 @@ export default function UsagePlansCreate() {
                 </ItemDiv>
                 { toggle === true ? 
                     <React.Fragment>
-                        <ItemDiv>
-                          <RequestDiv><RequestForm/> 건/일 </RequestDiv>
-                          <RequestDiv><RequestForm/> 건/월 </RequestDiv>
-                        </ItemDiv>
+                      <div style={{padding: "0px 0px 0px 240px"}}>
+                          <RequestDiv>
+                            <RequestForm/>
+                            <ItemNote> 건/일 </ItemNote>
+                          </RequestDiv>
+                          <RequestDiv>
+                            <RequestForm/> 
+                            <ItemNote> 건/월 </ItemNote> 
+                          </RequestDiv>
+                     </div>
                     </React.Fragment>
                   : null
                 }
@@ -258,9 +271,9 @@ export default function UsagePlansCreate() {
                 </ItemDiv>
                 { toggle2 === true ? 
                     <React.Fragment>
-                      <ItemDiv>
+                      <div style={{padding: "0px 0px 0px 240px"}}>
                         <Item><RequestForm/> 건/초</Item>
-                      </ItemDiv>
+                      </div>
                     </React.Fragment>
                   : null
                 }
@@ -268,22 +281,26 @@ export default function UsagePlansCreate() {
                     <VisiablText onClick={onClick}>Stage 연결</VisiablText>
                     { stageConnect === true ?
                     <div>
+                      <div style={{padding:"5px 0px 10px 0px"}}>
                       <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                        <Button size="large">Stage 연결 추가</Button>
-                        <TableCompUsageStage columns={TableHeader} data={testData}/>
+                        <Button size="small">Stage 연결 추가</Button>
                       </ThemeProvider>
+                      </div>
+                      <TableCompUsageStage columns={TableHeader} data={testData}/>
                     </div>
                     
                   : null}
                 </VisiablDiv>
                 <VisiablDiv>
-                    <VisiablText onClick={onClick}>API Key 연결</VisiablText>
-                    { stageConnect === true ?
+                    <VisiablText onClick={onClick2}>API Key 연결</VisiablText>
+                    { APIKeyConnect === true ?
                     <div>
+                      <div style={{padding:"5px 0px 10px 0px"}}>
                       <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                        <Button size="large">Stage 연결 추가</Button>
-                        <TableCompUsageStage columns={TableHeader} data={testData}/>
-                      </ThemeProvider>
+                        <Button size="small">APIKey 연결 추가</Button>
+                      </ThemeProvider>  
+                      </div>
+                      <TableCompAPIKeysStage columns={TableHeader} data={testData}/>
                     </div>
                     
                   : null}
