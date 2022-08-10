@@ -151,7 +151,7 @@ export default function MyApis() {
   return (
     <React.Fragment>
       <MainContainer>
-        <PageTitle>My APIs</PageTitle>
+        {/* <PageTitle>My APIs</PageTitle>
         <PageSubTitle>API Gateway를 관리합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
@@ -162,9 +162,9 @@ export default function MyApis() {
         </MenuDiv>
         <TableDiv>
           <TableComp columns={TableHeader} data={DataTemp} checkHandler={checkHandler}/>
-        </TableDiv>
+        </TableDiv> */}
       </MainContainer>
-      <ModalApiDelete
+      {/* <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제"
             cancelText="취소"
@@ -182,7 +182,7 @@ export default function MyApis() {
             onCancel={onCancel}
             checkedItems={checkedItems}
             visible={updatedialog}>
-      </ModalApiUpdate>
+      </ModalApiUpdate> */}
     </React.Fragment>
   );
 }

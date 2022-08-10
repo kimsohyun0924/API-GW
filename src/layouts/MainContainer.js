@@ -11,7 +11,7 @@ const MainWrapper = styled.div`
   justify-content: center;
   font-size: 1rem;
   background: var(--main-bs-white);
-  /* padding: 1rem; */
+  padding: 0px 60px 0px 60px;
   transition: all 0.3s ease;
 
   ${props => !props.menuOpen && 

@@ -150,7 +150,7 @@ export default function ApiCreate() {
     <React.Fragment>
         <MainContainer>
             <PageTitle>API 생성</PageTitle>
-                <ItemDiv>
+                {/* <ItemDiv>
                     <Item>
                         <ItemName>API 생성</ItemName>
                         <ItemInput>
@@ -165,7 +165,7 @@ export default function ApiCreate() {
                         </ItemInput>
                         <ItemNote></ItemNote>
                     </Item>
-                </ItemDiv>
+                </ItemDiv> */}
                 <ItemDiv>
                     <Item>
                         <ItemName>API 이름</ItemName>
@@ -175,7 +175,7 @@ export default function ApiCreate() {
                         <ItemNote></ItemNote>
                     </Item>
                 </ItemDiv>
-                <ItemDiv>
+                {/* <ItemDiv>
                     <Item2>
                         <ItemName>API 설명</ItemName>
                         <ItemInput2>
@@ -183,7 +183,7 @@ export default function ApiCreate() {
                         </ItemInput2>
                         <ItemNote></ItemNote>
                     </Item2>
-                </ItemDiv>
+                </ItemDiv> */}
                 <ButtonDiv>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <Button size="small" onClick={onCancel} noline>취소</Button>

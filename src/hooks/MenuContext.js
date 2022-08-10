@@ -2,10 +2,15 @@ import React, { useReducer, createContext, useContext } from 'react';
 
 const initialValue = {
   menuOpen : true,
-  sub : "",
-  item : "",
-  flag : false,
-  token: ""
+  token: "",
+  messageBoxFlag: false,
+  messageBoxContent: "",
+  platformId: "",
+  zoneId : "",
+  tenantId: "",
+  tierId: "",
+  accessKey: "",
+  secretKey: "",
 }
 
 function menuReducer(state, action) {

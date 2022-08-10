@@ -19,7 +19,8 @@ const theme = {
   tabletSize: 900,
   topbarSize: `60px`,
   sidebarSize: `280px`,
-  sidebarSmallSize: `50px`
+  sidebarSmallSize: `50px`,
+  minWidth: '800px'
 };
 
 export default theme;
