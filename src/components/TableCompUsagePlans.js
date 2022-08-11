@@ -4,7 +4,7 @@ import TableLine from '../image/tableline.svg';
 import { useNavigate } from 'react-router-dom';
 
 const TableWrapper = styled.div`
-  padding: 0px 60px 0px 60px;
+  padding: 0px 0px 0px 0px;
   overflow-x:auto;
   font-size: 15px;
   color: #333333;
@@ -85,8 +85,9 @@ export default function TableCompUsagePlans({ columns, data, clickId, setClickId
     }
   }
 
-  const checkHandler = () => {
-    setChecked(!bChecked);
+  const checkHandler = (e) => {
+    // e.preventDefault();
+    // setChecked(!bChecked);
   };
 
   return (

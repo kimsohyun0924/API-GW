@@ -9,7 +9,7 @@ const MainWrapper = styled.div`
   min-height: calc(100vh - ${theme.topbarSize});
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  /* font-size: 1rem; */
   background: var(--main-bs-white);
   padding: 0px 60px 0px 60px;
   transition: all 0.3s ease;

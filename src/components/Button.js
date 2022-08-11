@@ -18,37 +18,36 @@ const colorStyles = css`
         css`
           color: #333336;
           background: none;
+          border-radius: 2px;
           padding: 7px 10px 7px 10px;
           border: 0.01rem solid #333336;
+          font-family: Spoqa Han Sans Regular;
+          margin-right: 10px;
           &:hover {
             background: white;
             border: 0.01rem solid #03428e;
             color: #03428e;
-          }
+          }    
         `}
+
         ${props =>
-        props.noline&&
+          props.noline&&
         css`
-          color: black;
-          background: none;
+          background: ${selected};
+          border-radius: 3px;
+          padding: 7px 20px 7px 20px;
           border: none;
+          font-family: Spoqa Han Sans Regular;
+          margin-right: 20px;
+          vertical-align: middle;
+          text-align: center;
+          height: auto; 
           &:hover {
-            color: black;
-            background: #f4f4f4;
-            border: none;
+            background: ${lighten(0.1, selected)};
           }
-        `}
-        ${props =>
-        props.resource&&
-        css`
-          color: black;
-          background: none;
-          border: none;
-          &:hover {
-            background: none;
-            border: none;
-            color: black;
-          }
+          &:active {
+            background: ${darken(0.1, selected)};
+          }            
         `}
     `;
   }}
@@ -81,7 +80,6 @@ const StyledButton = styled.button`
   /* align-items: center; */
   outline: none;
   border: none;
-  border-radius: 2px;
   color: white;
   /* font-weight: bold; */
   cursor: pointer;
@@ -90,7 +88,6 @@ const StyledButton = styled.button`
   vertical-align: middle; */
   /* min-width: 200px; */
   box-shadow: none;
-  padding: 10px 20px 10px 20px;
 
   /* 크기 */
   ${sizeStyles}
@@ -99,17 +96,15 @@ const StyledButton = styled.button`
   ${colorStyles}
 
   /* 기타 */
-  & + & {
-    margin-left: 15px;
-  }
 `;
 
-function Button({ children, color, size, outline, action, ...rest }) {
+function Button({ children, color, size, outline, noline, action, ...rest }) {
   return (
     <StyledButton
       color={color}
       size={size}
       outline={outline}
+      noline={noline}
       onClick={action}
       {...rest}
     >
@@ -120,7 +115,7 @@ function Button({ children, color, size, outline, action, ...rest }) {
 
 Button.defaultProps = {
   color: 'blue',
-  size: 'medium'
+  size: 'medium',
 };
 
 export default Button;

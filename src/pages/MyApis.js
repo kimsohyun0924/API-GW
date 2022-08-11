@@ -8,12 +8,20 @@ import Button from 'components/Button';
 import TableComp from 'components/TableComp';
 import ModalApiDelete from 'components/ModalApiDelete';
 import ModalApiUpdate from 'components/ModalApiUpdate';
+import MainHeader from 'components/MainHeader';
 
 
-const MenuDiv = styled.div`
+
+const HeadDiv = styled.div`
+  min-width: 800px;
+`;
+
+
+const ButtonDiv = styled.div`
 /* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */
   display: flex;
-  padding: 30px 60px 20px 60px;
+  min-width: 800px;
+  padding: 30px 0px 20px 0px;
 `;
 
 const TableDiv = styled.div`
@@ -151,20 +159,24 @@ export default function MyApis() {
   return (
     <React.Fragment>
       <MainContainer>
-        {/* <PageTitle>My APIs</PageTitle>
-        <PageSubTitle>API Gateway를 관리합니다.</PageSubTitle>
-        <MenuDiv>
-          <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="small" action={Create}>API 생성</Button>
+        <HeadDiv>
+          <MainHeader location={"APIs"}/>
+          <PageTitle>My APIs</PageTitle>
+          <PageSubTitle>API Gateway를 관리합니다.</PageSubTitle>
+        </HeadDiv>
+        
+        <ButtonDiv>
+          <ThemeProvider theme={{ palette: { blue: '#141e49'}}}>
+            <Button size="small" noline action={Create}>API 생성</Button>
             <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
           </ThemeProvider>
-        </MenuDiv>
+        </ButtonDiv>
         <TableDiv>
           <TableComp columns={TableHeader} data={DataTemp} checkHandler={checkHandler}/>
-        </TableDiv> */}
+        </TableDiv>
       </MainContainer>
-      {/* <ModalApiDelete
+      <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제"
             cancelText="취소"
@@ -182,7 +194,7 @@ export default function MyApis() {
             onCancel={onCancel}
             checkedItems={checkedItems}
             visible={updatedialog}>
-      </ModalApiUpdate> */}
+      </ModalApiUpdate>
     </React.Fragment>
   );
 }

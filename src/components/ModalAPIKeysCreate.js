@@ -3,6 +3,7 @@ import styled, { css, ThemeProvider } from "styled-components";
 import axios from 'axios';
 import Button from './Button';
 import Logo from '../image/Cancel.svg';
+import Spacer from 'react-spacer';
 
 const DarkBackground = styled.div`
   position: fixed;
@@ -110,6 +111,7 @@ const ButtonGroup = styled.div`
   margin-top: 10px;
   display: flex;
   justify-content: center;
+  
 `;
 
 ModalAPIKeysCreate.defaultProps = {
@@ -181,10 +183,13 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
                   <ItemNote></ItemNote>
               </Item2>
               <ButtonGroup>
+                <Spacer grow={1}/>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <Button size="small" color="gray" onClick={onCancel} noline>{cancelText}</Button>
-                    <Button size="medium" onClick={onCreate}>{confirmText}</Button>
+                    
+                    <Button size="small" outline color="gray" onClick={onCancel}>{cancelText}</Button>
+                    <Button size="medium" noline onClick={onCreate}>{confirmText}</Button>
                   </ThemeProvider>
+               <Spacer grow={1}/> 
               </ButtonGroup>
           </DialogBlock>
       </DarkBackground>

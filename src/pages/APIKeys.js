@@ -155,7 +155,7 @@ export default function APIKeys() {
         <PageSubTitle>API Key를 관리합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="small" onClick={Create}>API Key 생성</Button>
+            <Button size="small" noline onClick={Create}>API Key 생성</Button>
             <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
             <Button size="small" outline onClick={Stage}>연결된 Stage</Button>

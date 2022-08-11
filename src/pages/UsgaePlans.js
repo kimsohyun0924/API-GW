@@ -13,7 +13,7 @@ import ModalApiUpdate from 'components/ModalApiUpdate';
 const MenuDiv = styled.div`
 /* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */
   display: flex;
-  padding: 30px 60px 20px 60px;
+  padding: 30px 0px 20px 0px;
 `;
 
 const TableDiv = styled.div`
@@ -157,7 +157,7 @@ export default function UsagePlans() {
         <PageSubTitle>API의 사용량을 계획합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="large" action={Create}>Usage Plan 생성</Button>
+            <Button size="large" noline action={Create}>Usage Plan 생성</Button>
             <Button size="small" outline onClick={Update}>변경</Button>
             <Button size="small" outline onClick={Delete}>삭제</Button>
             <Button size="small" outline onClick={Stage}>연결된 Stage</Button>

@@ -75,8 +75,8 @@ export default function ModalApiDelete( { title, children, confirmText, cancelTe
               <ContentDiv>{children}</ContentDiv>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <Button size="small" onClick={onCancel} noline>{cancelText}</Button>
-                    <Button size="medium" onClick={onConfirm}>{confirmText}</Button>
+                    <Button size="small" outline onClick={onCancel}>{cancelText}</Button>
+                    <Button size="medium" noline onClick={onConfirm}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>
