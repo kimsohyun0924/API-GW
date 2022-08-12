@@ -115,7 +115,7 @@ export default function APIKeys() {
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+        '/v1.0/g1/paas/Memsq07/apigw/api-keys/'
       );
       setDataTemp(response.data); // 데이터는 response.data)
       // console.log(response.data);
@@ -155,14 +155,14 @@ export default function APIKeys() {
         <PageSubTitle>API Key를 관리합니다.</PageSubTitle>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="small" noline onClick={Create}>API Key 생성</Button>
-            <Button size="small" outline onClick={Update}>변경</Button>
-            <Button size="small" outline onClick={Delete}>삭제</Button>
-            <Button size="small" outline onClick={Stage}>연결된 Stage</Button>
+            <Button size="small" line="line" onClick={Create}>API Key 생성</Button>
+            <Button size="small" line="outline" onClick={Update}>변경</Button>
+            <Button size="small" line="outline" onClick={Delete}>삭제</Button>
+            <Button size="small" line="outline" onClick={Stage}>연결된 Stage</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableCompAPIKeys columns={TableHeader} data={testData} clickId={clickId} setClickId={setClickId} bChecked={bChecked} setChecked={setChecked}/>
+          <TableCompAPIKeys columns={TableHeader} data={DataTemp} clickId={clickId} setClickId={setClickId} bChecked={bChecked} setChecked={setChecked}/>
         </TableDiv>
       </MainContainer>
       <ModalAPIKeysCreate

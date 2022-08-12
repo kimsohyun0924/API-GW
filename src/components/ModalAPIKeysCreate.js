@@ -145,10 +145,11 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/apikey/'+checkedItems,
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys/createKey',
           {
-            apikey_name: APIKeyName,
-            apikey_description: APIKeyExplain
+            name: APIKeyName,
+            description: APIKeyExplain,
+            enabled: true
           }
         );
       } catch (e) {
@@ -157,7 +158,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
     };
     createAPIKey();
     // window.location.reload(true);
-    setUpdateDialog(false);
+    setCreateDialog(false);
   };
 
   if (!visible) return null;
@@ -186,8 +187,8 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
                 <Spacer grow={1}/>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     
-                    <Button size="small" outline color="gray" onClick={onCancel}>{cancelText}</Button>
-                    <Button size="medium" noline onClick={onCreate}>{confirmText}</Button>
+                    <Button size="small" line="outline" color="gray" onClick={onCancel}>{cancelText}</Button>
+                    <Button size="medium" line="line" onClick={onCreate}>{confirmText}</Button>
                   </ThemeProvider>
                <Spacer grow={1}/> 
               </ButtonGroup>

@@ -282,8 +282,9 @@ export default function RecursiveTreeView(props) {
       <AllDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="small" onClick={Create}>리소스 생성</Button>
-            <Button size="small" onClick={Delete}>리소스 삭제</Button>
+            <span style={{padding: "0px 15px 0px 0px"}}><Button size="small" line="line" onClick={Create}>리소스 생성</Button></span>
+           
+            <Button size="small" line="line" onClick={Delete}>리소스 삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
         <ExampleDiv>

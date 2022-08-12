@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const PageTitle = styled.div`
+  color: #333;
   padding: 43px 0px 0px 0px;
   line-height: 39px;
   font-size: 32px;

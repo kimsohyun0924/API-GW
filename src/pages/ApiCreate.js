@@ -3,14 +3,24 @@ import MainContainer from 'layouts/MainContainer';
 import { useNavigate } from 'react-router';
 import { PageTitle } from 'style/PageStyle';
 import styled, { css, ThemeProvider } from "styled-components";
+import MainHeader from 'components/MainHeader';
 import Button from 'components/Button';
 import axios from 'axios';
 
-const ItemDiv = styled.div`
-  display: block;
-  color: #555555;
-  padding: 10px 60px 10px 60px;
+const HeadDiv = styled.div`
 
+`;
+
+const BodyDiv = styled.div`
+  display: block;
+  margin: 40px 0px 0px 0px;
+`;
+
+const ItemDiv = styled.div`
+  display: flex;
+  /* color: #555555; */
+  /* padding: 10px 0px 10px 0px; */
+  background: pink; 
 `;
 
 const Item = styled.div`
@@ -18,10 +28,12 @@ const Item = styled.div`
 `;
 
 const ItemName = styled.div`
-  width: 180px;
-  height: 32px;
+  width: 133px;
+  height: 50px;
+  text-align 
   /* line-height: 32px; */
-  font-size: 15px;
+  font-size: 14px;
+  padding: 10px 0px 10px 0px;
 `;
 
 const ItemInput = styled.div`
@@ -149,47 +161,51 @@ export default function ApiCreate() {
   return (
     <React.Fragment>
         <MainContainer>
+          <HeadDiv>
+            <MainHeader location={"API 생성"}/>
             <PageTitle>API 생성</PageTitle>
-                <ItemDiv>
-                    <Item>
-                        <ItemName>API 생성</ItemName>
-                        <ItemInput>
-                        <div>
-                            <input type='radio'></input>
-                            <ItemText>새로운 API</ItemText> 
-                            <input type='radio' ></input>
-                            <ItemText>API 복사</ItemText>
-                            <input type='radio' ></input>
-                            <ItemText>Swagger에서 가져오기</ItemText>
-                        </div>
-                        </ItemInput>
-                        <ItemNote></ItemNote>
-                    </Item>
-                </ItemDiv>
-                <ItemDiv>
-                    <Item>
-                        <ItemName>API 이름</ItemName>
-                        <ItemInput>
-                            <InputForm name="ApiName" placeholder=" API 이름을 입력하세요" onChange={onChange} value={ApiName}/>
-                        </ItemInput>
-                        <ItemNote></ItemNote>
-                    </Item>
-                </ItemDiv>
-                <ItemDiv>
-                    <Item2>
-                        <ItemName>API 설명</ItemName>
-                        <ItemInput2>
-                            <InputForm2 name="ApiExplain" placeholder=" API 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
-                        </ItemInput2>
-                        <ItemNote></ItemNote>
-                    </Item2>
-                </ItemDiv>
-                <ButtonDiv>
-                  <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <Button size="small" outline onClick={onCancel}>취소</Button>
-                    <Button size="medium" noline onClick={onCreate}>생성하기</Button>
-                  </ThemeProvider>
-                </ButtonDiv>
+          </HeadDiv>
+          <BodyDiv>
+            <ItemDiv>
+              <ItemName>API 생성</ItemName>
+                <ItemInput>
+                  <div>
+                    <input type='radio'></input>
+                    <ItemText>새로운 API</ItemText> 
+                    <input type='radio' ></input>
+                    <ItemText>API 복사</ItemText>
+                    <input type='radio' ></input>
+                    <ItemText>Swagger에서 가져오기</ItemText>
+                  </div>
+                </ItemInput>
+              <ItemNote></ItemNote>
+
+            </ItemDiv>
+            <ItemDiv>
+              <Item>
+                <ItemName>API 이름</ItemName>
+                  <ItemInput>
+                    <InputForm name="ApiName" placeholder=" API 이름을 입력하세요" onChange={onChange} value={ApiName}/>
+                  </ItemInput>
+                  <ItemNote></ItemNote>
+              </Item>
+            </ItemDiv>
+            <ItemDiv>
+              <Item2>
+                <ItemName>API 설명</ItemName>
+                <ItemInput2>
+                  <InputForm2 name="ApiExplain" placeholder=" API 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
+                </ItemInput2>
+                <ItemNote></ItemNote>
+              </Item2>
+            </ItemDiv>
+            <ButtonDiv>
+                <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+                  <Button size="large" line="noline" onClick={onCancel}>취소</Button>
+                      <Button size="large" line="line" onClick={onCreate}>생성하기</Button>
+                </ThemeProvider>
+            </ButtonDiv>
+          </BodyDiv>
         </MainContainer>
     </React.Fragment>
   );

@@ -157,8 +157,8 @@ export default function ResourceCreate(props) {
             {/* {content && <Content>{selectComponent[content]}</Content>} */}
             <ButtonDiv>
               <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                <Button size="small" onClick={onCancel} noline>취소</Button>
-                <Button size="medium" onClick={onCreate} >생성하기</Button>
+                <Button size="small" line="noline" onClick={onCancel}>취소</Button>
+                <Button size="medium" line="line" onClick={onCreate} >생성하기</Button>
               </ThemeProvider>
             </ButtonDiv>
           </AllDiv>   

@@ -6,39 +6,22 @@ const colorStyles = css`
   ${({ theme, color }) => {
     const selected = theme.palette[color];
     return css`
-      background: ${selected};
+      /* background: ${selected};
       &:hover {
         background: ${lighten(0.1, selected)};
       }
       &:active {
         background: ${darken(0.1, selected)};
-      }
-      ${props =>
-        props.outline &&
-        css`
-          color: #333336;
-          background: none;
-          border-radius: 2px;
-          padding: 7px 10px 7px 10px;
-          border: 0.01rem solid #333336;
-          font-family: Spoqa Han Sans Regular;
-          margin-right: 10px;
-          &:hover {
-            background: white;
-            border: 0.01rem solid #03428e;
-            color: #03428e;
-          }    
-        `}
+      } */
 
-        ${props =>
-          props.noline&&
+      ${props =>
+          props.line === "line"&&
         css`
           background: ${selected};
           border-radius: 3px;
-          padding: 7px 20px 7px 20px;
+          padding: 9px 21px 9px 21px;
           border: none;
           font-family: Spoqa Han Sans Regular;
-          margin-right: 20px;
           vertical-align: middle;
           text-align: center;
           height: auto; 
@@ -49,6 +32,52 @@ const colorStyles = css`
             background: ${darken(0.1, selected)};
           }            
         `}
+
+      ${props =>
+        props.line === "outline" &&
+        css`
+          color: #333336;
+          background: none;
+          border-radius: 2px;
+          padding: 8px 10px 8px 10px;
+          border: 1px solid #333336;
+          font-family: Spoqa Han Sans Regular;
+
+          &:hover {
+            background: white;
+            border: 1px solid #03428e;
+            color: #03428e;
+          }    
+        `}
+
+        ${props =>
+        props.line === "noline" &&
+        css`
+          color: black;
+          background: none;
+          border: none;
+          padding: 12px 28px 12px 28px;
+          font-family: Spoqa Han Sans Regular;
+          &:hover {
+            color: black;
+            background: #f4f4f4;
+            border: none;
+          }
+        `}
+
+        ${props =>
+        props.resource&&
+        css`
+          color: black;
+          background: none;
+          border: none;
+          &:hover {
+            background: none;
+            border: none;
+            color: black;
+          }
+        `}
+
     `;
   }}
 `;
@@ -98,13 +127,12 @@ const StyledButton = styled.button`
   /* 기타 */
 `;
 
-function Button({ children, color, size, outline, noline, action, ...rest }) {
+function Button({ children, color, size, line, action, ...rest }) {
   return (
     <StyledButton
       color={color}
       size={size}
-      outline={outline}
-      noline={noline}
+      line={line}
       onClick={action}
       {...rest}
     >

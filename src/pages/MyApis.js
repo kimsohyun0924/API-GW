@@ -9,23 +9,23 @@ import TableComp from 'components/TableComp';
 import ModalApiDelete from 'components/ModalApiDelete';
 import ModalApiUpdate from 'components/ModalApiUpdate';
 import MainHeader from 'components/MainHeader';
+import { backgrounds } from 'polished';
 
 
 
 const HeadDiv = styled.div`
-  min-width: 800px;
+
 `;
 
 
 const ButtonDiv = styled.div`
 /* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */
-  display: flex;
-  min-width: 800px;
+  /* display: flex; */
+  position: relative;
   padding: 30px 0px 20px 0px;
 `;
 
 const TableDiv = styled.div`
-  
 `;
 
 const TableHeader = [
@@ -164,12 +164,12 @@ export default function MyApis() {
           <PageTitle>My APIs</PageTitle>
           <PageSubTitle>API Gateway를 관리합니다.</PageSubTitle>
         </HeadDiv>
-        
+
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49'}}}>
-            <Button size="small" noline action={Create}>API 생성</Button>
-            <Button size="small" outline onClick={Update}>변경</Button>
-            <Button size="small" outline onClick={Delete}>삭제</Button>
+            <span style={{padding:"0px 20px 0px 0px"}}><Button size="small" line="line" onClick={Create}>API 생성</Button></span>
+            <span  style={{padding:"0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Update}>변경</Button></span>
+            <Button size="small" line="outline" onClick={Delete}>삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
         <TableDiv>

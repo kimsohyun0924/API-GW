@@ -67,7 +67,14 @@ export default function MainHeader({location}) {
 
   useEffect(() => {
 
-    if(location === 'Usage Plans') {
+
+    if(location === 'APIs') {
+      setUrl('/myapis');
+    }
+    else if(location === 'API 생성') {
+      setUrl('/api/create');
+    }
+    else if(location === 'Usage Plans') {
       setUrl('/usageplans');
     } else if((location === 'API Keys')) {
       setUrl('/apikeys');

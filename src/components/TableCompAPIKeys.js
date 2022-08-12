@@ -136,13 +136,13 @@ export default function TableCompAPIKeys({ columns, data, clickId, setClickId, b
                     <TD width='1%'>
                       <input type="checkbox" checked={clickId === item.apiKey_id ? bChecked : null} onChange={checkHandler}/>
                     </TD>
-                    <TD width='10%'>{item.apiKey_name}</TD>
-                    <TD width='10%'>{item.apiKey_description}</TD>
-                    <TD width='10%'>{item.apiKey_id}</TD>
-                    <TD width='10%'>{item.isEnabled === true ? "활성":"비활성"}</TD>
+                    <TD width='10%'>{item.name}</TD>
+                    <TD width='10%'>{item.description}</TD>
+                    <TD width='10%'>{item.id}</TD>
+                    <TD width='10%'>{item.enabled === true ? "활성":"비활성"}</TD>
                     <TD width='10%'>
                       <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                        <Button size="supersmall" outline onClick={onClick} value={item.primaryKey}>
+                        <Button size="supersmall" line="outline" onClick={onClick} value={item.api_key}>
                           {/* { dialog === true ? item.primaryKey : <div>보기</div>} */}
                           보기
                           </Button>
@@ -159,11 +159,9 @@ export default function TableCompAPIKeys({ columns, data, clickId, setClickId, b
       </TableWrapper>
       <ModalAPIKey
             title="API Key 보기"
-            confirmText="삭제"
-            cancelText="취소"
+            cancelText="확인"
             onCancel={onCancel}
             visible={dialog}
-       
             >
             {key}
       </ModalAPIKey>
