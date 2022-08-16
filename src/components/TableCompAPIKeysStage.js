@@ -8,7 +8,7 @@ import ModalAPIKey from './ModalAPIKey';
 import { click } from '@testing-library/user-event/dist/click';
 
 const TableWrapper = styled.div`
-  padding: 0px 60px 0px 60px;
+  padding: 0px 0px 0px 0px;
   overflow-x:auto;
   font-size: 15px;
   color: #333333;
@@ -129,6 +129,9 @@ export default function TableCompAPIKeys({ columns, data, clickId, setClickId, b
             </tr>            
           </THead>
           <TBody>
+            {
+              
+            }
             { data && data.map((item, index) => {
               return (
                 <React.Fragment key={index}>
@@ -136,20 +139,19 @@ export default function TableCompAPIKeys({ columns, data, clickId, setClickId, b
                     <TD width='1%'>
                       <input type="checkbox" checked={clickId === item.apiKey_id ? bChecked : null} onChange={checkHandler}/>
                     </TD>
-                    <TD width='10%'>{item.apiKey_name}</TD>
-                    <TD width='10%'>{item.apiKey_description}</TD>
-                    <TD width='10%'>{item.apiKey_id}</TD>
-                    <TD width='10%'>{item.isEnabled === true ? "활성":"비활성"}</TD>
-                    <TD width='10%'>
+                    <TD width='50%'>{item.apiKey_name}</TD>
+                    <TD width='50%'>{item.apiKey_description}</TD>
+                    {/* <TD width='10%'>{item.apiKey_id}</TD> */}
+                    {/* <TD width='10%'>{item.isEnabled === true ? "활성":"비활성"}</TD> */}
+                    {/* <TD width='10%'>
                       <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                         <Button size="supersmall" outline onClick={onClick} value={item.primaryKey}>
-                          {/* { dialog === true ? item.primaryKey : <div>보기</div>} */}
+                          { dialog === true ? item.primaryKey : <div>보기</div>}
                           보기
-                          </Button>
-                          
+                        </Button>
                       </ThemeProvider>
-                    </TD>
-                    <TD width='10%'>{item.created_at}</TD>
+                    </TD> */}
+                    {/* <TD width='10%'>{item.created_at}</TD> */}
                   </TR> 
                 </React.Fragment>
               );

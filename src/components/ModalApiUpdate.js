@@ -188,8 +188,8 @@ export default function ModalPopup( { title, children, confirmText, cancelText, 
                     </Item2>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <Button size="small" color="gray" onClick={onCancel} noline>{cancelText}</Button>
-                    <Button size="medium" onClick={onUpdate}>{confirmText}</Button>
+                    <Button size="small" color="gray" line="noline" onClick={onCancel} >{cancelText}</Button>
+                    <Button size="medium" line="line" Click={onUpdate}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>

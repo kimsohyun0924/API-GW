@@ -10,6 +10,10 @@ const ResourceContainer = styled.div`
     
 `;  
 
+const HeadDiv = styled.div`
+
+`;
+
 export default function Resource(props) {
 
   const serviceInfo = props.serviceInfo;

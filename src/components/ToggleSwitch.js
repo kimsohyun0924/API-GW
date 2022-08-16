@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Switch from '@material-ui/core/Switch';
 import styled, { css } from 'styled-components';
-import CORS from '../pages/CORS';
+import CORS from '../pages/API/CORS';
 
 const ToggleBtn = styled.button`
   width: 36px;

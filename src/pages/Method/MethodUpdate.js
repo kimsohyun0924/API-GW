@@ -230,6 +230,7 @@ export default function MethodUpdate(props) {
       setSelectedItem(response.data.integration_type);
       setInputs({
         url_path : '   '+response.data.url_path });
+      setToggle(response.data.api_key_using);
     } catch (e) {
       setError(e);
     }
@@ -415,8 +416,8 @@ export default function MethodUpdate(props) {
         </ItemDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="small" onClick={onCancel} noline>취소</Button>
-            <Button size="small" onClick={onCreate} >저장</Button>
+            <Button size="small" line="noline" onClick={onCancel}>취소</Button>
+            <Button size="small" line="line" onClick={onCreate} >저장</Button>
           </ThemeProvider>
         </ButtonDiv>
       </AllDiv>

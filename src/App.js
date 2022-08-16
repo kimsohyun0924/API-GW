@@ -6,17 +6,15 @@ import { MenuProvider } from './hooks/MenuContext';
 import Sidebar from './layouts/Sidebar';
 import Header from './layouts/Header';
 
-import Myapis from './pages/MyApis';
-import ApiCreate from './pages/ApiCreate';
-import ApiOperation from './pages/ApiOperations';
-import Resource from './pages/Resource';
-import Stage from './pages/Stage';
-import UsagePlans from './pages/UsgaePlans';
-import UsagePlansCreate from './pages/UsagePlansCreate';
-import UsagePlansEdit from './pages/UsagePlansEdit';
-import UsagePlansStage from './pages/UsagePlansStage';
-import APIKeys from './pages/APIKeys';
-import APIKeysStage from './pages/APIKeysStage';
+import Myapis from './pages/API/MyApis';
+import ApiCreate from './pages/API/ApiCreate';
+import ApiOperation from './pages/API/ApiOperations';
+import UsagePlans from './pages/UsagePlan/UsgaePlans';
+import UsagePlansCreate from './pages/UsagePlan/UsagePlansCreate';
+import UsagePlansEdit from './pages/UsagePlan/UsagePlansEdit';
+import UsagePlansStage from './pages/UsagePlan/UsagePlansStage';
+import APIKeys from './pages/ApiKey/APIKeys';
+import APIKeyUsagePlans from './pages/ApiKey/APIKeyUsagePlans';
 
 
 
@@ -39,7 +37,7 @@ export default function App() {
                 <Route path='/usageplans/edit' element={<UsagePlansEdit />}></Route>
                 <Route path='/usageplans/stage' element={<UsagePlansStage />}></Route>
                 <Route path='/apikeys' element={<APIKeys />}></Route>
-                <Route path='/apikeys/stage' element={<APIKeysStage />}></Route>
+                <Route path='/apikey/usageplans' element={<APIKeyUsagePlans />}></Route>
   
 
                 {/* <Route path='/api/operation/:value' element={<Stage />}></Route> */}

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled, { css } from "styled-components";
 import ModalApiDelete from './ModalApiDelete';
-import MethodUpdate from '../pages/MethodUpdate';
 
 const MethodDiv = styled.div`
     width: 320px;

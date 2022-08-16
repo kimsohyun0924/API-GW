@@ -7,17 +7,20 @@ import styled, { ThemeProvider } from "styled-components";
 import Button from 'components/Button';
 import TableCompUsageStage from 'components/TableCompUsageStage';
 import ModalApiDelete from 'components/ModalApiDelete';
-import ModalApiUpdate from 'components/ModalApiUpdate';
 import ModalStageConnect from 'components/ModalStageConnect';
+import MainHeader from 'components/MainHeader';
+
+
+const HeadDiv = styled.div`
+`;
 
 const MenuDiv = styled.div`
 /* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */
   display: flex;
-  padding: 30px 60px 20px 60px;
+  padding: 30px 0px 20px 0px;
 `;
 
 const TableDiv = styled.div`
-  
 `;
 
 const TableHeader = [
@@ -25,7 +28,7 @@ const TableHeader = [
   "Stage 이름"
 ];
 
-export default function UsagePlanStage() {
+export default function APIKeyUsagePlans() {
   
   const [bChecked, setChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]); //개별 체크된 아이템을 저장함
@@ -125,12 +128,16 @@ export default function UsagePlanStage() {
   return (
     <React.Fragment>
       <MainContainer>
-        <PageTitle>Usage Plans - Stage 연결 목록</PageTitle>
-        <PageSubTitle>Usage Plans에 연결된 Stage를 관리합니다</PageSubTitle>
+        <HeadDiv>
+          <MainHeader location={"APIs"}/>
+          <PageTitle>API Key - Usage Plan 연결 목록</PageTitle>
+          <PageSubTitle>API key에 연결된 Usage Plan을 관리합니다.</PageSubTitle>
+        </HeadDiv>
+    
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="medium" action={Create}>Stage 연결</Button>
-            <Button size="small" outline onClick={Delete}>삭제</Button>
+            <span style={{padding: "0px 15px 0px 0px"}}><Button size="medium" line="line" action={Create}>Stage 연결</Button></span>
+            <Button size="small" line="outline" onClick={Delete}>삭제</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
@@ -138,11 +145,12 @@ export default function UsagePlanStage() {
         </TableDiv>
       </MainContainer>
       <ModalStageConnect
-            title="Stage 연결를 연결합니다."
+            title="Stage 연결"
             confirmText="연결"
             cancelText="취소"
             setUpdateDialog={setUpdateDialog}
             onCancel={onCancel}
+            checkedItems={checkedItems}
             visible={updatedialog}>
       </ModalStageConnect>
       <ModalApiDelete

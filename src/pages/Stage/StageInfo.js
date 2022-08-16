@@ -21,8 +21,8 @@ const CopyButtonDiv = styled.button`
 `;
 
 const VisiablDiv = styled.div`
-  margin: 0px 20px 0px 20px;
-  padding: 20px 0px 5px 0px;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 5px 0px;
   border-bottom: 0.5px solid black;
   /* #e2e2e2 */
   /* background: pink; */
@@ -33,12 +33,10 @@ const VisiablText = styled.span`
   font-size: 18px;
   cursor: pointer;
   /* display: inline-block */
-  
 `;
 
 const UsagePlanDiv = styled.div`
-  padding: 10px 20px 10px 20px;
-
+  padding: 10px 0px 10px 0px;
 `;
 
 export default function StageInfo(props) {
@@ -52,11 +50,11 @@ export default function StageInfo(props) {
 
   return (
     <React.Fragment>
-      <InvokeurlDiv>{props.resourceId}.ktcloud.io
+      {/* <InvokeurlDiv>{props.resourceId}.ktcloud.io
         <CopyToClipboard text={props.resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
           <CopyButtonDiv>주소 복사</CopyButtonDiv>
         </CopyToClipboard>
-      </InvokeurlDiv>
+      </InvokeurlDiv> */}
       <VisiablDiv>
         <VisiablText onClick={onClick}>Usage Plans
           { stageConnect === true ?
@@ -64,13 +62,12 @@ export default function StageInfo(props) {
             : <img style={{padding:"0px 0px 0px 10px"}} src={img1}/>
           }
         </VisiablText>
-       
       </VisiablDiv>
       { stageConnect === true ?
             <UsagePlanDiv>
               <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                <Button size="supersmall">Usage Plan 연결 </Button>
-                <Button size="supersmall">연결 해제 </Button>
+                <span style={{padding: "0px 15px 0px 0px"}}><Button size="supersmall" line="line">Usage Plan 연결 </Button></span>
+                <Button size="supersmall" line="line">연결 해제 </Button>
               </ThemeProvider>
             </UsagePlanDiv>
             : null}

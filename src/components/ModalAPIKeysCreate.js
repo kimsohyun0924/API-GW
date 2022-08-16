@@ -120,7 +120,7 @@ ModalAPIKeysCreate.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onConfirm, onCancel, visible, setUpdateDialog, checkedItems } ) {
+export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onCancel, visible, setCreateDialog} ) {
 
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
@@ -137,14 +137,14 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       [name]: value
     });
   };
-  // console.log(inputs);
+  console.log(inputs);
 
   const onCreate = () => {
   
     const createAPIKey = async () => {
       try {
         setError(null);
-        await axios.put(
+        await axios.post(
           '/v1.0/g1/paas/Memsq07/apigw/api-keys/createKey',
           {
             name: APIKeyName,
@@ -157,7 +157,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       }
     };
     createAPIKey();
-    // window.location.reload(true);
+    window.location.reload(true);
     setCreateDialog(false);
   };
 
@@ -186,8 +186,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
               <ButtonGroup>
                 <Spacer grow={1}/>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    
-                    <Button size="small" line="outline" color="gray" onClick={onCancel}>{cancelText}</Button>
+                    <span style={{padding:"0px 15px 0px 0px"}}><Button size="small" line="noline" color="gray" onClick={onCancel}>{cancelText}</Button></span>
                     <Button size="medium" line="line" onClick={onCreate}>{confirmText}</Button>
                   </ThemeProvider>
                <Spacer grow={1}/> 

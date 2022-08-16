@@ -20,7 +20,6 @@ const ItemDiv = styled.div`
   display: flex;
   /* color: #555555; */
   /* padding: 10px 0px 10px 0px; */
-  background: pink; 
 `;
 
 const Item = styled.div`
@@ -30,7 +29,6 @@ const Item = styled.div`
 const ItemName = styled.div`
   width: 133px;
   height: 50px;
-  text-align 
   /* line-height: 32px; */
   font-size: 14px;
   padding: 10px 0px 10px 0px;

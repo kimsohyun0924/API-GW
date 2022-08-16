@@ -119,16 +119,18 @@ ModalAPIKeysCreate.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onConfirm, onCancel, visible, setUpdateDialog, checkedItems } ) {
+export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onCancel, visible, setUpdateDialog, checkedItem} ) {
 
   const [error, setError] = useState(null);
   const [toggle, setToggle] = useState(false);
   const [inputs, setInputs] = useState({
     APIKeyName: '',
-    APIKeyExplain: ''
+    APIKeyExplain: '',
   });
   
-  const { APIKeyName, APIKeyExplain } = inputs;
+  const APIKeyName = checkedItem.name;
+  const APIKeyExplain = checkedItem.description;
+  const enabledValue = checkedItem.enabled;
   
   const onChange = e => {
     const { name, value } = e.target;
@@ -139,24 +141,25 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
   };
   // console.log(inputs);
 
-  const onCreate = () => {
+  const onUpdate = () => {
   
-    const createAPIKey = async () => {
+    const updateAPIKey = async () => {
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/apikey/'+checkedItems,
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+checkedItem.id,
           {
-            apikey_name: APIKeyName,
-            apikey_description: APIKeyExplain
+            name: APIKeyName,
+            description: APIKeyExplain,
+            enabled: toggle
           }
         );
       } catch (e) {
         setError(e);
       }
     };
-    createAPIKey();
-    // window.location.reload(true);
+    updateAPIKey();
+    window.location.reload(true);
     setUpdateDialog(false);
   };
 
@@ -189,16 +192,16 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
                   <ItemNote></ItemNote>
               </Item2>
               <Item>
-                  <ItemName>API Key 이름</ItemName>
+                  <ItemName>API Key 활성화</ItemName>
                   <ItemInput>
-                      <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+                      <ToggleSwitch clickedToggle={clickedToggle} toggle={enabledValue}/>
                   </ItemInput>
                   <ItemNote></ItemNote>
               </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <Button size="small" color="gray" onClick={onCancel} noline>{cancelText}</Button>
-                    <Button size="medium" onClick={onCreate}>{confirmText}</Button>
+                  <span style={{padding:"0px 15px 0px 0px"}}><Button size="small" color="gray" line="noline" onClick={onCancel}>{cancelText}</Button></span>
+                    <Button size="medium" line="line" onClick={onUpdate}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>

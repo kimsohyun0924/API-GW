@@ -5,27 +5,33 @@ import MainContainer from 'layouts/MainContainer';
 import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
 import Button from 'components/Button';
-import TableCompUsageStage from 'components/TableCompUsageStage';
+import TableComp from 'components/TableComp';
 import ModalApiDelete from 'components/ModalApiDelete';
-import ModalStageConnect from 'components/ModalStageConnect';
+import ModalApiUpdate from 'components/ModalApiUpdate';
+import MainHeader from 'components/MainHeader';
 
-const MenuDiv = styled.div`
+const HeadDiv = styled.div`
+`;
+
+const ButtonDiv = styled.div`
 /* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */
-  display: flex;
-  padding: 30px 60px 20px 60px;
+  /* display: flex; */
+  position: relative;
+  padding: 30px 0px 20px 0px;
 `;
 
 const TableDiv = styled.div`
-  
 `;
 
 const TableHeader = [
   "API 이름",
-  "Stage 이름"
+  "API 설명",
+  "API ID",
+  "생성일시"
 ];
 
-export default function APIKeysStage() {
-  
+export default function MyApis() {
+
   const [bChecked, setChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]); //개별 체크된 아이템을 저장함
   const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
@@ -34,27 +40,52 @@ export default function APIKeysStage() {
   const [DataTemp, setDataTemp] = useState([]);
   const testData = [
     {
-      "api_name": "api_test1",
-      "stage_name": "stage_test1",
+        "service_id": "62c98e09d7176c1f4f28f463",
+        "mem_sq": "Memsq07",
+        "name": "Sso",
+        "description": "Sso",
+        "root_resource_id": "62c98e09d7176c1f4f28f462",
+        "created_at": "2022-07-09T23:17:45.777",
+        "updated_at": "2022-07-09T23:17:45.777"
     },
     {
-      "api_name": "api_test2",
-      "stage_name": "stage_test2",
-    },
+      "service_id": "62c98e09d7176c1f4f28f463",
+      "mem_sq": "Memsq07",
+      "name": "test",
+      "description": "test",
+      "root_resource_id": "62c98e09d7176c1f4f28f462",
+      "created_at": "2022-07-09T23:17:45.777",
+      "updated_at": "2022-07-09T23:17:45.777"
+  }
 ]
 
   const [error, setError] = useState(null);
-  const [value, setValue] = useState(null);
   const navigate = useNavigate();
+  
+  console.log(DataTemp);
+
+  // const ApiOperation = (e) => {
+  //   const evalue = e.target.getAttribute('value');
+  //   console.log(e);
+  //   // getElementById( 'xyz' ).getAttribute( 'title' );
+  //   navigate('/api/operation', { state: e.target.value });
+  // };
+
+  // console.log(checkedItems);
 
   const Create = () => {
-    // navigate('/usageplans/create');
-    setUpdateDialog(true);
+    navigate('/api/create');
   };
 
   const Delete = () => {
     if(!(checkedItems.length === 0)) {
       setDialog(true);
+    }
+  };
+
+  const Update = () => {
+    if(!(checkedItems.length === 0)) {
+      setUpdateDialog(true);
     }
   };
 
@@ -90,7 +121,6 @@ export default function APIKeysStage() {
         '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
       );
       setDataTemp(response.data); // 데이터는 response.data)
-      setValue(response.data.length);
       // console.log(response.data);
     } catch (e) {
       setError(e);
@@ -105,7 +135,6 @@ export default function APIKeysStage() {
         await axios.delete(
           '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItems
         );
-        setValue(value-1);
       } catch (e) {
         setError(e);
         console.log(error);
@@ -121,30 +150,27 @@ export default function APIKeysStage() {
     fetchApis();
   }, []);
 
+
   return (
     <React.Fragment>
       <MainContainer>
-        <PageTitle>API Keys - Stage 연결 목록</PageTitle>
-        <PageSubTitle>API keys에 연결된 Stage를 관리합니다.</PageSubTitle>
-        <MenuDiv>
-          <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="medium" action={Create}>Stage 연결</Button>
-            <Button size="small" outline onClick={Delete}>삭제</Button>
+        <HeadDiv>
+          <MainHeader location={"APIs"}/>
+          <PageTitle>My APIs</PageTitle>
+          <PageSubTitle>API Gateway를 관리합니다.</PageSubTitle>
+        </HeadDiv>
+
+        <ButtonDiv>
+          <ThemeProvider theme={{ palette: { blue: '#141e49'}}}>
+            <span style={{padding:"0px 20px 0px 0px"}}><Button size="small" line="line" onClick={Create}>API 생성</Button></span>
+            <span  style={{padding:"0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Update}>변경</Button></span>
+            <Button size="small" line="outline" onClick={Delete}>삭제</Button>
           </ThemeProvider>
-        </MenuDiv>
+        </ButtonDiv>
         <TableDiv>
-          <TableCompUsageStage columns={TableHeader} data={testData} checkHandler={checkHandler}/>
+          <TableComp columns={TableHeader} data={DataTemp} checkHandler={checkHandler}/>
         </TableDiv>
       </MainContainer>
-      <ModalStageConnect
-            title="Stage 연결"
-            confirmText="연결"
-            cancelText="취소"
-            setUpdateDialog={setUpdateDialog}
-            onCancel={onCancel}
-            checkedItems={checkedItems}
-            visible={updatedialog}>
-      </ModalStageConnect>
       <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제"
@@ -155,8 +181,15 @@ export default function APIKeysStage() {
             >
             {checkedItemsName}  정말로 삭제하시겠습니까?
       </ModalApiDelete>
+      <ModalApiUpdate
+            title="API를 변경합니다."
+            confirmText="변경하기"
+            cancelText="취소"
+            setUpdateDialog={setUpdateDialog}
+            onCancel={onCancel}
+            checkedItems={checkedItems}
+            visible={updatedialog}>
+      </ModalApiUpdate>
     </React.Fragment>
   );
 }
-
-

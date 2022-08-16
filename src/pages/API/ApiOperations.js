@@ -1,32 +1,24 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { PageTitle, PageSubTitle } from 'style/PageStyle';
+import MainContainer from 'layouts/MainContainer';
+import MainHeader from 'components/MainHeader';
 import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router';
-import MainContainer from '../layouts/MainContainer';
-import { PageTitle, Content, HR } from 'style/PageStyle';
 import Box from '@mui/material/Box';
-import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Resource from './Resource';
-import Stage from './Stage';
-import { style } from '@mui/system';
+import Resource from 'pages/Resource/Resource';
+import Stage from 'pages/Stage/Stage';
 import { useLocation } from "react-router";
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
 
 
-const MainDiv = styled.div`
-  /* background : pink; */
-  padding: 10px 60px 10px 60px;
-
+const HeadDiv = styled.div`
 `;
 
-const HeadDiv = styled.div`
-  /* background: pink; */
-  padding: 30px 0px 30px 0px;
-  font-size: 25px;
-  font-weight: bold;
+const MainDiv = styled.div`
+  padding: 10px 0px 10px 0px;
 `;
 
 const TSS = styled(Tabs)`
@@ -67,8 +59,14 @@ export default function ApiOperation() {
     return ( 
         <React.Fragment>
             <MainContainer>
+      
+                <HeadDiv>
+                  <MainHeader location={"APIs"}/>
+                  <PageTitle>{state.name}</PageTitle>
+                </HeadDiv>
+
                 <MainDiv>
-                  <HeadDiv>{state.name}</HeadDiv>
+                  {/* <HeadDiv>{state.name}</HeadDiv> */}
                     <Box sx={{ width: '100%' }}>
                       <TabContext value={value}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
@@ -81,7 +79,7 @@ export default function ApiOperation() {
                           </Box>
                           <TabPanel sx={{padding: '5px 0px 0px 0px'}} value="0" >
                               <Resource serviceInfo={state}/>  
-                              {/* { navigate('api/operation/resource', {state : state}) }  */}
+                               {/* { navigate('api/operation/resource', {state : state}) }  */}
                           </TabPanel>
                           <TabPanel sx={{padding: '5px 0px 0px 0px'}} value="1" >
                               <Stage serviceInfo={state}/> 
@@ -94,7 +92,7 @@ export default function ApiOperation() {
                           </TabPanel> 
                         </TabContext> 
                     </Box>
-                 </MainDiv>
+                 </MainDiv> 
             </MainContainer>
         </React.Fragment>
         

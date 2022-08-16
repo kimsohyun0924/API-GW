@@ -8,7 +8,7 @@ import ModalAPIKey from '../components/ModalAPIKey';
 import { click } from '@testing-library/user-event/dist/click';
 
 const TableWrapper = styled.div`
-  padding: 0px 60px 0px 60px;
+  padding: 0px 0px 0px 0px;
   overflow-x:auto;
   font-size: 15px;
   color: #333333;
@@ -50,7 +50,7 @@ const TBody = styled.tbody`
 const TR = styled.tr`
   border-bottom: 1px solid #ccc;
 
-  ${props => props.clickId === props.Id && props.bChecked === true &&
+  ${props => props.clickId === props.Id &&
     css`
       background: #c7dff4;;
       /* font-weight: 500; */
@@ -64,12 +64,6 @@ const TD = styled.td`
   vertical-align: middle;
   padding: 8px 10px;
   text-align: left;
-
-  ${props => props.sh === true &&
-    css`
-      background: #c7dff4;
-    `
-  }
 `;
 
 const Hov = styled.td`
@@ -84,21 +78,40 @@ const Hov = styled.td`
   } */
 `;
 
-export default function TableCompAPIKeys({ columns, data, clickId, setClickId, bChecked, setChecked }) {
+export default function TableCompAPIKeys({ columns, data, clickData, setClickData, bChecked, setChecked }) {
 
   const navigate = useNavigate();
   const [dialog, setDialog] = useState(false);
   const [key, setKey] = useState(null);
+  const initialState = {
+    "name": null,
+    "description": null,
+    "id": null,
+    "enabled": null,
+    "api_key": null,
+    "created_at": null
+  }
 
   const onClick = e => {
     setKey(e.target.value);
     setDialog(true);
   }
 
-  const onClick2 = (Id) => {
-    setClickId(Id);
-    if(clickId === Id) {
-      setChecked(true);
+  const onClick2 = (item) => {
+    // setClickId(item.id);
+    if(item.id === clickData.id) {
+      // setChecked(true);
+      setClickData(initialState);
+    }
+    else {
+      setClickData({
+        "name": item.name,
+        "description": item.description,
+        "id": item.id,
+        "enabled": item.enabled,
+        "api_key": item.api_key,
+        "created_at": item.created_at
+      });
     }
   }
 
@@ -107,7 +120,7 @@ export default function TableCompAPIKeys({ columns, data, clickId, setClickId, b
   };
 
   const checkHandler = () => {
-    setChecked(!bChecked);
+    // setChecked(!bChecked);
   };
 
   return (
@@ -132,9 +145,9 @@ export default function TableCompAPIKeys({ columns, data, clickId, setClickId, b
             { data && data.map((item, index) => {
               return (
                 <React.Fragment key={index}>
-                  <TR key={index} onClick={() => { onClick2(item.apiKey_id) }} clickId={clickId} Id={item.apiKey_id} bChecked={bChecked}>
+                  <TR key={index} onClick={() => { onClick2(item) }} clickId={clickData.id} Id={item.id}>
                     <TD width='1%'>
-                      <input type="checkbox" checked={clickId === item.apiKey_id ? bChecked : null} onChange={checkHandler}/>
+                      <input type="checkbox" checked={clickData.id === item.id ? true : false} onChange={checkHandler}/>
                     </TD>
                     <TD width='10%'>{item.name}</TD>
                     <TD width='10%'>{item.description}</TD>

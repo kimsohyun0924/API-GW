@@ -9,16 +9,18 @@ import ModalApiDelete from 'components/ModalApiDelete';
 import ModalAPIKeysCreate from 'components/ModalAPIKeysCreate';
 import ModalAPIKeysUpdate from 'components/ModalAPIKeysUpdate';
 import TableCompAPIKeys from 'components/TableCompAPIKeys';
+import MainHeader from 'components/MainHeader';
 
+const HeadDiv = styled.div`
+`;
 
-const MenuDiv = styled.div`
+const ButtonDiv = styled.div`
 /* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */
   display: flex;
-  padding: 30px 60px 20px 60px;
+  padding: 30px 0px 20px 0px;
 `;
 
 const TableDiv = styled.div`
-  
 `;
 
 const TableHeader = [
@@ -33,13 +35,21 @@ const TableHeader = [
 export default function APIKeys() {
 
   const [bChecked, setChecked] = useState(false);
-  const [clickId, setClickId] = useState();
+  const initialState = {
+    "name": null,
+    "description": null,
+    "id": null,
+    "enabled": null,
+    "api_key": null,
+    "created_at": null
+  }
+  const [clickData, setClickData] = useState(initialState);
 
   // const [checkedItem, setCheckedItem] = useState([]); //개별 체크된 아이템을 저장함
   // const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
   const [createDialog, setCreateDialog] = useState(false);
-  const [deleteDialog, setDeleteDialog] = useState(false);
   const [updateDialog, setUpdateDialog] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -66,26 +76,25 @@ export default function APIKeys() {
 
   
   const Create = () => {
-    // navigate('/usageplans/create');
+    
     setCreateDialog(true);
   };
 
   const Update = () => {
-    if(bChecked === true) {
-      setUpdateDialog(true);
-    }
+    setUpdateDialog(true);
+  
   };
 
   const Delete = () => {
-    if(bChecked === true) {
-      setDeleteDialog(true);
-    }
+   
+    setDeleteDialog(true);
+    
   };
 
   const Stage = () => {
-    if(bChecked === true) {
-      navigate('/apikeys/stage');
-    }
+
+    navigate('/apikey/usageplans');
+  
   };
 
   const onCancel = () => {
@@ -95,22 +104,8 @@ export default function APIKeys() {
     setDeleteDialog(false);
   };
 
- 
-  // const checkHandler = () => {
-  //   setChecked(!bChecked);
-
-  //   // const checkboxes = document.getElementsByName('test');
-  //   // setCheckedItem(checkThis.id);
-
-  //   // for (let i = 0; i < checkboxes.length; i++) { 
-  //   //   if (checkboxes[i] !== checkThis) {
-  //   //     checkboxes[i].checked = false
-  //   //   }
-  //   // }
-  // };
-
   const fetchAPIKeys = async () => {
-    //get api request
+    //get api key request
     try {
       setError(null);
 
@@ -130,7 +125,7 @@ export default function APIKeys() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+clickId
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+clickData.id
         );
       } catch (e) {
         setError(e);
@@ -145,31 +140,34 @@ export default function APIKeys() {
 
   useEffect(() => {
     fetchAPIKeys();
-  }, [DataTemp]);
+  }, []);
 
 
   return (
     <React.Fragment>
       <MainContainer>
-        <PageTitle>API Keys</PageTitle>
-        <PageSubTitle>API Key를 관리합니다.</PageSubTitle>
-        <MenuDiv>
+        <HeadDiv>
+          <MainHeader location={"API Keys"}/>
+          <PageTitle>API Keys</PageTitle>
+          <PageSubTitle>API Key를 관리합니다.</PageSubTitle>
+        </HeadDiv>
+        <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="small" line="line" onClick={Create}>API Key 생성</Button>
-            <Button size="small" line="outline" onClick={Update}>변경</Button>
-            <Button size="small" line="outline" onClick={Delete}>삭제</Button>
-            <Button size="small" line="outline" onClick={Stage}>연결된 Stage</Button>
+            <span style={{padding: "0px 20px 0px 0px"}}><Button size="small" line="line" onClick={Create}>API Key 생성</Button></span>
+            <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Update}>변경</Button></span>
+            <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Delete}>삭제</Button></span>
+            <Button size="small" line="outline" onClick={Stage}>연결된 Usage Plan</Button>
           </ThemeProvider>
-        </MenuDiv>
+        </ButtonDiv>
         <TableDiv>
-          <TableCompAPIKeys columns={TableHeader} data={DataTemp} clickId={clickId} setClickId={setClickId} bChecked={bChecked} setChecked={setChecked}/>
+          <TableCompAPIKeys columns={TableHeader} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
         </TableDiv>
       </MainContainer>
       <ModalAPIKeysCreate
             title="API Key를 생성합니다."
             confirmText="생성하기"
             cancelText="취소"
-            // onConfirm={onDelete}
+            setCreateDialog={setCreateDialog}
             onCancel={onCancel}
             visible={createDialog}
             >
@@ -178,9 +176,9 @@ export default function APIKeys() {
             title="API Key를 변경합니다."
             confirmText="변경하기"
             cancelText="취소"
-            // onConfirm={setUpdateDialog}
+            setUpdateDialog={setUpdateDialog}
             onCancel={onCancel}
-            checkedItem={clickId}
+            checkedItem={clickData}
             visible={updateDialog}>
       </ModalAPIKeysUpdate>
       <ModalApiDelete
@@ -189,6 +187,7 @@ export default function APIKeys() {
             cancelText="취소"
             onConfirm={onDelete}
             onCancel={onCancel}
+            checkedItem={clickData.id}
             visible={deleteDialog}
             >
             API Key를 삭제합니다.

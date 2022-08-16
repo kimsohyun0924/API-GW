@@ -58,11 +58,11 @@ export default function StageInfo(props) {
 
   return (
     <React.Fragment>
-      <InvokeurlDiv>{resourceId}.ktcloud.io
+      {/* <InvokeurlDiv>{resourceId}.ktcloud.io
         <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
           <CopyButtonDiv>주소 복사</CopyButtonDiv>
         </CopyToClipboard>
-      </InvokeurlDiv>
+      </InvokeurlDiv> */}
       <React.Fragment>
         { methods.method_list && methods.method_list.map((item, index) => {
           return (

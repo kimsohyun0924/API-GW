@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -7,12 +7,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
 import clsx from 'clsx';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import ResourceCreate from './ResourceCreate';
+import { useNavigate } from 'react-router-dom';
 import Button from 'components/Button';
-import Method from './Method';
 import ModalApiDelete from 'components/ModalApiDelete';
-import MethodUpdate from './MethodUpdate';
+import StageCreate from './StageCreate';
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import StageInfo from "./StageInfo";
+import StageResourceInfo from "./StageResourceInfo";
 
 
 const AllDiv = styled.div`
@@ -63,24 +64,40 @@ const PathDiv = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  padding: 20px 20px 0px 20px;
+  padding: 10px 10px 0px 10px;
   /* background:pink; */
+  /* background: #d9edf7; */
+`;
+
+const InvokeurlDiv = styled.div`
+  background: #eff4fb;
+  /* #d9edf7 #d7e3f5 */
+  font-size : 16px;
+  font-weight: bold;
+  padding: 15px 20px 15px 20px;
+`;
+
+const CopyButtonDiv = styled.button`
+  margin: 0px 0px 0px 10px;
+  cursor: pointer;
+
 `;
 
 export default function RecursiveTreeView(props) {
   // console.log(props);
 
   const serviceInfo = props.serviceInfo;
-  const resourceInfo = props.data;
   const [content, setContent] = useState(null);
   const [resourceId, setResourceId] = useState(null);
-  const [label, setLabel] = useState(null);
+  const [label, setLabel] = useState();
+  const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
-  const [faildialog, setFailDialog] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); 
+  // const serviceInfo = props.serviceInfo;
+  // const navigate = useNavigate(); 
 
   const CustomContent = React.forwardRef(function CustomContent(props, ref) {
+    // console.log(props.label);
     const {
       classes,
       className,
@@ -116,17 +133,20 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
-      if(label === "GET" || label === "POST" || label === "DELETE" || label === "PUT" || label === "ANY" || label === "PATCH" || label === "OPTIONS" || label === "HEAD") {
-        setContent('third');
-        // navigate('/api/operation/methodCreate');
+      console.log(event.target.getAttribute('value'));
+
+      if(event.target.getAttribute('value') === "RESOURCE") {
+        setContent("third");
       }
+      else if(event.target.getAttribute('value') === "METHOD") {
+        setContent("fourth");
+      } 
       else {
-        setContent('second');
-        // navigate('/api/operation/method');
+        setContent("second");
       }
+
       setLabel(label);
       setResourceId(nodeId);
-      // console.log();
     };
   
     return (
@@ -206,75 +226,94 @@ export default function RecursiveTreeView(props) {
       height: '35px', 
     },
     [`& .${treeItemClasses.label}`]: {
-
-      fontSize: '16px !important',
+      fontSize: '18px !important',
       borderBottom: '1px solid #e2e2e2'
     },
   }));
 
   const renderTree = (nodes) => {
-    return(
-    <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
-      {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
-      {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree(node)) : null}
-    </StyledTreeItem>
+    return (
+          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{doc_type : nodes.doc_type}}>
+            { renderTree2(nodes.root_resource) }   
+          </StyledTreeItem> 
     );
-  };  
+  };
+
+  const renderTree2 = (nodes) => {
+    return (
+          <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_typ} ContentProps={{doc_type : nodes.doc_type}}>
+            { Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree2(node)) : null }
+            { Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null }
+          </StyledTreeItem>  
+    );
+  };
+
 
   const renderTree3 = (nodes) => {
-    return(
-    <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} doc_type={nodes.doc_type}>
-      {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree(node)) : null}
-    </StyledTreeItem>
+    return (
+          <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
+            {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree2(node)) : null}
+          </StyledTreeItem> 
     );
   };
-  
 
-  
+  // console.log(serviceInfo.service_id);
+  // console.log(resourceId);
+
+
   const Create = e => {
     setContent('first');
-    // navigate('/api/operation/resourceCreate');
-  };
-
-  const Delete = e => {
-    if(label !== null) {
-      if (label !== '/') {
-        setDialog(true);
-      }
-      else {
-        setFailDialog(true);
-      }
-    }
-  };
-
-  const onCancel = () => {
-    console.log('취소');
-    setDialog(false);
-    setFailDialog(false);
   };
 
   const onDelete = () => {
-    //delete resource request
-     const deleteResource = async () => {
+    //delete stage request
+     const deleteStage = async () => {
        try {
          setError(null);
          await axios.delete(
-           '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
+           '/v1.0/g1/paas/Memsq07/apigw/stage/'+resourceId
          );
        } catch (e) {
          setError(e);
          console.log(error);
        }
      };
-     deleteResource();
-     window.location.reload(true);
+     deleteStage();
      setDialog(false);
+    window.location.reload(true);
    };
 
+   const Delete = e => {
+    if (label != null) {
+      setDialog(true);
+    }
+  };
+
+  const onCancel = () => {
+    console.log('취소');
+    setDialog(false);
+  };
+
+  const copy = () => {
+    const el = textInput.current
+    el.select()
+    document.execCommand("copy")
+  }   
+
+  const textInput = useRef();
+
   const selectComponent = {
-    first: <ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>,
-    second: <Method serviceId={serviceInfo.service_id} resourceId={resourceId} lable={label}/>, //method list 나태내줌
-    third: <MethodUpdate resourceId={resourceId} methodCommandValue={label}/>
+    first: <StageCreate serviceInfo={serviceInfo}/>,
+    second: <StageInfo resourceId={resourceId}/>,
+    third: <StageResourceInfo resourceId={resourceId}/>,
+    
+   
+      // <InvokeurlDiv>{resourceId}.ktcloud.io
+      //   <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
+      //     <CopyButtonDiv>주소 복사</CopyButtonDiv>
+      //   </CopyToClipboard>
+      // </InvokeurlDiv>
+    
   };
 
   return (
@@ -282,9 +321,8 @@ export default function RecursiveTreeView(props) {
       <AllDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <span style={{padding: "0px 15px 0px 0px"}}><Button size="small" line="line" onClick={Create}>리소스 생성</Button></span>
-           
-            <Button size="small" line="line" onClick={Delete}>리소스 삭제</Button>
+          <span style={{padding: "0px 15px 0px 0px"}}><Button size="small" line="line" onClick={Create}>스테이지 생성</Button></span>
+            <Button size="small" line="line" onClick={Delete}>스테이지 삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
         <ExampleDiv>
@@ -297,18 +335,17 @@ export default function RecursiveTreeView(props) {
               defaultSelected={'root'}
               sx={{ height: 440, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
               >
-                {renderTree(resourceInfo)}
+                {props.data.map((node) => renderTree(node)) }
             </TreeView>
           </MenuDiv> 
           <ResourceInfoDiv>
             <PathDiv>{label}</PathDiv>
+            <InvokeurlDiv>{resourceId}.ktcloud.io
+              <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
+                <CopyButtonDiv>주소 복사</CopyButtonDiv>
+              </CopyToClipboard>
+            </InvokeurlDiv>
              {content && <Content>{selectComponent[content]}</Content>}
-              {/* <Routes>
-                <Route path="/" element={<ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>}></Route>
-                <Route path="/resourceCreate" element={<ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>}></Route>
-                <Route path="/resource/:nodeId" element={<Method resourceId={resourceId}/>}></Route>
-                <Route path="/method" element={<MethodUpdate resourceId={resourceId} methodCommandValue={label}/>}></Route>
-              </Routes> */}
           </ResourceInfoDiv> 
         </ExampleDiv>
         <ModalApiDelete
@@ -319,15 +356,7 @@ export default function RecursiveTreeView(props) {
               onCancel={onCancel}
               visible={dialog}
               >
-              {label}를 정말로 삭제하시겠습니까?
-        </ModalApiDelete> 
-        <ModalApiDelete
-              // title="정말로 삭제하시겠습니까?"
-              ConfirmText="확인"
-              onConfirm={onCancel}
-              visible={faildialog}
-              >
-              최상위 리소스는 삭제할 수 없습니다.
+              {label} 정말로 삭제하시겠습니까?
         </ModalApiDelete> 
       </AllDiv>     
     </React.Fragment>
