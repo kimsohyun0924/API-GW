@@ -7,7 +7,6 @@ import Button from 'components/Button';
 import axios from 'axios';
 import ToggleSwitch from 'components/ToggleSwitch';
 import TableCompUsageStage from 'components/TableCompUsageStage';
-import TableCompAPIKeysStage from 'components/TableCompAPIKeysStage';
 import img1 from "image/Advanced_pre.svg";
 import img2 from "image/Advanced.svg";
 import MainHeader from 'components/MainHeader';
@@ -33,6 +32,7 @@ const Item = styled.div`
 
 const ItemName = styled.div`
   width: 180px;
+  min-width: 180px;
   height: 32px;
   /* line-height: 32px; */
   font-size: 14px;
@@ -40,12 +40,12 @@ const ItemName = styled.div`
 `;
 
 const ItemInput = styled.div`
-    width: 500px;
-    min-width: 220px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
+  width: 500px;
+  min-width: 220px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
 `;
 
 const InputForm = styled.input`
@@ -152,12 +152,12 @@ export default function UsagePlansCreate() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
-    ApiName: '',
-    ApiExplain: '',
+    UsagePlanName: '',
+    UsagePlanExplain: '',
     replenish_rate: '',
     burst_capacity: ''
   });
-  const { ApiName, ApiExplain } = inputs;
+  const { UsagePlanName, UsagePlanExplain, replenish_rate, burst_capacity } = inputs;
   const [toggle, setToggle] = useState(false);
   const [toggle2, setToggle2] = useState(false);
   const [stageConnect, setStageConnect] = useState(false);
@@ -191,28 +191,26 @@ export default function UsagePlansCreate() {
 
   const onCreate = () => {
   
-    const createApi = async () => {
+    const createUsagePlan = async () => {
       try {
         setError(null);
         await axios.post(
           '/v1.0/g1/paas/Memsq07/apigw/usage-plans/create',
           {
-            name: "plan01",
-            description: "정책 01",
-            replenish_rate: 500,
-            burst_capacity: 500,
+            name: UsagePlanName,
+            description: UsagePlanExplain,
+            replenish_rate: replenish_rate,
+            burst_capacity: burst_capacity,
             requested_tokens: "1"
           }
         );
       } catch (e) {
         setError(e);
       }
-    
     };
-    createApi();
-
-      setTimeout(()=>{
-      navigate('/dashboard');     
+    createUsagePlan();
+    setTimeout(()=>{
+      navigate('/usageplans');     
     }, 1000);
   };
 
@@ -243,14 +241,14 @@ export default function UsagePlansCreate() {
         <MainContainer>
             <HeadDiv>
               <MainHeader location={"Usage Plans"}/>
-              <PageTitle>Usage Plans</PageTitle>
+              <PageTitle>Usage Plans 생성</PageTitle>
             </HeadDiv>
             <BodyDiv>
               <ItemDiv>
                 <Item>
                   <ItemName>이름</ItemName>
                   <ItemInput>
-                    <InputForm name="ApiName" placeholder=" Usage Plan의 이름을 입력하세요" onChange={onChange} value={ApiName}/>
+                    <InputForm name="UsagePlanName" placeholder=" Usage Plan의 이름을 입력하세요" onChange={onChange} value={UsagePlanName}/>
                   </ItemInput>
                   <ItemNote></ItemNote>
                 </Item>
@@ -259,7 +257,7 @@ export default function UsagePlansCreate() {
                 <Item2>
                   <ItemName>설명</ItemName>
                     <ItemInput2>
-                      <InputForm2 name="ApiExplain" placeholder=" Usage Plan의 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
+                      <InputForm2 name="UsagePlanExplain" placeholder=" Usage Plan의 설명을 입력하세요" onChange={onChange} value={UsagePlanExplain}/>
                     </ItemInput2>
                     <ItemNote></ItemNote>
                 </Item2>
@@ -275,7 +273,7 @@ export default function UsagePlansCreate() {
                 <React.Fragment>
                   <div style={{padding: "0px 0px 0px 180px"}}>
                     <RequestDiv>
-                        <RequestForm name="ApiExplain" placeholder=" 초당 요청 수" onChange={onChange} value={ApiExplain}/>
+                        <RequestForm name="replenish_rate" placeholder=" 초당 요청 수" onChange={onChange} value={replenish_rate}/>
                         <ItemNote>초당 요청 수</ItemNote>
                     </RequestDiv>
                   </div>
@@ -293,7 +291,7 @@ export default function UsagePlansCreate() {
                   <React.Fragment>
                     <div style={{padding: "0px 0px 0px 180px"}}>
                     <RequestDiv>
-                      <RequestForm/> 
+                      <RequestForm name="burst_capacity" placeholder="요청 건" onChange={onChange} value={burst_capacity}/> 
                         <ItemNote>요청 건</ItemNote>
                     </RequestDiv>
                     </div>
@@ -319,21 +317,6 @@ export default function UsagePlansCreate() {
                   </div>    
                   : null
                 }
-        
-                  {/* <VisiablDiv>
-                      <VisiablText onClick={onClick2}>API Key 연결</VisiablText>
-                      { APIKeyConnect === true ?
-                      <div>
-                        <div style={{padding:"10px 0px 10px 0px"}}>
-                        <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                          <Button size="small" line="line">APIKey 연결 추가</Button>
-                        </ThemeProvider>  
-                        </div>
-                        <TableCompAPIKeysStage columns={TableHeader} data={testData}/>
-                      </div>
-                      
-                    : null}
-                  </VisiablDiv> */}
                 </BodyDiv>
                 <ButtonDiv>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

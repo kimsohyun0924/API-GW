@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
 import axios from 'axios';
 import Button from './Button';
 import Logo from '../image/Cancel.svg';
-import Spacer from 'react-spacer';
+import DropdownMethod from './DropdownMethod';
 
 const DarkBackground = styled.div`
   position: fixed;
@@ -84,72 +84,53 @@ const InputForm = styled.input`
   color: #333333;
 `;
 
-
-const Item2 = styled.div`
-  display: flex;
-  padding: 0px 0px 20px 0px;
-`;
-
-const ItemInput2 = styled.div`
-    width: 380;
-    height: 70px;
-    display: flex;
-    align-items: center;
-`;
-
-const InputForm2 = styled.input`
-  width: 380px;
-  height: 70px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
-  font-size: 13px;
-  color: #333333;
-`;
-
 const ButtonGroup = styled.div`
-  margin-top: 11px;
+  margin-top: 45px;
   display: flex;
   justify-content: center;
-  
 `;
 
-ModalAPIKeysCreate.defaultProps = {
+ModalUsagePlanConnect.defaultProps = {
   confirmText: '확인'
 };
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onCancel, visible, setCreateDialog} ) {
+export default function ModalUsagePlanConnect( { title, children, confirmText, cancelText, onConfirm, onCancel, visible, setUpdateDialog, checkedItems } ) {
 
   const [error, setError] = useState(null);
-  const [inputs, setInputs] = useState({
-    APIKeyName: '',
-    APIKeyExplain: ''
-  });
-  
-  const { APIKeyName, APIKeyExplain } = inputs;
-  
-  const onChange = e => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value
-    });
+
+  const [methodCommand, setMethodCommand] = useState(null);
+  const [methodCommandValue, setMethodCommandValue] = useState(null);
+  const [isOpen, setIsOpen] = useState(true);
+  const [optionsCommand, serOptionsCommand] = useState(null);
+
+
+  const fetchApis = async () => {
+    //get api request
+    try {
+      setError(null);
+
+      const response = await axios.get(
+        '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+      );
+      serOptionsCommand(response.data); // 데이터는 response.data)
+      // console.log(response.data);
+    } catch (e) {
+      setError(e);
+    }
   };
-  console.log(inputs);
+
 
   const onCreate = () => {
   
     const createAPIKey = async () => {
       try {
         setError(null);
-        await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/createKey',
+        await axios.put(
+          '/v1.0/g1/paas/Memsq07/apigw/apikey/'+checkedItems,
           {
-            name: APIKeyName,
-            description: APIKeyExplain,
-            enabled: true
+
           }
         );
       } catch (e) {
@@ -157,9 +138,14 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       }
     };
     createAPIKey();
-    window.location.reload(true);
-    setCreateDialog(false);
+    // window.location.reload(true);
+    setUpdateDialog(false);
   };
+
+
+  useEffect(() => {
+    fetchApis();
+  }, [optionsCommand]);
 
   if (!visible) return null;
   return (
@@ -170,26 +156,18 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
               </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
               <Item>
-                  <ItemName>API Key 이름</ItemName>
-                  <ItemInput>
-                      <InputForm name="APIKeyName" placeholder=" API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName}/>
-                  </ItemInput>
-                  <ItemNote></ItemNote>
+                  <ItemName>API</ItemName>
+                  <DropdownMethod dropdownItems={optionsCommand} default="API 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} /> 
               </Item>
-              <Item2>
-                  <ItemName>API Key 설명</ItemName>
-                  <ItemInput2>
-                      <InputForm2 name="APIKeyExplain" placeholder=" API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain}/>
-                  </ItemInput2>
-                  <ItemNote></ItemNote>
-              </Item2>
+              <Item>
+                  <ItemName>Stage</ItemName>
+                  <DropdownMethod dropdownItems={optionsCommand} default="Stage 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />     
+              </Item>
               <ButtonGroup>
-                <Spacer grow={1}/>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <span style={{padding:"0px 15px 0px 0px"}}><Button size="large" line="noline" color="gray" onClick={onCancel}>{cancelText}</Button></span>
+                    <span style={{padding: "0px 20px 0px 0px"}}><Button size="large" color="gray" line="noline" onClick={onCancel}>{cancelText}</Button></span>
                     <Button size="large" line="line" onClick={onCreate}>{confirmText}</Button>
                   </ThemeProvider>
-               <Spacer grow={1}/> 
               </ButtonGroup>
           </DialogBlock>
       </DarkBackground>

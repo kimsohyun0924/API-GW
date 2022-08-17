@@ -83,7 +83,8 @@ export default function UsagePlans() {
 
   const Update = () => {
   
-      navigate('/usageplans/edit');
+      navigate('/usageplans/edit', {state: clickData});
+      
     
   };
 
@@ -94,9 +95,7 @@ export default function UsagePlans() {
   };
 
   const Stage = () => {
-   
-      navigate('/usageplans/stage');
-    
+      navigate('/usageplans/stage', {state: clickData});
   };
 
   const onCancel = () => {
@@ -126,7 +125,7 @@ export default function UsagePlans() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+clickData.id
+          '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'+clickData.id
         );
       } catch (e) {
         setError(e);
@@ -134,14 +133,14 @@ export default function UsagePlans() {
       }
     };
     deleteUsagePlan();
-    // window.location.reload(true);
+    window.location.reload(true);
     setDeleteDialog(false);
   };
 
 
   useEffect(() => {
     fetchUsagePlans();
-  }, [DataTemp]);
+  }, []);
 
 
   return (
@@ -164,15 +163,6 @@ export default function UsagePlans() {
           <TableCompUsagePlans columns={TableHeader} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
         </TableDiv>
       </MainContainer>
-      {/* <ModalApiUpdate
-            title="API 변경"
-            confirmText="변경하기"
-            cancelText="취소"
-            setUpdateDialog={setUpdateDialog}
-            onCancel={onCancel}
-            checkedItems={checkedItems}
-            visible={updateDialog}>
-      </ModalApiUpdate> */}
        <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제하기"
@@ -182,7 +172,7 @@ export default function UsagePlans() {
             checkedItem={clickData.id}
             visible={deleteDialog}
             >
-            Usage Plan을 삭제합니다.
+            <span style={{fontWeight:"bold"}}>{clickData.name}</span><span style={{padding:"0px 0px 0px 10px"}}>Usage Plan을 삭제합니다.</span>
       </ModalApiDelete>
     </React.Fragment>
   );

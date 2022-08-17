@@ -13,6 +13,7 @@ import ModalApiDelete from 'components/ModalApiDelete';
 import StageCreate from './StageCreate';
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import StageInfo from "./StageInfo";
+import StageMethod from "./StageMethod";
 import StageResourceInfo from "./StageResourceInfo";
 
 
@@ -306,7 +307,7 @@ export default function RecursiveTreeView(props) {
     first: <StageCreate serviceInfo={serviceInfo}/>,
     second: <StageInfo resourceId={resourceId}/>,
     third: <StageResourceInfo resourceId={resourceId}/>,
-    
+    fourth: <StageMethod resourceId={resourceId}/>
    
       // <InvokeurlDiv>{resourceId}.ktcloud.io
       //   <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>

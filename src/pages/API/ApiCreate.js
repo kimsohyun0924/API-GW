@@ -31,6 +31,7 @@ const ItemName = styled.div`
   height: 50px;
   /* line-height: 32px; */
   font-size: 14px;
+  color: #333336;
   padding: 10px 0px 10px 0px;
 `;
 
@@ -73,7 +74,6 @@ const ItemNote = styled.div`
 const Item2 = styled.div`
   display: flex;
   /* padding: 0px 0px 20px 0px; */
-  /* background: pink; */
 `;
 
 const ItemInput2 = styled.div`
@@ -101,9 +101,9 @@ const ItemText = styled.span`
 
 const ButtonDiv = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   /* align-items: center; */
-  margin: 10px 60px 5px 60px;
+  margin: 10px 0px 5px 0px;
 `;
 
 export default function ApiCreate() {
@@ -165,7 +165,8 @@ export default function ApiCreate() {
           </HeadDiv>
           <BodyDiv>
             <ItemDiv>
-              <ItemName>API 생성</ItemName>
+              <Item>
+                <ItemName>위치</ItemName>
                 <ItemInput>
                   <div>
                     <input type='radio'></input>
@@ -176,8 +177,8 @@ export default function ApiCreate() {
                     <ItemText>Swagger에서 가져오기</ItemText>
                   </div>
                 </ItemInput>
-              <ItemNote></ItemNote>
-
+                <ItemNote></ItemNote>
+              </Item>
             </ItemDiv>
             <ItemDiv>
               <Item>
@@ -199,8 +200,8 @@ export default function ApiCreate() {
             </ItemDiv>
             <ButtonDiv>
                 <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                  <Button size="large" line="noline" onClick={onCancel}>취소</Button>
-                      <Button size="large" line="line" onClick={onCreate}>생성하기</Button>
+                  <span style={{padding: "0px 15px 0px 0px"}}><Button size="large" line="noline" onClick={onCancel}>취소</Button></span>
+                  <Button size="large" line="line" onClick={onCreate}>생성하기</Button>
                 </ThemeProvider>
             </ButtonDiv>
           </BodyDiv>

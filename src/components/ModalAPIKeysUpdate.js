@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
 import ToggleSwitch from './ToggleSwitch';
 import axios from 'axios';
 import Button from './Button';
 import Logo from '../image/Cancel.svg';
+import { checkboxClasses } from '@mui/material';
 
 const DarkBackground = styled.div`
   position: fixed;
@@ -108,7 +109,7 @@ const InputForm2 = styled.input`
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 10px;
+  margin-top: 7px;
   display: flex;
   justify-content: center;
 `;
@@ -125,12 +126,10 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
   const [toggle, setToggle] = useState(false);
   const [inputs, setInputs] = useState({
     APIKeyName: '',
-    APIKeyExplain: '',
+    APIKeyExplain: ''
   });
   
-  const APIKeyName = checkedItem.name;
-  const APIKeyExplain = checkedItem.description;
-  const enabledValue = checkedItem.enabled;
+  const { APIKeyName, APIKeyExplain } = inputs;
   
   const onChange = e => {
     const { name, value } = e.target;
@@ -139,7 +138,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       [name]: value
     });
   };
-  // console.log(inputs);
+  console.log(inputs);
 
   const onUpdate = () => {
   
@@ -164,7 +163,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
   };
 
   const clickedToggle = () => {
-    setToggle((prev) => !prev);
+    setToggle(!toggle);
     console.log(toggle);
   };
 
@@ -176,32 +175,32 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
               <ImgDiv onClick={onCancel}>
                 <img src={Logo}/>
               </ImgDiv>
-              <TitleDiv>{title}</TitleDiv>
+              <TitleDiv><span style={{padding:"0px 10px 0px 0px", fontWeight:"bold"}}>{checkedItem.name}</span>{title}</TitleDiv>
               <Item>
                   <ItemName>API Key 이름</ItemName>
                   <ItemInput>
-                      <InputForm name="APIKeyName" placeholder=" API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName}/>
+                      <InputForm name="APIKeyName" placeholder=" API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName || ''}/>
                   </ItemInput>
                   <ItemNote></ItemNote>
               </Item>
               <Item2>
                   <ItemName>API Key 설명</ItemName>
                   <ItemInput2>
-                      <InputForm2 name="APIKeyExplain" placeholder=" API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain}/>
+                      <InputForm2 name="APIKeyExplain" placeholder=" API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain || ''}/>
                   </ItemInput2>
                   <ItemNote></ItemNote>
               </Item2>
               <Item>
                   <ItemName>API Key 활성화</ItemName>
                   <ItemInput>
-                      <ToggleSwitch clickedToggle={clickedToggle} toggle={enabledValue}/>
+                      <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
                   </ItemInput>
                   <ItemNote></ItemNote>
               </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                  <span style={{padding:"0px 15px 0px 0px"}}><Button size="small" color="gray" line="noline" onClick={onCancel}>{cancelText}</Button></span>
-                    <Button size="medium" line="line" onClick={onUpdate}>{confirmText}</Button>
+                  <span style={{padding:"0px 15px 0px 0px"}}><Button size="large" color="gray" line="noline" onClick={onCancel}>{cancelText}</Button></span>
+                    <Button size="large" line="line" onClick={onUpdate}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>

@@ -8,7 +8,7 @@ const TableWrapper = styled.div`
   overflow-x:auto;
   font-size: 15px;
   color: #333333;
-  height: calc(100vh - 362px);
+  /* height: calc(100vh - 362px); */
 `;
 
 const Table = styled.table`

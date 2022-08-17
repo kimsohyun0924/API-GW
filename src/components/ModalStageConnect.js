@@ -85,7 +85,7 @@ const InputForm = styled.input`
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 10px;
+  margin-top: 45px;
   display: flex;
   justify-content: center;
 `;
@@ -165,8 +165,8 @@ export default function ModalStageConnect( { title, children, confirmText, cance
               </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <Button size="small" color="gray" onClick={onCancel} noline>{cancelText}</Button>
-                    <Button size="medium" onClick={onCreate}>{confirmText}</Button>
+                    <span style={{padding: "0px 20px 0px 0px"}}><Button size="large" color="gray" line="noline" onClick={onCancel}>{cancelText}</Button></span>
+                    <Button size="large" line="line" onClick={onCreate}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>

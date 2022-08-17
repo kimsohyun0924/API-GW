@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import theme from '../style/theme';
 
 const MainWrapper = styled.div`
-  min-width: 800px;
+  min-width: 1200px;
   margin-top: ${theme.topbarSize};
   margin-left: ${theme.sidebarSize};
   min-height: calc(100vh - ${theme.topbarSize});

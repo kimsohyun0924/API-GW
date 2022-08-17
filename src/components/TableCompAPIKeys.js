@@ -149,11 +149,11 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
                     <TD width='1%'>
                       <input type="checkbox" checked={clickData.id === item.id ? true : false} onChange={checkHandler}/>
                     </TD>
-                    <TD width='10%'>{item.name}</TD>
+                    <TD width='8%'>{item.name}</TD>
                     <TD width='10%'>{item.description}</TD>
                     <TD width='10%'>{item.id}</TD>
-                    <TD width='10%'>{item.enabled === true ? "활성":"비활성"}</TD>
-                    <TD width='10%'>
+                    <TD width='7%'>{item.enabled === true ? "활성":"비활성"}</TD>
+                    <TD width='7%'>
                       <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                         <Button size="supersmall" line="outline" onClick={onClick} value={item.api_key}>
                           {/* { dialog === true ? item.primaryKey : <div>보기</div>} */}

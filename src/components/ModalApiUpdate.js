@@ -109,7 +109,7 @@ const InputForm2 = styled.input`
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 15px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 `;
@@ -188,8 +188,8 @@ export default function ModalPopup( { title, children, confirmText, cancelText, 
                     </Item2>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <Button size="small" color="gray" line="noline" onClick={onCancel} >{cancelText}</Button>
-                    <Button size="medium" line="line" Click={onUpdate}>{confirmText}</Button>
+                    <span style={{padding:"0px 20px 0px 0px"}}><Button size="large" color="gray" line="noline" onClick={onCancel} >{cancelText}</Button></span>
+                    <Button size="large" line="line" Click={onUpdate}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>

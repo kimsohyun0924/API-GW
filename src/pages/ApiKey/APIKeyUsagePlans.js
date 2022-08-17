@@ -7,8 +7,9 @@ import styled, { ThemeProvider } from "styled-components";
 import Button from 'components/Button';
 import TableCompUsageStage from 'components/TableCompUsageStage';
 import ModalApiDelete from 'components/ModalApiDelete';
-import ModalStageConnect from 'components/ModalStageConnect';
+import ModalUsagePlanConnect from 'components/ModalUsagePlanConnect';
 import MainHeader from 'components/MainHeader';
+import { useLocation } from "react-router";
 
 
 const HeadDiv = styled.div`
@@ -29,8 +30,17 @@ const TableHeader = [
 ];
 
 export default function APIKeyUsagePlans() {
-  
+
+  const { state } = useLocation();
   const [bChecked, setChecked] = useState(false);
+  const initialState = {
+    "name": null,
+    "description": null,
+    "id": null,
+    "enabled": null,
+    "api_key": null,
+    "created_at": null
+  }
   const [checkedItems, setCheckedItems] = useState([]); //개별 체크된 아이템을 저장함
   const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
   const [dialog, setDialog] = useState(false);
@@ -57,9 +67,9 @@ export default function APIKeyUsagePlans() {
   };
 
   const Delete = () => {
-    if(!(checkedItems.length === 0)) {
-      setDialog(true);
-    }
+    // if(!(checkedItems.length === 0)) {
+    //   setDialog(true);
+    // }
   };
 
   const onCancel = () => {
@@ -129,9 +139,9 @@ export default function APIKeyUsagePlans() {
     <React.Fragment>
       <MainContainer>
         <HeadDiv>
-          <MainHeader location={"APIs"}/>
-          <PageTitle>API Key - Usage Plan 연결 목록</PageTitle>
-          <PageSubTitle>API key에 연결된 Usage Plan을 관리합니다.</PageSubTitle>
+          <MainHeader location={"API Keys"}/>
+          <PageTitle>연결된 Usage Plan 목록</PageTitle>
+          <PageSubTitle>{state.name}</PageSubTitle>
         </HeadDiv>
     
         <MenuDiv>
@@ -141,10 +151,10 @@ export default function APIKeyUsagePlans() {
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableCompUsageStage columns={TableHeader} data={testData} checkHandler={checkHandler}/>
+          <TableCompUsageStage columns={TableHeader} data={DataTemp} checkHandler={checkHandler}/>
         </TableDiv>
       </MainContainer>
-      <ModalStageConnect
+      <ModalUsagePlanConnect
             title="Stage 연결"
             confirmText="연결"
             cancelText="취소"
@@ -152,7 +162,7 @@ export default function APIKeyUsagePlans() {
             onCancel={onCancel}
             checkedItems={checkedItems}
             visible={updatedialog}>
-      </ModalStageConnect>
+      </ModalUsagePlanConnect>
       <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제"

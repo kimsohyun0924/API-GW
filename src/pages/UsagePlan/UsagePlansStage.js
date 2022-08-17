@@ -9,6 +9,11 @@ import TableCompUsageStage from 'components/TableCompUsageStage';
 import ModalApiDelete from 'components/ModalApiDelete';
 import ModalApiUpdate from 'components/ModalApiUpdate';
 import ModalStageConnect from 'components/ModalStageConnect';
+import MainHeader from 'components/MainHeader';
+import { useLocation } from "react-router";
+
+const HeadDiv = styled.div`
+`;
 
 const MenuDiv = styled.div`
 /* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */
@@ -26,7 +31,8 @@ const TableHeader = [
 ];
 
 export default function UsagePlanStage() {
-  
+
+  const { state } = useLocation();
   const [bChecked, setChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]); //개별 체크된 아이템을 저장함
   const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
@@ -125,8 +131,11 @@ export default function UsagePlanStage() {
   return (
     <React.Fragment>
       <MainContainer>
-        <PageTitle>Usage Plans - Stage 연결 목록</PageTitle>
-        <PageSubTitle>Usage Plans에 연결된 Stage를 관리합니다</PageSubTitle>
+        <HeadDiv>
+          <MainHeader location={"Usage Plans"}/>
+            <PageTitle>연결된 Stage 목록</PageTitle>
+            <PageSubTitle>{state.name}</PageSubTitle>
+        </HeadDiv>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
           <span style={{padding: "0px 20px 0px 0px"}}><Button size="medium" line="line" action={Create}>Stage 연결</Button></span>
@@ -138,8 +147,8 @@ export default function UsagePlanStage() {
         </TableDiv>
       </MainContainer>
       <ModalStageConnect
-            title="Stage 연결를 연결합니다."
-            confirmText="연결"
+            title="Stage와 연결합니다."
+            confirmText="연결하기"
             cancelText="취소"
             setUpdateDialog={setUpdateDialog}
             onCancel={onCancel}
@@ -147,7 +156,7 @@ export default function UsagePlanStage() {
       </ModalStageConnect>
       <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
-            confirmText="삭제"
+            confirmText="삭제하기"
             cancelText="취소"
             onConfirm={onDelete}
             onCancel={onCancel}

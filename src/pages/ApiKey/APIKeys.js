@@ -93,7 +93,7 @@ export default function APIKeys() {
 
   const Stage = () => {
 
-    navigate('/apikey/usageplans');
+    navigate('/apikey/usageplans', { state : clickData});
   
   };
 
@@ -190,7 +190,7 @@ export default function APIKeys() {
             checkedItem={clickData.id}
             visible={deleteDialog}
             >
-            API Key를 삭제합니다.
+           <span style={{fontWeight:"bold"}}>{clickData.name}</span>  <span style={{padding:"0px 0px 0px 15px"}}>API Key를 삭제합니다.</span>
       </ModalApiDelete>
     </React.Fragment>
   );

@@ -84,7 +84,7 @@ const Hov = styled.td`
   } */
 `;
 
-export default function TableCompAPIKeys({ columns, data, clickId, setClickId, bChecked, setChecked }) {
+export default function TableCompAPIKeyUsagePlan({ columns, data, clickId, setClickId, bChecked, setChecked }) {
 
   const navigate = useNavigate();
   const [dialog, setDialog] = useState(false);

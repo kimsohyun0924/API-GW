@@ -53,7 +53,7 @@ const ContentDiv = styled.div`
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 65px;
+  margin-top: 60px;
   display: flex;
   justify-content: center;
 `;
@@ -75,8 +75,8 @@ export default function ModalApiDelete( { title, children, confirmText, cancelTe
               <ContentDiv>{children}</ContentDiv>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <Button size="small" line="noline" onClick={onCancel}>{cancelText}</Button>
-                    <Button size="medium" line="line" onClick={onConfirm}>{confirmText}</Button>
+                    <span style={{padding:"0px 20px 0px 0px"}}><Button size="large" line="noline" onClick={onCancel}>{cancelText}</Button></span>
+                    <Button size="large" line="line" onClick={onConfirm}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>

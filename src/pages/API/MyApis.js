@@ -173,7 +173,7 @@ export default function MyApis() {
       </MainContainer>
       <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
-            confirmText="삭제"
+            confirmText="삭제하기"
             cancelText="취소"
             onConfirm={onDelete}
             onCancel={onCancel}
