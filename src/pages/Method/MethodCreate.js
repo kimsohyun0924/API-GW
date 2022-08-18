@@ -49,6 +49,7 @@ const InputForm = styled.input`
     box-sizing: border-box;
     font-size: 14px;
     color: #333333;
+    padding: 5px 5px 5px 5px;
 `;
 
 const DropdownContainer = styled.div`
@@ -128,9 +129,8 @@ const DropdownItemContainer = styled.li`
 
 const ButtonDiv = styled.div`
     display: flex;
-    justify-content: center;
-    margin: 20px 60px 0px 60px;
-  /* align-items: center; */
+    justify-content: flex-end;
+    margin: 10px 0px 5px 0px;
 `;
 
 export default function MethodCreate(props) {
@@ -389,8 +389,8 @@ export default function MethodCreate(props) {
         </ItemDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <Button size="small" line="noline" onClick={onCancel}>취소</Button>
-            <Button size="small" line="line" onClick={onCreate} >저장</Button>
+            <span style={{padding:"0px 10px 0px 0px"}}><Button size="large" line="noline" onClick={onCancel}>취소</Button></span>
+            <Button size="large" line="line" onClick={onCreate} >생성하기</Button>
           </ThemeProvider>
         </ButtonDiv>
       </AllDiv>

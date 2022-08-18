@@ -179,7 +179,7 @@ export default function MyApis() {
             onCancel={onCancel}
             visible={dialog}
             >
-            {checkedItemsName}  정말로 삭제하시겠습니까?
+            <span style={{fontWeight:"bold"}}>{checkedItemsName}</span><span style={{padding:"0px 0px 0px 10px"}}>API를 삭제합니다.</span>
       </ModalApiDelete>
       <ModalApiUpdate
             title="API를 변경합니다."

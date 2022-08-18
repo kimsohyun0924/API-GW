@@ -7,12 +7,8 @@ import { useLocation } from "react-router";
 
 
 const ResourceContainer = styled.div`
-    
+  
 `;  
-
-const HeadDiv = styled.div`
-
-`;
 
 export default function Resource(props) {
 

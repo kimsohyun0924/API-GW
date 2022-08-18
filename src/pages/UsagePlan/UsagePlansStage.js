@@ -138,7 +138,7 @@ export default function UsagePlanStage() {
         </HeadDiv>
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-          <span style={{padding: "0px 20px 0px 0px"}}><Button size="medium" line="line" action={Create}>Stage 연결</Button></span>
+          <span style={{padding: "0px 20px 0px 0px"}}><Button size="medium" line="line" onClick={Create}>Stage 연결</Button></span>
             <Button size="small" line="outline" onClick={Delete}>삭제</Button>
           </ThemeProvider>
         </MenuDiv>

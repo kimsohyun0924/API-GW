@@ -6,6 +6,7 @@ import { useLocation } from "react-router";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import img1 from "image/Advanced_pre.svg";
 import img2 from "image/Advanced.svg";
+import ModalUsagePlanConnect from 'components/ModalUsagePlanConnect';
 
 const InvokeurlDiv = styled.div`
   background: #eff4fb;
@@ -42,11 +43,21 @@ const UsagePlanDiv = styled.div`
 export default function StageInfo(props) {
 
   const [stageConnect, setStageConnect] = useState(false);
+  const [usagePlanConnectDialog, setUsagePlanConnectDialog] = useState(false);
   
   const onClick = () => {
     // console.log(isActive2)
     setStageConnect((prev) => !prev);
   }
+
+  const onClick2 = () => {
+    setUsagePlanConnectDialog(true);
+  };
+
+  const onCancel = () => {
+    console.log('취소');
+    setUsagePlanConnectDialog(false);
+  };
 
   return (
     <React.Fragment>
@@ -64,13 +75,22 @@ export default function StageInfo(props) {
         </VisiablText>
       </VisiablDiv>
       { stageConnect === true ?
-            <UsagePlanDiv>
-              <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                <span style={{padding: "0px 15px 0px 0px"}}><Button size="supersmall" line="line">Usage Plan 연결 </Button></span>
-                <Button size="supersmall" line="line">연결 해제 </Button>
-              </ThemeProvider>
-            </UsagePlanDiv>
-            : null}
+        <UsagePlanDiv>
+          <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+            <span style={{padding: "0px 15px 0px 0px"}}><Button size="supersmall" line="line" onClick={onClick2}>Usage Plan 연결 </Button></span>
+            <Button size="supersmall" line="line">연결 해제 </Button>
+          </ThemeProvider>
+        </UsagePlanDiv>
+      : null}
+
+      <ModalUsagePlanConnect
+          title="UsagePlan와 연결합니다."
+          confirmText="연결하기"
+          cancelText="취소"
+          setUsagePlanConnectDialog={setUsagePlanConnectDialog}
+          onCancel={onCancel}
+          visible={usagePlanConnectDialog}>
+      </ModalUsagePlanConnect>
     </React.Fragment>
   );
 }

@@ -3,17 +3,14 @@ import styled from 'styled-components';
 
 
 const AllDiv = styled.div`
-    /* min-height: 100%;
-    width: 990px; */
+    display: block;
     width:100%;
     height: 100%;
-    /* padding: 10px 0px 0px 0px; */
 `;
 
 const ItemDiv = styled.div`
     display: block;
     color: #555555;
-    padding: 0px 0px 20px 0px;
 `;
 
 const Item = styled.div`
@@ -21,32 +18,29 @@ const Item = styled.div`
 `;
 
 const ItemName = styled.div`
-    width: 17%;
-    height: 30px;
+    min-width: 250px;
+    height: 45px;
+    font-size: 12px;
     line-height: 15px;
-    font-size: 14px;
-    margin-right: 50px;
-    padding: 6px 12px 6px 0px;
-    /* min-width: 18px; */
-    /* margin-right: 50px; */
+    padding: 5px 0px 5px 10px;
 `;
 
 const ItemInput = styled.div`
     display: flex;
-    width: 78%;
-    height: 30px;
-    /* min-width: 220px; */
-    /* align-items: center; */
+    width: 100%;
+    height: 45px;
+    font-size: 14px;
+    padding: 10px 0px 5px 0px;
 `;
 
 const InputForm = styled.input`
-    width: 100%;
+     width: 100%;
     height: 30px;
-    border: solid 1px #b6b6c3;
-    background: #ffffff;
-    box-sizing: border-box;
     font-size: 14px;
-    color: #333333;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    color: #333336;
+    padding: 6px 10px 4px 9px;
 `;
 
 const onChange = e => {

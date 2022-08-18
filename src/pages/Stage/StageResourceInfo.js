@@ -21,7 +21,7 @@ const CopyButtonDiv = styled.button`
 
 const MethodDiv = styled.div`
   display: inline-block;
-  padding: 20px 20px 0px 0px;
+  padding: 10px 10px 0px 10px;
 `;
 
 export default function StageInfo(props) {

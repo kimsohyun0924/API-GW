@@ -7,6 +7,7 @@ import MainHeader from 'components/MainHeader';
 import Button from 'components/Button';
 import axios from 'axios';
 
+
 const HeadDiv = styled.div`
 
 `;
@@ -17,41 +18,41 @@ const BodyDiv = styled.div`
 `;
 
 const ItemDiv = styled.div`
-  display: flex;
+  display: block;
   /* color: #555555; */
   /* padding: 10px 0px 10px 0px; */
 `;
 
 const Item = styled.div`
   display: flex;
+  align-items: center;
+  width: 917px;
+  height: 45px;
 `;
 
 const ItemName = styled.div`
-  width: 133px;
-  height: 50px;
-  /* line-height: 32px; */
+  width: 143px;
+  height: 45px;
   font-size: 14px;
-  color: #333336;
-  padding: 10px 0px 10px 0px;
+  padding: 10px 0px 5px 0px;
 `;
 
 const ItemInput = styled.div`
-    width: 500px;
-    min-width: 220px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
+  display: flex;
+  width: 784px;
+  height: 45px;
+  font-size: 14px;
+  padding: 10px 0px 5px 0px;
 `;
 
 const InputForm = styled.input`
   width: 400px;
-  height: 32px;
+  height: 30px;
+  font-size: 14px;
   border: solid 1px #b6b6c3;
-  background: #ffffff;
   box-sizing: border-box;
-  font-size: 12px;
-  color: #333333;
+  color: #333336;
+  padding: 6px 10px 4px 9px;
 `;
 
 const ItemNote = styled.div`
@@ -73,25 +74,28 @@ const ItemNote = styled.div`
 
 const Item2 = styled.div`
   display: flex;
-  /* padding: 0px 0px 20px 0px; */
+  /* align-items: center; */
+  width: 917px;
+  height: 90px;
 `;
 
 const ItemInput2 = styled.div`
-    width: 400px;
-    height: 70px;
-    display: flex;
-    align-items: center;
+  display: flex;
+  width: 784px;
+  height: 90px;
+  font-size: 14px;
+  padding: 10px 0px 5px 0px;
 `;
 
 const InputForm2 = styled.textarea`
   width: 400px;
-  height: 70px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
+  min-height: 70px;
   font-size: 14px;
-  color: #333333;
-  font-family: none;  
+  border: solid 1px #b6b6c3;
+  box-sizing: border-box;
+  color: #333336;
+  padding: 6px 10px 4px 9px;
+  font-family: "Noto Sans KR",sans-serif !important;
 `;
 
 const ItemText = styled.span`
@@ -134,9 +138,7 @@ export default function ApiCreate() {
       
     const createApi = async () => {
       try {
-        
         setError(null);
-       
         await axios.post(
           '/v1.0/g1/paas/Memsq07/apigw/service',
           {
@@ -177,7 +179,6 @@ export default function ApiCreate() {
                     <ItemText>Swagger에서 가져오기</ItemText>
                   </div>
                 </ItemInput>
-                <ItemNote></ItemNote>
               </Item>
             </ItemDiv>
             <ItemDiv>
@@ -186,7 +187,6 @@ export default function ApiCreate() {
                   <ItemInput>
                     <InputForm name="ApiName" placeholder=" API 이름을 입력하세요" onChange={onChange} value={ApiName}/>
                   </ItemInput>
-                  <ItemNote></ItemNote>
               </Item>
             </ItemDiv>
             <ItemDiv>
@@ -195,7 +195,6 @@ export default function ApiCreate() {
                 <ItemInput2>
                   <InputForm2 name="ApiExplain" placeholder=" API 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
                 </ItemInput2>
-                <ItemNote></ItemNote>
               </Item2>
             </ItemDiv>
             <ButtonDiv>

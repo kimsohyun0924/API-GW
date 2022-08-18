@@ -6,63 +6,54 @@ import Button from 'components/Button';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 
-
-const AllDiv = styled.div`
-    /* min-height: 100%;
-    width: 990px; */
+const BodyDiv = styled.div`
+    /* display: block;
     width:100%;
-    height: 100%;
-    /* background:pink; */
+    height: 100%; */
 `;
 
 const ItemDiv = styled.div`
     display: block;
-    color: #555555;
-    padding: 0px 0px 20px 0px;
-    /* background:pink; */
+    /* color: #555555;
+    padding: 0px 0px 20px 0px; */
 `;
 
 const Item = styled.div`
     display: flex;
+    align-items: center;
+    width: 100%;
+    height: 45px;
 `;
 
 const ItemName = styled.div`
-    width: 17%;
-    height: 30px;
-    line-height: 15px;
+    min-width: 250px;
+    height: 45px;
     font-size: 14px;
-    margin-right: 50px;
-    padding: 6px 12px 6px 0px;
-    /* min-width: 18px; */
-    /* margin-right: 50px; */
+    padding: 10px 0px 5px 10px;
 `;
 
 const ItemInput = styled.div`
     display: flex;
-    width: 78%;
-    height: 30px;
-    /* min-width: 220px; */
-    /* align-items: center; */
+    width: 100%;
+    height: 45px;
+    font-size: 14px;
+    padding: 10px 0px 5px 0px;
 `;
 
 const InputForm = styled.input`
     width: 100%;
     height: 30px;
-    border: solid 1px #b6b6c3;
-    background: #ffffff;
-    box-sizing: border-box;
     font-size: 14px;
-    color: #333333;
-`;
-
-const Content = styled.div`
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    color: #333336;
+    padding: 5px 5px 5px 5px;
 `;
 
 const ButtonDiv = styled.div`
     display: flex;
-    justify-content: center;
-    margin: 20px 60px 0px 60px;
-    /* align-items: center; */
+    justify-content: flex-end;
+    margin: 10px 0px 5px 0px;
 `;
 
 
@@ -134,7 +125,7 @@ export default function ResourceCreate(props) {
 
     return (
         <React.Fragment>
-          <AllDiv>
+          <BodyDiv>
             <ItemDiv>
               <Item>
                 <ItemName>리소스 경로</ItemName>
@@ -157,11 +148,11 @@ export default function ResourceCreate(props) {
             {/* {content && <Content>{selectComponent[content]}</Content>} */}
             <ButtonDiv>
               <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                <Button size="small" line="noline" onClick={onCancel}>취소</Button>
+                <span style={{padding:"0px 10px 0px 0px"}}><Button size="small" line="noline" onClick={onCancel}>취소</Button></span>
                 <Button size="medium" line="line" onClick={onCreate} >생성하기</Button>
               </ThemeProvider>
             </ButtonDiv>
-          </AllDiv>   
+          </BodyDiv>   
         </React.Fragment>
     );
 }

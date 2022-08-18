@@ -24,7 +24,10 @@ const methodcolor = {
     },
     DELETE: {
         backgroundColor: 'red'
-      }
+    },
+    ANY: {
+        backgroundColor: 'orange'
+    }
   };
 
   const methodStyles = css`
@@ -164,13 +167,13 @@ export default function MethodComp(props) {
             </MethodDiv> 
             <ModalApiDelete
                 // title="메서드 삭제"
-                confirmText="삭제"
+                confirmText="삭제하기"
                 cancelText="취소"
                 onConfirm={onDelete}
                 onCancel={onCancel}
                 visible={dialog}
                 >
-                {methodInfo.method_type} 메서드를 삭제하시겠습니까?
+                <span style={{fontWeight:"bold"}}>{methodInfo.method_type}</span><span style={{padding:"0px 0px 0px 10px"}}>메서드를 삭제합니다.</span>   
             </ModalApiDelete>     
         </React.Fragment> 
     );

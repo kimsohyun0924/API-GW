@@ -201,7 +201,7 @@ export default function UsagePlansCreate() {
             description: UsagePlanExplain,
             replenish_rate: replenish_rate,
             burst_capacity: burst_capacity,
-            requested_tokens: "1"
+            requested_tokens: 1
           }
         );
       } catch (e) {

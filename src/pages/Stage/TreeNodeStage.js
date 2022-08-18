@@ -73,7 +73,7 @@ const Content = styled.div`
 const InvokeurlDiv = styled.div`
   background: #eff4fb;
   /* #d9edf7 #d7e3f5 */
-  font-size : 16px;
+  font-size : 15px;
   font-weight: bold;
   padding: 15px 20px 15px 20px;
 `;
@@ -90,6 +90,7 @@ export default function RecursiveTreeView(props) {
   const serviceInfo = props.serviceInfo;
   const [content, setContent] = useState(null);
   const [resourceId, setResourceId] = useState(null);
+  const [stageId, setStageId] = useState(null);
   const [label, setLabel] = useState();
   const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
@@ -134,7 +135,6 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
-      console.log(event.target.getAttribute('value'));
 
       if(event.target.getAttribute('value') === "RESOURCE") {
         setContent("third");
@@ -143,6 +143,7 @@ export default function RecursiveTreeView(props) {
         setContent("fourth");
       } 
       else {
+        setStageId(nodeId);
         setContent("second");
       }
 
@@ -307,7 +308,7 @@ export default function RecursiveTreeView(props) {
     first: <StageCreate serviceInfo={serviceInfo}/>,
     second: <StageInfo resourceId={resourceId}/>,
     third: <StageResourceInfo resourceId={resourceId}/>,
-    fourth: <StageMethod resourceId={resourceId}/>
+    fourth: <StageMethod stageId={stageId} resourceId={resourceId}/>
    
       // <InvokeurlDiv>{resourceId}.ktcloud.io
       //   <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>

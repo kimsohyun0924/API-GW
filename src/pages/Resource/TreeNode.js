@@ -312,13 +312,13 @@ export default function RecursiveTreeView(props) {
         </ExampleDiv>
         <ModalApiDelete
               // title="정말로 삭제하시겠습니까?"
-              confirmText="삭제"
+              confirmText="삭제하기"
               cancelText="취소"
               onConfirm={onDelete}
               onCancel={onCancel}
               visible={dialog}
               >
-              {label}를 정말로 삭제하시겠습니까?
+              <span style={{fontWeight:"bold"}}>{label}</span><span style={{padding:"0px 0px 0px 10px"}}>리소스를 삭제합니다.</span>
         </ModalApiDelete> 
         <ModalApiDelete
               // title="정말로 삭제하시겠습니까?"

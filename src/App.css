@@ -28,3 +28,11 @@
   src:url('./style/fonts/NotoSansKR-Bold.otf') format('truetype');
   font-weight: 700;
 } 
+/* 
+input::placeholder {
+  font-size: 13px;
+}
+
+textarea::placeholder {
+  font-size: 13px;
+} */

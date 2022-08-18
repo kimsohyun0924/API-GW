@@ -52,85 +52,52 @@ const InputForm = styled.input`
 `;
 
 const ItemNote = styled.div`
-  font-size: 16px;
-  color: black;
-  padding: 0 10px;
-  height: 32px;
-  text-align: left;
   display : flex;
+  height: 30px;
+  font-size: 13px;
+  color: black;
+  padding: 0px 10px 0px 10px;
   justify-content : center;
   align-items : center;
-
-  ${props => props.state &&
-    css`
-      color: red;
-    `
-  }
 `;
 
 const RequestDiv = styled.div`
-  display: flex;
-  padding: 0px 0px 0px 0px;
-  background: pink;
+  margin: 0px 20px 0px 20px;
+  padding: 5px 5px 5px 5px;
+  border: 1px solid #b6b6c3;
 `;
 
 const RequestName = styled.div`
+  display: flex;
   width: 143px;
   height: 45px;
+  align-items: center;
   font-size: 14px;
   padding: 10px 0px 5px 10px;
 `;
 
-const RequestForm = styled.input`
-  width: 150px;
-  height: 32px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
-  font-size: 12px;
-  color: #333333;
-`;
-
-const InvokeurlDiv = styled.div`
-  background: #eff4fb;
-  /* #d9edf7 #d7e3f5 */
-  font-size : 16px;
-  font-weight: bold;
-  padding: 15px 20px 15px 20px;
-`;
-
-const CopyButtonDiv = styled.button`
-  margin: 0px 0px 0px 10px;
-  cursor: pointer;
-`;
-
-const VisiablDiv = styled.div`
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 5px 0px;
-  border-bottom: 0.5px solid black;
-  /* #e2e2e2 */
-  /* background: pink; */
-`;
-
-const VisiablText = styled.span`
+const ButtonDiv = styled.div`
   display: flex;
-  font-size: 18px;
-  cursor: pointer;
-  /* display: inline-block */
-`;
-
-const UsagePlanDiv = styled.div`
-  padding: 10px 0px 10px 0px;
+  justify-content: flex-end;
+  /* align-items: center; */
+  margin: 10px 0px 5px 0px;
 `;
 
 export default function StageMethod(props) {
 
+  const [error, setError] = useState(null);
   const [stageConnect, setStageConnect] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [inputs, setInputs] = useState({
     replenish_rate: '',
+    burst_capacity: ''
   });
-  const { replenish_rate} = inputs;
+  const { replenish_rate, burst_capacity } = inputs;
+
+  const clickedToggle = () => {
+    setToggle((prev) => !prev);
+    console.log(toggle);
+  };
 
   const onChange = e => {
     const { name, value } = e.target;
@@ -140,10 +107,28 @@ export default function StageMethod(props) {
     });
   };
   console.log(inputs);
-
-  const clickedToggle = () => {
-    setToggle((prev) => !prev);
-    console.log(toggle);
+  
+  const onCreate = () => {
+      
+    const createApi = async () => {
+      try {
+        setError(null);
+        await axios.post(
+          '/v1.0/g1/paas/Memsq07/apigw/service',
+          {
+            stage_id: props.stageId,
+            method_id: props.resourceId,
+            replenish_rate: replenish_rate,
+            burst_capacity: burst_capacity,
+            requested_tokens: 1
+          }
+        );
+      } catch (e) {
+        setError(e);
+      }
+    
+    };
+    createApi();
   };
 
 
@@ -158,23 +143,30 @@ export default function StageMethod(props) {
         </ItemDiv>
         { toggle === true ? 
           <React.Fragment>
-            <div style={{margin: "0px 20px 0px 20px", padding: "5px 0px 5px 0px", border: "1px solid #b6b6c3"}}>
+            <RequestDiv>
               <Item>
                 <RequestName>요율</RequestName>
                 <ItemInput>
-                  <InputForm name="" value="요율값 입력"/>
+                  <InputForm name="replenish_rate" placeholder="초당 요청 수" onChange={onChange} value={replenish_rate}/>
+                  <ItemNote>초당 요청 수</ItemNote>
                 </ItemInput>
               </Item>
               <Item>
                 <RequestName>버스트</RequestName>
                 <ItemInput>
-                  <InputForm value="버스트값 입력"/>
+                  <InputForm name="burst_capacity" placeholder="요청 건" onChange={onChange} value={burst_capacity}/>
+                  <ItemNote>요청 건</ItemNote>
                 </ItemInput>
               </Item>
-            </div>
+            </RequestDiv>
           </React.Fragment>
           : null
         }
+        <ButtonDiv>
+            <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+              <Button size="large" line="line" onClick={onCreate}>생성하기</Button>
+            </ThemeProvider>
+        </ButtonDiv>
       </BodyDiv>
     </React.Fragment>
   );
