@@ -10,7 +10,7 @@ const AllDiv = styled.div`
     width:100%;
     height: 100%;
     /* background:pink; */
-    padding : 20px 20px 0px 20px;
+    padding : 10px 10px 0px 10px;
 `;
 
 const ItemDiv = styled.div`
@@ -55,8 +55,8 @@ const InputForm = styled.input`
 
 const ButtonDiv = styled.div`
     display: flex;
-    justify-content: center;
-    margin: 20px 60px 0px 60px;
+    justify-content: flex-end;
+    margin: 10px 0px 5px 0px;
     /* align-items: center; */
 `;
 

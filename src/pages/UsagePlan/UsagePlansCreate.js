@@ -22,30 +22,30 @@ const BodyDiv = styled.div`
 
 const ItemDiv = styled.div`
   display: block;
-  color: #555555;
-  padding: 10px 0px 10px 0px;
+  color: #333336;
+  /* padding: 10px 0px 10px 0px; */
 `;
 
 const Item = styled.div`
   display: flex;
+  align-items: center;
+  width: 917px;
+  height: 45px;
 `;
 
 const ItemName = styled.div`
-  width: 180px;
-  min-width: 180px;
-  height: 32px;
-  /* line-height: 32px; */
+  width: 143px;
+  height: 45px;
   font-size: 14px;
-  padding: 10px 0px 10px 0px;
+  padding: 10px 0px 5px 0px;
 `;
 
 const ItemInput = styled.div`
-  width: 500px;
-  min-width: 220px;
-  height: 32px;
   display: flex;
-  align-items: center;
+  width: 784px;
+  height: 45px;
   font-size: 14px;
+  padding: 10px 0px 5px 0px;
 `;
 
 const InputForm = styled.input`
@@ -59,8 +59,8 @@ const InputForm = styled.input`
 `;
 
 const ItemNote = styled.div`
-  font-size: 16px;
-  color: black;
+  font-size: 12px;
+  color: #777777;
   padding: 0 10px;
   height: 32px;
   text-align: left;
@@ -77,25 +77,28 @@ const ItemNote = styled.div`
 
 const Item2 = styled.div`
   display: flex;
+  width: 917px;
+  height: 90px;
   /* padding: 0px 0px 20px 0px; */
 `;
 
 const ItemInput2 = styled.div`
-    width: 400px;
-    height: 70px;
     display: flex;
-    align-items: center;
+    width: 784px;
+    height: 90px;
+    font-size: 14px;
+    padding: 10px 0px 5px 0px;
 `;
 
 const InputForm2 = styled.textarea`
   width: 400px;
-  height: 70px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
+  min-height: 70px;
   font-size: 14px;
-  color: #333333;
-  font-family: none;  
+  border: solid 1px #b6b6c3;
+  box-sizing: border-box;
+  color: #333336;
+  padding: 6px 10px 4px 9px;
+  font-family: "Noto Sans KR",sans-serif !important; 
 `;
 
 const VisiablDiv = styled.div`
@@ -201,7 +204,7 @@ export default function UsagePlansCreate() {
             description: UsagePlanExplain,
             replenish_rate: replenish_rate,
             burst_capacity: burst_capacity,
-            requested_tokens: 1
+            requested_tokens: "1"
           }
         );
       } catch (e) {
@@ -248,7 +251,7 @@ export default function UsagePlansCreate() {
                 <Item>
                   <ItemName>이름</ItemName>
                   <ItemInput>
-                    <InputForm name="UsagePlanName" placeholder=" Usage Plan의 이름을 입력하세요" onChange={onChange} value={UsagePlanName}/>
+                    <InputForm name="UsagePlanName" placeholder="Usage Plan의 이름을 입력하세요" onChange={onChange} value={UsagePlanName}/>
                   </ItemInput>
                   <ItemNote></ItemNote>
                 </Item>
@@ -257,7 +260,7 @@ export default function UsagePlansCreate() {
                 <Item2>
                   <ItemName>설명</ItemName>
                     <ItemInput2>
-                      <InputForm2 name="UsagePlanExplain" placeholder=" Usage Plan의 설명을 입력하세요" onChange={onChange} value={UsagePlanExplain}/>
+                      <InputForm2 name="UsagePlanExplain" placeholder="Usage Plan의 설명을 입력하세요" onChange={onChange} value={UsagePlanExplain}/>
                     </ItemInput2>
                     <ItemNote></ItemNote>
                 </Item2>
@@ -280,24 +283,6 @@ export default function UsagePlansCreate() {
                 </React.Fragment>
                 : null
               }
-              <ItemDiv>
-                <Item>
-                  <ItemName>버스트</ItemName>
-                    <ToggleSwitch clickedToggle={clickedToggle2} toggle={toggle2}/>
-                    <ItemNote></ItemNote>
-                </Item>
-              </ItemDiv>
-                { toggle2 === true ? 
-                  <React.Fragment>
-                    <div style={{padding: "0px 0px 0px 180px"}}>
-                    <RequestDiv>
-                      <RequestForm name="burst_capacity" placeholder="요청 건" onChange={onChange} value={burst_capacity}/> 
-                        <ItemNote>요청 건</ItemNote>
-                    </RequestDiv>
-                    </div>
-                  </React.Fragment>
-                  : null
-                }
               <VisiablDiv>
                 <VisiablText onClick={onClick}>Stage 연결
                     { stageConnect === true ?

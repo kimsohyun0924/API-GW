@@ -19,7 +19,7 @@ const BodyDiv = styled.div`
 
 const ItemDiv = styled.div`
   display: block;
-  /* color: #555555; */
+  color: #333336;
   /* padding: 10px 0px 10px 0px; */
 `;
 
@@ -74,9 +74,9 @@ const ItemNote = styled.div`
 
 const Item2 = styled.div`
   display: flex;
-  /* align-items: center; */
   width: 917px;
   height: 90px;
+  /* padding: 0px 0px 20px 0px; */
 `;
 
 const ItemInput2 = styled.div`

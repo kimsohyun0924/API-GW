@@ -62,7 +62,7 @@ const ItemNote = styled.div`
 `;
 
 const RequestDiv = styled.div`
-  margin: 0px 20px 0px 20px;
+  margin: 0px 0px 0px 5px;
   padding: 5px 5px 5px 5px;
   border: 1px solid #b6b6c3;
 `;
@@ -80,7 +80,7 @@ const ButtonDiv = styled.div`
   display: flex;
   justify-content: flex-end;
   /* align-items: center; */
-  margin: 10px 0px 5px 0px;
+  margin: 15px 0px 5px 0px;
 `;
 
 export default function StageMethod(props) {
@@ -107,20 +107,23 @@ export default function StageMethod(props) {
     });
   };
   console.log(inputs);
-  
+
+  console.log(props.stageId);
+  console.log(props.resourceId);
+
   const onCreate = () => {
       
     const createApi = async () => {
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/service',
+          '/v1.0/g1/paas/Memsq07/apigw/method/custom-usage-plan',
           {
             stage_id: props.stageId,
             method_id: props.resourceId,
             replenish_rate: replenish_rate,
             burst_capacity: burst_capacity,
-            requested_tokens: 1
+            requested_tokens: "1"
           }
         );
       } catch (e) {
@@ -129,6 +132,7 @@ export default function StageMethod(props) {
     
     };
     createApi();
+    // window.location.reload(true);
   };
 
 

@@ -65,7 +65,7 @@ const PathDiv = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  padding: 10px 10px 0px 10px;
+  padding: 20px 20px 0px 20px;
   /* background:pink; */
   /* background: #d9edf7; */
 `;
