@@ -27,8 +27,7 @@ const TableHeader = [
   "설명",
   "ID",
   "요율",
-  "버스트",
-  "생성일시"
+  "버스트"
 ];
 
 export default function UsagePlans() {
@@ -37,12 +36,11 @@ export default function UsagePlans() {
   const initialState = {
     "name": null,
     "description": null,
-    "id": null,
+    "usage_plan_id": null,
     "replenish_rate": null,
     "burst_capacity": null,
     "requested_tokens": null,
-    "api_key_doc_list": null,
-    "stage_doc_list": null
+    "api_key_list": null,
   }
   const [clickData, setClickData] = useState(initialState);
 
@@ -125,7 +123,7 @@ export default function UsagePlans() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'+clickData.id
+          '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'+clickData.usage_plan_id
         );
       } catch (e) {
         setError(e);

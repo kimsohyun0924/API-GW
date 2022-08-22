@@ -3,7 +3,7 @@ import styled, { css, ThemeProvider } from "styled-components";
 import axios from 'axios';
 import Button from './Button';
 import Logo from '../image/Cancel.svg';
-import DropdownMethod from '../components/DropdownMethod';
+import DropdownMethod from './DropdownMethod';
 
 const DarkBackground = styled.div`
   position: fixed;
@@ -20,7 +20,7 @@ const DarkBackground = styled.div`
 
 const DialogBlock = styled.div`
   width: 600px;
-  height: 320px;
+  height: 300px;
   padding: 20px 30px 20px 30px;
   background: white;
   border-radius: 2px;
@@ -85,7 +85,7 @@ const InputForm = styled.input`
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 45px;
+  margin-top: 25px;
   display: flex;
   justify-content: center;
 `;
@@ -103,7 +103,8 @@ export default function ModalStageConnect( { title, children, confirmText, cance
   const [methodCommand, setMethodCommand] = useState(null);
   const [methodCommandValue, setMethodCommandValue] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
-  const [optionsCommand, serOptionsCommand] = useState(null);
+  const [apiOptions, setApiOptions] = useState(null);
+  const [stageOptions, setStageOptions] = useState(null);
 
 
   const fetchApis = async () => {
@@ -114,8 +115,23 @@ export default function ModalStageConnect( { title, children, confirmText, cance
       const response = await axios.get(
         '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
       );
-      serOptionsCommand(response.data); // 데이터는 response.data)
+      setApiOptions(response.data); // 데이터는 response.data)
       // console.log(response.data);
+    } catch (e) {
+      setError(e);
+    }
+  };
+
+  const fetchStages = async () => {
+    //get api request
+    try {
+      setError(null);
+
+      const response = await axios.get(
+        '/v1.0/g1/paas/Memsq07/apigw/stage/service/63034597d63c464a4e87ff82'
+      );
+      setStageOptions(response.data); // 데이터는 response.data
+      // console.log(AllResource);
     } catch (e) {
       setError(e);
     }
@@ -124,28 +140,14 @@ export default function ModalStageConnect( { title, children, confirmText, cance
 
   const onCreate = () => {
   
-    const createAPIKey = async () => {
-      try {
-        setError(null);
-        await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/apikey/'+checkedItems,
-          {
-
-          }
-        );
-      } catch (e) {
-        setError(e);
-      }
-    };
-    createAPIKey();
-    // window.location.reload(true);
-    setUpdateDialog(false);
+    
   };
 
 
   useEffect(() => {
     fetchApis();
-  }, [optionsCommand]);
+    fetchStages();
+  }, []);
 
   if (!visible) return null;
   return (
@@ -157,11 +159,11 @@ export default function ModalStageConnect( { title, children, confirmText, cance
               <TitleDiv>{title}</TitleDiv>
               <Item>
                   <ItemName>API</ItemName>
-                  <DropdownMethod dropdownItems={optionsCommand} default="API 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} /> 
+                  <DropdownMethod dropdownItems={apiOptions} default="API 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} /> 
               </Item>
               <Item>
                   <ItemName>Stage</ItemName>
-                  <DropdownMethod dropdownItems={optionsCommand} default="Stage 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />     
+                  <DropdownMethod dropdownItems={stageOptions} default="Stage 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />     
               </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

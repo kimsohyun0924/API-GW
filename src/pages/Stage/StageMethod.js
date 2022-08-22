@@ -35,7 +35,7 @@ const ItemName = styled.div`
 
 const ItemInput = styled.div`
   display: flex;
-  width: 784px;
+  width: 300px;
   height: 45px;
   font-size: 14px;
   padding: 10px 0px 5px 0px;
@@ -48,7 +48,7 @@ const InputForm = styled.input`
   border: solid 1px #b6b6c3;
   box-sizing: border-box;
   color: #333336;
-  padding: 6px 10px 4px 9px;
+  padding: 5px 5px 5px 5px;
 `;
 
 const ItemNote = styled.div`
@@ -123,7 +123,7 @@ export default function StageMethod(props) {
             method_id: props.resourceId,
             replenish_rate: replenish_rate,
             burst_capacity: burst_capacity,
-            requested_tokens: "1"
+            requested_tokens: 1
           }
         );
       } catch (e) {
@@ -132,7 +132,7 @@ export default function StageMethod(props) {
     
     };
     createApi();
-    // window.location.reload(true);
+    window.location.reload(true);
   };
 
 

@@ -49,6 +49,7 @@ const InputForm = styled.input`
     box-sizing: border-box;
     font-size: 15px;
     color: #333333;
+    padding: 5px 5px 5px 5px;
 `;
 
 const DropdownContainer = styled.div`
@@ -62,7 +63,7 @@ const DropdownBody = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 10px;
+    padding: 5px 10px;
     border-radius: 2px;
     color: #495057;
     border: 1px solid #b6b6c3;
@@ -194,11 +195,7 @@ export default function MethodUpdate(props) {
     {
       "name": "MOCK",
       "value": "MOCK"
-    },
-    {
-      "name": "kt cloud",
-      "value": "kt cloud"
-    },
+    }
   ];
 
   const { url_path } = inputs;
@@ -227,8 +224,9 @@ export default function MethodUpdate(props) {
       );
       setDataTemp(response.data); // 데이터는 response.data)
       setSelectedItem(response.data.integration_type);
+      setSelectedItem2(response.data.method_type);
       setInputs({
-        url_path : '   '+response.data.url_path });
+        url_path : response.data.url_path });
       setToggle(response.data.api_key_using);
     } catch (e) {
       setError(e);
@@ -240,23 +238,19 @@ export default function MethodUpdate(props) {
   }, []);
 
   const onCreate = () => {
-    const Api = {
-      selectedItem,
-      selectedItem2,
-      url_path
-    };
   
-    const createMethod = async () => {
+    const updateMethod = async () => {
       try {
         
         setError(null);
        
-        await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/method',
+        await axios.put(
+          '/v1.0/g1/paas/Memsq07/apigw/method'+resourceId,
           {
-            resource_id: resourceId,
             integration_type: selectedItem,
-            type: selectedItem2
+            method_type: selectedItem2,
+            url_path: url_path,
+            api_key_using: toggle,
           }
         );
       } catch (e) {
@@ -264,7 +258,7 @@ export default function MethodUpdate(props) {
       }
     
     };
-    createMethod();
+    updateMethod();
     window.location.reload(true);
 
     //   setTimeout(()=>{

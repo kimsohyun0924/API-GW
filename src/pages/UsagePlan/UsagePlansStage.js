@@ -32,10 +32,18 @@ const TableHeader = [
 
 export default function UsagePlanStage() {
 
-  const { state } = useLocation();
   const [bChecked, setChecked] = useState(false);
-  const [checkedItems, setCheckedItems] = useState([]); //개별 체크된 아이템을 저장함
-  const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
+  const { state } = useLocation();
+  const initialState = {
+    "name": null,
+    "description": null,
+    "usage_plan_id": null,
+    "replenish_rate": null,
+    "burst_capacity": null,
+    "requested_tokens": null,
+    "api_key_list": null,
+  }
+  const [clickData, setClickData] = useState(initialState);
   const [dialog, setDialog] = useState(false);
   const [updatedialog, setUpdateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
@@ -60,32 +68,13 @@ export default function UsagePlanStage() {
   };
 
   const Delete = () => {
-    if(!(checkedItems.length === 0)) {
-      setDialog(true);
-    }
+    
   };
 
   const onCancel = () => {
     console.log('취소');
     setDialog(false);
     setUpdateDialog(false);
-  };
-
- 
-  const checkHandler = (e) => {
-    setChecked(!bChecked);
-    const apiid = e.target.getAttribute('apiid');
-    const apiname = e.target.getAttribute('apiname');
-
-    if (e.target.checked) {
-      checkedItems.push(apiid);
-      checkedItemsName.push(apiname)
-      setCheckedItems(checkedItems);
-      setCheckedItemsName(checkedItemsName);
-    } else if (!e.target.checked) {
-      setCheckedItems(checkedItems.filter(checkedItem => checkedItem !== apiid));
-      setCheckedItemsName(checkedItemsName.filter(checkedItemName => checkedItemName !== apiname));
-    }
   };
 
   const fetchApis = async () => {
@@ -110,7 +99,7 @@ export default function UsagePlanStage() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItems
+          '/v1.0/g1/paas/Memsq07/apigw/service/'+clickData.usage_plan_id
         );
         setValue(value-1);
       } catch (e) {
@@ -143,7 +132,7 @@ export default function UsagePlanStage() {
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>
-          <TableCompUsageStage columns={TableHeader} data={testData} checkHandler={checkHandler}/>
+          <TableCompUsageStage columns={TableHeader} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
         </TableDiv>
       </MainContainer>
       <ModalStageConnect
@@ -162,7 +151,7 @@ export default function UsagePlanStage() {
             onCancel={onCancel}
             visible={dialog}
             >
-            {checkedItemsName}  정말로 삭제하시겠습니까?
+            {clickData.name}  정말로 삭제하시겠습니까?
       </ModalApiDelete>
     </React.Fragment>
   );

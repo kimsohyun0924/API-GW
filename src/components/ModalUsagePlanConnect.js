@@ -20,7 +20,7 @@ const DarkBackground = styled.div`
 
 const DialogBlock = styled.div`
   width: 600px;
-  height: 320px;
+  height: 250px;
   padding: 20px 30px 20px 30px;
   background: white;
   border-radius: 2px;
@@ -85,7 +85,7 @@ const InputForm = styled.input`
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 45px;
+  margin-top: 25px;
   display: flex;
   justify-content: center;
 `;
@@ -96,58 +96,68 @@ ModalUsagePlanConnect.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalUsagePlanConnect( { title, children, confirmText, cancelText, onConfirm, onCancel, visible, setUpdateDialog, checkedItems } ) {
+export default function ModalUsagePlanConnect( { title, children, confirmText, cancelText, onConfirm, onCancel, ConnectUsage, resourceId, visible, setUsagePlanConnectDialog } ) {
 
   const [error, setError] = useState(null);
-
   const [methodCommand, setMethodCommand] = useState(null);
   const [methodCommandValue, setMethodCommandValue] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
-  const [optionsCommand, serOptionsCommand] = useState(null);
+  const [usageOptions, setUsageOptions] = useState([]);
+  const [data, setData] = useState(null);
+  const [selectItem, setSelectItem] = useState(null);
 
 
-  const fetchApis = async () => {
-    //get api request
+  const fetchUsagePlan = async () => {
+    //get UsagePlan
     try {
       setError(null);
-
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+        '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'
       );
-      serOptionsCommand(response.data); // 데이터는 response.data)
-      // console.log(response.data);
+      setData(response.data);
     } catch (e) {
       setError(e);
     }
   };
 
+  const abcd = () => {
+
+    for (let index = 0; index < ConnectUsage.length; index++) {
+      setUsageOptions(data.filter(d => d.usage_plan_id !== ConnectUsage[index].usage_plan_id));
+      // console.log(ConnectUsage[index].usage_plan_id);
+    }
+
+  };
 
   const onCreate = () => {
-  
-    const createAPIKey = async () => {
+      
+    const createStageUsagePlanConnet = async () => {
       try {
         setError(null);
-        await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/apikey/'+checkedItems,
+        await axios.post(
+          '/v1.0/g1/paas/Memsq07/apigw/stage/usage-plan',
           {
-
+            stage_id: resourceId,
+            usage_plan_id: selectItem
           }
         );
       } catch (e) {
         setError(e);
       }
+    
     };
-    createAPIKey();
-    // window.location.reload(true);
-    setUpdateDialog(false);
+    createStageUsagePlanConnet();
+    window.location.reload(true);
+    setUsagePlanConnectDialog(false);
   };
 
-
   useEffect(() => {
-    fetchApis();
-  }, [optionsCommand]);
+    fetchUsagePlan();
+    abcd();
+  }, [data]);
 
   if (!visible) return null;
+
   return (
       <DarkBackground>
            <DialogBlock>
@@ -156,12 +166,8 @@ export default function ModalUsagePlanConnect( { title, children, confirmText, c
               </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
               <Item>
-                  <ItemName>API</ItemName>
-                  <DropdownMethod dropdownItems={optionsCommand} default="API 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} /> 
-              </Item>
-              <Item>
-                  <ItemName>Stage</ItemName>
-                  <DropdownMethod dropdownItems={optionsCommand} default="Stage 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />     
+                  <ItemName>Usage Plan</ItemName>
+                  <DropdownMethod dropdownItems={usageOptions} default="Usage Plan 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} selectItem={selectItem} setSelectItem={setSelectItem}/> 
               </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

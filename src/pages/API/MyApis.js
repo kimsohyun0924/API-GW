@@ -62,7 +62,7 @@ export default function MyApis() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   
-  console.log(DataTemp);
+  // console.log(DataTemp);
 
   // const ApiOperation = (e) => {
   //   const evalue = e.target.getAttribute('value');

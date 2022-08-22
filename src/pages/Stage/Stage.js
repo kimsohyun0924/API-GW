@@ -60,7 +60,7 @@ export default function Stage(props) {
 
     
   
-  const getAllResource = async () => {
+  const fetchStages = async () => {
     //get api request
     try {
       setError(null);
@@ -77,7 +77,7 @@ export default function Stage(props) {
 
 
   useEffect(() => {
-    getAllResource();
+    fetchStages();
   }, []);
 
 

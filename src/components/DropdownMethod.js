@@ -115,12 +115,13 @@ const DropdownDBServer = (props) => {
     setIsActive((prev) => !prev);
   }, []);
 
-  const onSelectItem = useCallback((e, itemName) => {
+  const onSelectItem = useCallback((e, item) => {
 
     // console.log(props);
-    setSelectedItem(itemName);
-    props.setItem(itemName);
-    props.setMethodCommandValue(itemName);
+    setSelectedItem(item.name);
+    props.setItem(item.name);
+    props.setMethodCommandValue(item.name);
+    props.setSelectItem(item.usage_plan_id);
 
     setIsActive((prev) => !prev);
   }, []);
@@ -144,7 +145,7 @@ const DropdownDBServer = (props) => {
   // useEffect(() => {
   //   setSelectedItem("");
   // }, [props.methodCommand]);
-
+  
   return (
     <DropdownContainer size={props.size}>
       <DropdownBody onClick={onActiveToggle}>
@@ -172,7 +173,7 @@ const DropdownDBServer = (props) => {
       
       <DropdownMenu isActive={isActive} ref={wrapperRef} size={props.size}>
         {props.dropdownItems.map((item, index) => (
-          <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem(e, item.name); }}>
+          <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem(e, item); }}>
             <DropdownItemName id="item_name" itemName={item.name} selectedItem={selectedItem}>{item.name}</DropdownItemName>
           </DropdownItemContainer>
         ))}

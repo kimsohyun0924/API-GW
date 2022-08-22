@@ -22,45 +22,43 @@ const BodyDiv = styled.div`
 
 const ItemDiv = styled.div`
   display: block;
-  color: #555555;
-  padding: 10px 0px 10px 0px;
+  color: #333336;
+  /* padding: 10px 0px 10px 0px; */
 `;
 
 const Item = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const ItemName = styled.div`
-  width: 180px;
-  min-width: 180px;
-  height: 32px;
-  /* line-height: 32px; */
-  font-size: 15px;
-  padding: 10px 0px 10px 0px;
+  width: 143px;
+  height: 45px;
+  font-size: 14px;
+  padding: 10px 0px 5px 0px;
 `;
 
 const ItemInput = styled.div`
-    width: 500px;
-    min-width: 220px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
+  display: flex;
+  width: 700px;
+  height: 45px;
+  font-size: 14px;
+  padding: 10px 0px 5px 0px;
 `;
 
 const InputForm = styled.input`
   width: 400px;
-  height: 32px;
+  height: 30px;
+  font-size: 14px;
   border: solid 1px #b6b6c3;
-  background: #ffffff;
   box-sizing: border-box;
-  font-size: 12px;
-  color: #333333;
+  color: #333336;
+  padding: 5px 5px 5px 5px;
 `;
 
 const ItemNote = styled.div`
-  font-size: 16px;
-  color: black;
+  font-size: 12px;
+  color: #777777;
   padding: 0 10px;
   height: 32px;
   text-align: left;
@@ -81,21 +79,45 @@ const Item2 = styled.div`
 `;
 
 const ItemInput2 = styled.div`
-    width: 400px;
-    height: 70px;
     display: flex;
-    align-items: center;
+    width: 700px;
+    height: 90px;
+    font-size: 14px;
+    padding: 10px 0px 5px 0px;
 `;
 
 const InputForm2 = styled.textarea`
   width: 400px;
-  height: 70px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
+  min-height: 70px;
   font-size: 14px;
-  color: #333333;
-  font-family: none;  
+  border: solid 1px #b6b6c3;
+  box-sizing: border-box;
+  color: #333336;
+  padding: 5px 5px 5px 5px;
+  font-family: "Noto Sans KR",sans-serif !important; 
+`;
+
+const RequestDiv = styled.div`
+  margin: 0px 0px 0px 138px;
+  padding: 5px 5px 5px 5px;
+`;
+
+const RequestInput = styled.div`
+  display: flex;
+  width: 300px;
+  height: 45px;
+  font-size: 14px;
+  padding: 10px 0px 5px 0px;
+`;
+
+const RequestForm = styled.input`
+  width: 200px;
+  height: 30px;
+  font-size: 14px;
+  border: solid 1px #b6b6c3;
+  box-sizing: border-box;
+  color: #333336;
+  padding: 5px 5px 5px 5px;
 `;
 
 const VisiablDiv = styled.div`
@@ -104,24 +126,9 @@ const VisiablDiv = styled.div`
 `;
 
 const VisiablText = styled.span`
-    border-bottom: 1px solid black;
-    font-size: 20px;
-    cursor: pointer;
-`;
-
-const RequestDiv = styled.div`
-  display: flex;
-  padding: 0px 0px 15px 0px;
-`;
-
-const RequestForm = styled.input`
-  width: 150px;
-  height: 32px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
-  font-size: 12px;
-  color: #333333;
+  border-bottom: 1px solid black;
+  font-size: 20px;
+  cursor: pointer;
 `;
 
 const ButtonDiv = styled.div`
@@ -147,7 +154,7 @@ const testData = [
   },
 ]
 
-export default function UsagePlansEdit() {
+export default function UsagePlansUpdate() {
 
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -183,7 +190,7 @@ export default function UsagePlansEdit() {
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'+state.id,
+          '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'+state.usage_plan_id,
           {
             name: UsagePlanName,
             description: UsagePlanExplain,
@@ -246,43 +253,35 @@ export default function UsagePlansEdit() {
                         <ItemNote></ItemNote>
                     </Item2>
                   </ItemDiv>
-                  <ItemDiv>  
-                    <Item>
-                        <ItemName>요율</ItemName>
-                        <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
-                        <ItemNote></ItemNote>
-                      </Item>
-                  </ItemDiv>
-                    { toggle === true ? 
-                      <React.Fragment>
-                        <div style={{padding: "0px 0px 0px 180px"}}>
-                          <RequestDiv>
-                              <RequestForm name="replenish_rate" placeholder="초당 요청 수" onChange={onChange} value={replenish_rate}/>
-                              <ItemNote>초당 요청 수</ItemNote>
-                          </RequestDiv>
-                        </div>
-                      </React.Fragment>
-                      : null
-                    }
                   <ItemDiv>
                     <Item>
-                      <ItemName>버스트</ItemName>
-                        <ToggleSwitch clickedToggle={clickedToggle2} toggle={toggle2}/>
-                        <ItemNote></ItemNote>   
+                      <ItemName>Throttling</ItemName>
+                      <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+                      <ItemNote></ItemNote>
                     </Item>
-                </ItemDiv>
-                  { toggle2 === true ? 
+                  </ItemDiv>
+                  { toggle === true ? 
                     <React.Fragment>
-                      <div style={{padding: "0px 0px 0px 180px"}}>
                       <RequestDiv>
-                        <RequestForm name="burst_capacity" placeholder="요청 건" onChange={onChange} value={burst_capacity}/> 
-                          <ItemNote>요청 건</ItemNote>
+                        <Item>
+                          <ItemName>요율</ItemName>
+                          <RequestInput>
+                            <RequestForm name="replenish_rate" placeholder="초당 요청 수" onChange={onChange} value={replenish_rate}/>
+                            <ItemNote>초당 요청 수</ItemNote>
+                          </RequestInput>
+                        </Item>
+                        <Item>
+                          <ItemName>버스트</ItemName>
+                          <RequestInput>
+                            <RequestForm name="burst_capacity" placeholder="요청 건" onChange={onChange} value={burst_capacity}/>
+                            <ItemNote>요청 건</ItemNote>
+                          </RequestInput>
+                        </Item>
                       </RequestDiv>
-                      </div>
                     </React.Fragment>
                     : null
                   }
-                <VisiablDiv>
+                {/* <VisiablDiv>
                 <VisiablText onClick={onClick}>Stage 연결
                     { stageConnect === true ?
                       <img style={{padding:"0px 0px 0px 10px"}} src={img2}/>
@@ -300,12 +299,12 @@ export default function UsagePlansEdit() {
                     <TableCompUsageStage columns={TableHeader} data={testData}/>
                   </div>    
                   : null
-                }
+                } */}
                 </BodyDiv>
                 <ButtonDiv>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <span style={{padding: "0px 15px 0px 0px"}}><Button size="small" line="noline" onClick={onCancel}>취소</Button></span>
-                    <Button size="medium" line="line" onClick={onUpdate}>저장</Button>
+                    <span style={{padding: "0px 15px 0px 0px"}}><Button size="large" line="noline" onClick={onCancel}>취소</Button></span>
+                    <Button size="large" line="line" onClick={onUpdate}>저장</Button>
                   </ThemeProvider>
                 </ButtonDiv>
         </MainContainer>

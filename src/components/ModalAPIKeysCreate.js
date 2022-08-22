@@ -6,111 +6,150 @@ import Logo from '../image/Cancel.svg';
 import Spacer from 'react-spacer';
 
 const DarkBackground = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 99;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(153,153,153,0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(153,153,153,0.5);
 `;
 
 const DialogBlock = styled.div`
-  width: 600px;
-  height: 320px;
-  padding: 20px 30px 20px 30px;
-  background: white;
-  border-radius: 2px;
-  border : 1px solid black;
+    display: block;
+    width: 600px;
+    height: 320px;
+    padding: 20px 30px 20px 30px;
+    background: white;
+    border-radius: 2px;
+    border : 1px solid black;
 `;
 
 const ImgDiv = styled.div`
-  display: flex;
-  margin-left: 530px;
-  justify-content: flex-end;
-  cursor: pointer;
+    display: flex;
+    margin-left: 530px;
+    justify-content: flex-end;
+    cursor: pointer;
 `;
 
 const TitleDiv = styled.div`
-  font-size : 16px;
-  padding : 10px 0px 30px 0px;
+    font-size : 16px;
+    padding : 10px 0px 20px 0px;
+`;
+
+const ItemDiv = styled.div`
+  display: block;
+  color: #333336;
+  /* padding: 10px 0px 10px 0px; */
 `;
 
 const Item = styled.div`
-  display: flex;
-  padding: 0px 0px 20px 0px;
+    /* display: flex;
+    padding: 0px 0px 20px 0px; */
+    display: flex;
+    align-items: center;
 `;
 
 const ItemName = styled.div`
-  width: 150px;
-  height: 32px;
-  line-height: 32px;
-  font-size: 15px;
+    /* width: 150px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 15px; */
+    width: 143px;
+    height: 45px;
+    font-size: 14px;
+    padding: 10px 0px 5px 0px;
 `;
 
 const ItemInput = styled.div`
-    width: 380px;
+    /* width: 380px;
     height: 32px;
     display: flex;
-    align-items: center;
-`;
-
-const ItemNote = styled.div`
-  font-size: 12px;
-  color: #777777;
-  height: 32px;
-  text-align: left;
-  display : flex;
-  justify-content : center;
-  align-items : center;
-
-  ${props => props.state &&
-    css`
-      color: red;
-    `
-  }
+    align-items: center; */
+    display: flex;
+    width: 380px;
+    height: 45px;
+    font-size: 14px;
+    padding: 10px 0px 5px 0px;
 `;
 
 const InputForm = styled.input`
-  width: 380px;
-  height: 32px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
-  font-size: 13px;
-  color: #333333;
+    /* width: 380px;
+    height: 32px;
+    border: solid 1px #b6b6c3;
+    background: #ffffff;
+    box-sizing: border-box;
+    font-size: 13px;
+    color: #333333; */
+    width: 380px;
+    height: 30px;
+    font-size: 14px;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    color: #333336;
+    padding: 5px 5px 5px 5px;
 `;
 
+const ItemNote = styled.div`
+    font-size: 12px;
+    color: #777777;
+    height: 32px;
+    text-align: left;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+
+    ${props => props.state &&
+      css`
+        color: red;
+      `
+    }
+`;
 
 const Item2 = styled.div`
-  display: flex;
-  padding: 0px 0px 20px 0px;
+    display: flex;
+    /* width: 917px;
+    height: 90px;
+    padding: 0px 0px 20px 0px; */
 `;
 
 const ItemInput2 = styled.div`
-    width: 380;
+    /* width: 380;
     height: 70px;
     display: flex;
-    align-items: center;
+    align-items: center; */
+    display: flex;
+    width: 380px;
+    height: 90px;
+    font-size: 14px;
+    padding: 10px 0px 5px 0px;
 `;
 
-const InputForm2 = styled.input`
-  width: 380px;
-  height: 70px;
-  border: solid 1px #b6b6c3;
-  background: #ffffff;
-  box-sizing: border-box;
-  font-size: 13px;
-  color: #333333;
+const InputForm2 = styled.textarea`
+    /* width: 380px;
+    height: 70px;
+    border: solid 1px #b6b6c3;
+    background: #ffffff;
+    box-sizing: border-box;
+    font-size: 13px;
+    color: #333333; */
+    width: 380px;
+    min-height: 70px;
+    font-size: 14px;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    color: #333336;
+    padding: 5px 5px 5px 5px;
+    font-family: "Noto Sans KR",sans-serif !important;
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 11px;
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0px 5px 0px;
   
 `;
 
@@ -169,20 +208,22 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
                 <img src={Logo}/>
               </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
-              <Item>
+              <ItemDiv>
+                <Item>
                   <ItemName>API Key 이름</ItemName>
-                  <ItemInput>
-                      <InputForm name="APIKeyName" placeholder=" API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName}/>
-                  </ItemInput>
-                  <ItemNote></ItemNote>
-              </Item>
-              <Item2>
-                  <ItemName>API Key 설명</ItemName>
-                  <ItemInput2>
-                      <InputForm2 name="APIKeyExplain" placeholder=" API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain}/>
-                  </ItemInput2>
-                  <ItemNote></ItemNote>
-              </Item2>
+                    <ItemInput>
+                        <InputForm name="APIKeyName" placeholder="API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName}/>
+                    </ItemInput>
+                  </Item>
+                </ItemDiv>
+                <ItemDiv>
+                  <Item2>
+                    <ItemName>API Key 설명</ItemName>
+                    <ItemInput2>
+                        <InputForm2 name="APIKeyExplain" placeholder="API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain}/>
+                    </ItemInput2>
+                  </Item2>
+              </ItemDiv>
               <ButtonGroup>
                 <Spacer grow={1}/>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

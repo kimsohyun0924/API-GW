@@ -26,8 +26,8 @@ const ItemDiv = styled.div`
 const Item = styled.div`
   display: flex;
   align-items: center;
-  width: 917px;
-  height: 45px;
+  /* width: 917px;
+  height: 45px; */
 `;
 
 const ItemName = styled.div`
@@ -52,7 +52,7 @@ const InputForm = styled.input`
   border: solid 1px #b6b6c3;
   box-sizing: border-box;
   color: #333336;
-  padding: 6px 10px 4px 9px;
+  padding: 5px 5px 5px 5px;
 `;
 
 const ItemNote = styled.div`
@@ -74,8 +74,8 @@ const ItemNote = styled.div`
 
 const Item2 = styled.div`
   display: flex;
-  width: 917px;
-  height: 90px;
+  /* width: 917px;
+  height: 90px; */
   /* padding: 0px 0px 20px 0px; */
 `;
 
@@ -94,7 +94,7 @@ const InputForm2 = styled.textarea`
   border: solid 1px #b6b6c3;
   box-sizing: border-box;
   color: #333336;
-  padding: 6px 10px 4px 9px;
+  padding: 5px 5px 5px 5px;
   font-family: "Noto Sans KR",sans-serif !important;
 `;
 
@@ -185,7 +185,7 @@ export default function ApiCreate() {
               <Item>
                 <ItemName>API 이름</ItemName>
                   <ItemInput>
-                    <InputForm name="ApiName" placeholder=" API 이름을 입력하세요" onChange={onChange} value={ApiName}/>
+                    <InputForm name="ApiName" placeholder="API 이름을 입력하세요" onChange={onChange} value={ApiName}/>
                   </ItemInput>
               </Item>
             </ItemDiv>
@@ -193,7 +193,7 @@ export default function ApiCreate() {
               <Item2>
                 <ItemName>API 설명</ItemName>
                 <ItemInput2>
-                  <InputForm2 name="ApiExplain" placeholder=" API 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
+                  <InputForm2 name="ApiExplain" placeholder="API 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
                 </ItemInput2>
               </Item2>
             </ItemDiv>

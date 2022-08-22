@@ -48,7 +48,7 @@ export default function ApiOperation() {
     // console.log(state);
   
     const handleChange = (event, newValue) => {
-        console.log(newValue);
+        // console.log(newValue);
         setValue(newValue);
     };
 

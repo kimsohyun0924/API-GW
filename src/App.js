@@ -9,9 +9,9 @@ import Header from './layouts/Header';
 import Myapis from './pages/API/MyApis';
 import ApiCreate from './pages/API/ApiCreate';
 import ApiOperation from './pages/API/ApiOperations';
-import UsagePlans from './pages/UsagePlan/UsgaePlans';
+import UsagePlans from './pages/UsagePlan/UsagePlans';
 import UsagePlansCreate from './pages/UsagePlan/UsagePlansCreate';
-import UsagePlansEdit from './pages/UsagePlan/UsagePlansEdit';
+import UsagePlansUpdate from './pages/UsagePlan/UsagePlansUpdate';
 import UsagePlansStage from './pages/UsagePlan/UsagePlansStage';
 import APIKeys from './pages/ApiKey/APIKeys';
 import APIKeyUsagePlans from './pages/ApiKey/APIKeyUsagePlans';
@@ -34,7 +34,7 @@ export default function App() {
                 <Route path='/api/operation/*' element={<ApiOperation />}></Route>
                 <Route path='/usageplans' element={<UsagePlans />}></Route>
                 <Route path='/usageplans/create' element={<UsagePlansCreate />}></Route>
-                <Route path='/usageplans/edit' element={<UsagePlansEdit />}></Route>
+                <Route path='/usageplans/edit' element={<UsagePlansUpdate />}></Route>
                 <Route path='/usageplans/stage' element={<UsagePlansStage />}></Route>
                 <Route path='/apikeys' element={<APIKeys />}></Route>
                 <Route path='/apikey/usageplans' element={<APIKeyUsagePlans />}></Route>

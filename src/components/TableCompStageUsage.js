@@ -74,9 +74,10 @@ const Hov = styled.td`
   } */
 `;
 
-export default function TableCompUsagePlans({ columns, data, clickData, setClickData, bChecked, setChecked }) {
+export default function TableCompStageUsage({ columns, data, clickData, setClickData, bChecked, setChecked }) {
 
   const navigate = useNavigate();
+
   const initialState = {
     "name": null,
     "description": null,

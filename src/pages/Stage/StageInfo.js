@@ -7,6 +7,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import img1 from "image/Advanced_pre.svg";
 import img2 from "image/Advanced.svg";
 import ModalUsagePlanConnect from 'components/ModalUsagePlanConnect';
+import TableCompStageUsage from 'components/TableCompStageUsage';
 
 const InvokeurlDiv = styled.div`
   background: #eff4fb;
@@ -40,14 +41,53 @@ const UsagePlanDiv = styled.div`
   padding: 10px 0px 10px 0px;
 `;
 
+const TableDiv = styled.div`
+`;
+
+const TableHeader = [
+  "Usage Plan 이름",
+  "설명",
+  "ID",
+  "요율",
+  "버스트"
+];
+
 export default function StageInfo(props) {
 
+  console.log(props);
+
+  const initialState = {
+    "usage_plan_id": null,
+    "name": null,
+    "description": null,
+    "replenish_rate": null,
+    "burst_capacity": null,
+    "requested_tokens": null,
+    "api_key_list": null,
+  }
+  const [clickData, setClickData] = useState(initialState);
   const [stageConnect, setStageConnect] = useState(false);
   const [usagePlanConnectDialog, setUsagePlanConnectDialog] = useState(false);
+  const [DataTemp, setDataTemp] = useState([]);
+  const [error, setError] = useState(null);
   
   const onClick = () => {
     // console.log(isActive2)
     setStageConnect((prev) => !prev);
+
+    const fetchConnectUsgaList = async () => {
+      try {
+        setError(null);
+        const response = await axios.get(
+          '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.resourceId+'/usage-plan'
+        );
+        setDataTemp(response.data); // 데이터는 response.data)
+      } catch (e) {
+        setError(e);
+        console.log(error);
+      }
+    };
+    fetchConnectUsgaList();
   }
 
   const onClick2 = () => {
@@ -58,6 +98,8 @@ export default function StageInfo(props) {
     console.log('취소');
     setUsagePlanConnectDialog(false);
   };
+
+
 
   return (
     <React.Fragment>
@@ -75,20 +117,26 @@ export default function StageInfo(props) {
         </VisiablText>
       </VisiablDiv>
       { stageConnect === true ?
-        <UsagePlanDiv>
-          <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <span style={{padding: "0px 15px 0px 0px"}}><Button size="supersmall" line="line" onClick={onClick2}>Usage Plan 연결 </Button></span>
-            <Button size="supersmall" line="line">연결 해제 </Button>
-          </ThemeProvider>
-        </UsagePlanDiv>
+        <React.Fragment>
+          <UsagePlanDiv>
+            <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+              <span style={{padding: "0px 15px 0px 0px"}}><Button size="supersmall" line="line" onClick={onClick2}>Usage Plan 연결</Button></span>
+              <Button size="supersmall" line="line">연결 해제 </Button>
+            </ThemeProvider>
+          </UsagePlanDiv>
+          <TableDiv>
+            <TableCompStageUsage columns={TableHeader} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
+          </TableDiv>
+        </React.Fragment>
       : null}
-
       <ModalUsagePlanConnect
-          title="UsagePlan와 연결합니다."
+          title="Usage Plan과 연결합니다."
           confirmText="연결하기"
           cancelText="취소"
           setUsagePlanConnectDialog={setUsagePlanConnectDialog}
           onCancel={onCancel}
+          ConnectUsage={DataTemp}
+          resourceId={props.resourceId}
           visible={usagePlanConnectDialog}>
       </ModalUsagePlanConnect>
     </React.Fragment>
