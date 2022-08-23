@@ -95,6 +95,7 @@ export default function RecursiveTreeView(props) {
   const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [error, setError] = useState(null);
+  
   // const serviceInfo = props.serviceInfo;
   // const navigate = useNavigate(); 
 
@@ -130,7 +131,6 @@ export default function RecursiveTreeView(props) {
   
     const handleExpansionClick = (event) => {
       handleExpansion(event);
-      
     };
   
     const handleSelectionClick = (event) => {

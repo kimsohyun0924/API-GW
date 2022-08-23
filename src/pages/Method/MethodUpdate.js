@@ -208,11 +208,6 @@ export default function MethodUpdate(props) {
       [name]: value
     });
   };
-  // console.log(inputs);
-  // console.log(selectedItem);
-  // console.log(selectedItem2);
-  // console.log(resourceId);
-
 
   const getMethod = async () => {
     //get api request
@@ -237,33 +232,33 @@ export default function MethodUpdate(props) {
     getMethod();
   }, []);
 
+
+  // console.log(inputs);
+  // console.log(selectedItem);
+  // console.log(selectedItem2);
+  // console.log(resourceId);
+
   const onCreate = () => {
   
     const updateMethod = async () => {
       try {
-        
         setError(null);
-       
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/method'+resourceId,
+          '/v1.0/g1/paas/Memsq07/apigw/method/'+resourceId,
           {
-            integration_type: selectedItem,
-            method_type: selectedItem2,
-            url_path: url_path,
-            api_key_using: toggle,
+              integration_type: selectedItem,
+              method_type: selectedItem2,
+              url_path: url_path,
+              api_key_using: toggle
           }
         );
       } catch (e) {
         setError(e);
       }
-    
     };
     updateMethod();
     window.location.reload(true);
 
-    //   setTimeout(()=>{
-    //   navigate('/dashboard');     
-    // }, 1000);
   };
 
   const onCancel = () => {

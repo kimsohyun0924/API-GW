@@ -20,7 +20,6 @@ const Table = styled.table`
 `;
 
 const THead = styled.thead`
-
 `;
 
 const TH = styled.th`
@@ -33,7 +32,6 @@ const TH = styled.th`
   font-weight: 400;
   font-size: 13px;
   text-align: left;
-
   &:not(:last-child) {
     background: url(${TableLine}) right 50% no-repeat;
   }
@@ -53,7 +51,6 @@ const TD = styled.td`
   vertical-align: middle;
   padding: 8px 10px;
   text-align: left;
-
   ${props => props.sh === true &&
     css`
       background: #c7dff4;
@@ -67,7 +64,6 @@ const Hov = styled.td`
   vertical-align: middle;
   padding: 8px 10px;
   text-align: left;
-
   /* &:hover {
     cursor: pointer;;
   } */

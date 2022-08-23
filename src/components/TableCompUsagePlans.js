@@ -101,7 +101,7 @@ export default function TableCompUsagePlans({ columns, data, clickData, setClick
         "replenish_rate": item.replenish_rate,
         "burst_capacity": item.burst_capacity,
         "requested_tokens": item.requested_tokens,
-        "api_key_list": item.api_key_doc_list,
+        "api_key_list": item.api_key_list,
       });
     }
   }

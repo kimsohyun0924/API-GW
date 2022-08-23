@@ -78,7 +78,7 @@ const Hov = styled.td`
   } */
 `;
 
-export default function TableCompAPIKeys({ columns, data, clickData, setClickData, bChecked, setChecked }) {
+export default function TableCompAPIKeys({ columns, data, clickData, setClickData }) {
 
   const navigate = useNavigate();
   const [dialog, setDialog] = useState(false);
@@ -86,7 +86,7 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
   const initialState = {
     "name": null,
     "description": null,
-    "id": null,
+    "api_key_id": null,
     "enabled": null,
     "api_key": null,
     "created_at": null
@@ -99,7 +99,7 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
 
   const onClick2 = (item) => {
     // setClickId(item.id);
-    if(item.id === clickData.id) {
+    if(item.api_key_id === clickData.api_key_id) {
       // setChecked(true);
       setClickData(initialState);
     }
@@ -107,7 +107,7 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
       setClickData({
         "name": item.name,
         "description": item.description,
-        "id": item.id,
+        "api_key_id": item.api_key_id,
         "enabled": item.enabled,
         "api_key": item.api_key,
         "created_at": item.created_at
@@ -119,7 +119,7 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
     setDialog(false);
   };
 
-  const checkHandler = () => {
+  const checkHandler = (e) => {
     // setChecked(!bChecked);
   };
 
@@ -145,13 +145,13 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
             { data && data.map((item, index) => {
               return (
                 <React.Fragment key={index}>
-                  <TR key={index} onClick={() => { onClick2(item) }} clickId={clickData.id} Id={item.id}>
+                  <TR key={index} onClick={() => { onClick2(item) }} clickId={clickData.api_key_id} Id={item.api_key_id}>
                     <TD width='1%'>
-                      <input type="checkbox" checked={clickData.id === item.id ? true : false} onChange={checkHandler}/>
+                      <input type="checkbox" checked={clickData.api_key_id === item.api_key_id ? true : false} onChange={checkHandler}/>
                     </TD>
                     <TD width='8%'>{item.name}</TD>
                     <TD width='10%'>{item.description}</TD>
-                    <TD width='10%'>{item.id}</TD>
+                    <TD width='10%'>{item.api_key_id}</TD>
                     <TD width='7%'>{item.enabled === true ? "활성":"비활성"}</TD>
                     <TD width='7%'>
                       <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

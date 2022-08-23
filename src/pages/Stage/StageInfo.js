@@ -54,8 +54,6 @@ const TableHeader = [
 
 export default function StageInfo(props) {
 
-  console.log(props);
-
   const initialState = {
     "usage_plan_id": null,
     "name": null,
@@ -99,6 +97,23 @@ export default function StageInfo(props) {
     setUsagePlanConnectDialog(false);
   };
 
+  const onDelete = () => {
+    //delete api request
+     const deleteStageUsagePlanConnet = async () => {
+       try {
+         setError(null);
+         await axios.delete(
+           '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.resourceId+'/usage-plan/'+clickData.usage_plan_id
+         );
+       } catch (e) {
+         setError(e);
+         console.log(error);
+       }
+     };
+     deleteStageUsagePlanConnet();
+     window.location.reload(true);
+   };
+
 
 
   return (
@@ -121,7 +136,7 @@ export default function StageInfo(props) {
           <UsagePlanDiv>
             <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
               <span style={{padding: "0px 15px 0px 0px"}}><Button size="supersmall" line="line" onClick={onClick2}>Usage Plan 연결</Button></span>
-              <Button size="supersmall" line="line">연결 해제 </Button>
+              <Button size="supersmall" line="line" onClick={onDelete}>연결 해제 </Button>
             </ThemeProvider>
           </UsagePlanDiv>
           <TableDiv>

@@ -38,7 +38,7 @@ export default function APIKeys() {
   const initialState = {
     "name": null,
     "description": null,
-    "id": null,
+    "api_key_id": null,
     "enabled": null,
     "api_key": null,
     "created_at": null
@@ -125,7 +125,7 @@ export default function APIKeys() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+clickData.id
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+clickData.api_key_id
         );
       } catch (e) {
         setError(e);
@@ -133,7 +133,7 @@ export default function APIKeys() {
       }
     };
     deleteAPIKey();
-    // window.location.reload(true);
+    window.location.reload(true);
     setDeleteDialog(false);
   };
 
@@ -178,7 +178,7 @@ export default function APIKeys() {
             cancelText="취소"
             setUpdateDialog={setUpdateDialog}
             onCancel={onCancel}
-            checkedItem={clickData}
+            clickData={clickData}
             visible={updateDialog}>
       </ModalAPIKeysUpdate>
       <ModalApiDelete
@@ -187,7 +187,6 @@ export default function APIKeys() {
             cancelText="취소"
             onConfirm={onDelete}
             onCancel={onCancel}
-            checkedItem={clickData.id}
             visible={deleteDialog}
             >
            <span style={{fontWeight:"bold"}}>{clickData.name}</span>  <span style={{padding:"0px 0px 0px 15px"}}>API Key를 삭제합니다.</span>

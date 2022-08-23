@@ -121,12 +121,10 @@ export default function ModalUsagePlanConnect( { title, children, confirmText, c
   };
 
   const abcd = () => {
-
     for (let index = 0; index < ConnectUsage.length; index++) {
       setUsageOptions(data.filter(d => d.usage_plan_id !== ConnectUsage[index].usage_plan_id));
       // console.log(ConnectUsage[index].usage_plan_id);
     }
-
   };
 
   const onCreate = () => {

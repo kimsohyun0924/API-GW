@@ -176,7 +176,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       [name]: value
     });
   };
-  console.log(inputs);
+  // console.log(inputs);
 
   const onCreate = () => {
   
@@ -184,7 +184,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/createKey',
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys/',
           {
             name: APIKeyName,
             description: APIKeyExplain,

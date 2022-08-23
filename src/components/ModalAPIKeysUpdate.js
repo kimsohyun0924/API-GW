@@ -158,7 +158,7 @@ ModalAPIKeysCreate.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onCancel, visible, setUpdateDialog, checkedItem} ) {
+export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onCancel, visible, setUpdateDialog, clickData} ) {
 
   const [error, setError] = useState(null);
   const [toggle, setToggle] = useState(false);
@@ -176,7 +176,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       [name]: value
     });
   };
-  console.log(inputs);
+  // console.log(inputs);
 
   const onUpdate = () => {
   
@@ -184,7 +184,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+checkedItem.id,
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+clickData.api_key_id,
           {
             name: APIKeyName,
             description: APIKeyExplain,
@@ -213,7 +213,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
               <ImgDiv onClick={onCancel}>
                 <img src={Logo}/>
               </ImgDiv>
-              <TitleDiv><span style={{padding:"0px 10px 0px 0px", fontWeight:"bold"}}>{checkedItem.name}</span>{title}</TitleDiv>
+              <TitleDiv><span style={{padding:"0px 10px 0px 0px", fontWeight:"bold"}}>{clickData.name}</span>{title}</TitleDiv>
               <Item>
                   <ItemName>API Key 이름</ItemName>
                   <ItemInput>
