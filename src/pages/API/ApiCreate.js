@@ -152,8 +152,7 @@ export default function ApiCreate() {
     
     };
     createApi();
-
-      setTimeout(()=>{
+    setTimeout(()=>{
       navigate('/myapis');     
     }, 1000);
   };

@@ -129,9 +129,7 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
         <Table>
           <THead>  
             <tr>
-              <TH width='1%'>
-                {/* <input type="checkbox"/> */}
-              </TH>
+              <TH width='1%'/>
               { columns.map((item, index) => {
                 return (
                   <React.Fragment key={index}>

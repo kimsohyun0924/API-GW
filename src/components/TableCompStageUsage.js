@@ -118,9 +118,7 @@ export default function TableCompStageUsage({ columns, data, clickData, setClick
         <Table>
           <THead>  
             <tr>
-              <TH width='1%'>
-                <input type="checkbox"/>
-              </TH>
+              <TH width='1%'/>
               { columns.map((item, index) => {
                 return (
                   <React.Fragment key={index}>

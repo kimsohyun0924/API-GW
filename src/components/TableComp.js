@@ -69,7 +69,7 @@ const Hov = styled.td`
   text-align: left;
 
   &:hover {
-    cursor: pointer;;
+    cursor: pointer;
   }
 `;
 
@@ -88,9 +88,7 @@ export default function TableComp({ columns, data, checkHandler }) {
         <Table>
           <THead>  
             <tr>
-              <TH width='1%'>
-                <input type="checkbox"/>
-              </TH>
+              <TH width='1%'/>
               { columns.map((item, index) => {
                 return (
                   <React.Fragment key={index}>

@@ -62,19 +62,7 @@ const TD = styled.td`
   text-align: left;
 `;
 
-const Hov = styled.td`
-  line-height: 20px;
-  text-align: center;
-  vertical-align: middle;
-  padding: 8px 10px;
-  text-align: left;
-
-  /* &:hover {
-    cursor: pointer;;
-  } */
-`;
-
-export default function TableCompUsagePlans({ columns, data, clickData, setClickData, bChecked, setChecked }) {
+export default function TableCompUsagePlans({ columns, data, clickData, setClickData }) {
 
   const navigate = useNavigate();
   const initialState = {
@@ -88,9 +76,7 @@ export default function TableCompUsagePlans({ columns, data, clickData, setClick
   }
 
   const onClick = (item) => {
-    // setClickId(item.id);
     if(item.usage_plan_id === clickData.usage_plan_id) {
-      // setChecked(true);
       setClickData(initialState);
     }
     else {
@@ -107,8 +93,6 @@ export default function TableCompUsagePlans({ columns, data, clickData, setClick
   }
 
   const checkHandler = (e) => {
-    // setChecked(e.tartget.checked);
-    // console.log(e);
   };
 
   return (
@@ -117,9 +101,7 @@ export default function TableCompUsagePlans({ columns, data, clickData, setClick
         <Table>
           <THead>  
             <tr>
-              <TH width='1%'>
-                <input type="checkbox"/>
-              </TH>
+              <TH width='1%'/>
               { columns.map((item, index) => {
                 return (
                   <React.Fragment key={index}>
@@ -137,7 +119,7 @@ export default function TableCompUsagePlans({ columns, data, clickData, setClick
                   <TD width='1%'>
                       <input type="checkbox" checked={clickData.usage_plan_id === item.usage_plan_id ? true : false} onChange={checkHandler}/>
                     </TD>
-                    <Hov align='left' width='10%' >{item.name}</Hov>
+                    <TD width='10%' >{item.name}</TD>
                     <TD width='10%'>{item.description}</TD>
                     <TD width='15%'>{item.usage_plan_id}</TD>
                     <TD width='10%'>{item.replenish_rate}</TD> 

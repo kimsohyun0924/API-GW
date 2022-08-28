@@ -32,7 +32,6 @@ const TableHeader = [
 
 export default function UsagePlans() {
 
-  const [bChecked, setChecked] = useState(false);
   const initialState = {
     "name": null,
     "description": null,
@@ -43,9 +42,6 @@ export default function UsagePlans() {
     "api_key_list": null,
   }
   const [clickData, setClickData] = useState(initialState);
-
-  // const [checkedItem, setCheckedItem] = useState([]); //개별 체크된 아이템을 저장함
-  // const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
   const [updateDialog, setUpdateDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
@@ -80,20 +76,15 @@ export default function UsagePlans() {
   };
 
   const Update = () => {
-  
-      navigate('/usageplans/edit', {state: clickData});
-      
-    
+    navigate('/usageplans/edit', {state: clickData});
   };
 
   const Delete = () => {
-
-      setDeleteDialog(true);
-    
+    setDeleteDialog(true);
   };
 
   const Stage = () => {
-      navigate('/usageplans/stage', {state: clickData});
+    navigate('/usageplans/stage', {state: clickData});
   };
 
   const onCancel = () => {
@@ -103,7 +94,7 @@ export default function UsagePlans() {
   };
 
   const fetchUsagePlans = async () => {
-    //get Usage Plan request
+    //get UsagePlan
     try {
       setError(null);
 
@@ -118,7 +109,7 @@ export default function UsagePlans() {
   };
 
   const onDelete = () => {
-   //delete api request
+   //delete UsagePlan
     const deleteUsagePlan = async () => {
       try {
         setError(null);
@@ -151,7 +142,7 @@ export default function UsagePlans() {
         </HeadDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <span style={{padding: "0px 20px 0px 0px"}}><Button size="large" line="line" action={Create}>Usage Plan 생성</Button></span>
+            <span style={{padding: "0px 20px 0px 0px"}}><Button size="small" line="line" action={Create}>Usage Plan 생성</Button></span>
             <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Update}>변경</Button></span>
             <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Delete}>삭제</Button></span>
             <Button size="small" line="outline" onClick={Stage}>연결된 Stage</Button>

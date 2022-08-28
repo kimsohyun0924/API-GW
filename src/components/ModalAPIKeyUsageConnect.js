@@ -3,7 +3,7 @@ import styled, { css, ThemeProvider } from "styled-components";
 import axios from 'axios';
 import Button from './Button';
 import Logo from '../image/Cancel.svg';
-import DropdownMethod from '../components/DropdownMethod';
+import DropdownMethod from './DropdownMethod';
 
 const DarkBackground = styled.div`
   position: fixed;
@@ -20,7 +20,7 @@ const DarkBackground = styled.div`
 
 const DialogBlock = styled.div`
   width: 600px;
-  height: 320px;
+  height: 250px;
   padding: 20px 30px 20px 30px;
   background: white;
   border-radius: 2px;
@@ -85,70 +85,68 @@ const InputForm = styled.input`
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 45px;
+  margin-top: 25px;
   display: flex;
   justify-content: center;
 `;
 
-ModalStageConnect.defaultProps = {
+ModalAPIKeyUsageConnect.defaultProps = {
   confirmText: '확인'
 };
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalStageConnect( { title, confirmText, cancelText, onCreate, onCancel, selectItem, setSelectItem, setSelectItem2, visible } ) {
+export default function ModalAPIKeyUsageConnect( { title, confirmText, cancelText, onCancel, setCreateDialog, resourceId, visible, ConnectUsage } ) {
 
   const [error, setError] = useState(null);
-
   const [methodCommand, setMethodCommand] = useState(null);
   const [methodCommandValue, setMethodCommandValue] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
-  const [apiOptions, setApiOptions] = useState(null);
-  const [stageOptions, setStageOptions] = useState([
-    {
-      "stage_id": "63058d5cc321357100befe75",
-      "name": "test_stage"
-    }
-  ]);
+  const [usageOptions, setUsageOptions] = useState([]);
+  const [data, setData] = useState(null);
+  const [selectItem, setSelectItem] = useState(null);
 
-  const fetchApis = async () => {
-    //get api request
+
+  const fetchUsagePlan = async () => {
+    //get UsagePlan
     try {
       setError(null);
-
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+        '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'
       );
-      setApiOptions(response.data); // 데이터는 response.data)
-      // console.log(response.data);
+      setData(response.data);
     } catch (e) {
       setError(e);
     }
   };
 
-  const fetchStage = async () => {
-    //get api request
-    try {
-      setError(null);
-
-      const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/stage/service/'+selectItem
-      );
-      setStageOptions(response.data); // 데이터는 response.data)
-      // console.log(response.data);
-    } catch (e) {
-      setError(e);
-    }
+  const onCreate = () => {
+      
+    const createAPIKeyUsageConnet = async () => {
+      try {
+        setError(null);
+        await axios.post(
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+resourceId,
+          {
+            usage_plan_id: selectItem
+          }
+        );
+      } catch (e) {
+        setError(e);
+      }
+    
+    };
+    createAPIKeyUsageConnet();
+    window.location.reload(true);
+    setCreateDialog(false);
   };
 
   useEffect(() => {
-    fetchApis();
-    if(selectItem !== null) {
-      fetchStage();
-    }
-  }, [apiOptions, stageOptions]);
+    fetchUsagePlan();
+  }, []);
 
   if (!visible) return null;
+
   return (
       <DarkBackground>
            <DialogBlock>
@@ -157,12 +155,8 @@ export default function ModalStageConnect( { title, confirmText, cancelText, onC
               </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
               <Item>
-                  <ItemName>API</ItemName>
-                  <DropdownMethod dropdownItems={apiOptions} default="API 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} setSelectItem={setSelectItem}/> 
-              </Item>
-              <Item>
-                  <ItemName>Stage</ItemName>
-                  <DropdownMethod dropdownItems={stageOptions} default="Stage 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} setSelectItem2={setSelectItem2}/>     
+                  <ItemName>Usage Plan</ItemName>
+                  <DropdownMethod dropdownItems={data} default="Usage Plan 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} selectItem={selectItem} setSelectItem={setSelectItem}/> 
               </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

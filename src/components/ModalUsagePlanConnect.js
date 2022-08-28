@@ -96,16 +96,13 @@ ModalUsagePlanConnect.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalUsagePlanConnect( { title, children, confirmText, cancelText, onConfirm, onCancel, ConnectUsage, resourceId, visible, setUsagePlanConnectDialog } ) {
+export default function ModalUsagePlanConnect( { title, confirmText, cancelText, onCreate, onCancel, ConnectUsage, visible, setSelectItem } ) {
 
   const [error, setError] = useState(null);
   const [methodCommand, setMethodCommand] = useState(null);
   const [methodCommandValue, setMethodCommandValue] = useState(null);
-  const [isOpen, setIsOpen] = useState(true);
   const [usageOptions, setUsageOptions] = useState([]);
   const [data, setData] = useState(null);
-  const [selectItem, setSelectItem] = useState(null);
-
 
   const fetchUsagePlan = async () => {
     //get UsagePlan
@@ -120,39 +117,17 @@ export default function ModalUsagePlanConnect( { title, children, confirmText, c
     }
   };
 
-  const abcd = () => {
-    for (let index = 0; index < ConnectUsage.length; index++) {
-      setUsageOptions(data.filter(d => d.usage_plan_id !== ConnectUsage[index].usage_plan_id));
-      // console.log(ConnectUsage[index].usage_plan_id);
-    }
-  };
-
-  const onCreate = () => {
-      
-    const createStageUsagePlanConnet = async () => {
-      try {
-        setError(null);
-        await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/stage/usage-plan',
-          {
-            stage_id: resourceId,
-            usage_plan_id: selectItem
-          }
-        );
-      } catch (e) {
-        setError(e);
-      }
-    
-    };
-    createStageUsagePlanConnet();
-    window.location.reload(true);
-    setUsagePlanConnectDialog(false);
-  };
+  // const abcd = () => {
+  //   for (let index = 0; index < ConnectUsage.length; index++) {
+  //     setUsageOptions(data.filter(d => d.usage_plan_id !== ConnectUsage[index].usage_plan_id));
+  //     // console.log(ConnectUsage[index].usage_plan_id);
+  //   }
+  // };
 
   useEffect(() => {
     fetchUsagePlan();
-    abcd();
-  }, [data]);
+    // abcd();
+  }, []);
 
   if (!visible) return null;
 
@@ -165,7 +140,7 @@ export default function ModalUsagePlanConnect( { title, children, confirmText, c
               <TitleDiv>{title}</TitleDiv>
               <Item>
                   <ItemName>Usage Plan</ItemName>
-                  <DropdownMethod dropdownItems={usageOptions} default="Usage Plan 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} selectItem={selectItem} setSelectItem={setSelectItem}/> 
+                  <DropdownMethod dropdownItems={data} default="Usage Plan 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} setSelectItem={setSelectItem}/> 
               </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

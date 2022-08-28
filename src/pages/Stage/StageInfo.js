@@ -65,9 +65,10 @@ export default function StageInfo(props) {
   }
   const [clickData, setClickData] = useState(initialState);
   const [stageConnect, setStageConnect] = useState(false);
-  const [usagePlanConnectDialog, setUsagePlanConnectDialog] = useState(false);
+  const [createDialog, setCreateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
+  const [selectItem, setSelectItem] = useState(null);
   
   const onClick = () => {
     // console.log(isActive2)
@@ -89,17 +90,39 @@ export default function StageInfo(props) {
   }
 
   const onClick2 = () => {
-    setUsagePlanConnectDialog(true);
+    setCreateDialog(true);
   };
 
   const onCancel = () => {
     console.log('취소');
-    setUsagePlanConnectDialog(false);
+    setCreateDialog(false);
+  };
+
+  const onCreate = () => {
+      
+    const createStageUsageConnet = async () => {
+      try {
+        setError(null);
+        await axios.post(
+          '/v1.0/g1/paas/Memsq07/apigw/stage/usage-plan',
+          {
+            stage_id: props.resourceId,
+            usage_plan_id: selectItem
+          }
+        );
+      } catch (e) {
+        setError(e);
+      }
+    
+    };
+    createStageUsageConnet();
+    window.location.reload(true);
+    setCreateDialog(false);
   };
 
   const onDelete = () => {
     //delete api request
-     const deleteStageUsagePlanConnet = async () => {
+     const deleteStageUsagePlanConnect = async () => {
        try {
          setError(null);
          await axios.delete(
@@ -110,7 +133,7 @@ export default function StageInfo(props) {
          console.log(error);
        }
      };
-     deleteStageUsagePlanConnet();
+     deleteStageUsagePlanConnect();
      window.location.reload(true);
    };
 
@@ -148,11 +171,12 @@ export default function StageInfo(props) {
           title="Usage Plan과 연결합니다."
           confirmText="연결하기"
           cancelText="취소"
-          setUsagePlanConnectDialog={setUsagePlanConnectDialog}
+          onCreate={onCreate}
           onCancel={onCancel}
+          selectItem={selectItem} 
+          setSelectItem={setSelectItem}
           ConnectUsage={DataTemp}
-          resourceId={props.resourceId}
-          visible={usagePlanConnectDialog}>
+          visible={createDialog}>
       </ModalUsagePlanConnect>
     </React.Fragment>
   );

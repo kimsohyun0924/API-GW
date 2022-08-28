@@ -32,89 +32,109 @@ const TableHeader = [
 
 export default function UsagePlanStage() {
 
-  const [bChecked, setChecked] = useState(false);
   const { state } = useLocation();
   const initialState = {
-    "name": null,
-    "description": null,
-    "usage_plan_id": null,
-    "replenish_rate": null,
-    "burst_capacity": null,
-    "requested_tokens": null,
-    "api_key_list": null,
+    "service_name": null,
+    "service_id": null,
+    "stage_name": null,
+    "stage_id": null,
   }
   const [clickData, setClickData] = useState(initialState);
-  const [dialog, setDialog] = useState(false);
-  const [updatedialog, setUpdateDialog] = useState(false);
+  const [createdialog, setCreateDialog] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
+  const [selectItem, setSelectItem] = useState(null);
+  const [selectItem2, setSelectItem2] = useState(null);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const testData = [
     {
-      "api_name": "api_test1",
+      "api_name": "test_stage",
+      "service_id": "63058d05c321357100befe6f",
       "stage_name": "stage_test1",
+      "stage_id": "63058d5cc321357100befe75"
     },
     {
-      "api_name": "api_test2",
+      "api_name": "test_stage2",
+      "service_id": "63058d05c321357100befe6f",
       "stage_name": "stage_test2",
+      "stage_id": "6305d32fc321357100befe7f"
     },
-]
-
-  const [error, setError] = useState(null);
-  const [value, setValue] = useState(null);
-  const navigate = useNavigate();
+  ]
 
   const Create = () => {
-    // navigate('/usageplans/create');
-    setUpdateDialog(true);
+    setCreateDialog(true);
   };
 
   const Delete = () => {
-    
+    setDeleteDialog(true);
   };
 
   const onCancel = () => {
     console.log('취소');
-    setDialog(false);
-    setUpdateDialog(false);
+    setCreateDialog(false);
+    setDeleteDialog(false);
   };
 
-  const fetchApis = async () => {
-    //get api request
+
+  const fetchUsageStageConnect = async () => {
+    //get UsagePlan-Stage Connect list
     try {
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+        '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'+state.usage_plan_id+'/stages'
       );
       setDataTemp(response.data); // 데이터는 response.data)
-      setValue(response.data.length);
       // console.log(response.data);
     } catch (e) {
       setError(e);
     }
   };
 
+  const onCreate = () => {
+      //create UsagePlan-Stage Connect
+    const createUsageStageConnect = async () => {
+      try {
+        setError(null);
+        await axios.post(
+          '/v1.0/g1/paas/Memsq07/apigw/stage/usage-plan',
+          {
+            stage_id: selectItem2,
+            usage_plan_id: state.usage_plan_id
+          }
+        );
+      } catch (e) {
+        setError(e);
+      }
+    };
+    createUsageStageConnect();
+    setTimeout(()=>{
+      window.location.reload(true);
+    }, 500);
+    setCreateDialog(false);
+  };
+
   const onDelete = () => {
-   //delete api request
-    const deleteApi = async () => {
+    //delete UsagePlan-Stage Connect
+    const deleteUsageStageConnect = async () => {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+clickData.usage_plan_id
+          '/v1.0/g1/paas/Memsq07/apigw/stage/'+clickData.stage_id+'/usage-plan/'+state.usage_plan_id
         );
-        setValue(value-1);
       } catch (e) {
         setError(e);
         console.log(error);
       }
     };
-    deleteApi();
+    deleteUsageStageConnect();
     window.location.reload(true);
-    setDialog(false);
-  };
-
+    setDeleteDialog(false);
+   };
 
   useEffect(() => {
-    fetchApis();
+    fetchUsageStageConnect();
   }, []);
 
   return (
@@ -139,9 +159,12 @@ export default function UsagePlanStage() {
             title="Stage와 연결합니다."
             confirmText="연결하기"
             cancelText="취소"
-            setUpdateDialog={setUpdateDialog}
+            onCreate={onCreate}
             onCancel={onCancel}
-            visible={updatedialog}>
+            selectItem={selectItem}
+            setSelectItem={setSelectItem}
+            setSelectItem2={setSelectItem2}
+            visible={createdialog}>
       </ModalStageConnect>
       <ModalApiDelete
             // title="정말로 삭제하시겠습니까?"
@@ -149,9 +172,10 @@ export default function UsagePlanStage() {
             cancelText="취소"
             onConfirm={onDelete}
             onCancel={onCancel}
-            visible={dialog}
+            checkedItem={clickData.id}
+            visible={deleteDialog}
             >
-            {clickData.name}  정말로 삭제하시겠습니까?
+            <span style={{fontWeight:"bold"}}>{clickData.stage_name}</span><span style={{padding:"0px 0px 0px 10px"}}>Stage와 연결을 해제합니다.</span>
       </ModalApiDelete>
     </React.Fragment>
   );

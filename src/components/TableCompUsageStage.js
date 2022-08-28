@@ -32,6 +32,7 @@ const TH = styled.th`
   font-weight: 400;
   font-size: 13px;
   text-align: left;
+
   &:not(:last-child) {
     background: url(${TableLine}) right 50% no-repeat;
   }
@@ -43,6 +44,13 @@ const TBody = styled.tbody`
 
 const TR = styled.tr`
   border-bottom: 1px solid #ccc;
+
+  ${props => props.clickId === props.Id &&
+    css`
+      background: #c7dff4;;
+      /* font-weight: 500; */
+    `
+  }
 `;
 
 const TD = styled.td`
@@ -51,27 +59,34 @@ const TD = styled.td`
   vertical-align: middle;
   padding: 8px 10px;
   text-align: left;
-  ${props => props.sh === true &&
-    css`
-      background: #c7dff4;
-    `
-  }
 `;
 
-const Hov = styled.td`
-  line-height: 20px;
-  text-align: center;
-  vertical-align: middle;
-  padding: 8px 10px;
-  text-align: left;
-  /* &:hover {
-    cursor: pointer;;
-  } */
-`;
-
-export default function TableCompUsageStage({ columns, data, checkHandler }) {
+export default function TableCompUsageStage({ columns, data, clickData, setClickData }) {
 
   const navigate = useNavigate();
+  const initialState = {
+    "service_name": null,
+    "service_id": null,
+    "stage_name": null,
+    "stage_id": null,
+  }
+
+  const onClick = (item) => {
+    if(item.stage_id === clickData.stage_id) {
+      setClickData(initialState);
+    }
+    else {
+      setClickData({
+        "service_name": item.service_name,
+        "service_id": item.service_id,
+        "stage_name": item.stage_name,
+        "stage_id": item.stage_id,
+      });
+    }
+  }
+
+  const checkHandler = (e) => {
+  };
 
   return (
     <React.Fragment>
@@ -79,9 +94,7 @@ export default function TableCompUsageStage({ columns, data, checkHandler }) {
         <Table>
           <THead>  
             <tr>
-              <TH width='1%'>
-                <input type="checkbox"/>
-              </TH>
+              <TH width='1%'/>
               { columns.map((item, index) => {
                 return (
                   <React.Fragment key={index}>
@@ -95,11 +108,11 @@ export default function TableCompUsageStage({ columns, data, checkHandler }) {
             { data && data.map((item, index) => {
               return (
                 <React.Fragment key={index}>
-                  <TR key={index}>
+                  <TR key={index} onClick={() => { onClick(item) }} clickId={clickData.stage_id} Id={item.stage_id}>
                     <TD width='1%'>
-                      <input type="checkbox" onChange={checkHandler}/>
+                      <input type="checkbox" checked={clickData.stage_id === item.stage_id ? true : false} onChange={checkHandler}/>
                     </TD>
-                    <TD width='20%'>{item.api_name}</TD>
+                    <TD width='20%'>{item.service_name}</TD>
                     <TD width='20%'>{item.stage_name}</TD>
                   </TR> 
                 </React.Fragment>

@@ -121,7 +121,15 @@ const DropdownDBServer = (props) => {
     setSelectedItem(item.name);
     props.setItem(item.name);
     props.setMethodCommandValue(item.name);
-    props.setSelectItem(item.usage_plan_id);
+    if(item.usage_plan_id) {
+      props.setSelectItem(item.usage_plan_id);
+    }
+    if(item.stage_id) {
+      props.setSelectItem2(item.stage_id);
+    }
+    if(item.service_id) {
+      props.setSelectItem(item.service_id);
+    }
 
     setIsActive((prev) => !prev);
   }, []);
