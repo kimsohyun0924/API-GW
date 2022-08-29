@@ -135,7 +135,7 @@ export default function ResourceCreate(props) {
                 </ItemInput>
               </Item>
             </ItemDiv>
-            <ItemDiv>
+            {/* <ItemDiv>
               <Item>
                 <ItemName>CORS 활성화</ItemName>
                   <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
@@ -146,7 +146,7 @@ export default function ResourceCreate(props) {
               <CORS/>
               : null
             }
-            {/* {content && <Content>{selectComponent[content]}</Content>} */}
+            {content && <Content>{selectComponent[content]}</Content>} */}
             <ButtonDiv>
               <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                 <span style={{padding:"0px 10px 0px 0px"}}><Button size="small" line="noline" onClick={onCancel}>취소</Button></span>

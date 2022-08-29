@@ -60,7 +60,7 @@ export default function Stage(props) {
 
     
   
-  const fetchStages = async () => {
+  const getAllResource = async () => {
     //get api request
     try {
       setError(null);
@@ -77,11 +77,12 @@ export default function Stage(props) {
 
 
   useEffect(() => {
-    fetchStages();
+    getAllResource();
   }, []);
 
 
   // console.log(AllResource);
+  // console.log(testData);
 
   return (
     <React.Fragment>

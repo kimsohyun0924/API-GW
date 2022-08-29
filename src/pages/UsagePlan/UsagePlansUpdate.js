@@ -11,6 +11,7 @@ import img1 from "image/Advanced_pre.svg";
 import img2 from "image/Advanced.svg";
 import MainHeader from 'components/MainHeader';
 import { useLocation } from "react-router";
+import { SatelliteAlt } from '@mui/icons-material';
 
 const HeadDiv = styled.div`
 `;
@@ -160,14 +161,21 @@ export default function UsagePlansUpdate() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
-    UsagePlanName: '',
-    UsagePlanExplain: '',
-    replenish_rate: '',
-    burst_capacity: ''
+    UsagePlanName: state.name,
+    UsagePlanExplain: state.description,
+    replenish_rate: state.replenish_rate,
+    burst_capacity: state.burst_capacity
   });
   const { UsagePlanName, UsagePlanExplain, replenish_rate, burst_capacity } = inputs;
-  const [toggle, setToggle] = useState(false);
-  const [toggle2, setToggle2] = useState(false);
+  function Throttling() {
+    if(state.replenish_rate !== null && state.burst_capacity !== null) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  const [toggle, setToggle] = useState(Throttling);
   const [stageConnect, setStageConnect] = useState(false);
 
   const onCancel = (e) => {
@@ -214,11 +222,6 @@ export default function UsagePlansUpdate() {
   const clickedToggle = () => {
     setToggle((prev) => !prev);
     console.log(toggle);
-  };
-
-  const clickedToggle2 = () => {
-    setToggle2((prev) => !prev);
-    console.log(toggle2);
   };
 
   const onClick = () => {

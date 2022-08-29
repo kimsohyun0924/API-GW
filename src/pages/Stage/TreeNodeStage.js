@@ -236,25 +236,34 @@ export default function RecursiveTreeView(props) {
   const renderTree = (nodes) => {
     return (
           <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{doc_type : nodes.doc_type}}>
-            { renderTree2(nodes.root_resource) }   
+            { Array.isArray(nodes.stage_snapshot_list) ? nodes.stage_snapshot_list.map((node) => renderTree2(node)) : null }
           </StyledTreeItem> 
     );
   };
 
+
   const renderTree2 = (nodes) => {
     return (
+          <StyledTreeItem key={nodes.stage_snapshot_id} nodeId={nodes.stage_snapshot_id}>
+            { renderTree3(nodes.root_resource) }   
+          </StyledTreeItem> 
+    );
+  };
+
+  const renderTree3 = (nodes) => {
+    return (
           <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_typ} ContentProps={{doc_type : nodes.doc_type}}>
-            { Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree2(node)) : null }
-            { Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null }
+            { Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree3(node)) : null }
+            { Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree4(node)) : null }
           </StyledTreeItem>  
     );
   };
 
 
-  const renderTree3 = (nodes) => {
+  const renderTree4 = (nodes) => {
     return (
           <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
-            {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree2(node)) : null}
+            {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
           </StyledTreeItem> 
     );
   };

@@ -51,6 +51,7 @@ const InputForm = styled.input`
     box-sizing: border-box;
     font-size: 14px;
     color: #333333;
+    padding: 5px 5px 5px 5px;
 `;
 
 const ButtonDiv = styled.div`

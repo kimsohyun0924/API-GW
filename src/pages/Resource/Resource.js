@@ -60,8 +60,6 @@ export default function Resource(props) {
                       "updated_at": "2022-08-01T15:45:52.426"
                   }
     
-  
-
   //전체 리소스 조회
   const getAllResource = async () => {
     //get api request
