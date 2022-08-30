@@ -122,8 +122,8 @@ export default function TableCompAPIKeyUsagePlan({ columns, data, clickData, set
                     <TD width='1%'>
                       <input type="checkbox" checked={clickData.usage_plan_id === item.usage_plan_id ? true : false} onChange={checkHandler}/>
                     </TD>
-                    <TD width='15%'>{item.name}</TD>
-                    <TD width='15%'>{item.usage_plan_id}</TD>
+                    <TD width='40%'>{item.name}</TD>
+                    <TD width='40%'>{item.usage_plan_id}</TD>
                   </TR> 
                 </React.Fragment>
               );

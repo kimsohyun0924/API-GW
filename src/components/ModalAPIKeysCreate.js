@@ -159,14 +159,13 @@ ModalAPIKeysCreate.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onCancel, visible, setCreateDialog} ) {
+export default function ModalAPIKeysCreate( { title, confirmText, cancelText, onCancel, visible, setCreateDialog} ) {
 
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
     APIKeyName: '',
     APIKeyExplain: ''
   });
-  
   const { APIKeyName, APIKeyExplain } = inputs;
   
   const onChange = e => {
@@ -179,12 +178,12 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
   // console.log(inputs);
 
   const onCreate = () => {
-  
+    //Create API Key
     const createAPIKey = async () => {
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/',
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys',
           {
             name: APIKeyName,
             description: APIKeyExplain,
@@ -196,7 +195,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       }
     };
     createAPIKey();
-    window.location.reload(true);
+    // window.location.reload(true);
     setCreateDialog(false);
   };
 

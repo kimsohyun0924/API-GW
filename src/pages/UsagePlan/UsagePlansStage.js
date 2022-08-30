@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from "react-router";
 import axios from 'axios';
-import MainContainer from 'layouts/MainContainer';
+
 import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
+
+import MainContainer from 'layouts/MainContainer';
+import MainHeader from 'components/MainHeader';
 import Button from 'components/Button';
+
 import TableCompUsageStage from 'components/TableCompUsageStage';
 import ModalApiDelete from 'components/ModalApiDelete';
-import ModalApiUpdate from 'components/ModalApiUpdate';
 import ModalStageConnect from 'components/ModalStageConnect';
-import MainHeader from 'components/MainHeader';
-import { useLocation } from "react-router";
+
+
 
 const HeadDiv = styled.div`
 `;
@@ -46,7 +49,6 @@ export default function UsagePlanStage() {
   const [selectItem, setSelectItem] = useState(null);
   const [selectItem2, setSelectItem2] = useState(null);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
   const testData = [
     {
       "api_name": "test_stage",
@@ -81,7 +83,6 @@ export default function UsagePlanStage() {
     //get UsagePlan-Stage Connect list
     try {
       setError(null);
-
       const response = await axios.get(
         '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'+state.usage_plan_id+'/stages'
       );
@@ -91,7 +92,7 @@ export default function UsagePlanStage() {
       setError(e);
     }
   };
-
+  
   const onCreate = () => {
       //create UsagePlan-Stage Connect
     const createUsageStageConnect = async () => {
@@ -109,9 +110,7 @@ export default function UsagePlanStage() {
       }
     };
     createUsageStageConnect();
-    setTimeout(()=>{
-      window.location.reload(true);
-    }, 500);
+    // window.location.reload(true);
     setCreateDialog(false);
   };
 
@@ -129,13 +128,13 @@ export default function UsagePlanStage() {
       }
     };
     deleteUsageStageConnect();
-    window.location.reload(true);
+    // window.location.reload(true);
     setDeleteDialog(false);
    };
 
   useEffect(() => {
     fetchUsageStageConnect();
-  }, []);
+  }, [DataTemp]);
 
   return (
     <React.Fragment>

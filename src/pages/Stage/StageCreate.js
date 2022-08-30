@@ -125,7 +125,7 @@ export default function ResourceCreate(props) {
               <Item>
                 <ItemName>스테이지 이름</ItemName>
                 <ItemInput>
-                  <InputForm name="stage_name" placeholder=" 스테이지 이름" onChange={onChange} />
+                  <InputForm name="stage_name" placeholder="스테이지 이름" onChange={onChange} />
                 </ItemInput>
               </Item>
             </ItemDiv>
@@ -133,7 +133,7 @@ export default function ResourceCreate(props) {
               <Item>
                 <ItemName>Endpoint 도메인</ItemName>
                 <ItemInput>
-                  <InputForm name="backend_url" placeholder=" Endpoint 도메인" onChange={onChange} />
+                  <InputForm name="backend_url" placeholder="Endpoint 도메인" onChange={onChange} />
                 </ItemInput>
               </Item>
             </ItemDiv>

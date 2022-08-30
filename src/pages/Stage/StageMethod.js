@@ -85,12 +85,15 @@ const ButtonDiv = styled.div`
 
 export default function StageMethod(props) {
 
+  console.log(props.testData);
+
+  const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
   const [stageConnect, setStageConnect] = useState(false);
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(props.testData.usage_plan_using);
   const [inputs, setInputs] = useState({
-    replenish_rate: '',
-    burst_capacity: ''
+    replenish_rate: props.testData.replenish_rate,
+    burst_capacity: props.testData.burst_capacity
   });
   const { replenish_rate, burst_capacity } = inputs;
 
@@ -108,11 +111,26 @@ export default function StageMethod(props) {
   };
   console.log(inputs);
 
-  console.log(props.stageId);
-  console.log(props.resourceId);
+  // console.log(props.stageId);
+  // console.log(props.resourceId);
+
+  // const GetMethodInfo = async () => {
+  //   //get Method info
+  //   try {
+  //     setError(null);
+
+  //     const response = await axios.get(
+  //       '/v1.0/g1/paas/Memsq07/apigw/method/'+props.resourceId
+  //     );
+  //     setDataTemp(response.data); // 데이터는 response.data)
+  //     // console.log(response.data);
+  //   } catch (e) {
+  //     setError(e);
+  //   }
+  // };
 
   const onCreate = () => {
-      
+    //Create method-Throttling
     const createApi = async () => {
       try {
         setError(null);
@@ -135,6 +153,9 @@ export default function StageMethod(props) {
     window.location.reload(true);
   };
 
+  // useEffect(() => {
+  //   GetMethodInfo();
+  // }, []);
 
   return (
     <React.Fragment>

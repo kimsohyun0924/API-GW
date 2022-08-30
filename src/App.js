@@ -34,7 +34,7 @@ export default function App() {
                 <Route path='/api/operation/*' element={<ApiOperation />}></Route>
                 <Route path='/usageplans' element={<UsagePlans />}></Route>
                 <Route path='/usageplans/create' element={<UsagePlansCreate />}></Route>
-                <Route path='/usageplans/edit' element={<UsagePlansUpdate />}></Route>
+                <Route path='/usageplans/update' element={<UsagePlansUpdate />}></Route>
                 <Route path='/usageplans/stage' element={<UsagePlansStage />}></Route>
                 <Route path='/apikeys' element={<APIKeys />}></Route>
                 <Route path='/apikey/usageplans' element={<APIKeyUsagePlans />}></Route>

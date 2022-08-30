@@ -76,14 +76,14 @@ export default function UsagePlans() {
   };
 
   const Update = () => {
-    navigate('/usageplans/edit', {state: clickData});
+    navigate('/usageplans/update', {state: clickData});
   };
 
   const Delete = () => {
     setDeleteDialog(true);
   };
 
-  const Stage = () => {
+  const StageConncet = () => {
     navigate('/usageplans/stage', {state: clickData});
   };
 
@@ -94,12 +94,11 @@ export default function UsagePlans() {
   };
 
   const fetchUsagePlans = async () => {
-    //get UsagePlan
+    //Get UsagePlan
     try {
       setError(null);
-
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'
+        '/v1.0/g1/paas/Memsq07/apigw/usage-plans'
       );
       setDataTemp(response.data); // 데이터는 response.data)
       // console.log(response.data);
@@ -109,7 +108,7 @@ export default function UsagePlans() {
   };
 
   const onDelete = () => {
-   //delete UsagePlan
+   //Delete UsagePlan
     const deleteUsagePlan = async () => {
       try {
         setError(null);
@@ -122,15 +121,13 @@ export default function UsagePlans() {
       }
     };
     deleteUsagePlan();
-    window.location.reload(true);
+    // window.location.reload(true);
     setDeleteDialog(false);
   };
 
-
   useEffect(() => {
     fetchUsagePlans();
-  }, []);
-
+  }, [DataTemp]);
 
   return (
     <React.Fragment>
@@ -145,7 +142,7 @@ export default function UsagePlans() {
             <span style={{padding: "0px 20px 0px 0px"}}><Button size="small" line="line" action={Create}>Usage Plan 생성</Button></span>
             <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Update}>변경</Button></span>
             <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Delete}>삭제</Button></span>
-            <Button size="small" line="outline" onClick={Stage}>연결된 Stage</Button>
+            <Button size="small" line="outline" onClick={StageConncet}>연결된 Stage</Button>
           </ThemeProvider>
         </ButtonDiv>
         <TableDiv>

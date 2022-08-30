@@ -158,15 +158,23 @@ ModalAPIKeysCreate.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalAPIKeysCreate( { title, children, confirmText, cancelText, onCancel, visible, setUpdateDialog, clickData} ) {
+export default function ModalAPIKeysCreate( { title, confirmText, cancelText, onCancel, visible, setUpdateDialog, clickData, setClickData} ) {
+
+  const initialState = {
+    "name": null,
+    "description": null,
+    "api_key_id": null,
+    "enabled": null,
+    "api_key": null,
+    "created_at": null
+  }
 
   const [error, setError] = useState(null);
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(clickData.enabled);
   const [inputs, setInputs] = useState({
-    APIKeyName: '',
-    APIKeyExplain: ''
+    APIKeyName: clickData.name,
+    APIKeyExplain: clickData.description
   });
-  
   const { APIKeyName, APIKeyExplain } = inputs;
   
   const onChange = e => {
@@ -196,7 +204,8 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
       }
     };
     updateAPIKey();
-    window.location.reload(true);
+    setClickData(initialState)
+    // window.location.reload(true);
     setUpdateDialog(false);
   };
 
@@ -206,6 +215,7 @@ export default function ModalAPIKeysCreate( { title, children, confirmText, canc
   };
 
   if (!visible) return null;
+
 
   return (
       <DarkBackground>

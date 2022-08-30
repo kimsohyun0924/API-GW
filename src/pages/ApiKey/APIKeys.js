@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import MainContainer from 'layouts/MainContainer';
+
 import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
+
+import MainContainer from 'layouts/MainContainer';
+import MainHeader from 'components/MainHeader';
 import Button from 'components/Button';
-import ModalApiDelete from 'components/ModalApiDelete';
+
 import ModalAPIKeysCreate from 'components/ModalAPIKeysCreate';
 import ModalAPIKeysUpdate from 'components/ModalAPIKeysUpdate';
+import ModalApiDelete from 'components/ModalApiDelete';
 import TableCompAPIKeys from 'components/TableCompAPIKeys';
-import MainHeader from 'components/MainHeader';
 
 const HeadDiv = styled.div`
 `;
@@ -34,7 +37,6 @@ const TableHeader = [
 
 export default function APIKeys() {
 
-  const [bChecked, setChecked] = useState(false);
   const initialState = {
     "name": null,
     "description": null,
@@ -43,14 +45,12 @@ export default function APIKeys() {
     "api_key": null,
     "created_at": null
   }
+  const [DataTemp, setDataTemp] = useState([]);
   const [clickData, setClickData] = useState(initialState);
-
-  // const [checkedItem, setCheckedItem] = useState([]); //개별 체크된 아이템을 저장함
-  // const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
   const [createDialog, setCreateDialog] = useState(false);
   const [updateDialog, setUpdateDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
-  const [DataTemp, setDataTemp] = useState([]);
+
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const testData = [
@@ -74,27 +74,20 @@ export default function APIKeys() {
     }
 ]
 
-  
   const Create = () => {
-    
     setCreateDialog(true);
   };
 
   const Update = () => {
     setUpdateDialog(true);
-  
   };
 
   const Delete = () => {
-   
     setDeleteDialog(true);
-    
   };
 
-  const Stage = () => {
-
+  const UsagePlanConnect = () => {
     navigate('/apikey/usageplans', { state : clickData});
-  
   };
 
   const onCancel = () => {
@@ -108,9 +101,8 @@ export default function APIKeys() {
     //get api key request
     try {
       setError(null);
-
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/api-keys/'
+        '/v1.0/g1/paas/Memsq07/apigw/api-keys'
       );
       setDataTemp(response.data); // 데이터는 response.data)
       // console.log(response.data);
@@ -133,14 +125,14 @@ export default function APIKeys() {
       }
     };
     deleteAPIKey();
-    window.location.reload(true);
+    // window.location.reload(true);
     setDeleteDialog(false);
   };
 
 
   useEffect(() => {
     fetchAPIKeys();
-  }, []);
+  }, [DataTemp]);
 
 
   return (
@@ -156,7 +148,7 @@ export default function APIKeys() {
             <span style={{padding: "0px 20px 0px 0px"}}><Button size="small" line="line" onClick={Create}>API Key 생성</Button></span>
             <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Update}>변경</Button></span>
             <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Delete}>삭제</Button></span>
-            <Button size="small" line="outline" onClick={Stage}>연결된 Usage Plan</Button>
+            <Button size="small" line="outline" onClick={UsagePlanConnect}>연결된 Usage Plan</Button>
           </ThemeProvider>
         </ButtonDiv>
         <TableDiv>
@@ -167,18 +159,18 @@ export default function APIKeys() {
             title="API Key를 생성합니다."
             confirmText="생성하기"
             cancelText="취소"
-            setCreateDialog={setCreateDialog}
             onCancel={onCancel}
-            visible={createDialog}
-            >
+            setCreateDialog={setCreateDialog}
+            visible={createDialog}>
       </ModalAPIKeysCreate>
       <ModalAPIKeysUpdate
             title="API Key를 변경합니다."
             confirmText="변경하기"
             cancelText="취소"
-            setUpdateDialog={setUpdateDialog}
             onCancel={onCancel}
             clickData={clickData}
+            setClickData={setClickData}
+            setUpdateDialog={setUpdateDialog}
             visible={updateDialog}>
       </ModalAPIKeysUpdate>
       <ModalApiDelete
@@ -187,8 +179,7 @@ export default function APIKeys() {
             cancelText="취소"
             onConfirm={onDelete}
             onCancel={onCancel}
-            visible={deleteDialog}
-            >
+            visible={deleteDialog}>
            <span style={{fontWeight:"bold"}}>{clickData.name}</span>  <span style={{padding:"0px 0px 0px 15px"}}>API Key를 삭제합니다.</span>
       </ModalApiDelete>
     </React.Fragment>

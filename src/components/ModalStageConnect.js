@@ -66,7 +66,6 @@ const ItemNote = styled.div`
   display : flex;
   justify-content : center;
   align-items : center;
-
   ${props => props.state &&
     css`
       color: red;
@@ -106,8 +105,8 @@ export default function ModalStageConnect( { title, confirmText, cancelText, onC
   const [apiOptions, setApiOptions] = useState(null);
   const [stageOptions, setStageOptions] = useState([
     {
-      "stage_id": "63058d5cc321357100befe75",
-      "name": "test_stage"
+      "stage_id": "",
+      "name": ""
     }
   ]);
 

@@ -46,7 +46,6 @@ export default function APIKeyUsagePlans() {
   const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const [selectItem, setSelectItem] = useState(null);
   const testData = [
     {
       "name": "api_test1",
@@ -87,48 +86,27 @@ export default function APIKeyUsagePlans() {
     }
   };
 
-  const onCreate = () => {
-      
-    const createAPIKeyUsageConnet = async () => {
+  const onDelete = () => {
+    //delete api request
+    const deleteAPIKeyUsagePlanConnect = async () => {
       try {
         setError(null);
-        await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id,
-          {
-            usage_plan_id: selectItem
-          }
+        await axios.delete(
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id+'/'+clickData.usage_plan_id
         );
       } catch (e) {
         setError(e);
+        console.log(error);
       }
-    
     };
-    createAPIKeyUsageConnet();
-    window.location.reload(true);
-    setCreateDialog(false);
+    deleteAPIKeyUsagePlanConnect();
+    // window.location.reload(true);
+    setDeleteDialog(false);
   };
-
-  const onDelete = () => {
-    //delete api request
-     const deleteAPIKeyUsagePlanConnect = async () => {
-       try {
-         setError(null);
-         await axios.delete(
-           '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id+'/'+clickData.usage_plan_id
-         );
-       } catch (e) {
-         setError(e);
-         console.log(error);
-       }
-     };
-     deleteAPIKeyUsagePlanConnect();
-     window.location.reload(true);
-     setDeleteDialog(false);
-   };
 
   useEffect(() => {
     fetchAPIKeyUsagePlan();
-  }, []);
+  }, [DataTemp]);
 
   return (
     <React.Fragment>
@@ -153,9 +131,10 @@ export default function APIKeyUsagePlans() {
         title="Usage Plan과 연결합니다."
         confirmText="연결하기"
         cancelText="취소"
-        onCreate={onCreate}
+        state={state}
         onCancel={onCancel}
-        setSelectItem={setSelectItem}
+        setCreateDialog={setCreateDialog}
+        ConnectUsage={DataTemp}
         visible={createDialog}>
       </ModalUsagePlanConnect>
       <ModalApiDelete

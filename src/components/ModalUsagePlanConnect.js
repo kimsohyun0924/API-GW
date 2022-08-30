@@ -96,8 +96,9 @@ ModalUsagePlanConnect.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalUsagePlanConnect( { title, confirmText, cancelText, onCreate, onCancel, ConnectUsage, visible, setSelectItem } ) {
+export default function ModalUsagePlanConnect( { title, confirmText, cancelText, state, onCancel, ConnectUsage, setCreateDialog, visible } ) {
 
+  const [selectItem, setSelectItem] = useState(null);
   const [error, setError] = useState(null);
   const [methodCommand, setMethodCommand] = useState(null);
   const [methodCommandValue, setMethodCommandValue] = useState(null);
@@ -117,20 +118,36 @@ export default function ModalUsagePlanConnect( { title, confirmText, cancelText,
     }
   };
 
-  // const abcd = () => {
-  //   for (let index = 0; index < ConnectUsage.length; index++) {
-  //     setUsageOptions(data.filter(d => d.usage_plan_id !== ConnectUsage[index].usage_plan_id));
-  //     // console.log(ConnectUsage[index].usage_plan_id);
-  //   }
-  // };
+  //data에 있는 api_key_list 모두 삭제해주기
+  // console.log(data.filter(d => ConnectUsage.includes(d)))
+
+
+  const onCreate = () => {
+    //Create APIKey-UsagePlan Connect
+    const createAPIKeyUsageConnet = async () => {
+      try {
+        setError(null);
+        await axios.post(
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id,
+          {
+            usage_plan_id: selectItem
+          }
+        );
+      } catch (e) {
+        setError(e);
+      }
+    };
+    createAPIKeyUsageConnet();
+    window.location.reload(true);
+    setCreateDialog(false);
+  };
 
   useEffect(() => {
     fetchUsagePlan();
     // abcd();
-  }, []);
+  }, [data]);
 
   if (!visible) return null;
-
   return (
       <DarkBackground>
            <DialogBlock>

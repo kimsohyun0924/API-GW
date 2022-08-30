@@ -197,12 +197,12 @@ export default function UsagePlansCreate() {
   console.log(inputs);
 
   const onCreate = () => {
-  
+    //Create UsagePlan
     const createUsagePlan = async () => {
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/usage-plans/',
+          '/v1.0/g1/paas/Memsq07/apigw/usage-plans',
           {
             name: UsagePlanName,
             description: UsagePlanExplain,

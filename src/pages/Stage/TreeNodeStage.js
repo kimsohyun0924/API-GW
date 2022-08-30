@@ -87,11 +87,29 @@ const CopyButtonDiv = styled.button`
 export default function RecursiveTreeView(props) {
   // console.log(props);
 
+  const testData = {
+    "method_id": "630d60094020810f037c67c3",
+    "url_path": "test_method",
+    "doc_type": "METHOD",
+    "method_type": "GET",
+    "integration_type": "HTTP",
+    "api_key_using": true,
+    "usage_plan_using": true,
+    "replenish_rate": 500,
+    "burst_capacity": 500,
+    "requested_tokens": 1,
+    "backend_url_using": false,
+    "backend_url": null,
+    "created_at": "2022-08-30T09:55:37.218",
+    "updated_at": "2022-08-30T11:14:46.529"
+}
+
   const serviceInfo = props.serviceInfo;
   const [content, setContent] = useState(null);
   const [resourceId, setResourceId] = useState(null);
   const [stageId, setStageId] = useState(null);
   const [label, setLabel] = useState();
+  const [backend_url, setBackend_url] = useState(null);
   const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [error, setError] = useState(null);
@@ -106,6 +124,7 @@ export default function RecursiveTreeView(props) {
       className,
       label,
       doc_type,
+      backend_url,
       nodeId,
       icon: iconProp,
       expansionIcon,
@@ -131,6 +150,9 @@ export default function RecursiveTreeView(props) {
   
     const handleExpansionClick = (event) => {
       handleExpansion(event);
+      if(event.target.getAttribute('value') !== "RESOURCE" && event.target.getAttribute('value') !== "METHOD") {
+        setStageId(nodeId);
+      }
     };
   
     const handleSelectionClick = (event) => {
@@ -147,6 +169,7 @@ export default function RecursiveTreeView(props) {
         setContent("second");
       }
 
+      setBackend_url(event.target.getAttribute('value2'));
       setLabel(label);
       setResourceId(nodeId);
     };
@@ -172,6 +195,7 @@ export default function RecursiveTreeView(props) {
           component="div"
           className={classes.label}
           value={doc_type}
+          value2={backend_url}
         >
           {label}
         </div>
@@ -206,6 +230,8 @@ export default function RecursiveTreeView(props) {
     label: PropTypes.node,
 
     doc_type: PropTypes.node,
+
+    backend_url: PropTypes.node,
     /**
      * The id of the node.
      */
@@ -235,8 +261,8 @@ export default function RecursiveTreeView(props) {
 
   const renderTree = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{doc_type : nodes.doc_type}}>
-            { Array.isArray(nodes.stage_snapshot_list) ? nodes.stage_snapshot_list.map((node) => renderTree2(node)) : null }
+          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{doc_type : nodes.doc_type}, {backend_url: nodes.backend_url}}>
+            { Array.isArray(nodes.stage_snapshot_list) ? nodes.stage_snapshot_list.map((node) => renderTree3(node.root_resource)) : null }
           </StyledTreeItem> 
     );
   };
@@ -315,16 +341,9 @@ export default function RecursiveTreeView(props) {
 
   const selectComponent = {
     first: <StageCreate serviceInfo={serviceInfo}/>,
-    second: <StageInfo resourceId={resourceId}/>,
+    second: <StageInfo resourceId={resourceId} backend_url={backend_url}/>,
     third: <StageResourceInfo resourceId={resourceId}/>,
-    fourth: <StageMethod stageId={stageId} resourceId={resourceId}/>
-   
-      // <InvokeurlDiv>{resourceId}.ktcloud.io
-      //   <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
-      //     <CopyButtonDiv>주소 복사</CopyButtonDiv>
-      //   </CopyToClipboard>
-      // </InvokeurlDiv>
-    
+    fourth: <StageMethod stageId={stageId} resourceId={resourceId} testData={testData}/>
   };
 
   return (

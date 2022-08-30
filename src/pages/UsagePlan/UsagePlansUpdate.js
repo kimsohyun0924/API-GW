@@ -66,7 +66,6 @@ const ItemNote = styled.div`
   display : flex;
   justify-content : center;
   align-items : center;
-
   ${props => props.state &&
     css`
       color: red;
@@ -193,7 +192,7 @@ export default function UsagePlansUpdate() {
   console.log(inputs);
 
   const onUpdate = () => {
-  
+    //Update UsagePlan
     const updateUsagePlan = async () => {
       try {
         setError(null);
@@ -210,7 +209,6 @@ export default function UsagePlansUpdate() {
       } catch (e) {
         setError(e);
       }
-    
     };
     updateUsagePlan();
     setTimeout(()=>{
@@ -314,5 +312,3 @@ export default function UsagePlansUpdate() {
     </React.Fragment>
   );
 }
-
-

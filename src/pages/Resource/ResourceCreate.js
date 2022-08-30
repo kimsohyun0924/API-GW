@@ -131,7 +131,7 @@ export default function ResourceCreate(props) {
               <Item>
                 <ItemName>리소스 경로</ItemName>
                 <ItemInput>
-                  <InputForm name="resource" placeholder=" 리소스 경로 입력" onChange={onChange} value={resource}/>
+                  <InputForm name="resource" placeholder="리소스 경로 입력" onChange={onChange} value={resource}/>
                 </ItemInput>
               </Item>
             </ItemDiv>
