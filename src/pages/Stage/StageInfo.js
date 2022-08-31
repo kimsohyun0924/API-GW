@@ -83,12 +83,20 @@ const UsagePlanDiv = styled.div`
 const TableDiv = styled.div`
 `;
 
-const TableHeader = [
+const TableHeaderUsagePlan = [
   "Usage Plan 이름",
   "설명",
   "ID",
   "요율",
   "버스트"
+];
+
+const TableHeaderDeployHistory = [
+  "배포일시",
+  "설명",
+  "배포된 Stage",
+  "배포",
+  "삭제"
 ];
 
 export default function StageInfo(props) {
@@ -108,6 +116,7 @@ export default function StageInfo(props) {
   const [stageConnect3, setStageConnect3] = useState(false);
   const [createDialog, setCreateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
+  const [DataTemp2, setDataTemp2] = useState([]);
   const [error, setError] = useState(null);
   const [selectItem, setSelectItem] = useState(null);
   const [inputs, setInputs] = useState({
@@ -116,7 +125,6 @@ export default function StageInfo(props) {
   const { backend_url } = inputs;
 
   const onClick = () => {
-    // console.log(isActive2)
     setStageConnect((prev) => !prev);
   }
 
@@ -135,7 +143,7 @@ export default function StageInfo(props) {
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.resourceId,
+          '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.stageId,
           {
             backend_url:backend_url
           }
@@ -150,14 +158,13 @@ export default function StageInfo(props) {
   }
   
   const onClick2 = () => {
-    // console.log(isActive2)
     setStageConnect2((prev) => !prev);
     //Get Stage-UsagePlan Connect List
     const fetchConnectUsgaList = async () => {
       try {
         setError(null);
         const response = await axios.get(
-          '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.resourceId+'/usage-plan'
+          '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.stageId+'/usage-plan'
         );
         setDataTemp(response.data); // 데이터는 response.data)
       } catch (e) {
@@ -169,8 +176,21 @@ export default function StageInfo(props) {
   }
 
   const onClick3 = () => {
-    // console.log(isActive2)
     setStageConnect3((prev) => !prev);
+    //Get Stage Deployment History List
+    const fetchStageDeployList = async () => {
+      try {
+        setError(null);
+        const response = await axios.get(
+          '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.stageId+'/snapshots'
+        );
+        setDataTemp2(response.data); // 데이터는 response.data)
+      } catch (e) {
+        setError(e);
+        console.log(error);
+      }
+    };
+    fetchStageDeployList();
   }
 
   const ModalCreateDialog = () => {
@@ -190,7 +210,7 @@ export default function StageInfo(props) {
         await axios.post(
           '/v1.0/g1/paas/Memsq07/apigw/stage/usage-plan',
           {
-            stage_id: props.resourceId,
+            stage_id: props.stageId,
             usage_plan_id: selectItem
           }
         );
@@ -209,7 +229,7 @@ export default function StageInfo(props) {
        try {
          setError(null);
          await axios.delete(
-           '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.resourceId+'/usage-plan/'+clickData.usage_plan_id
+           '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.stageId+'/usage-plan/'+clickData.usage_plan_id
          );
        } catch (e) {
          setError(e);
@@ -224,8 +244,8 @@ export default function StageInfo(props) {
 
   return (
     <React.Fragment>
-      {/* <InvokeurlDiv>{props.resourceId}.ktcloud.io
-        <CopyToClipboard text={props.resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
+      {/* <InvokeurlDiv>{props.stageId}.ktcloud.io
+        <CopyToClipboard text={props.stageId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
           <CopyButtonDiv>주소 복사</CopyButtonDiv>
         </CopyToClipboard>
       </InvokeurlDiv> */}
@@ -270,7 +290,7 @@ export default function StageInfo(props) {
               </ThemeProvider>
             </UsagePlanDiv>
             <TableDiv>
-              <TableCompStageUsage columns={TableHeader} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
+              <TableCompStageUsage columns={TableHeaderUsagePlan} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
             </TableDiv>
           </HiddenDiv>
         </React.Fragment>
@@ -286,7 +306,7 @@ export default function StageInfo(props) {
       { stageConnect3 === true ?
         <React.Fragment>
             <TableDiv>
-              <TableCompDeploymentHistory columns={TableHeader} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
+              <TableCompDeploymentHistory columns={TableHeaderDeployHistory} data={DataTemp2} clickData={clickData} setClickData={setClickData}/>
             </TableDiv>
         </React.Fragment>
       : null}

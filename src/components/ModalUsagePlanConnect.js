@@ -144,7 +144,6 @@ export default function ModalUsagePlanConnect( { title, confirmText, cancelText,
 
   useEffect(() => {
     fetchUsagePlan();
-    // abcd();
   }, [data]);
 
   if (!visible) return null;

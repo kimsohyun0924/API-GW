@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import MainContainer from 'layouts/MainContainer';
 import MainHeader from 'components/MainHeader';
-import styled, { css } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { useNavigate } from 'react-router';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
@@ -12,9 +12,13 @@ import Stage from 'pages/Stage/Stage';
 import { useLocation } from "react-router";
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
+import Button from 'components/Button';
+import ModalStageDeploy from 'components/ModalStageDeploy'
 
 
 const HeadDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const MainDiv = styled.div`
@@ -44,12 +48,23 @@ export default function ApiOperation() {
     const [value, setValue] = useState('0');
     const navigate = useNavigate();
     const { state } = useLocation();
+    const [selectItem, setSelectItem] = useState(null);
+    const [createDialog, setCreateDialog] = useState(false);
 
     // console.log(state);
   
     const handleChange = (event, newValue) => {
         // console.log(newValue);
         setValue(newValue);
+    };
+
+    const ModalCreateDialog = () => {
+      setCreateDialog(true);
+    };
+
+    const onCancel = () => {
+      console.log('취소');
+      setCreateDialog(false);
     };
 
     useEffect(() => {
@@ -59,12 +74,15 @@ export default function ApiOperation() {
     return ( 
         <React.Fragment>
             <MainContainer>
-      
+              <MainHeader location={"APIs"}/>
                 <HeadDiv>
-                  <MainHeader location={"APIs"}/>
                   <PageTitle>{state.name}</PageTitle>
+                  <div style={{padding: "43px 0px 0px 0px"}}>
+                    <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+                      <Button size="supersmall" line="line" onClick={ModalCreateDialog}>API 배포</Button>      
+                    </ThemeProvider>
+                  </div>
                 </HeadDiv>
-
                 <MainDiv>
                   {/* <HeadDiv>{state.name}</HeadDiv> */}
                     <Box sx={{ width: '100%' }}>
@@ -94,6 +112,17 @@ export default function ApiOperation() {
                     </Box>
                  </MainDiv> 
             </MainContainer>
+            <ModalStageDeploy
+              title="API를 배포합니다."
+              confirmText="배포"
+              cancelText="취소"
+              onCancel={onCancel}
+              serviceId={state.service_id}
+              selectItem={selectItem} 
+              setSelectItem={setSelectItem}
+              setCreateDialog={setCreateDialog}
+              visible={createDialog}>
+            </ModalStageDeploy>
         </React.Fragment>
         
     );

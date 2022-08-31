@@ -261,7 +261,7 @@ export default function RecursiveTreeView(props) {
 
   const renderTree = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{doc_type : nodes.doc_type}, {backend_url: nodes.backend_url}}>
+          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{backend_url: nodes.backend_url}}>
             { Array.isArray(nodes.stage_snapshot_list) ? nodes.stage_snapshot_list.map((node) => renderTree3(node.root_resource)) : null }
           </StyledTreeItem> 
     );
@@ -341,7 +341,7 @@ export default function RecursiveTreeView(props) {
 
   const selectComponent = {
     first: <StageCreate serviceInfo={serviceInfo}/>,
-    second: <StageInfo resourceId={resourceId} backend_url={backend_url}/>,
+    second: <StageInfo stageId={resourceId} backend_url={backend_url}/>,
     third: <StageResourceInfo resourceId={resourceId}/>,
     fourth: <StageMethod stageId={stageId} resourceId={resourceId} testData={testData}/>
   };

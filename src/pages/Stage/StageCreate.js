@@ -9,8 +9,8 @@ const AllDiv = styled.div`
     width: 990px; */
     width:100%;
     height: 100%;
-    /* background:pink; */
     padding : 10px 10px 0px 10px;
+    /* background:pink; */
 `;
 
 const ItemDiv = styled.div`
@@ -26,6 +26,7 @@ const Item = styled.div`
 
 const ItemName = styled.div`
     width: 17%;
+    min-width: 100px;
     height: 30px;
     line-height: 15px;
     font-size: 14px;
@@ -46,12 +47,12 @@ const ItemInput = styled.div`
 const InputForm = styled.input`
     width: 100%;
     height: 30px;
-    border: solid 1px #b6b6c3;
-    background: #ffffff;
-    box-sizing: border-box;
     font-size: 14px;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
     color: #333333;
     padding: 5px 5px 5px 5px;
+    background: #ffffff;
 `;
 
 const ButtonDiv = styled.div`

@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
 import axios from 'axios';
 import Button from './Button';
 import Logo from '../image/Cancel.svg';
-import Spacer from 'react-spacer';
+import DropdownStage from '../components/DropdownStage';
 
 const DarkBackground = styled.div`
     position: fixed;
@@ -47,9 +47,9 @@ const ItemDiv = styled.div`
 `;
 
 const Item = styled.div`
-  display: flex;
-  /* padding: 0px 0px 20px 0px;  */
-  /* align-items: center; */
+    display: flex;
+    /* padding: 0px 0px 20px 0px; */
+    /* align-items: center; */
 `;
 
 const ItemName = styled.div`
@@ -73,23 +73,6 @@ const ItemInput = styled.div`
     height: 45px;
     font-size: 14px;
     padding: 10px 0px 5px 0px;
-`;
-
-const InputForm = styled.input`
-    /* width: 380px;
-    height: 32px;
-    border: solid 1px #b6b6c3;
-    background: #ffffff;
-    box-sizing: border-box;
-    font-size: 13px;
-    color: #333333; */
-    width: 380px;
-    height: 30px;
-    font-size: 14px;
-    border: solid 1px #b6b6c3;
-    box-sizing: border-box;
-    color: #333336;
-    padding: 5px 5px 5px 5px;
 `;
 
 const ItemNote = styled.div`
@@ -152,21 +135,24 @@ const ButtonGroup = styled.div`
   
 `;
 
-ModalAPIKeysCreate.defaultProps = {
+ModalStageDeploy.defaultProps = {
   confirmText: '확인'
 };
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalAPIKeysCreate( { title, confirmText, cancelText, onCancel, visible, setCreateDialog} ) {
+export default function ModalStageDeploy( { title, confirmText, cancelText, onCancel, serviceId, selectItem, setSelectItem, setCreateDialog, visible } ) {
 
   const [error, setError] = useState(null);
+  const [methodCommand, setMethodCommand] = useState(null);
+  const [methodCommandValue, setMethodCommandValue] = useState(null);
+  const [isOpen, setIsOpen] = useState(true);
+  const [stageOptions, setStageOptions] = useState();
   const [inputs, setInputs] = useState({
-    APIKeyName: '',
-    APIKeyExplain: ''
+    StageDescription: ''
   });
-  const { APIKeyName, APIKeyExplain } = inputs;
-  
+  const { StageDescription } = inputs;
+
   const onChange = e => {
     const { name, value } = e.target;
     setInputs({
@@ -176,27 +162,49 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
   };
   // console.log(inputs);
 
+  const fetchApis = async () => {
+    //get api request
+    try {
+      setError(null);
+
+      const response = await axios.get(
+        '/v1.0/g1/paas/Memsq07/apigw/stage/service/'+serviceId
+      );
+      setStageOptions(response.data); // 데이터는 response.data)
+      // console.log(response.data);
+    } catch (e) {
+      setError(e);
+    }
+  };
+
   const onCreate = () => {
-    //Create API Key
-    const createAPIKey = async () => {
+    //Deploy stage
+    const deployStage = async () => {
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys',
+          '/v1.0/g1/paas/Memsq07/apigw/stage',
           {
-            name: APIKeyName,
-            description: APIKeyExplain,
-            enabled: true
+            service_id: serviceId,
+            stage_id: selectItem,
+            stage_name: null,
+            backend_url: null
           }
         );
       } catch (e) {
         setError(e);
       }
     };
-    createAPIKey();
-    // window.location.reload(true);
+    deployStage();
+    window.location.reload(true);
     setCreateDialog(false);
   };
+
+  useEffect(() => {
+    fetchApis();
+  }, []);
+
+  console.log(selectItem);
 
   if (!visible) return null;
   return (
@@ -208,27 +216,25 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
               <TitleDiv>{title}</TitleDiv>
               <ItemDiv>
                 <Item>
-                  <ItemName>API Key 이름</ItemName>
-                    <ItemInput>
-                        <InputForm name="APIKeyName" placeholder="API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName}/>
-                    </ItemInput>
-                  </Item>
-                </ItemDiv>
-                <ItemDiv>
-                  <Item>
-                    <ItemName>API Key 설명</ItemName>
-                    <ItemInput2>
-                        <InputForm2 name="APIKeyExplain" placeholder="API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain}/>
-                    </ItemInput2>
-                  </Item>
+                  <ItemName>배포할 Stage</ItemName>
+                  <ItemInput>
+                    <DropdownStage dropdownItems={stageOptions} default="Stage 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} setSelectItem={setSelectItem}/> 
+                  </ItemInput>
+                </Item>
               </ItemDiv>
+              {/* <ItemDiv>
+                <Item>
+                  <ItemName>설명</ItemName>
+                  <ItemInput2>
+                    <InputForm2 name="StageDescription" placeholder="설명을 입력하세요" onChange={onChange} value={StageDescription}/>
+                  </ItemInput2>
+                </Item>
+              </ItemDiv> */}
               <ButtonGroup>
-                <Spacer grow={1}/>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <span style={{padding:"0px 15px 0px 0px"}}><Button size="large" line="noline" color="gray" onClick={onCancel}>{cancelText}</Button></span>
+                    <span style={{padding: "0px 20px 0px 0px"}}><Button size="large" color="gray" line="noline" onClick={onCancel}>{cancelText}</Button></span>
                     <Button size="large" line="line" onClick={onCreate}>{confirmText}</Button>
                   </ThemeProvider>
-               <Spacer grow={1}/> 
               </ButtonGroup>
           </DialogBlock>
       </DarkBackground>

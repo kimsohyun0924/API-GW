@@ -80,15 +80,17 @@ const Hov = styled.td`
 
 export default function TableCompDeploymentHistory({ columns, data, clickData, setClickData }) {
 
+  console.log(data.stage_snapshot_list);
+
   const navigate = useNavigate();
   const [dialog, setDialog] = useState(false);
   const [key, setKey] = useState(null);
   const initialState = {
-    "name": null,
-    "description": null,
-    "api_key_id": null,
-    "enabled": null,
-    "api_key": null,
+    // "name": null,
+    // "description": null,
+    "stage_snapshot_id": null,
+    // "enabled": null,
+    // "api_key": null,
     "created_at": null
   }
 
@@ -99,17 +101,17 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
 
   const onClick2 = (item) => {
     // setClickId(item.id);
-    if(item.api_key_id === clickData.api_key_id) {
+    if(item.stage_snapshot_id === clickData.stage_snapshot_id) {
       // setChecked(true);
       setClickData(initialState);
     }
     else {
       setClickData({
-        "name": item.name,
-        "description": item.description,
-        "api_key_id": item.api_key_id,
-        "enabled": item.enabled,
-        "api_key": item.api_key,
+        // "name": item.name,
+        // "description": item.description,
+        "stage_snapshot_id": item.stage_snapshot_id,
+        // "enabled": item.enabled,
+        // "api_key": item.api_key,
         "created_at": item.created_at
       });
     }
@@ -140,27 +142,18 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
             </tr>            
           </THead>
           <TBody>
-            { data && data.map((item, index) => {
+            { data.stage_snapshot_list && data.stage_snapshot_list.map((item, index) => {
               return (
                 <React.Fragment key={index}>
-                  <TR key={index} onClick={() => { onClick2(item) }} clickId={clickData.api_key_id} Id={item.api_key_id}>
+                  <TR key={index} onClick={() => { onClick2(item) }} clickId={clickData.stage_snapshot_id} Id={item.stage_snapshot_id}>
                     <TD width='1%'>
-                      <input type="checkbox" checked={clickData.api_key_id === item.api_key_id ? true : false} onChange={checkHandler}/>
+                      <input type="checkbox" checked={clickData.stage_snapshot_id === item.stage_snapshot_id ? true : false} onChange={checkHandler}/>
                     </TD>
+                    <TD width='20%'>{item.created_at}</TD>
+                    {/* <TD width='10%'>{item.api_key_id}</TD>
                     <TD width='8%'>{item.name}</TD>
                     <TD width='10%'>{item.description}</TD>
-                    <TD width='10%'>{item.api_key_id}</TD>
-                    <TD width='7%'>{item.enabled === true ? "활성":"비활성"}</TD>
-                    <TD width='7%'>
-                      <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                        <Button size="supersmall" line="outline" onClick={onClick} value={item.api_key}>
-                          {/* { dialog === true ? item.primaryKey : <div>보기</div>} */}
-                          보기
-                          </Button>
-                          
-                      </ThemeProvider>
-                    </TD>
-                    <TD width='10%'>{item.created_at}</TD>
+                    <TD width='7%'>{item.enabled === true ? "활성":"비활성"}</TD> */}
                   </TR> 
                 </React.Fragment>
               );

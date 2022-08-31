@@ -113,7 +113,7 @@ export default function MyApis() {
   };
 
   const fetchApis = async () => {
-    //get api request
+    //Get API List 
     try {
       setError(null);
 
@@ -148,6 +148,7 @@ export default function MyApis() {
 
   useEffect(() => {
     fetchApis();
+    console.log("hey");
   }, []);
 
 

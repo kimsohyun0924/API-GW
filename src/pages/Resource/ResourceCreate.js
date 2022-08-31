@@ -8,37 +8,41 @@ import axios from 'axios';
 
 
 const BodyDiv = styled.div`
-    /* display: block;
     width:100%;
-    height: 100%; */
+    height: 100%;
+    padding : 10px 10px 0px 10px;
 `;
 
 const ItemDiv = styled.div`
     display: block;
-    /* color: #555555;
-    padding: 0px 0px 20px 0px; */
+    color: #555555;
+    /* padding: 0px 0px 20px 0px; */
 `;
 
 const Item = styled.div`
     display: flex;
-    align-items: center;
+    /* align-items: center;
     width: 100%;
-    height: 45px;
+    height: 45px; */
 `;
 
 const ItemName = styled.div`
-    min-width: 250px;
-    height: 45px;
+    width: 17%;
+    min-width: 100px;
+    height: 30px;
+    line-height: 15px;
     font-size: 14px;
-    padding: 10px 0px 5px 10px;
+    margin-right: 50px;
+    padding: 6px 12px 6px 0px;
+    /* padding: 10px 0px 5px 10px; */
 `;
 
 const ItemInput = styled.div`
     display: flex;
-    width: 100%;
-    height: 45px;
+    width: 78%;
+    height: 30px;
     font-size: 14px;
-    padding: 10px 0px 5px 0px;
+    /* padding: 10px 0px 5px 0px; */
 `;
 
 const InputForm = styled.input`

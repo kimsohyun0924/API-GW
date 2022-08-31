@@ -24,6 +24,7 @@ const Item = styled.div`
 
 const ItemName = styled.div`
     width: 17%;
+    min-width: 100px;
     height: 30px;
     line-height: 15px;
     font-size: 14px;
@@ -379,7 +380,9 @@ export default function MethodCreate(props) {
         <ItemDiv>
           <Item>
               <ItemName>API Key 활성화</ItemName>
-              <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+              <ItemInput>
+                <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+              </ItemInput>
           </Item>
         </ItemDiv>
         <ButtonDiv>
