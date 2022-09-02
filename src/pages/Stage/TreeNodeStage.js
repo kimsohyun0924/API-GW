@@ -15,6 +15,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import StageInfo from "./StageInfo";
 import StageMethod from "./StageMethod";
 import StageResourceInfo from "./StageResourceInfo";
+import img2 from "image/Table_Copy.svg";
 
 
 const AllDiv = styled.div`
@@ -71,17 +72,45 @@ const Content = styled.div`
 `;
 
 const InvokeurlDiv = styled.div`
+  display: flex;
   background: #eff4fb;
   /* #d9edf7 #d7e3f5 */
   font-size : 15px;
-  font-weight: bold;
-  padding: 15px 20px 15px 20px;
+  font-weight: 500;
+  padding: 10px 15px 10px 15px;
 `;
 
-const CopyButtonDiv = styled.button`
-  margin: 0px 0px 0px 10px;
+const CopyButtonDiv = styled.div`
+  margin: 3px 0px 0px 10px;
   cursor: pointer;
+`;
 
+const TestDiv = styled.div`
+   ${props => props.label === 'GET' &&
+      css`
+      color: royalblue;
+      `
+    }
+    ${props => props.label === 'POST' &&
+      css`
+      color: green;
+      `
+    }
+    ${props => props.label === 'PUT' &&
+      css`
+      color: brown;
+      `
+    }
+    ${props => props.label === 'DELETE' &&
+      css`
+      color: red;
+      `
+    }
+      ${props => props.label === 'ANY' &&
+      css`
+      color: orange;
+      `
+    }
 `;
 
 export default function RecursiveTreeView(props) {
@@ -109,6 +138,7 @@ export default function RecursiveTreeView(props) {
   const [resourceId, setResourceId] = useState(null);
   const [stageId, setStageId] = useState(null);
   const [label, setLabel] = useState();
+  const [invoke_url, setInvoke_url] = useState(null);
   const [backend_url, setBackend_url] = useState(null);
   const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
@@ -125,6 +155,7 @@ export default function RecursiveTreeView(props) {
       label,
       doc_type,
       backend_url,
+      invoke_url,
       nodeId,
       icon: iconProp,
       expansionIcon,
@@ -169,7 +200,9 @@ export default function RecursiveTreeView(props) {
         setContent("second");
       }
 
+      // console.log(event.target)
       setBackend_url(event.target.getAttribute('value2'));
+      setInvoke_url(event.target.getAttribute('value3'));
       setLabel(label);
       setResourceId(nodeId);
     };
@@ -194,8 +227,10 @@ export default function RecursiveTreeView(props) {
           onClick={handleSelectionClick}
           component="div"
           className={classes.label}
+          label={label}
           value={doc_type}
           value2={backend_url}
+          value3={invoke_url}
         >
           {label}
         </div>
@@ -232,6 +267,8 @@ export default function RecursiveTreeView(props) {
     doc_type: PropTypes.node,
 
     backend_url: PropTypes.node,
+
+    invoke_url: PropTypes.node,
     /**
      * The id of the node.
      */
@@ -254,14 +291,16 @@ export default function RecursiveTreeView(props) {
       height: '35px', 
     },
     [`& .${treeItemClasses.label}`]: {
-      fontSize: '18px !important',
+      fontWeight: '500 !important',
+      fontFamily: 'Noto Sans KR, sans-serif !important',
+      fontSize: '15px !important',
       borderBottom: '1px solid #e2e2e2'
     },
   }));
 
   const renderTree = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{backend_url: nodes.backend_url}}>
+          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{backend_url: nodes.backend_url, invoke_url: nodes.invoke_url}}>
             { Array.isArray(nodes.stage_snapshot_list) ? nodes.stage_snapshot_list.map((node) => renderTree3(node.root_resource)) : null }
           </StyledTreeItem> 
     );
@@ -278,7 +317,7 @@ export default function RecursiveTreeView(props) {
 
   const renderTree3 = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_typ} ContentProps={{doc_type : nodes.doc_type}}>
+          <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_typ} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url}}>
             { Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree3(node)) : null }
             { Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree4(node)) : null }
           </StyledTreeItem>  
@@ -288,7 +327,7 @@ export default function RecursiveTreeView(props) {
 
   const renderTree4 = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
+          <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url}}>
             {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
           </StyledTreeItem> 
     );
@@ -343,7 +382,7 @@ export default function RecursiveTreeView(props) {
     first: <StageCreate serviceInfo={serviceInfo}/>,
     second: <StageInfo stageId={resourceId} backend_url={backend_url}/>,
     third: <StageResourceInfo resourceId={resourceId}/>,
-    fourth: <StageMethod stageId={stageId} resourceId={resourceId} testData={testData}/>
+    fourth: <StageMethod stageId={stageId} resourceId={resourceId} backend_url={backend_url} testData={testData}/>
   };
 
   return (
@@ -370,11 +409,13 @@ export default function RecursiveTreeView(props) {
           </MenuDiv> 
           <ResourceInfoDiv>
             <PathDiv>{label}</PathDiv>
-            <InvokeurlDiv>{resourceId}.ktcloud.io
-              <CopyToClipboard text={resourceId+".ktcloud.io"} onCopy={()=>alert("주소가 복사되었습니다")}>
-                <CopyButtonDiv>주소 복사</CopyButtonDiv>
+            { invoke_url &&
+            <InvokeurlDiv>Invoke URL : {invoke_url}
+              <CopyToClipboard text={invoke_url} onCopy={()=>alert("주소가 복사되었습니다")}>
+                <CopyButtonDiv><img src={img2}/></CopyButtonDiv>
               </CopyToClipboard>
             </InvokeurlDiv>
+            }
              {content && <Content>{selectComponent[content]}</Content>}
           </ResourceInfoDiv> 
         </ExampleDiv>

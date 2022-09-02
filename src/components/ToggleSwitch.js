@@ -4,8 +4,8 @@ import styled, { css } from 'styled-components';
 import CORS from '../pages/API/CORS';
 
 const ToggleBtn = styled.button`
-  width: 36px;
-  height: 20px;
+  width: 34px;
+  height: 18px;
   border-radius: 30px;
   border: none;
   cursor: pointer;
@@ -18,17 +18,17 @@ const ToggleBtn = styled.button`
 `;
 const Circle = styled.div`
   background-color: white;
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   border-radius: 50px;
   position: absolute;
-  left: 5%;
+  left: 10%;
   transition: all 0.5s ease-in-out;
   ${(props) =>
     props.toggle &&
     css`
     /* 스위치가 움직이는 거리 */
-      transform: translate(17px, 0);
+      transform: translate(14px, 0);
       transition: all 0.5s ease-in-out;
     `}
 `;

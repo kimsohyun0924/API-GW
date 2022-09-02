@@ -93,6 +93,7 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
   }
 
   const onClick = e => {
+    console.log(e.target);
     setKey(e.target.value);
     setDialog(true);
   }
@@ -156,8 +157,7 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
                         <Button size="supersmall" line="outline" onClick={onClick} value={item.api_key}>
                           {/* { dialog === true ? item.primaryKey : <div>보기</div>} */}
                           보기
-                          </Button>
-                          
+                        </Button>
                       </ThemeProvider>
                     </TD>
                     <TD width='10%'>{item.created_at}</TD>

@@ -22,7 +22,7 @@ const ItemName = styled.div`
     height: 45px;
     font-size: 12px;
     line-height: 15px;
-    padding: 5px 0px 5px 10px;
+    padding: 5px 0px 5px 0px;
 `;
 
 const ItemInput = styled.div`

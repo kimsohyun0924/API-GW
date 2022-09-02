@@ -29,7 +29,7 @@ const Item = styled.div`
 const ItemName = styled.div`
   width: 143px;
   height: 45px;
-  font-size: 16px;
+  font-size: 13px;
   padding: 10px 0px 5px 10px;
 `;
 
@@ -37,7 +37,7 @@ const ItemInput = styled.div`
   display: flex;
   width: 300px;
   height: 45px;
-  font-size: 14px;
+  font-size: 13px;
   padding: 10px 0px 5px 0px;
 `;
 
@@ -85,21 +85,26 @@ const ButtonDiv = styled.div`
 
 export default function StageMethod(props) {
 
-  console.log(props.testData);
-
   const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
   const [stageConnect, setStageConnect] = useState(false);
-  const [toggle, setToggle] = useState(props.testData.usage_plan_using);
+  const [toggle, setToggle] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
   const [inputs, setInputs] = useState({
-    replenish_rate: props.testData.replenish_rate,
-    burst_capacity: props.testData.burst_capacity
+    backend_url: '',
+    replenish_rate: '',
+    burst_capacity: ''
   });
-  const { replenish_rate, burst_capacity } = inputs;
+  const { backend_url, replenish_rate, burst_capacity } = inputs;
 
   const clickedToggle = () => {
     setToggle((prev) => !prev);
-    console.log(toggle);
+    // console.log(toggle);
+  };
+
+  const clickedToggle2 = () => {
+    setToggle2((prev) => !prev);
+    // console.log(toggle);
   };
 
   const onChange = e => {
@@ -109,25 +114,25 @@ export default function StageMethod(props) {
       [name]: value
     });
   };
-  console.log(inputs);
+  // console.log(inputs);
 
   // console.log(props.stageId);
   // console.log(props.resourceId);
 
-  // const GetMethodInfo = async () => {
-  //   //get Method info
-  //   try {
-  //     setError(null);
+  const GetMethodInfo = async () => {
+    //get Method info
+    try {
+      setError(null);
 
-  //     const response = await axios.get(
-  //       '/v1.0/g1/paas/Memsq07/apigw/method/'+props.resourceId
-  //     );
-  //     setDataTemp(response.data); // 데이터는 response.data)
-  //     // console.log(response.data);
-  //   } catch (e) {
-  //     setError(e);
-  //   }
-  // };
+      const response = await axios.get(
+        '/v1.0/g1/paas/Memsq07/apigw/method/'+props.resourceId
+      );
+      setDataTemp(response.data); // 데이터는 response.data)
+      // console.log(response.data);
+    } catch (e) {
+      setError(e);
+    }
+  };
 
   const onCreate = () => {
     //Create method-Throttling
@@ -153,20 +158,36 @@ export default function StageMethod(props) {
     window.location.reload(true);
   };
 
-  // useEffect(() => {
-  //   GetMethodInfo();
-  // }, []);
+  useEffect(() => {
+    GetMethodInfo();
+  }, []);
 
   return (
     <React.Fragment>
       <BodyDiv>
-        <ItemDiv>
+        <ItemDiv> 
           <Item>
-            <ItemName>Throttling</ItemName>
+            <ItemName>Endpoint 도메인</ItemName>
             <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
           </Item>
         </ItemDiv>
         { toggle === true ? 
+          <React.Fragment>
+              <Item style={{padding:"0px 0px 0px 5px"}}>
+                <ItemInput>
+                  <InputForm name="backend_url" placeholder="초당 요청 수" onChange={onChange} value={backend_url}/>
+                </ItemInput>
+              </Item>
+          </React.Fragment>
+          : null
+        }
+        <ItemDiv>
+          <Item>
+            <ItemName>Throttling</ItemName>
+            <ToggleSwitch clickedToggle={clickedToggle2} toggle={toggle2}/>
+          </Item>
+        </ItemDiv>
+        { toggle2 === true ? 
           <React.Fragment>
             <RequestDiv>
               <Item>

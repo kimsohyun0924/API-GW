@@ -26,15 +26,17 @@ const CopyButtonDiv = styled.button`
 const VisiablDiv = styled.div`
   margin: 0px 0px 10px 0px;
   padding: 0px 0px 8px 0px;
-  border-bottom: 0.5px solid black;
+  border-bottom: 1px solid #e2e2e2;
   /* #e2e2e2 */
   /* background: pink; */
 `;
 
 const VisiablText = styled.span`
   display: flex;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
+
   /* display: inline-block */
 `;
 
@@ -50,7 +52,7 @@ const Item = styled.div`
 `;
 
 const ItemName = styled.div`
-display: flex;
+    display: flex;
     min-width: 250px;
     height: 45px;
     font-size: 14px;
@@ -93,8 +95,7 @@ const TableHeaderUsagePlan = [
 
 const TableHeaderDeployHistory = [
   "배포일시",
-  "설명",
-  "배포된 Stage",
+  "배포 상태",
   "배포",
   "삭제"
 ];

@@ -67,6 +67,34 @@ const Content = styled.div`
   /* background:pink; */
 `;
 
+const TestDiv = styled.div`
+   ${props => props.label === 'GET' &&
+      css`
+      color: royalblue;
+      `
+    }
+    ${props => props.label === 'POST' &&
+      css`
+      color: green;
+      `
+    }
+    ${props => props.label === 'PUT' &&
+      css`
+      color: brown;
+      `
+    }
+    ${props => props.label === 'DELETE' &&
+      css`
+      color: red;
+      `
+    }
+      ${props => props.label === 'ANY' &&
+      css`
+      color: orange;
+      `
+    }
+`;
+
 export default function RecursiveTreeView(props) {
   // console.log(props);
 
@@ -125,7 +153,7 @@ export default function RecursiveTreeView(props) {
         // navigate('/api/operation/method');
       }
 
-      console.log(nodeId)
+      // console.log(nodeId)
       setLabel(label);
       setResourceId(nodeId);
       // console.log();
@@ -147,14 +175,15 @@ export default function RecursiveTreeView(props) {
         <div onClick={handleExpansionClick} className={classes.iconContainer}>
           {icon}
         </div>
-        <div
+        <TestDiv
           onClick={handleSelectionClick}
           component="div"
           className={classes.label}
           value={doc_type}
+          label={label}
         >
           {label}
-        </div>
+        </TestDiv>
       </div>
     );
   });
@@ -208,8 +237,9 @@ export default function RecursiveTreeView(props) {
       height: '35px', 
     },
     [`& .${treeItemClasses.label}`]: {
-
-      fontSize: '16px !important',
+      fontWeight: '500 !important',
+      fontFamily: 'Noto Sans KR, sans-serif !important',
+      fontSize: '15px !important',
       borderBottom: '1px solid #e2e2e2'
     },
   }));

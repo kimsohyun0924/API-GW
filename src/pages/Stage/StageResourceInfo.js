@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import axios from 'axios';
 import { useLocation } from "react-router";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import ResourceMethodComp from 'components/ResourceMethodComp';
+import StageMethodComp from 'components/StageMethodComp';
 
 const InvokeurlDiv = styled.div`
   background: #eff4fb;
@@ -68,7 +68,7 @@ export default function StageInfo(props) {
           return (
             <React.Fragment key={index}>
               <MethodDiv>
-                <ResourceMethodComp methodInfo={item} onClick={onClick}/>                 
+                <StageMethodComp methodInfo={item} onClick={onClick}/>                 
               </MethodDiv>
             </React.Fragment>
           );

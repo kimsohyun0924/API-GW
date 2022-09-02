@@ -1,11 +1,11 @@
 import React, { useState, useEffect} from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
+import axios from 'axios';
 import TableLine from '../image/tableline.svg';
-import { useNavigate } from 'react-router-dom';
+import Logo from '../image/trash.svg';
+import Logo2 from '../image/deployment.svg';
 import Button from './Button';
 import ModalApiDelete from './ModalApiDelete';
-import ModalAPIKey from './ModalAPIKey';
-import { click } from '@testing-library/user-event/dist/click';
 
 const TableWrapper = styled.div`
   padding: 0px 0px 0px 0px;
@@ -28,7 +28,7 @@ const THead = styled.thead`
 `;
 
 const TH = styled.th`
-  line-height: 18px;
+  line-height: 13px;
   text-align: center;
   vertical-align: middle;
   padding: 10px 10px;
@@ -49,21 +49,19 @@ const TBody = styled.tbody`
 
 const TR = styled.tr`
   border-bottom: 1px solid #ccc;
-
-  ${props => props.clickId === props.Id &&
-    css`
-      background: #c7dff4;;
-      /* font-weight: 500; */
-    `
+  
+    &:hover {
+    background: #c7dff4;
   }
 `;
 
 const TD = styled.td`
-  line-height: 20px;
+  line-height: 10px;
   text-align: center;
   vertical-align: middle;
   padding: 8px 10px;
   text-align: left;
+  font-size: 13px;
 `;
 
 const Hov = styled.td`
@@ -78,28 +76,31 @@ const Hov = styled.td`
   } */
 `;
 
+const ImgDiv = styled.div`
+    /* display: flex;
+    margin-left: 530px;
+    justify-content: flex-end; */
+    cursor: pointer;
+`;
+
 export default function TableCompDeploymentHistory({ columns, data, clickData, setClickData }) {
 
-  console.log(data.stage_snapshot_list);
+  // console.log(data.stage_id);
 
-  const navigate = useNavigate();
-  const [dialog, setDialog] = useState(false);
-  const [key, setKey] = useState(null);
+  const [error, setError] = useState(null);
+  const [deploydialog, setDeployDialog] = useState(false);
+  const [deletedialog, setDeleteDialog] = useState(false);
+  const [snapshotId, setSnapshotId] = useState(null);
   const initialState = {
     // "name": null,
     // "description": null,
     "stage_snapshot_id": null,
     // "enabled": null,
     // "api_key": null,
-    "created_at": null
+    "updated_at": null
   }
 
-  const onClick = e => {
-    setKey(e.target.value);
-    setDialog(true);
-  }
-
-  const onClick2 = (item) => {
+  const onClick = (item) => {
     // setClickId(item.id);
     if(item.stage_snapshot_id === clickData.stage_snapshot_id) {
       // setChecked(true);
@@ -112,17 +113,60 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
         "stage_snapshot_id": item.stage_snapshot_id,
         // "enabled": item.enabled,
         // "api_key": item.api_key,
-        "created_at": item.created_at
+        "updated_at": item.created_at
       });
     }
   }
 
-  const onCancel = () => {
-    setDialog(false);
-  };
+  const onClick2 = e => {
+    setSnapshotId(e.target.getAttribute('value'));
+    setDeployDialog(true);
+  }
 
-  const checkHandler = (e) => {
-    // setChecked(!bChecked);
+  const onClick3 = e => {
+    setSnapshotId(e.target.getAttribute('value'));
+    setDeleteDialog(true);
+  }
+
+  const onCreate = e => {
+    //Delete Stage Snapshot
+    const deployStageSnapshot = async () => {
+      try {
+        setError(null);
+        await axios.post(
+          '/v1.0/g1/paas/Memsq07/apigw/stage-snapshot/deploy',
+          {
+            stage_id: data.stage_id,
+            stage_snapshot_id: snapshotId
+          }
+        );
+      } catch (e) {
+        setError(e);
+      }
+    };
+    deployStageSnapshot();
+    setDeployDialog(false);
+  }
+
+  const onDelete = e => {
+    //Delete Stage Snapshot
+    const deleteStageSnapshot = async () => {
+      try {
+        setError(null);
+        await axios.delete(
+          '/v1.0/g1/paas/Memsq07/apigw/stage-snapshot/'+snapshotId,
+        );
+      } catch (e) {
+        setError(e);
+      }
+    };
+    deleteStageSnapshot();
+    setDeleteDialog(false);
+  }
+
+  const onCancel = () => {
+    setDeployDialog(false);
+    setDeleteDialog(false);
   };
 
   return (
@@ -131,7 +175,7 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
         <Table>
           <THead>  
             <tr>
-              <TH width='1%'/>
+              {/* <TH width='1%'/> */}
               { columns.map((item, index) => {
                 return (
                   <React.Fragment key={index}>
@@ -145,15 +189,22 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
             { data.stage_snapshot_list && data.stage_snapshot_list.map((item, index) => {
               return (
                 <React.Fragment key={index}>
-                  <TR key={index} onClick={() => { onClick2(item) }} clickId={clickData.stage_snapshot_id} Id={item.stage_snapshot_id}>
-                    <TD width='1%'>
+                  <TR key={index}>
+                    {/* <TD width='1%'>
                       <input type="checkbox" checked={clickData.stage_snapshot_id === item.stage_snapshot_id ? true : false} onChange={checkHandler}/>
+                    </TD> */}
+                    <TD width='20%'>{item.updated_at}</TD>
+                    <TD width='20%'>{item.status === "DEPLOYED" ? "배포":null}</TD>
+                    <TD width='10%'>
+                      <ImgDiv onClick={onClick2}>
+                        <img value={item.stage_snapshot_id} src={Logo2}/>
+                      </ImgDiv>
                     </TD>
-                    <TD width='20%'>{item.created_at}</TD>
-                    {/* <TD width='10%'>{item.api_key_id}</TD>
-                    <TD width='8%'>{item.name}</TD>
-                    <TD width='10%'>{item.description}</TD>
-                    <TD width='7%'>{item.enabled === true ? "활성":"비활성"}</TD> */}
+                    <TD width='10%'>
+                      <ImgDiv onClick={onClick3}>
+                        <img value={item.stage_snapshot_id} src={Logo}/>
+                      </ImgDiv>
+                    </TD>
                   </TR> 
                 </React.Fragment>
               );
@@ -161,14 +212,24 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
           </TBody>
         </Table>
       </TableWrapper>
-      <ModalAPIKey
-            title="API Key 보기"
-            cancelText="확인"
+      <ModalApiDelete
+            // title="Stage Snapshot 배포"
+            confirmText="배포하기"
+            cancelText="취소"
+            onConfirm={onCreate}
             onCancel={onCancel}
-            visible={dialog}
-            >
-            {key}
-      </ModalAPIKey>
+            visible={deploydialog}>
+            <span style={{padding:"0px 0px 0px 10px"}}>선택한 Stage를 배포합니다.</span>
+      </ModalApiDelete>
+      <ModalApiDelete
+            // title="Stage Snapshot 삭제"
+            confirmText="삭제하기"
+            cancelText="취소"
+            onConfirm={onDelete}
+            onCancel={onCancel}
+            visible={deletedialog}>
+            <span style={{padding:"0px 0px 0px 10px"}}>선택한 Stage를 삭제합니다.</span>
+      </ModalApiDelete>
     </React.Fragment>
   );
 }

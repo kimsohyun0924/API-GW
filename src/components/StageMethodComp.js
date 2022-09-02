@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled, { css } from "styled-components";
 import ModalApiDelete from './ModalApiDelete';
-import MethodUpdate from '../pages/MethodUpdate';
+import MethodUpdate from '../pages/Method/MethodUpdate';
 
 const MethodDiv = styled.div`
     width: 320px;
@@ -55,7 +55,7 @@ const MethodValue = styled.div`
 const ButtonDiv = styled.div`
     display: flex;
     height: 100%;
-    margin-left: 110px;
+    margin-left: 170px;
     align-items: center;
 `;
 
@@ -145,21 +145,19 @@ export default function MethodComp(props) {
                     <MethodValue>{methodInfo.method_type}</MethodValue>
                     <ButtonDiv>
                         <Button onClick={props.onClick}>보기</Button>
-                        <Button onClick={Delete}>삭제</Button>
                     </ButtonDiv>
                 </MethodValueDiv>
                 <MethodInfoDiv>
                     <MethodInfoType>
                         <MethodInfoName>엔드포인트</MethodInfoName>
-                        <MethodInfoValue>{methodInfo.method_type} {"/"+methodInfo.url_path}</MethodInfoValue >
+                        <MethodInfoValue>{methodInfo.method_type} {methodInfo.url_path}</MethodInfoValue >
                     </MethodInfoType>
                     <MethodInfoType>
                         <MethodInfoName>API Key 필요</MethodInfoName>
-                            {/* {
-                                methodInfo.requiredApiKey.required? <MethodInfoValue>예</MethodInfoValue> 
+                            {
+                                methodInfo.api_key_using? <MethodInfoValue>예</MethodInfoValue> 
                                 : <MethodInfoValue>아니요</MethodInfoValue>
-                            } */}
-                            <MethodInfoValue>{methodId}</MethodInfoValue>
+                            }
                     </MethodInfoType>
                 </MethodInfoDiv>
             </MethodDiv> 

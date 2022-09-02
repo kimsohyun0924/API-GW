@@ -104,6 +104,7 @@ export default function ResourceCreate(props) {
             '/v1.0/g1/paas/Memsq07/apigw/stage',
             {
               service_id: serviceInfo.service_id,
+              stage_id: null,
               stage_name: stage_name,
               backend_url: backend_url
             }

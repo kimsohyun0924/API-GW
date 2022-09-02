@@ -180,7 +180,7 @@ const DropdownDBServer = (props) => {
       </DropdownBody>
       
       <DropdownMenu isActive={isActive} ref={wrapperRef} size={props.size}>
-        {props.dropdownItems.map((item, index) => (
+        {props.dropdownItems && props.dropdownItems.map((item, index) => (
           <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem(e, item); }}>
             <DropdownItemName id="item_name" itemName={item.name} selectedItem={selectedItem}>{item.name}</DropdownItemName>
           </DropdownItemContainer>

@@ -103,12 +103,7 @@ export default function ModalStageConnect( { title, confirmText, cancelText, onC
   const [methodCommandValue, setMethodCommandValue] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
   const [apiOptions, setApiOptions] = useState(null);
-  const [stageOptions, setStageOptions] = useState([
-    {
-      "stage_id": "",
-      "name": ""
-    }
-  ]);
+  const [stageOptions, setStageOptions] = useState(null);
 
   const fetchApis = async () => {
     //get api request

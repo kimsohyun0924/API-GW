@@ -223,6 +223,7 @@ export default function MethodCreate(props) {
         await axios.post(
           '/v1.0/g1/paas/Memsq07/apigw/method',
           {
+            service_id: serviceId,
             resource_id: resourceId,
             url_path: urlInfo,
             integration_type: selectedItem,

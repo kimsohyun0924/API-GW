@@ -153,15 +153,14 @@ export default function MethodComp(props) {
                 <MethodInfoDiv>
                     <MethodInfoType>
                         <MethodInfoName>엔드포인트</MethodInfoName>
-                        <MethodInfoValue>{methodInfo.method_type} {"/"+methodInfo.url_path}</MethodInfoValue >
+                        <MethodInfoValue>{methodInfo.method_type} {methodInfo.url_path}</MethodInfoValue >
                     </MethodInfoType>
                     <MethodInfoType>
                         <MethodInfoName>API Key 필요</MethodInfoName>
-                            {/* {
-                                methodInfo.requiredApiKey.required? <MethodInfoValue>예</MethodInfoValue> 
+                            {
+                                methodInfo.api_key_using? <MethodInfoValue>예</MethodInfoValue> 
                                 : <MethodInfoValue>아니요</MethodInfoValue>
-                            } */}
-                            <MethodInfoValue>{methodId}</MethodInfoValue>
+                            }
                     </MethodInfoType>
                 </MethodInfoDiv>
             </MethodDiv> 
