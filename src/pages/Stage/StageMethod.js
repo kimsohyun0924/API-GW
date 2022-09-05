@@ -85,13 +85,15 @@ const ButtonDiv = styled.div`
 
 export default function StageMethod(props) {
 
+  console.log(props);
+
   const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
   const [stageConnect, setStageConnect] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [toggle2, setToggle2] = useState(false);
   const [inputs, setInputs] = useState({
-    backend_url: '',
+    backend_url: props.backend_url,
     replenish_rate: '',
     burst_capacity: ''
   });
@@ -168,10 +170,13 @@ export default function StageMethod(props) {
         <ItemDiv> 
           <Item>
             <ItemName>Endpoint 도메인</ItemName>
-            <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+            <ItemInput>
+              <InputForm name="backend_url" placeholder="Endpoint 도메인" onChange={onChange} value={backend_url}/>
+            </ItemInput>
+            {/* <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/> */}
           </Item>
         </ItemDiv>
-        { toggle === true ? 
+        {/* { toggle === true ? 
           <React.Fragment>
               <Item style={{padding:"0px 0px 0px 5px"}}>
                 <ItemInput>
@@ -180,7 +185,7 @@ export default function StageMethod(props) {
               </Item>
           </React.Fragment>
           : null
-        }
+        } */}
         <ItemDiv>
           <Item>
             <ItemName>Throttling</ItemName>

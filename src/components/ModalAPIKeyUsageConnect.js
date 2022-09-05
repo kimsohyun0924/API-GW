@@ -96,37 +96,21 @@ ModalAPIKeyUsageConnect.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalAPIKeyUsageConnect( { title, confirmText, cancelText, onCancel, setCreateDialog, resourceId, visible, ConnectUsage } ) {
+export default function ModalAPIKeyUsageConnect( { title, confirmText, cancelText, state, onCancel, UsageList, setCreateDialog, visible } ) {
 
+  const [selectItem, setSelectItem] = useState(null);
   const [error, setError] = useState(null);
   const [methodCommand, setMethodCommand] = useState(null);
   const [methodCommandValue, setMethodCommandValue] = useState(null);
-  const [isOpen, setIsOpen] = useState(true);
   const [usageOptions, setUsageOptions] = useState([]);
-  const [data, setData] = useState(null);
-  const [selectItem, setSelectItem] = useState(null);
-
-
-  const fetchUsagePlan = async () => {
-    //get UsagePlan
-    try {
-      setError(null);
-      const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'
-      );
-      setData(response.data);
-    } catch (e) {
-      setError(e);
-    }
-  };
 
   const onCreate = () => {
-      
+    //Create APIKey-UsagePlan Connect
     const createAPIKeyUsageConnet = async () => {
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+resourceId,
+          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id,
           {
             usage_plan_id: selectItem
           }
@@ -134,19 +118,13 @@ export default function ModalAPIKeyUsageConnect( { title, confirmText, cancelTex
       } catch (e) {
         setError(e);
       }
-    
     };
     createAPIKeyUsageConnet();
     window.location.reload(true);
     setCreateDialog(false);
   };
 
-  useEffect(() => {
-    fetchUsagePlan();
-  }, []);
-
   if (!visible) return null;
-
   return (
       <DarkBackground>
            <DialogBlock>
@@ -156,7 +134,7 @@ export default function ModalAPIKeyUsageConnect( { title, confirmText, cancelTex
               <TitleDiv>{title}</TitleDiv>
               <Item>
                   <ItemName>Usage Plan</ItemName>
-                  <DropdownMethod dropdownItems={data} default="Usage Plan 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} selectItem={selectItem} setSelectItem={setSelectItem}/> 
+                  <DropdownMethod dropdownItems={UsageList} default="Usage Plan 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} setSelectItem={setSelectItem}/> 
               </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

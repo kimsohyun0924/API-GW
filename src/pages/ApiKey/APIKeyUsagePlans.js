@@ -7,7 +7,7 @@ import styled, { ThemeProvider } from "styled-components";
 import Button from 'components/Button';
 import TableCompAPIKeyUsagePlan from 'components/TableCompAPIKeyUsagePlan';
 import ModalApiDelete from 'components/ModalApiDelete';
-import ModalUsagePlanConnect from 'components/ModalUsagePlanConnect';
+import ModalAPIKeyUsageConnect from 'components/ModalAPIKeyUsageConnect';
 import MainHeader from 'components/MainHeader';
 import { useLocation } from "react-router";
 
@@ -44,6 +44,7 @@ export default function APIKeyUsagePlans() {
   const [createDialog, setCreateDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
+  const [DataTemp2, setDataTemp2] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const testData = [
@@ -86,6 +87,19 @@ export default function APIKeyUsagePlans() {
     }
   };
 
+  const fetchUsagePlan = async () => {
+    //get UsagePlan
+    try {
+      setError(null);
+      const response = await axios.get(
+        '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'
+      );
+      setDataTemp2(response.data.filter((item) => !(DataTemp.some((i) => i.usage_plan_id === item.usage_plan_id))));
+    } catch (e) {
+      setError(e);
+    }
+  };
+
   const onDelete = () => {
     //delete api request
     const deleteAPIKeyUsagePlanConnect = async () => {
@@ -106,6 +120,7 @@ export default function APIKeyUsagePlans() {
 
   useEffect(() => {
     fetchAPIKeyUsagePlan();
+    fetchUsagePlan();
   }, [DataTemp]);
 
   return (
@@ -127,16 +142,16 @@ export default function APIKeyUsagePlans() {
           <TableCompAPIKeyUsagePlan columns={TableHeader} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
         </TableDiv>
       </MainContainer>
-      <ModalUsagePlanConnect
+      <ModalAPIKeyUsageConnect
         title="Usage Plan과 연결합니다."
         confirmText="연결하기"
         cancelText="취소"
         state={state}
         onCancel={onCancel}
         setCreateDialog={setCreateDialog}
-        ConnectUsage={DataTemp}
+        UsageList={DataTemp2}
         visible={createDialog}>
-      </ModalUsagePlanConnect>
+      </ModalAPIKeyUsageConnect>
       <ModalApiDelete
         // title="정말로 삭제하시겠습니까?"
         confirmText="삭제하기"

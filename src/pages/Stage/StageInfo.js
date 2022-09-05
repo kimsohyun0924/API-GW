@@ -118,6 +118,7 @@ export default function StageInfo(props) {
   const [createDialog, setCreateDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
   const [DataTemp2, setDataTemp2] = useState([]);
+  const [DataTemp3, setDataTemp3] = useState([]);
   const [error, setError] = useState(null);
   const [selectItem, setSelectItem] = useState(null);
   const [inputs, setInputs] = useState({
@@ -196,6 +197,20 @@ export default function StageInfo(props) {
 
   const ModalCreateDialog = () => {
     setCreateDialog(true);
+
+    const fetchUsagePlan = async () => {
+      //get UsagePlan
+      try {
+        setError(null);
+        const response = await axios.get(
+          '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'
+        );
+        setDataTemp3(response.data.filter((item) => !(DataTemp.some((i) => i.usage_plan_id === item.usage_plan_id))));
+      } catch (e) {
+        setError(e);
+      }
+    };
+    fetchUsagePlan();
   };
 
   const onCancel = () => {
@@ -317,9 +332,8 @@ export default function StageInfo(props) {
           cancelText="취소"
           onCreate={onCreate}
           onCancel={onCancel}
-          selectItem={selectItem} 
           setSelectItem={setSelectItem}
-          ConnectUsage={DataTemp}
+          UsageList={DataTemp3}
           visible={createDialog}>
       </ModalUsagePlanConnect>
     </React.Fragment>

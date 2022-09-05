@@ -160,6 +160,12 @@ ModalAPIKeysCreate.defaultProps = {
 //제목, 내용, 확인 텍스트, 취소 텍스트
 export default function ModalAPIKeysCreate( { title, confirmText, cancelText, onCancel, visible, setCreateDialog} ) {
 
+
+  const initialState = {
+    "APIKeyName": null,
+    "APIKeyExplain": null
+  }
+
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
     APIKeyName: '',
@@ -194,6 +200,7 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
       }
     };
     createAPIKey();
+    setInputs(initialState);
     // window.location.reload(true);
     setCreateDialog(false);
   };

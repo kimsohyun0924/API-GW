@@ -22,13 +22,13 @@ const Circle = styled.div`
   height: 13px;
   border-radius: 50px;
   position: absolute;
-  left: 10%;
+  left: 7%;
   transition: all 0.5s ease-in-out;
   ${(props) =>
     props.toggle &&
     css`
     /* 스위치가 움직이는 거리 */
-      transform: translate(14px, 0);
+      transform: translate(16px, 0);
       transition: all 0.5s ease-in-out;
     `}
 `;

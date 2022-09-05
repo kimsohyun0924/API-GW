@@ -181,8 +181,10 @@ export default function RecursiveTreeView(props) {
   
     const handleExpansionClick = (event) => {
       handleExpansion(event);
+      console.log(event.target);
       if(event.target.getAttribute('value') !== "RESOURCE" && event.target.getAttribute('value') !== "METHOD") {
         setStageId(nodeId);
+        setBackend_url(event.target.getAttribute('value2'));
       }
     };
   
@@ -197,11 +199,11 @@ export default function RecursiveTreeView(props) {
       } 
       else {
         setStageId(nodeId);
+        setBackend_url(event.target.getAttribute('value2'));
         setContent("second");
       }
 
       // console.log(event.target)
-      setBackend_url(event.target.getAttribute('value2'));
       setInvoke_url(event.target.getAttribute('value3'));
       setLabel(label);
       setResourceId(nodeId);
@@ -220,7 +222,7 @@ export default function RecursiveTreeView(props) {
         ref={ref}
       >
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-        <div onClick={handleExpansionClick} className={classes.iconContainer}>
+        <div onClick={handleExpansionClick} className={classes.iconContainer} value={doc_type} value2={backend_url}>
           {icon}
         </div>
         <div

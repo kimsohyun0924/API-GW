@@ -96,55 +96,32 @@ ModalUsagePlanConnect.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalUsagePlanConnect( { title, confirmText, cancelText, state, onCancel, ConnectUsage, setCreateDialog, visible } ) {
+export default function ModalUsagePlanConnect( { title, confirmText, cancelText, onCreate, onCancel, setSelectItem, UsageList, visible } ) {
 
-  const [selectItem, setSelectItem] = useState(null);
   const [error, setError] = useState(null);
   const [methodCommand, setMethodCommand] = useState(null);
   const [methodCommandValue, setMethodCommandValue] = useState(null);
   const [usageOptions, setUsageOptions] = useState([]);
-  const [data, setData] = useState(null);
 
-  const fetchUsagePlan = async () => {
-    //get UsagePlan
-    try {
-      setError(null);
-      const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'
-      );
-      setData(response.data);
-    } catch (e) {
-      setError(e);
-    }
-  };
-
-  //data에 있는 api_key_list 모두 삭제해주기
-  // console.log(data.filter(d => ConnectUsage.includes(d)))
-
-
-  const onCreate = () => {
-    //Create APIKey-UsagePlan Connect
-    const createAPIKeyUsageConnet = async () => {
-      try {
-        setError(null);
-        await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id,
-          {
-            usage_plan_id: selectItem
-          }
-        );
-      } catch (e) {
-        setError(e);
-      }
-    };
-    createAPIKeyUsageConnet();
-    window.location.reload(true);
-    setCreateDialog(false);
-  };
-
-  useEffect(() => {
-    fetchUsagePlan();
-  }, [data]);
+  // const onCreate = () => {
+  //   //Create APIKey-UsagePlan Connect
+  //   const createAPIKeyUsageConnet = async () => {
+  //     try {
+  //       setError(null);
+  //       await axios.post(
+  //         '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id,
+  //         {
+  //           usage_plan_id: selectItem
+  //         }
+  //       );
+  //     } catch (e) {
+  //       setError(e);
+  //     }
+  //   };
+  //   createAPIKeyUsageConnet();
+  //   window.location.reload(true);
+  //   setCreateDialog(false);
+  // };
 
   if (!visible) return null;
   return (
@@ -156,7 +133,7 @@ export default function ModalUsagePlanConnect( { title, confirmText, cancelText,
               <TitleDiv>{title}</TitleDiv>
               <Item>
                   <ItemName>Usage Plan</ItemName>
-                  <DropdownMethod dropdownItems={data} default="Usage Plan 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} setSelectItem={setSelectItem}/> 
+                  <DropdownMethod dropdownItems={UsageList} default="Usage Plan 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} setSelectItem={setSelectItem}/> 
               </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
