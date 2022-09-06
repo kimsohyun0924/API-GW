@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import MainContainer from 'layouts/MainContainer';
-import { PageTitle, PageSubTitle } from 'style/PageStyle';
-import styled, { ThemeProvider } from "styled-components";
-import Button from 'components/Button';
-import TableCompAPIKeyUsagePlan from 'components/TableCompAPIKeyUsagePlan';
-import ModalApiDelete from 'components/ModalApiDelete';
-import ModalAPIKeyUsageConnect from 'components/ModalAPIKeyUsageConnect';
-import MainHeader from 'components/MainHeader';
 import { useLocation } from "react-router";
+import axios from 'axios';
 
+import styled, { ThemeProvider } from "styled-components";
+import { PageTitle, PageSubTitle } from 'style/PageStyle';
+import MainContainer from 'layouts/MainContainer';
+
+import Button from 'components/Button';
+import MainHeader from 'components/MainHeader';
+import ModalAPIDelete from 'components/ModalAPIDelete';
+import ModalAPIKeyUsageConnect from 'components/ModalAPIKeyUsageConnect';
+import TableCompAPIKeyUsagePlan from 'components/TableCompAPIKeyUsagePlan';
 
 const HeadDiv = styled.div`
 `;
@@ -152,7 +153,7 @@ export default function APIKeyUsagePlans() {
         UsageList={DataTemp2}
         visible={createDialog}>
       </ModalAPIKeyUsageConnect>
-      <ModalApiDelete
+      <ModalAPIDelete
         // title="정말로 삭제하시겠습니까?"
         confirmText="삭제하기"
         cancelText="취소"
@@ -160,7 +161,7 @@ export default function APIKeyUsagePlans() {
         onCancel={onCancel}
         visible={deleteDialog}>
         <span style={{fontWeight:"bold"}}>{clickData.name}</span>  <span style={{padding:"0px 0px 0px 15px"}}>Usgae Plan과 연결을 해제합니다.</span>
-      </ModalApiDelete>
+      </ModalAPIDelete>
     </React.Fragment>
   );
 }

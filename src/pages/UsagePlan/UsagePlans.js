@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import MainContainer from 'layouts/MainContainer';
+
 import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
+import MainContainer from 'layouts/MainContainer';
+
 import Button from 'components/Button';
-import TableCompUsagePlans from 'components/TableCompUsagePlans';
-import ModalApiDelete from 'components/ModalApiDelete';
-import ModalApiUpdate from 'components/ModalApiUpdate';
 import MainHeader from 'components/MainHeader';
+import TableCompUsagePlans from 'components/TableCompUsagePlans';
+import ModalAPIDelete from 'components/ModalAPIDelete';
+
 
 const HeadDiv = styled.div`
 `;
@@ -149,7 +151,7 @@ export default function UsagePlans() {
           <TableCompUsagePlans columns={TableHeader} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
         </TableDiv>
       </MainContainer>
-       <ModalApiDelete
+       <ModalAPIDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제하기"
             cancelText="취소"
@@ -159,7 +161,7 @@ export default function UsagePlans() {
             visible={deleteDialog}
             >
             <span style={{fontWeight:"bold"}}>{clickData.name}</span><span style={{padding:"0px 0px 0px 10px"}}>Usage Plan을 삭제합니다.</span>
-      </ModalApiDelete>
+      </ModalAPIDelete>
     </React.Fragment>
   );
 }

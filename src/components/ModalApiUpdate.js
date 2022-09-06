@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
 import axios from 'axios';
 import Button from './Button';
@@ -127,16 +127,24 @@ ModalPopup.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalPopup( { title, children, confirmText, cancelText, onCancel, visible, setUpdateDialog, checkedItems } ) {
+export default function ModalPopup( { title,confirmText, cancelText, onCancel, visible, setUpdateDialog, clickData, setClickData } ) {
+
+  const initialState = {
+    "service_id": null,
+    "mem_sq": null,
+    "name": null,
+    "description": null,
+    "root_resource_id": null,
+    "created_at": null,
+    "updated_at": null,
+  }
 
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
-    ApiName: '',
-    ApiExplain: ''
+    ApiName: clickData.name,
+    ApiExplain: clickData.description
   });
-  
   const { ApiName, ApiExplain } = inputs;
-  
   const onChange = e => {
     const { name, value } = e.target;
     setInputs({
@@ -152,7 +160,7 @@ export default function ModalPopup( { title, children, confirmText, cancelText, 
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+checkedItems,
+          '/v1.0/g1/paas/Memsq07/apigw/service/'+clickData.service_id,
           {
             api_name: ApiName,
             description: ApiExplain
@@ -163,10 +171,16 @@ export default function ModalPopup( { title, children, confirmText, cancelText, 
       }
     };
     updateApi();
+    setClickData(initialState)
     window.location.reload(true);
     setUpdateDialog(false);
   };
 
+
+  // useEffect(() => {
+
+  // }, [clickData]);
+  
   if (!visible) return null;
   return (
       <DarkBackground>
@@ -174,12 +188,12 @@ export default function ModalPopup( { title, children, confirmText, cancelText, 
               <ImgDiv onClick={onCancel}>
                 <img src={Logo}/>
               </ImgDiv>
-              <TitleDiv>{title}</TitleDiv>
+              <TitleDiv><span style={{padding:"0px 10px 0px 0px", fontWeight:"bold"}}>{clickData.name}</span>{title}</TitleDiv>
               <ItemDiv>
                 <Item>
                   <ItemName>API 이름</ItemName>
                     <ItemInput>
-                        <InputForm name="ApiName" placeholder="API 이름을 입력하세요" onChange={onChange} value={ApiName}/>
+                        <InputForm name="ApiName" placeholder="API 이름을 입력하세요" onChange={onChange} value={ApiName || '' }/>
                     </ItemInput>
                 </Item>
               </ItemDiv>
@@ -187,7 +201,7 @@ export default function ModalPopup( { title, children, confirmText, cancelText, 
                 <Item2>
                   <ItemName>API 설명</ItemName>
                   <ItemInput2>
-                      <InputForm2 name="ApiExplain" placeholder="API 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
+                      <InputForm2 name="ApiExplain" placeholder="API 설명을 입력하세요" onChange={onChange} value={ApiExplain || ''}/>
                   </ItemInput2>
                 </Item2>
               </ItemDiv>

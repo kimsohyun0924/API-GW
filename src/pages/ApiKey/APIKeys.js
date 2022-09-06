@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import styled, { ThemeProvider } from "styled-components";
-
+import { PageTitle, PageSubTitle } from 'style/PageStyle';
 import MainContainer from 'layouts/MainContainer';
-import MainHeader from 'components/MainHeader';
-import Button from 'components/Button';
 
+import Button from 'components/Button';
+import MainHeader from 'components/MainHeader';
 import ModalAPIKeysCreate from 'components/ModalAPIKeysCreate';
 import ModalAPIKeysUpdate from 'components/ModalAPIKeysUpdate';
-import ModalApiDelete from 'components/ModalApiDelete';
+import ModalAPIDelete from 'components/ModalAPIDelete';
 import TableCompAPIKeys from 'components/TableCompAPIKeys';
 
 const HeadDiv = styled.div`
@@ -50,7 +49,6 @@ export default function APIKeys() {
   const [createDialog, setCreateDialog] = useState(false);
   const [updateDialog, setUpdateDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
-
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const testData = [
@@ -98,7 +96,7 @@ export default function APIKeys() {
   };
 
   const fetchAPIKeys = async () => {
-    //get api key request
+    //get API Key List 
     try {
       setError(null);
       const response = await axios.get(
@@ -112,7 +110,7 @@ export default function APIKeys() {
   };
 
   const onDelete = () => {
-   //delete api request
+   //delete API Key
     const deleteAPIKey = async () => {
       try {
         setError(null);
@@ -173,7 +171,7 @@ export default function APIKeys() {
             setUpdateDialog={setUpdateDialog}
             visible={updateDialog}>
       </ModalAPIKeysUpdate>
-      <ModalApiDelete
+      <ModalAPIDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제하기"
             cancelText="취소"
@@ -181,7 +179,7 @@ export default function APIKeys() {
             onCancel={onCancel}
             visible={deleteDialog}>
            <span style={{fontWeight:"bold"}}>{clickData.name}</span>  <span style={{padding:"0px 0px 0px 15px"}}>API Key를 삭제합니다.</span>
-      </ModalApiDelete>
+      </ModalAPIDelete>
     </React.Fragment>
   );
 }

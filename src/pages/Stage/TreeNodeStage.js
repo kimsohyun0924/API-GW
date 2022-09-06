@@ -1,22 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
+import styled, { css, ThemeProvider } from 'styled-components';
+import img2 from "image/Table_Copy.svg";
+
+import StageInfo from "./StageInfo";
+import StageCreate from './StageCreate';
+import StageMethod from "./StageMethod";
+import StageResourceInfo from "./StageResourceInfo";
+
+import Button from 'components/Button';
+import ModalAPIDelete from 'components/ModalAPIDelete';
+
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
-import clsx from 'clsx';
-import { useNavigate } from 'react-router-dom';
-import Button from 'components/Button';
-import ModalApiDelete from 'components/ModalApiDelete';
-import StageCreate from './StageCreate';
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import StageInfo from "./StageInfo";
-import StageMethod from "./StageMethod";
-import StageResourceInfo from "./StageResourceInfo";
-import img2 from "image/Table_Copy.svg";
-
 
 const AllDiv = styled.div`
   width: 100%;
@@ -384,7 +387,7 @@ export default function RecursiveTreeView(props) {
     first: <StageCreate serviceInfo={serviceInfo}/>,
     second: <StageInfo stageId={resourceId} backend_url={backend_url}/>,
     third: <StageResourceInfo resourceId={resourceId}/>,
-    fourth: <StageMethod stageId={stageId} resourceId={resourceId} backend_url={backend_url} testData={testData}/>
+    fourth: <StageMethod stageId={stageId} resourceId={resourceId} backend_url={backend_url}/>
   };
 
   return (
@@ -421,7 +424,7 @@ export default function RecursiveTreeView(props) {
              {content && <Content>{selectComponent[content]}</Content>}
           </ResourceInfoDiv> 
         </ExampleDiv>
-        <ModalApiDelete
+        <ModalAPIDelete
               // title="정말로 삭제하시겠습니까?"
               confirmText="삭제"
               cancelText="취소"
@@ -430,7 +433,7 @@ export default function RecursiveTreeView(props) {
               visible={dialog}
               >
               {label} 정말로 삭제하시겠습니까?
-        </ModalApiDelete> 
+        </ModalAPIDelete> 
       </AllDiv>     
     </React.Fragment>
   );

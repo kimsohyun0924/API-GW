@@ -1,11 +1,13 @@
-import React, { useState, useEffect} from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
+import React, { useState } from 'react';
 import axios from 'axios';
+
+import styled from 'styled-components';
+
 import TableLine from '../image/tableline.svg';
 import Logo from '../image/trash.svg';
 import Logo2 from '../image/deployment.svg';
-import Button from './Button';
-import ModalApiDelete from './ModalApiDelete';
+
+import ModalAPIDelete from './ModalAPIDelete';
 
 const TableWrapper = styled.div`
   padding: 0px 0px 0px 0px;
@@ -212,7 +214,7 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
           </TBody>
         </Table>
       </TableWrapper>
-      <ModalApiDelete
+      <ModalAPIDelete
             // title="Stage Snapshot 배포"
             confirmText="배포하기"
             cancelText="취소"
@@ -220,8 +222,8 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
             onCancel={onCancel}
             visible={deploydialog}>
             <span style={{padding:"0px 0px 0px 10px"}}>선택한 Stage를 배포합니다.</span>
-      </ModalApiDelete>
-      <ModalApiDelete
+      </ModalAPIDelete>
+      <ModalAPIDelete
             // title="Stage Snapshot 삭제"
             confirmText="삭제하기"
             cancelText="취소"
@@ -229,7 +231,7 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
             onCancel={onCancel}
             visible={deletedialog}>
             <span style={{padding:"0px 0px 0px 10px"}}>선택한 Stage를 삭제합니다.</span>
-      </ModalApiDelete>
+      </ModalAPIDelete>
     </React.Fragment>
   );
 }

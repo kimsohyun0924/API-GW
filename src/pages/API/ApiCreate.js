@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import MainContainer from 'layouts/MainContainer';
-import { useNavigate } from 'react-router';
-import { PageTitle } from 'style/PageStyle';
-import styled, { css, ThemeProvider } from "styled-components";
-import MainHeader from 'components/MainHeader';
-import Button from 'components/Button';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import { PageTitle } from 'style/PageStyle';
+import styled, { css, ThemeProvider } from "styled-components";
+import MainContainer from 'layouts/MainContainer';
+
+import Button from 'components/Button';
+import MainHeader from 'components/MainHeader';
 
 const HeadDiv = styled.div`
 
@@ -165,7 +166,7 @@ export default function ApiCreate() {
             <PageTitle>API 생성</PageTitle>
           </HeadDiv>
           <BodyDiv>
-            <ItemDiv>
+            {/* <ItemDiv>
               <Item>
                 <ItemName>위치</ItemName>
                 <ItemInput>
@@ -179,7 +180,7 @@ export default function ApiCreate() {
                   </div>
                 </ItemInput>
               </Item>
-            </ItemDiv>
+            </ItemDiv> */}
             <ItemDiv>
               <Item>
                 <ItemName>API 이름</ItemName>

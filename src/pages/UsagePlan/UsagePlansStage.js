@@ -10,7 +10,7 @@ import MainHeader from 'components/MainHeader';
 import Button from 'components/Button';
 
 import TableCompUsageStage from 'components/TableCompUsageStage';
-import ModalApiDelete from 'components/ModalApiDelete';
+import ModalAPIDelete from 'components/ModalAPIDelete';
 import ModalStageConnect from 'components/ModalStageConnect';
 
 
@@ -165,7 +165,7 @@ export default function UsagePlanStage() {
             setSelectItem2={setSelectItem2}
             visible={createdialog}>
       </ModalStageConnect>
-      <ModalApiDelete
+      <ModalAPIDelete
             // title="정말로 삭제하시겠습니까?"
             confirmText="삭제하기"
             cancelText="취소"
@@ -175,7 +175,7 @@ export default function UsagePlanStage() {
             visible={deleteDialog}
             >
             <span style={{fontWeight:"bold"}}>{clickData.stage_name}</span><span style={{padding:"0px 0px 0px 10px"}}>Stage와 연결을 해제합니다.</span>
-      </ModalApiDelete>
+      </ModalAPIDelete>
     </React.Fragment>
   );
 }

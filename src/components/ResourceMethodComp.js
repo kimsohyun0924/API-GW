@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled, { css } from "styled-components";
-import ModalApiDelete from './ModalApiDelete';
+import ModalAPIDelete from './ModalAPIDelete';
 
 const MethodDiv = styled.div`
-    width: 320px;
-    height: 180px;
+    width: 280px;
+    height: 160px;
     border: 1px solid  #e2e2e2;
     border-radius: 2px;
     /* margin: 20px 0px 0px 20px; */
@@ -27,6 +27,15 @@ const methodcolor = {
     },
     ANY: {
         backgroundColor: 'orange'
+    },
+    HEAD: {
+        backgroundColor: 'gray'
+    },
+    OPTIONS: {
+        backgroundColor: 'darkgray'
+    },
+    PATCH: {
+        backgroundColor: 'gray'
     }
   };
 
@@ -57,7 +66,7 @@ const MethodValue = styled.div`
 const ButtonDiv = styled.div`
     display: flex;
     height: 100%;
-    margin-left: 110px;
+    margin-left: 70px;
     align-items: center;
 `;
 
@@ -164,7 +173,7 @@ export default function MethodComp(props) {
                     </MethodInfoType>
                 </MethodInfoDiv>
             </MethodDiv> 
-            <ModalApiDelete
+            <ModalAPIDelete
                 // title="메서드 삭제"
                 confirmText="삭제하기"
                 cancelText="취소"
@@ -173,7 +182,7 @@ export default function MethodComp(props) {
                 visible={dialog}
                 >
                 <span style={{fontWeight:"bold"}}>{methodInfo.method_type}</span><span style={{padding:"0px 0px 0px 10px"}}>메서드를 삭제합니다.</span>   
-            </ModalApiDelete>     
+            </ModalAPIDelete>     
         </React.Fragment> 
     );
 }

@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const MethodDiv = styled.div`
   display: inline-block;
-  padding: 20px 20px 0px 0px;
+  padding: 15px 15px 0px 0px;
 `;
 
 export default function Method(props) {
@@ -27,8 +27,7 @@ export default function Method(props) {
     const [methods, setMethods] = useState([]);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-
-    const optionsCommand = [
+    const [optionsCommand, setOptionsCommand] = useState([
       {
         "name": "ANY",
         "value": "ANY"
@@ -61,8 +60,7 @@ export default function Method(props) {
         "name": "PUT",
         "value": "PUT"
       }
-    ];
-
+    ]);
     const testData = [
             {
               "created_at": "2022-07-09T23:53:31.316",
@@ -142,17 +140,10 @@ export default function Method(props) {
         }
       ];
   
-
     useEffect(() => {
-
       setIsOpen(true);
       setMethodCommand("");
-
     }, [methodCommand]);
-
-
-    // console.log(methodCommandValue);
-
 
     const fetchMethods = async () => {
       //get methods request
@@ -164,6 +155,7 @@ export default function Method(props) {
         );
         setMethods(response.data); // 데이터는 response.data)
         // console.log(response.data);
+        setOptionsCommand(optionsCommand.filter((item) => !(response.data.method_list.some((i) => i.method_type === item.name))));
       } catch (e) {
         setError(e);
       }
@@ -174,20 +166,16 @@ export default function Method(props) {
       fetchMethods();
     }, [resourceId]);
 
-    // console.log(methods.method_list);
-
     const onClick = () => {
       console.log("보기");
       setUpdate(true);
   }
-
 
     return (
         <React.Fragment>
           <DropdownMethod dropdownItems={optionsCommand} default="메서드 생성" size="small" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />    
           { isOpen === true && methodCommandValue ?
               <MethodCreate serviceId={serviceId} resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} /> 
-            
               :   <React.Fragment>
                   { update === false ? 
                     <React.Fragment>

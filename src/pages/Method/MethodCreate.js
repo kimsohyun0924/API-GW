@@ -87,7 +87,7 @@ const IconSVG = styled.svg`
 
 const DropdownMenu = styled.ul`
     display: ${(props) => (props.isActive ? `block` : `none`)};
-    width: 51.5%;
+    width: 41.6%;
     z-index: 10;
     background-color: white;
     position: absolute;
@@ -304,11 +304,9 @@ export default function MethodCreate(props) {
 
             <DropdownContainer>
               <DropdownBody onClick={onActiveToggle}>
-          
                 { selectedItem ? 
                   <ItemName>{selectedItem}</ItemName>     
                   : <DropdownSelect>엔드포인트 유형</DropdownSelect> }
-              
                 <IconSVG
                   width="20"
                   height="20"

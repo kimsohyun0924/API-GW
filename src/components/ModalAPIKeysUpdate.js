@@ -168,7 +168,6 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
     "api_key": null,
     "created_at": null
   }
-
   const [error, setError] = useState(null);
   const [toggle, setToggle] = useState(clickData.enabled);
   const [inputs, setInputs] = useState({
@@ -187,7 +186,7 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
   // console.log(inputs);
 
   const onUpdate = () => {
-  
+    //update API Key
     const updateAPIKey = async () => {
       try {
         setError(null);
@@ -215,8 +214,6 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
   };
 
   if (!visible) return null;
-
-
   return (
       <DarkBackground>
            <DialogBlock>

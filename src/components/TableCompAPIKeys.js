@@ -1,11 +1,12 @@
 import React, { useState, useEffect} from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
-import TableLine from '../image/tableline.svg';
 import { useNavigate } from 'react-router-dom';
+
+import styled, { css, ThemeProvider } from 'styled-components';
+
+import TableLine from '../image/tableline.svg';
+
 import Button from './Button';
-import ModalApiDelete from '../components/ModalApiDelete';
 import ModalAPIKey from '../components/ModalAPIKey';
-import { click } from '@testing-library/user-event/dist/click';
 
 const TableWrapper = styled.div`
   padding: 0px 0px 0px 0px;
@@ -66,23 +67,8 @@ const TD = styled.td`
   text-align: left;
 `;
 
-const Hov = styled.td`
-  line-height: 20px;
-  text-align: center;
-  vertical-align: middle;
-  padding: 8px 10px;
-  text-align: left;
-
-  /* &:hover {
-    cursor: pointer;;
-  } */
-`;
-
 export default function TableCompAPIKeys({ columns, data, clickData, setClickData }) {
 
-  const navigate = useNavigate();
-  const [dialog, setDialog] = useState(false);
-  const [key, setKey] = useState(null);
   const initialState = {
     "name": null,
     "description": null,
@@ -91,6 +77,11 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
     "api_key": null,
     "created_at": null
   }
+
+  const navigate = useNavigate();
+  const [dialog, setDialog] = useState(false);
+  const [key, setKey] = useState(null);
+ 
 
   const onClick = e => {
     console.log(e.target);
@@ -131,7 +122,7 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
           <THead>  
             <tr>
               <TH width='1%'/>
-              { columns.map((item, index) => {
+              { columns && columns.map((item, index) => {
                 return (
                   <React.Fragment key={index}>
                     <TH>{item}</TH>
