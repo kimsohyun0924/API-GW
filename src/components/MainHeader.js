@@ -69,15 +69,15 @@ export default function MainHeader({location}) {
 
 
     if(location === 'APIs') {
-      setUrl('/myapis');
+      setUrl('/apigw-listmyapis');
     }
     else if(location === 'API 생성') {
       setUrl('/api/create');
     }
     else if(location === 'Usage Plans') {
-      setUrl('/usageplans');
+      setUrl('/apigw-usageplans');
     } else if((location === 'API Keys')) {
-      setUrl('/apikeys');
+      setUrl('/apigw-apikeys');
     }
 
   }, [location]);

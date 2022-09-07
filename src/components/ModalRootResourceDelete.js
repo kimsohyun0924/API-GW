@@ -58,24 +58,23 @@ const ButtonGroup = styled.div`
   justify-content: center;
 `;
 
-ModalAPIDelete.defaultProps = {
+ModalRootResourceDelete.defaultProps = {
   confirmText: '확인'
 };
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalAPIDelete( { title, children, confirmText, cancelText, onConfirm, onCancel, visible } ) {
+export default function ModalRootResourceDelete( { title, children, confirmText, cancelText, onConfirm, onCancel, visible } ) {
   if (!visible) return null;
   return (
       <DarkBackground>
            <DialogBlock>
-              <ImgDiv onClick={onCancel}>
+              <ImgDiv onClick={onConfirm}>
                 <img src={Logo}/>
               </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
               <ContentDiv>{children}</ContentDiv>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <span style={{padding:"0px 20px 0px 0px"}}><Button size="large" line="noline" onClick={onCancel}>{cancelText}</Button></span>
                     <Button size="large" line="line" onClick={onConfirm}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>

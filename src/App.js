@@ -6,7 +6,7 @@ import { MenuProvider } from './hooks/MenuContext';
 import Sidebar from './layouts/Sidebar';
 import Header from './layouts/Header';
 
-import Myapis from './pages/API/MyApis';
+import APIList from './pages/API/APIList';
 import ApiCreate from './pages/API/ApiCreate';
 import ApiOperation from './pages/API/ApiOperations';
 import UsagePlans from './pages/UsagePlan/UsagePlans';
@@ -29,14 +29,14 @@ export default function App() {
               <Header />
               
               <Routes>
-                <Route path='/myapis' element={<Myapis />}></Route> 
+                <Route path='/apigw-list' element={<APIList />}></Route> 
                 <Route path='/api/create' element={<ApiCreate />}></Route>               
                 <Route path='/api/operation/*' element={<ApiOperation />}></Route>
-                <Route path='/usageplans' element={<UsagePlans />}></Route>
+                <Route path='/apigw-usageplans' element={<UsagePlans />}></Route>
                 <Route path='/usageplans/create' element={<UsagePlansCreate />}></Route>
                 <Route path='/usageplans/update' element={<UsagePlansUpdate />}></Route>
                 <Route path='/usageplans/stage' element={<UsagePlansStage />}></Route>
-                <Route path='/apikeys' element={<APIKeys />}></Route>
+                <Route path='/apigw-apikeys' element={<APIKeys />}></Route>
                 <Route path='/apikey/usageplans' element={<APIKeyUsagePlans />}></Route>
   
 

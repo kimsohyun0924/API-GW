@@ -63,7 +63,10 @@ const PathDiv = styled.div`
     width: 100%;
     height: 45px;
     border-bottom: 1px solid #e2e2e2;
-    padding : 15px 15px 0px 15px;
+    padding : 10px 10px 0px 10px;
+    font-weight: 500 !important;
+  font-family: 'Noto Sans KR', sans-serif !important;
+  font-size: 17px !important;
     /* background:orange; */
 `;
 
@@ -116,8 +119,7 @@ const TestDiv = styled.div`
     }
 `;
 
-export default function RecursiveTreeView(props) {
-  // console.log(props);
+export default function TreeNodeStage(props) {
 
   const testData = {
     "method_id": "630d60094020810f037c67c3",
@@ -214,7 +216,7 @@ export default function RecursiveTreeView(props) {
   
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      <div
+      <div style={{ height: '35px' }}
         className={clsx(className, classes.root, {
           [classes.expanded]: expanded,
           [classes.selected]: selected,
@@ -228,7 +230,7 @@ export default function RecursiveTreeView(props) {
         <div onClick={handleExpansionClick} className={classes.iconContainer} value={doc_type} value2={backend_url}>
           {icon}
         </div>
-        <div
+        <div style={{ borderBottom: '1px solid #e2e2e2', fontSize: '15px', fontWeight: '500', fontFamily: 'Noto Sans KR, sans-serif' }}
           onClick={handleSelectionClick}
           component="div"
           className={classes.label}
@@ -286,55 +288,55 @@ export default function RecursiveTreeView(props) {
     <TreeItem ContentComponent={CustomContent} {...props} />
   );
 
-  const StyledTreeItem = styled((props) => {
-    // console.log(props);
-    return (
-    <TreeItem ContentComponent={CustomContent} {...props}/>
-    );
-  })(() => ({
-    [`& .${treeItemClasses.content}`]: {
-      height: '35px', 
-    },
-    [`& .${treeItemClasses.label}`]: {
-      fontWeight: '500 !important',
-      fontFamily: 'Noto Sans KR, sans-serif !important',
-      fontSize: '15px !important',
-      borderBottom: '1px solid #e2e2e2'
-    },
-  }));
+  // const StyledTreeItem = styled((props) => {
+  //   // console.log(props);
+  //   return (
+  //   <TreeItem ContentComponent={CustomContent} {...props}/>
+  //   );
+  // })(() => ({
+  //   [`& .${treeItemClasses.content}`]: {
+  //     height: '35px', 
+  //   },
+  //   [`& .${treeItemClasses.label}`]: {
+  //     fontWeight: '500 !important',
+  //     fontFamily: 'Noto Sans KR, sans-serif !important',
+  //     fontSize: '15px !important',
+  //     borderBottom: '1px solid #e2e2e2'
+  //   },
+  // }));
 
   const renderTree = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{backend_url: nodes.backend_url, invoke_url: nodes.invoke_url}}>
+          <CustomTreeItem key={nodes.stage_id} nodeId={nodes.stage_id} label={nodes.name} ContentProps={{backend_url: nodes.backend_url, invoke_url: nodes.invoke_url}}>
             { Array.isArray(nodes.stage_snapshot_list) ? nodes.stage_snapshot_list.map((node) => renderTree3(node.root_resource)) : null }
-          </StyledTreeItem> 
+          </CustomTreeItem> 
     );
   };
 
 
   const renderTree2 = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.stage_snapshot_id} nodeId={nodes.stage_snapshot_id}>
+          <CustomTreeItem key={nodes.stage_snapshot_id} nodeId={nodes.stage_snapshot_id}>
             { renderTree3(nodes.root_resource) }   
-          </StyledTreeItem> 
+          </CustomTreeItem> 
     );
   };
 
   const renderTree3 = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_typ} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url}}>
+          <CustomTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_typ} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url}}>
             { Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree3(node)) : null }
             { Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree4(node)) : null }
-          </StyledTreeItem>  
+          </CustomTreeItem>  
     );
   };
 
 
   const renderTree4 = (nodes) => {
     return (
-          <StyledTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url}}>
+          <CustomTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url}}>
             {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
-          </StyledTreeItem> 
+          </CustomTreeItem> 
     );
   };
 
@@ -409,7 +411,7 @@ export default function RecursiveTreeView(props) {
               defaultSelected={'root'}
               sx={{ height: 440, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
               >
-                {props.data.map((node) => renderTree(node)) }
+                {props.stageList && props.stageList.map((node) => renderTree(node)) }
             </TreeView>
           </MenuDiv> 
           <ResourceInfoDiv>
@@ -432,7 +434,7 @@ export default function RecursiveTreeView(props) {
               onCancel={onCancel}
               visible={dialog}
               >
-              {label} 정말로 삭제하시겠습니까?
+              <span style={{fontWeight:"bold"}}>{label}</span><span style={{padding:"0px 0px 0px 10px"}}>스테이지를 삭제합니다.</span>
         </ModalAPIDelete> 
       </AllDiv>     
     </React.Fragment>

@@ -10,6 +10,7 @@ import MethodUpdate from 'pages/Method/MethodUpdate';
 import ResourceCreate from './ResourceCreate';
 import Button from 'components/Button';
 import ModalAPIDelete from 'components/ModalAPIDelete';
+import ModalRootResourceDelete from 'components/ModalRootResourceDelete';
 
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -103,9 +104,14 @@ const TestDiv2 = styled.div`
       color: red;
       `
     }
-      ${props => props.label === 'ANY' &&
+    ${props => props.label === 'ANY' &&
       css`
       color: orange;
+      `
+    }
+    ${props => props.label === 'PATCH' &&
+      css`
+      color: gray;
       `
     }
 `;
@@ -367,14 +373,14 @@ export default function RecursiveTreeView(props) {
               >
               <span style={{fontWeight:"bold"}}>{label}</span><span style={{padding:"0px 0px 0px 10px"}}>리소스를 삭제합니다.</span>
         </ModalAPIDelete> 
-        <ModalAPIDelete
+        <ModalRootResourceDelete
               // title="정말로 삭제하시겠습니까?"
               ConfirmText="확인"
               onConfirm={onCancel}
               visible={faildialog}
               >
               최상위 리소스는 삭제할 수 없습니다.
-        </ModalAPIDelete> 
+        </ModalRootResourceDelete> 
       </AllDiv>     
     </React.Fragment>
   );

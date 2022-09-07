@@ -217,7 +217,7 @@ export default function UsagePlansCreate() {
     };
     createUsagePlan();
     setTimeout(()=>{
-      navigate('/usageplans');     
+      navigate('/apigw-usageplans');     
     }, 1000);
   };
 

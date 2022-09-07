@@ -1,8 +1,11 @@
 import React, { useState, useRef, useCallback } from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
-import ToggleSwitch from 'components/ToggleSwitch';
-import Button from 'components/Button';
 import axios from 'axios';
+
+import styled, { css, ThemeProvider } from 'styled-components';
+
+import Button from 'components/Button';
+import ToggleSwitch from 'components/ToggleSwitch';
+
 
 const AllDiv = styled.div`
     /* min-height: 100%;
@@ -51,6 +54,7 @@ const InputForm = styled.input`
     font-size: 14px;
     color: #333333;
     padding: 5px 5px 5px 5px;
+    font-family: 'Noto Sans KR', sans-serif !important;
 `;
 
 const DropdownContainer = styled.div`
@@ -64,7 +68,7 @@ const DropdownBody = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 10px;
+    padding: 5px 5px 5px 5px;
     border-radius: 2px;
     color: #495057;
     border: 1px solid #b6b6c3;
@@ -286,7 +290,6 @@ export default function MethodCreate(props) {
     console.log(toggle);
   };
 
-
   return (
     <React.Fragment>
       <AllDiv>
@@ -359,7 +362,7 @@ export default function MethodCreate(props) {
                 </IconSVG>
               </DropdownBody>
               <DropdownMenu isActive={isActive2} ref={wrapperRef2}>
-                {methodoptionsCommand.map((item, index) => (
+                {props.optionsCommand && props.optionsCommand.map((item, index) => (
                   <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem2(e, item.name); }}>
                     <DropdownItemName id="item_name" itemName={item.name} selectedItem={selectedItem2}>{item.name}</DropdownItemName>
                   </DropdownItemContainer>

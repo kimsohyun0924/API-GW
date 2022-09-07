@@ -50,6 +50,7 @@ const InputForm = styled.input`
     font-size: 15px;
     color: #333333;
     padding: 5px 5px 5px 5px;
+    font-family: 'Noto Sans KR', sans-serif !important;
 `;
 
 const DropdownContainer = styled.div`
@@ -63,7 +64,7 @@ const DropdownBody = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 10px;
+    padding: 5px 5px 5px 5px;
     border-radius: 2px;
     color: #495057;
     border: 1px solid #b6b6c3;
@@ -134,9 +135,6 @@ const ButtonDiv = styled.div`
 `;
 
 export default function MethodUpdate(props) {
-
-
-  // console.log(props);
 
   const { resourceId, methodCommandValue, isOpen, setIsOpen}= props;
   const [selectedItem, setSelectedItem] = useState();
@@ -230,7 +228,7 @@ export default function MethodUpdate(props) {
   
   useEffect(() => {
     getMethod();
-  }, []);
+  }, [props.resourceId]);
 
 
   // console.log(inputs);
@@ -322,7 +320,7 @@ export default function MethodUpdate(props) {
             <DropdownContainer>
               <DropdownBody onClick={onActiveToggle}>
 
-                { selectedItem ? 
+                { selectedItem && selectedItem ? 
                   <ItemName>{selectedItem}</ItemName>     
                   : <DropdownSelect>엔드포인트 유형</DropdownSelect> }
               

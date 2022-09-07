@@ -159,7 +159,7 @@ export default function MyApis() {
       <MainContainer>
         <HeadDiv>
           <MainHeader location={"APIs"}/>
-          <PageTitle>My APIs</PageTitle>
+          <PageTitle>APIs</PageTitle>
           <PageSubTitle>API Gateway를 관리합니다.</PageSubTitle>
         </HeadDiv>
         <ButtonDiv>

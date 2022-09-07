@@ -108,28 +108,18 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: 'My APIs',
-        path: '/myapis',
+        title: 'APIs',
+        path: '/apigw-list',
         cName: 'sub-nav'
       },
       {
         title: 'Usage Plans',
-        path: '/usageplans',
+        path: '/apigw-usageplans',
         cName: 'sub-nav'
       },
       {
         title: 'API Keys',
-        path: '/apikeys',
-        cName: 'sub-nav'
-      },
-      {
-        title: 'Dashboard',
-        path: '/parametergroup',
-        cName: 'sub-nav'
-      },
-      {
-        title: 'Monitoring',
-        path: '/monitoring',
+        path: '/apigw-apikeys',
         cName: 'sub-nav'
       }
     ]

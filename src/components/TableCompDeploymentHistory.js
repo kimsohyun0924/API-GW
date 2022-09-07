@@ -9,6 +9,9 @@ import Logo2 from '../image/deployment.svg';
 
 import ModalAPIDelete from './ModalAPIDelete';
 
+import img1 from "image/Circle_Green.svg";
+import img2 from "image/ico_state_stop.png";
+
 const TableWrapper = styled.div`
   padding: 0px 0px 0px 0px;
   overflow-x:auto;
@@ -64,18 +67,6 @@ const TD = styled.td`
   padding: 8px 10px;
   text-align: left;
   font-size: 13px;
-`;
-
-const Hov = styled.td`
-  line-height: 20px;
-  text-align: center;
-  vertical-align: middle;
-  padding: 8px 10px;
-  text-align: left;
-
-  /* &:hover {
-    cursor: pointer;;
-  } */
 `;
 
 const ImgDiv = styled.div`
@@ -195,8 +186,8 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
                     {/* <TD width='1%'>
                       <input type="checkbox" checked={clickData.stage_snapshot_id === item.stage_snapshot_id ? true : false} onChange={checkHandler}/>
                     </TD> */}
-                    <TD width='20%'>{item.updated_at}</TD>
-                    <TD width='20%'>{item.status === "DEPLOYED" ? "배포":null}</TD>
+                    <TD style={{ lineHeight: '0.8rem' }} width='20%'>{item.updated_at}</TD>
+                    <TD width='20%'>{item.status === "DEPLOYED" ?  <img style={{padding:"0px 0px 0px 5px"}} src={img1}/> : <img style={{padding:"0px 0px 0px 5px"}} src={img2}/>}</TD>
                     <TD width='10%'>
                       <ImgDiv onClick={onClick2}>
                         <img value={item.stage_snapshot_id} src={Logo2}/>

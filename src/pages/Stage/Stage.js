@@ -14,7 +14,7 @@ export default function Stage(props) {
 
   const serviceInfo = props.serviceInfo;
   const serviceId = serviceInfo.service_id;
-  const [AllResource, SetAllResource] = useState([]);
+  const [stageList, setStageList] = useState([]);
   const [error, setError] = useState(null);
   // const serviceInfo = props.serviceInfo;
 
@@ -60,15 +60,15 @@ export default function Stage(props) {
 
     
   
-  const getAllResource = async () => {
-    //get api request
+  const getStageList = async () => {
+    //get Stage List
     try {
       setError(null);
 
       const response = await axios.get(
         '/v1.0/g1/paas/Memsq07/apigw/stage/service/'+serviceId
       );
-      SetAllResource(response.data); // 데이터는 response.data
+      setStageList(response.data); // 데이터는 response.data
       // console.log(AllResource);
     } catch (e) {
       setError(e);
@@ -77,7 +77,7 @@ export default function Stage(props) {
 
 
   useEffect(() => {
-    getAllResource();
+    getStageList();
   }, []);
 
 
@@ -87,7 +87,7 @@ export default function Stage(props) {
   return (
     <React.Fragment>
       <ResourceContainer>        
-        <TreeNodeStage serviceInfo={serviceInfo} data={AllResource}/>
+        <TreeNodeStage serviceInfo={serviceInfo} stageList={stageList}/>
       </ResourceContainer>
     </React.Fragment>
   );

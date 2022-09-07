@@ -101,6 +101,7 @@ const TableHeaderDeployHistory = [
 ];
 
 export default function StageInfo(props) {
+  // console.log(props);
 
   const initialState = {
     "usage_plan_id": null,
@@ -122,7 +123,7 @@ export default function StageInfo(props) {
   const [error, setError] = useState(null);
   const [selectItem, setSelectItem] = useState(null);
   const [inputs, setInputs] = useState({
-    backend_url: props.backend_url
+    backend_url: ''
   });
   const { backend_url } = inputs;
 
@@ -159,7 +160,7 @@ export default function StageInfo(props) {
     window.location.reload(true);
   }
   
-  const onClick2 = () => {
+  const onClick2 = e => {
     setStageConnect2((prev) => !prev);
     //Get Stage-UsagePlan Connect List
     const fetchConnectUsgaList = async () => {
@@ -255,6 +256,17 @@ export default function StageInfo(props) {
      deleteStageUsagePlanConnect();
      window.location.reload(true);
    };
+
+   useEffect(() => {
+      setInputs({
+        backend_url: props.backend_url
+      });
+    //  console.log("stageId 바뀔 때마다 리랜더링");
+    setStageConnect(false);
+    setStageConnect2(false);
+    setStageConnect3(false);
+    setDataTemp2([]);
+  }, [props.stageId]);
 
 
 
