@@ -121,13 +121,13 @@ const ButtonGroup = styled.div`
   justify-content: center;
 `;
 
-ModalPopup.defaultProps = {
+ModalAPIUpdate.defaultProps = {
   confirmText: '확인'
 };
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalPopup( { title,confirmText, cancelText, onCancel, visible, setUpdateDialog, clickData, setClickData } ) {
+export default function ModalAPIUpdate( { title,confirmText, cancelText, onCancel, visible, setUpdateDialog, clickData, setClickData } ) {
 
   const initialState = {
     "service_id": null,
