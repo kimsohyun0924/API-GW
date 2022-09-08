@@ -16,6 +16,40 @@ export default function Method(props) {
 
 
   // console.log(props);
+  const optionsinitial = [
+    {
+      "name": "ANY",
+      "value": "ANY"
+    },
+    {
+      "name": "DELETE",
+      "value": "DELETE"
+    },
+    {
+      "name": "GET",
+      "value": "GET"
+    },
+    {
+      "name": "HEAD",
+      "value": "HEAD"
+    },
+    {
+      "name": "OPTIONS",
+      "value": "OPTIONS"
+    },
+    {
+      "name": "PATCH",
+      "value": "PATCH"
+    },
+    {
+      "name": "POST",
+      "value": "POST"
+    },
+    {
+      "name": "PUT",
+      "value": "PUT"
+    }
+  ];
 
     const [update, setUpdate] = useState(false);
     const serviceId = props.serviceId;
@@ -27,40 +61,7 @@ export default function Method(props) {
     const [methods, setMethods] = useState([]);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const [optionsCommand, setOptionsCommand] = useState([
-      {
-        "name": "ANY",
-        "value": "ANY"
-      },
-      {
-        "name": "DELETE",
-        "value": "DELETE"
-      },
-      {
-        "name": "GET",
-        "value": "GET"
-      },
-      {
-        "name": "HEAD",
-        "value": "HEAD"
-      },
-      {
-        "name": "OPTIONS",
-        "value": "OPTIONS"
-      },
-      {
-        "name": "PATCH",
-        "value": "PATCH"
-      },
-      {
-        "name": "POST",
-        "value": "POST"
-      },
-      {
-        "name": "PUT",
-        "value": "PUT"
-      }
-    ]);
+    const [optionsCommand, setOptionsCommand] = useState(optionsinitial);
     const testData = [
             {
               "created_at": "2022-07-09T23:53:31.316",
@@ -164,6 +165,7 @@ export default function Method(props) {
 
     useEffect(() => {
       fetchMethods();
+      setOptionsCommand(optionsinitial);
     }, [resourceId]);
 
     const onClick = () => {
@@ -175,7 +177,7 @@ export default function Method(props) {
         <React.Fragment>
           <DropdownMethod dropdownItems={optionsCommand} default="메서드 생성" size="small" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />    
           { isOpen === true && methodCommandValue ?
-              <MethodCreate serviceId={serviceId} resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} /> 
+              <MethodCreate serviceId={serviceId} resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} optionsCommand={optionsCommand}/> 
               :   <React.Fragment>
                   { update === false ? 
                     <React.Fragment>

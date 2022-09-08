@@ -230,7 +230,7 @@ export default function TreeNodeStage(props) {
         <div onClick={handleExpansionClick} className={classes.iconContainer} value={doc_type} value2={backend_url}>
           {icon}
         </div>
-        <div style={{ borderBottom: '1px solid #e2e2e2', fontSize: '15px', fontWeight: '500', fontFamily: 'Noto Sans KR, sans-serif' }}
+        <TestDiv style={{ borderBottom: '1px solid #e2e2e2', fontSize: '15px', fontWeight: '500', fontFamily: 'Noto Sans KR, sans-serif' }}
           onClick={handleSelectionClick}
           component="div"
           className={classes.label}
@@ -240,7 +240,7 @@ export default function TreeNodeStage(props) {
           value3={invoke_url}
         >
           {label}
-        </div>
+        </TestDiv>
       </div>
     );
   });

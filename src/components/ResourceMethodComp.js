@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import ModalAPIDelete from './ModalAPIDelete';
 
 const MethodDiv = styled.div`
-    width: 280px;
+    width: 300px;
     height: 160px;
     border: 1px solid  #e2e2e2;
     border-radius: 2px;
@@ -66,7 +66,7 @@ const MethodValue = styled.div`
 const ButtonDiv = styled.div`
     display: flex;
     height: 100%;
-    margin-left: 70px;
+    margin-left: 90px;
     align-items: center;
 `;
 

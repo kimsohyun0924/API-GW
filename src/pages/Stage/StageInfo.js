@@ -41,31 +41,31 @@ const VisiablText = styled.span`
 `;
 
 const HiddenDiv = styled.div`
-  padding: 0px 0px 15px 0px;
+  padding: 5px 0px 15px 0px;
 `;
 
 const Item = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    height: 45px;
+    height: 30px;
 `;
 
 const ItemName = styled.div`
     display: flex;
     min-width: 250px;
-    height: 45px;
+    height: 30px;
     font-size: 14px;
-    padding: 10px 0px 5px 0px;
+    /* padding: 10px 0px 5px 0px; */
     align-items: center; //아이템 세로축 가운데 정렬
 `;
 
 const ItemInput = styled.div`
     display: flex;
     width: 100%;
-    height: 45px;
+    height: 30px;
     font-size: 14px;
-    padding: 10px 0px 5px 0px;
+    /* padding: 10px 0px 5px 0px; */
 `;
 
 const InputForm = styled.input`
@@ -294,9 +294,11 @@ export default function StageInfo(props) {
                 <InputForm name="backend_url" placeholder="Endpoint 도메인" onChange={onChange} value={backend_url}/>
               </ItemInput>
             </Item>
-            <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-              <span style={{ display:"flex", justifyContent: "flex-end", padding: "5px 0px 0px 0px" }}><Button size="supersmall" line="line" onClick={onUpdate}>변경</Button></span>
-            </ThemeProvider>
+            <div style={{padding: "10px 0px 0px 0px"}}>
+              <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+                <span style={{ display:"flex", justifyContent: "flex-end" }}><Button size="supersmall" line="line" onClick={onUpdate}>변경</Button></span>
+              </ThemeProvider>
+            </div>
           </HiddenDiv>
         </React.Fragment>
       : null}
@@ -333,9 +335,11 @@ export default function StageInfo(props) {
       </VisiablDiv>
       { stageConnect3 === true ?
         <React.Fragment>
+          <HiddenDiv>
             <TableDiv>
-              <TableCompDeploymentHistory columns={TableHeaderDeployHistory} data={DataTemp2} clickData={clickData} setClickData={setClickData}/>
+              <TableCompDeploymentHistory columns={TableHeaderDeployHistory} data={DataTemp2} clickData={clickData} setClickData={setClickData} setStageConnect3={setStageConnect3}/>
             </TableDiv>
+          </HiddenDiv>
         </React.Fragment>
       : null}
       <ModalUsagePlanConnect

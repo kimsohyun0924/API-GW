@@ -76,7 +76,7 @@ const ImgDiv = styled.div`
     cursor: pointer;
 `;
 
-export default function TableCompDeploymentHistory({ columns, data, clickData, setClickData }) {
+export default function TableCompDeploymentHistory({ columns, data, clickData, setClickData, setStageConnect3 }) {
 
   // console.log(data.stage_id);
 
@@ -139,6 +139,7 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
     };
     deployStageSnapshot();
     setDeployDialog(false);
+    setStageConnect3(false);
   }
 
   const onDelete = e => {
@@ -155,6 +156,7 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
     };
     deleteStageSnapshot();
     setDeleteDialog(false);
+    setStageConnect3(false);
   }
 
   const onCancel = () => {
@@ -187,15 +189,21 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
                       <input type="checkbox" checked={clickData.stage_snapshot_id === item.stage_snapshot_id ? true : false} onChange={checkHandler}/>
                     </TD> */}
                     <TD style={{ lineHeight: '0.8rem' }} width='20%'>{item.updated_at}</TD>
-                    <TD width='20%'>{item.status === "DEPLOYED" ?  <img style={{padding:"0px 0px 0px 5px"}} src={img1}/> : <img style={{padding:"0px 0px 0px 5px"}} src={img2}/>}</TD>
+                    <TD width='20%'>{item.status === "STAGE_DEPLOYED" ?  <img style={{padding:"0px 0px 0px 5px"}} src={img1}/> : <img style={{padding:"0px 0px 0px 5px"}} src={img2}/>}</TD>
                     <TD width='10%'>
                       <ImgDiv onClick={onClick2}>
-                        <img value={item.stage_snapshot_id} src={Logo2}/>
+                        { item.status === "STAGE_DEPLOYED" ?
+                          null
+                          : <img value={item.stage_snapshot_id} src={Logo2}/>
+                        }
                       </ImgDiv>
                     </TD>
                     <TD width='10%'>
                       <ImgDiv onClick={onClick3}>
-                        <img value={item.stage_snapshot_id} src={Logo}/>
+                      { item.status === "STAGE_DEPLOYED" ?
+                          null
+                          : <img value={item.stage_snapshot_id} src={Logo}/>
+                        }
                       </ImgDiv>
                     </TD>
                   </TR> 

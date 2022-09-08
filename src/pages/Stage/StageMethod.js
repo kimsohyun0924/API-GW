@@ -31,7 +31,7 @@ export default function StageMethod(props) {
   
   return (
     <React.Fragment>
-      <StageMethod_2 stageId={props.stageId} resourceId={props.resourceId} backend_url={props.backend_url} DataTemp={DataTemp}/>
+      { DataTemp && <StageMethod_2 stageId={props.stageId} resourceId={props.resourceId} backend_url={props.backend_url} DataTemp={DataTemp}/> }
     </React.Fragment>
   );
 }
