@@ -92,6 +92,13 @@ const CopyButtonDiv = styled.div`
 `;
 
 const TestDiv = styled.div`
+  display: flex;
+  font-weight: 500 !important;
+  font-family: 'Noto Sans KR', sans-serif !important;
+  font-size: 15px !important;
+  border-bottom: 1px solid #e2e2e2;
+  align-items: center;
+
    ${props => props.label === 'GET' &&
       css`
       color: royalblue;
@@ -186,30 +193,30 @@ export default function TreeNodeStage(props) {
   
     const handleExpansionClick = (event) => {
       handleExpansion(event);
-      console.log(event.target);
-      if(event.target.getAttribute('value') !== "RESOURCE" && event.target.getAttribute('value') !== "METHOD") {
-        setStageId(nodeId);
-        setBackend_url(event.target.getAttribute('value2'));
-      }
+      // console.log(event.target);
+      // if(event.target.getAttribute('value') !== "RESOURCE" && event.target.getAttribute('value') !== "METHOD") {
+      //   setStageId(nodeId);
+      //   setBackend_url(event.target.getAttribute('value2'));
+      // }
     };
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
+      const str = event.target.getAttribute('value').split("!");
 
-      if(event.target.getAttribute('value') === "RESOURCE") {
+      if(str[0] === "RESOURCE") {
         setContent("third");
       }
-      else if(event.target.getAttribute('value') === "METHOD") {
+      else if(str[0]=== "METHOD") {
         setContent("fourth");
       } 
       else {
         setStageId(nodeId);
-        setBackend_url(event.target.getAttribute('value2'));
+        setBackend_url(str[1]);
         setContent("second");
       }
 
-      // console.log(event.target)
-      setInvoke_url(event.target.getAttribute('value3'));
+      setInvoke_url(str[2]);
       setLabel(label);
       setResourceId(nodeId);
     };
@@ -230,14 +237,14 @@ export default function TreeNodeStage(props) {
         <div onClick={handleExpansionClick} className={classes.iconContainer} value={doc_type} value2={backend_url}>
           {icon}
         </div>
-        <TestDiv style={{ borderBottom: '1px solid #e2e2e2', fontSize: '15px', fontWeight: '500', fontFamily: 'Noto Sans KR, sans-serif' }}
+        <TestDiv 
           onClick={handleSelectionClick}
           component="div"
           className={classes.label}
           label={label}
-          value={doc_type}
-          value2={backend_url}
-          value3={invoke_url}
+          value={doc_type+'!'+backend_url+'!'+invoke_url}
+          // value2={backend_url}
+          // value3={invoke_url}
         >
           {label}
         </TestDiv>

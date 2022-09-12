@@ -166,6 +166,7 @@ export default function Method(props) {
     useEffect(() => {
       fetchMethods();
       setOptionsCommand(optionsinitial);
+      setIsOpen(false);
     }, [resourceId]);
 
     const onClick = () => {
@@ -179,7 +180,7 @@ export default function Method(props) {
           { isOpen === true && methodCommandValue ?
               <MethodCreate serviceId={serviceId} resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} optionsCommand={optionsCommand}/> 
               :   <React.Fragment>
-                  { update === false ? 
+                  {/* { update === false ?  */}
                     <React.Fragment>
                       { methods.method_list && methods.method_list.map((item, index) => {
                           return (
@@ -194,8 +195,8 @@ export default function Method(props) {
                           );
                       })}
                     </React.Fragment> 
-                    : <MethodUpdate methodId={methodId} methodCommandValue={methodCommandValue} />
-                  }
+                    {/* : <MethodUpdate methodId={methodId} methodCommandValue={methodCommandValue} />
+                  } */}
                 </React.Fragment>
             }
         </React.Fragment>

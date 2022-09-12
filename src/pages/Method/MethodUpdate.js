@@ -402,7 +402,7 @@ export default function MethodUpdate(props) {
         </ItemDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-            <span style={{padding:"0px 10px 0px 0px"}}><Button size="large" line="noline" onClick={onCancel}>취소</Button></span>
+            {/* <span style={{padding:"0px 10px 0px 0px"}}><Button size="large" line="noline" onClick={onCancel}>취소</Button></span> */}
             <Button size="large" line="line" onClick={onCreate} >저장하기</Button>
           </ThemeProvider>
         </ButtonDiv>
