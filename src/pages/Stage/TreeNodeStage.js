@@ -65,8 +65,8 @@ const PathDiv = styled.div`
     border-bottom: 1px solid #e2e2e2;
     padding : 10px 10px 0px 10px;
     font-weight: 500 !important;
-  font-family: 'Noto Sans KR', sans-serif !important;
-  font-size: 17px !important;
+    font-family: 'Noto Sans KR', sans-serif !important;
+    font-size: 17px !important;
     /* background:orange; */
 `;
 
@@ -193,11 +193,9 @@ export default function TreeNodeStage(props) {
   
     const handleExpansionClick = (event) => {
       handleExpansion(event);
-      // console.log(event.target);
-      // if(event.target.getAttribute('value') !== "RESOURCE" && event.target.getAttribute('value') !== "METHOD") {
-      //   setStageId(nodeId);
-      //   setBackend_url(event.target.getAttribute('value2'));
-      // }
+      if (doc_type !== "RESOURCE" && doc_type !== "METHOD") {
+        setBackend_url(backend_url);
+      }
     };
   
     const handleSelectionClick = (event) => {
@@ -234,7 +232,7 @@ export default function TreeNodeStage(props) {
         ref={ref}
       >
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-        <div onClick={handleExpansionClick} className={classes.iconContainer} value={doc_type} value2={backend_url}>
+        <div onClick={handleExpansionClick} className={classes.iconContainer}>
           {icon}
         </div>
         <TestDiv 

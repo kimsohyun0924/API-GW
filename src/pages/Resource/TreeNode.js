@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -63,13 +63,11 @@ const PathDiv = styled.div`
     height: 45px;
     border-bottom: 1px solid #e2e2e2;
     padding : 15px 15px 0px 15px;
-    /* background:orange; */
 `;
 
 const Content = styled.div`
   width: 100%;
   padding: 15px 15px 0px 15px;
-  /* background:pink; */
 `;
 
 const TestDiv = styled.div`
@@ -128,6 +126,9 @@ export default function RecursiveTreeView(props) {
   const [faildialog, setFailDialog] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate(); 
+  // const NodeId_array = [props.data.resource_id];
+  const [nodeId_array, setNodeId_array] = useState(null);
+  // const nodeId_array = useMemo(()=> "data",[props.data.resource_id]);
 
   const CustomContent = React.forwardRef(function CustomContent(props, ref) {
     const {
@@ -265,6 +266,11 @@ export default function RecursiveTreeView(props) {
   //   },
   // }));
 
+  const test_function = (node) => {
+    console.log(node);
+    setNodeId_array(node);
+  }
+
   const renderTree = (nodes) => {
     return(
     <CustomTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
@@ -273,6 +279,10 @@ export default function RecursiveTreeView(props) {
     </CustomTreeItem>
     );
   };  
+// (NodeId_array.push(node.resource_id), 
+// ({() => setNodeId_array(node.resoure_id)}, renderTree(node)))
+// () => setNodeId_array(node.resoure_id),
+// console.log(nodeId_array);
 
   const renderTree3 = (nodes) => {
     return(
@@ -281,8 +291,6 @@ export default function RecursiveTreeView(props) {
     </CustomTreeItem>
     );
   };
-  
-
   
   const Create = e => {
     setContent('first');
@@ -341,16 +349,18 @@ export default function RecursiveTreeView(props) {
         </ButtonDiv>
         <ExampleDiv>
           <MenuDiv>
+            { props.data.resource_id ? 
             <TreeView
               aria-label="icon expansion"
               defaultCollapseIcon={<ExpandMoreIcon />}
-              // defaultExpanded={['root', '1']} //처음 화면이 렌더링 됐을 떄 펼쳐져있을 Tree
+              defaultExpanded={[]} //처음 화면이 렌더링 됐을 떄 펼쳐져있을 Tree
               defaultExpandIcon={<ChevronRightIcon />}
-              defaultSelected={'root'}
+              // defaultSelected={'root'}
               sx={{ height: 440, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
               >
                 {renderTree(resourceInfo)}
             </TreeView>
+            : null }
           </MenuDiv> 
           <ResourceInfoDiv>
             <PathDiv>{label}</PathDiv>
