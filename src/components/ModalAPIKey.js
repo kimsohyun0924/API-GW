@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
 import Button from './Button';
+import Logo from '../image/Cancel.svg';
 
 
 const DarkBackground = styled.div`
@@ -18,7 +19,7 @@ const DarkBackground = styled.div`
 
 const DialogBlock = styled.div`
   width: 450px;
-  padding: 1.5rem;
+  padding: 20px 30px 20px 30px;
   background: white;
   border-radius: 2px;
   border : 1px solid black;
@@ -31,14 +32,20 @@ const DialogBlock = styled.div`
   }
 `;
 
+const ImgDiv = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+`;
+
 const TitleDiv = styled.div`
-  font-size : 20px;
-  padding-bottom : 30px;
+  font-size : 16px;
+  padding : 0px 0px 20px 0px;
 
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 3rem;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 `;
@@ -48,13 +55,16 @@ ModalApiDelete.defaultProps = {
 };
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalApiDelete( { title, children, confirmText, cancelText, onConfirm, onCancel, visible } ) {
+export default function ModalApiDelete( { title, children, cancelText, onCancel, visible } ) {
   if (!visible) return null;
   return (
       <DarkBackground>
            <DialogBlock>
+              <ImgDiv onClick={onCancel}>
+                <img src={Logo}/>
+              </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
-              <p>{children}</p>
+              <div>{children}</div>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <Button size="small" line="line" onClick={onCancel} >{cancelText}</Button>

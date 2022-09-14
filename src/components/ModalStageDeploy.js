@@ -21,7 +21,8 @@ const DarkBackground = styled.div`
 const DialogBlock = styled.div`
     display: block;
     width: 600px;
-    height: 320px;
+    height: 220px;
+    /* height: 320px; */
     padding: 20px 30px 20px 30px;
     background: white;
     border-radius: 2px;
@@ -141,17 +142,15 @@ ModalStageDeploy.defaultProps = {
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
-export default function ModalStageDeploy( { title, confirmText, cancelText, onCancel, serviceId, selectItem, setSelectItem, setCreateDialog, visible } ) {
+export default function ModalStageDeploy( { title, confirmText, cancelText, onCancel, serviceId, setCreateDialog, visible } ) {
 
-  const [error, setError] = useState(null);
-  const [methodCommand, setMethodCommand] = useState(null);
-  const [methodCommandValue, setMethodCommandValue] = useState(null);
-  const [isOpen, setIsOpen] = useState(true);
+  const [stage_id, setStage_id] = useState(null);
   const [stageOptions, setStageOptions] = useState();
   const [inputs, setInputs] = useState({
     StageDescription: ''
   });
   const { StageDescription } = inputs;
+  const [error, setError] = useState(null);
 
   const onChange = e => {
     const { name, value } = e.target;
@@ -186,7 +185,7 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
           '/v1.0/g1/paas/Memsq07/apigw/stage',
           {
             service_id: serviceId,
-            stage_id: selectItem,
+            stage_id: stage_id,
             stage_name: null,
             backend_url: null
           }
@@ -204,8 +203,6 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
     fetchApis();
   }, []);
 
-  console.log(selectItem);
-
   if (!visible) return null;
   return (
       <DarkBackground>
@@ -218,7 +215,7 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
                 <Item>
                   <ItemName>배포할 Stage</ItemName>
                   <ItemInput>
-                    <DropdownStage dropdownItems={stageOptions} default="Stage 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} setSelectItem={setSelectItem}/> 
+                    <DropdownStage dropdownItems={stageOptions} default="Stage 선택" size="medium" Command={stage_id} setCommand={setStage_id}/> 
                   </ItemInput>
                 </Item>
               </ItemDiv>

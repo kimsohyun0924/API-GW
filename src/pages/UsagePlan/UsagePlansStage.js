@@ -46,8 +46,7 @@ export default function UsagePlanStage() {
   const [createdialog, setCreateDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [DataTemp, setDataTemp] = useState([]);
-  const [selectItem, setSelectItem] = useState(null);
-  const [selectItem2, setSelectItem2] = useState(null);
+  const [DataTemp2, setDataTemp2] = useState([]);
   const [error, setError] = useState(null);
   const testData = [
     {
@@ -92,26 +91,19 @@ export default function UsagePlanStage() {
       setError(e);
     }
   };
-  
-  const onCreate = () => {
-      //create UsagePlan-Stage Connect
-    const createUsageStageConnect = async () => {
-      try {
-        setError(null);
-        await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/stage/usage-plan',
-          {
-            stage_id: selectItem2,
-            usage_plan_id: state.usage_plan_id
-          }
-        );
-      } catch (e) {
-        setError(e);
-      }
-    };
-    createUsageStageConnect();
-    // window.location.reload(true);
-    setCreateDialog(false);
+
+  const fetchAPI = async () => {
+    //get API list
+    try {
+      setError(null);
+      const response = await axios.get(
+        '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+      );
+      setDataTemp2(response.data);
+      // setDataTemp2(response.data.filter((item) => !(DataTemp.some((i) => i.usage_plan_id === item.usage_plan_id))));
+    } catch (e) {
+      setError(e);
+    }
   };
 
   const onDelete = () => {
@@ -134,6 +126,7 @@ export default function UsagePlanStage() {
 
   useEffect(() => {
     fetchUsageStageConnect();
+    fetchAPI();
   }, [DataTemp]);
 
   return (
@@ -158,11 +151,10 @@ export default function UsagePlanStage() {
             title="Stage와 연결합니다."
             confirmText="연결하기"
             cancelText="취소"
-            onCreate={onCreate}
+            state={state}
             onCancel={onCancel}
-            selectItem={selectItem}
-            setSelectItem={setSelectItem}
-            setSelectItem2={setSelectItem2}
+            setCreateDialog={setCreateDialog}
+            APIList={DataTemp2}
             visible={createdialog}>
       </ModalStageConnect>
       <ModalAPIDelete

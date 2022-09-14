@@ -98,11 +98,8 @@ ModalAPIKeyUsageConnect.defaultProps = {
 //제목, 내용, 확인 텍스트, 취소 텍스트
 export default function ModalAPIKeyUsageConnect( { title, confirmText, cancelText, state, onCancel, UsageList, setCreateDialog, visible } ) {
 
-  const [selectItem, setSelectItem] = useState(null);
+  const [usage_plan_id, setUsage_plan_id] = useState(null);
   const [error, setError] = useState(null);
-  const [methodCommand, setMethodCommand] = useState(null);
-  const [methodCommandValue, setMethodCommandValue] = useState(null);
-  const [usageOptions, setUsageOptions] = useState([]);
 
   const onCreate = () => {
     //Create APIKey-UsagePlan Connect
@@ -112,7 +109,7 @@ export default function ModalAPIKeyUsageConnect( { title, confirmText, cancelTex
         await axios.post(
           '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id,
           {
-            usage_plan_id: selectItem
+            usage_plan_id: usage_plan_id
           }
         );
       } catch (e) {
@@ -134,7 +131,7 @@ export default function ModalAPIKeyUsageConnect( { title, confirmText, cancelTex
               <TitleDiv>{title}</TitleDiv>
               <Item>
                   <ItemName>Usage Plan</ItemName>
-                  <DropdownMethod dropdownItems={UsageList} default="Usage Plan 선택" size="medium" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} setSelectItem={setSelectItem}/> 
+                  <DropdownMethod dropdownItems={UsageList} default="Usage Plan 선택" size="medium" Command={usage_plan_id} setCommand={setUsage_plan_id}/> 
               </Item>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

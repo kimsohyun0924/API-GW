@@ -114,6 +114,41 @@ const TestDiv2 = styled.div`
     }
 `;
 
+const optionsinitial = [
+  {
+    "name": "ANY",
+    "value": "ANY"
+  },
+  {
+    "name": "DELETE",
+    "value": "DELETE"
+  },
+  {
+    "name": "GET",
+    "value": "GET"
+  },
+  {
+    "name": "HEAD",
+    "value": "HEAD"
+  },
+  {
+    "name": "OPTIONS",
+    "value": "OPTIONS"
+  },
+  {
+    "name": "PATCH",
+    "value": "PATCH"
+  },
+  {
+    "name": "POST",
+    "value": "POST"
+  },
+  {
+    "name": "PUT",
+    "value": "PUT"
+  }
+];
+
 export default function RecursiveTreeView(props) {
   // console.log(props);
 
@@ -125,6 +160,7 @@ export default function RecursiveTreeView(props) {
   const [dialog, setDialog] = useState(false);
   const [faildialog, setFailDialog] = useState(false);
   const [error, setError] = useState(null);
+  const [optionsCommand, setOptionsCommand] = useState(optionsinitial);
   const navigate = useNavigate(); 
   // const NodeId_array = [props.data.resource_id];
   const [nodeId_array, setNodeId_array] = useState(null);
@@ -334,8 +370,8 @@ export default function RecursiveTreeView(props) {
 
   const selectComponent = {
     first: <ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>,
-    second: <Method serviceId={serviceInfo.service_id} resourceId={resourceId} lable={label}/>, //method list 나태내줌
-    third: <MethodUpdate resourceId={resourceId} methodCommandValue={label}/>
+    second: <Method serviceId={serviceInfo.service_id} resourceId={resourceId} lable={label} optionsCommand={optionsCommand} setOptionsCommand={setOptionsCommand}/>, //method list 나태내줌
+    third: <MethodUpdate resourceId={resourceId} methodCommand={label} dropdownItems={optionsCommand}/>
   };
 
   return (

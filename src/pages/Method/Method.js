@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
-import styled from 'styled-components';
-import DropdownMethod from 'components/DropdownMethod';
-import MethodCreate from './MethodCreate';
-import ResourceMethodComp from 'components/ResourceMethodComp';
-import MethodUpdate from './MethodUpdate';
 import axios from 'axios';
+
+import styled from 'styled-components';
+
+import MethodCreate from './MethodCreate';
+import MethodUpdate from './MethodUpdate';
+
+import DropdownMethod from 'components/DropdownMethod';
+import ResourceMethodComp from 'components/ResourceMethodComp';
+
 
 const MethodDiv = styled.div`
   display: inline-block;
@@ -13,7 +17,6 @@ const MethodDiv = styled.div`
 `;
 
 export default function Method(props) {
-
 
   // console.log(props);
   const optionsinitial = [
@@ -51,17 +54,18 @@ export default function Method(props) {
     }
   ];
 
-    const [update, setUpdate] = useState(false);
     const serviceId = props.serviceId;
     const resourceId = props.resourceId;
-    const [methodId, setMethodId] = useState(null);
-    const [methodCommand, setMethodCommand] = useState(null);
-    const [methodCommandValue, setMethodCommandValue] = useState(null);
-    const [isOpen, setIsOpen] = useState(true);
-    const [methods, setMethods] = useState([]);
-    const [error, setError] = useState(null);
-    const navigate = useNavigate();
+    const [methods, setMethods] = useState([]); // 각 resource에 대한 method list 저장 
     const [optionsCommand, setOptionsCommand] = useState(optionsinitial);
+    const [methodCommand, setMethodCommand] = useState(null);
+    const [isOpen, setIsOpen] = useState(true);
+    const [error, setError] = useState(null);
+ 
+    const navigate = useNavigate();
+    const [update, setUpdate] = useState(null);
+    const [methodId, setMethodId] = useState(null);
+    const [methodCommandValue, setMethodCommandValue] = useState(null);
     const testData = [
             {
               "created_at": "2022-07-09T23:53:31.316",
@@ -140,13 +144,9 @@ export default function Method(props) {
             }
         }
       ];
-  
-    useEffect(() => {
-      setIsOpen(true);
-      setMethodCommand("");
-    }, [methodCommand]);
 
     const fetchMethods = async () => {
+      
       //get methods request
       try {
         setError(null);
@@ -154,7 +154,7 @@ export default function Method(props) {
         const response = await axios.get(
           '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
         );
-        setMethods(response.data); // 데이터는 response.data)
+        setMethods(response.data.method_list); // 데이터는 response.data)
         // console.log(response.data);
         setOptionsCommand(optionsCommand.filter((item) => !(response.data.method_list.some((i) => i.method_type === item.name))));
       } catch (e) {
@@ -163,26 +163,32 @@ export default function Method(props) {
       // window.location.reload(true);
     };
 
-    useEffect(() => {
-      fetchMethods();
-      setOptionsCommand(optionsinitial);
-      setIsOpen(false);
-    }, [resourceId]);
-
     const onClick = () => {
       console.log("보기");
       setUpdate(true);
-  }
+    }
+
+    useEffect(() => {
+      setIsOpen(true);
+      // setMethodCommand("");
+    }, [methodCommand]);
+
+    useEffect(() => {
+      fetchMethods();
+      setIsOpen(false);
+      setMethodCommand("");
+      setOptionsCommand(optionsinitial);
+    }, [props.resourceId]);
 
     return (
         <React.Fragment>
-          <DropdownMethod dropdownItems={optionsCommand} default="메서드 생성" size="small" setItem={setMethodCommand} methodCommand={methodCommand} setMethodCommandValue={setMethodCommandValue} />    
-          { isOpen === true && methodCommandValue ?
-              <MethodCreate serviceId={serviceId} resourceId={resourceId} isOpen={isOpen} setIsOpen={setIsOpen} methodCommandValue={methodCommandValue} setMethodCommandValue={setMethodCommandValue} optionsCommand={optionsCommand}/> 
+          <DropdownMethod dropdownItems={optionsCommand} default="메서드 생성" size="small" setCommand={setMethodCommand}/>    
+          { isOpen === true && methodCommand ?
+              <MethodCreate serviceId={serviceId} resourceId={resourceId} setIsOpen={setIsOpen} dropdownItems={optionsCommand} methodCommand={methodCommand} setMethodCommand={setMethodCommand}/> 
               :   <React.Fragment>
                   {/* { update === false ?  */}
                     <React.Fragment>
-                      { methods.method_list && methods.method_list.map((item, index) => {
+                      { methods && methods.map((item, index) => {
                           return (
                             <React.Fragment key={index}>
                               <MethodDiv>

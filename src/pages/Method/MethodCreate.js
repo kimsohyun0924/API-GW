@@ -5,6 +5,7 @@ import styled, { css, ThemeProvider } from 'styled-components';
 
 import Button from 'components/Button';
 import ToggleSwitch from 'components/ToggleSwitch';
+import DropdownMethod from 'components/DropdownMethod';
 
 
 const AllDiv = styled.div`
@@ -57,81 +58,6 @@ const InputForm = styled.input`
     font-family: 'Noto Sans KR', sans-serif !important;
 `;
 
-const DropdownContainer = styled.div`
-    width: 78%;
-    &:hover {
-      cursor: pointer;
-    }
-`;
-
-const DropdownBody = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 5px 5px 5px;
-    border-radius: 2px;
-    color: #495057;
-    border: 1px solid #b6b6c3;
-    box-shadow: inset 0 1px 2px rgb(0 0 0 / 8%);
-    background-color: #ffffff;
-    height: 33px;
-    font-size: 14px;
-`;
-
-const DropdownSelect = styled.p`
-
-`;
-
-const IconSVG = styled.svg`
-    margin-left: -28px;
-    align-self: center;
-    width: 16px;
-    height: 16px;
-`;
-
-const DropdownMenu = styled.ul`
-    display: ${(props) => (props.isActive ? `block` : `none`)};
-    width: 41.6%;
-    z-index: 10;
-    background-color: white;
-    position: absolute;
-    border: 1px solid #d2d2d2;
-    margin-top: 0.2rem;
-    overflow-y: auto;
-    padding: 0 0;
-`;
-
-const DropdownItemContainer = styled.li`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 12px;
-    border-top: none;
-    border-radius: 2px;
-
-    &:last-child {
-      border-bottom: none;
-    }
-    
-    &:hover {
-      color: royalblue;
-      background: #e6effc;
-    }
-  `;
-
-  const DropdownItemName = styled.span`
-    font-size: 14px;
-    ${props => props.itemName === props.selectedItem && 
-      css`
-        color: royalblue;
-        &:before {
-          content: "\u2713";
-          padding-right: 0.3rem;
-        }
-      `
-    }
-`;
-
 const ButtonDiv = styled.div`
     display: flex;
     justify-content: flex-end;
@@ -140,54 +66,17 @@ const ButtonDiv = styled.div`
 
 export default function MethodCreate(props) {
 
-  const { serviceId, resourceId, isOpen, setIsOpen, methodCommandValue, setMethodCommandValue } = props;
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedItem2, setSelectedItem2] = useState(methodCommandValue);
-  const [isActive, setIsActive] = useState(false);
-  const [isActive2, setIsActive2] = useState(false);
+  console.log(props);
+
+  const { serviceId, resourceId, setIsOpen, dropdownItems, methodCommand, setMethodCommand } = props;
+  const [integration_type, setIntegration_type] = useState(null);
+  const [method_type, setMethod_type] = useState(methodCommand);
   const [toggle, setToggle] = useState(false);
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
-    urlInfo:''
+    url_path:''
   });
-  const wrapperRef = useRef(null);
-  const wrapperRef2 = useRef(null);
-
-  const methodoptionsCommand = [
-    {
-      "name": "ANY",
-      "value": "ANY"
-    },
-    {
-      "name": "DELETE",
-      "value": "DELETE"
-    },
-    {
-      "name": "GET",
-      "value": "GET"
-    },
-    {
-      "name": "HEAD",
-      "value": "HEAD"
-    },
-    {
-      "name": "OPTIONS",
-      "value": "OPTIONS"
-    },
-    {
-      "name": "PATCH",
-      "value": "PATCH"
-    },
-    {
-      "name": "POST",
-      "value": "POST"
-    },
-    {
-      "name": "PUT",
-      "value": "PUT"
-    }
-  ];
-
+  const { url_path } = inputs;
   const endpointoptionsCommand = [
     {
       "name": "HTTP",
@@ -199,9 +88,6 @@ export default function MethodCreate(props) {
     }
   ];
 
-  const { urlInfo } = inputs;
-
-
   const onChange = e => {
     const { name, value } = e.target;
     setInputs({
@@ -209,81 +95,37 @@ export default function MethodCreate(props) {
       [name]: value
     });
   };
-  console.log(inputs);
-  
-  // console.log(serviceId);
-  // console.log(resourceId);
-  // console.log(selectedItem);
-  // console.log(selectedItem2);
-
+  // console.log(inputs);
 
   const onCreate = () => {
-  
+    //create Method
     const createMethod = async () => {
       try {
-        
         setError(null);
-       
         await axios.post(
           '/v1.0/g1/paas/Memsq07/apigw/method',
           {
             service_id: serviceId,
             resource_id: resourceId,
-            url_path: urlInfo,
-            integration_type: selectedItem,
-            method_type: selectedItem2,
+            integration_type: integration_type,
+            method_type: method_type,
+            url_path: url_path,
             api_key_using: toggle
           }
         );
       } catch (e) {
         setError(e);
       }
-    
     };
     createMethod();
     window.location.reload(true);
-
-    //   setTimeout(()=>{
-    //   navigate('/dashboard');     
-    // }, 1000);
   };
 
   const onCancel = () => {
     console.log("취소");
     setIsOpen(false);
-    setMethodCommandValue("");
+    setMethodCommand("");
   };
-
-  const onActiveToggle = useCallback(() => {
-    // console.log(isActive)
-    setIsActive((prev) => !prev);
-  }, []);
-
-  const onActiveToggle2 = useCallback(() => {
-    // console.log(isActive2)
-    setIsActive2((prev) => !prev);
-  }, []);
-
-  const onSelectItem = useCallback((e, itemName) => {
-
-    // console.log(props);
-    setSelectedItem(itemName);
-    // props.setItem(itemName);
-    // props.setMethodCommandValue(itemName);
-    setIsActive((prev) => !prev);
-
-  }, []);
-
-  const onSelectItem2 = useCallback((e, itemName) => {
-
-    // console.log(props);
-    setSelectedItem2(itemName);
-    // props.setItem(itemName);
-    // props.setMethodCommandValue(itemName);
-    setIsActive2((prev) => !prev);
-
-  }, []);
-
 
   const clickedToggle = () => {
     setToggle((prev) => !prev);
@@ -293,89 +135,23 @@ export default function MethodCreate(props) {
   return (
     <React.Fragment>
       <AllDiv>
-        {/* <ItemDiv>
-          <Item>
-            <ItemName>설명</ItemName>
-            <ItemInput>
-              <InputForm name="explain" onChange={onChange} value={explain}/>
-            </ItemInput>
-          </Item>
-        </ItemDiv> */}
         <ItemDiv>
           <Item>
             <ItemName>엔드포인트 유형</ItemName>
-
-            <DropdownContainer>
-              <DropdownBody onClick={onActiveToggle}>
-                { selectedItem ? 
-                  <ItemName>{selectedItem}</ItemName>     
-                  : <DropdownSelect>엔드포인트 유형</DropdownSelect> }
-                <IconSVG
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M10 14L16 6H4L10 14Z"
-                  fill="#888888"
-                />
-                </IconSVG>
-              </DropdownBody>
-              <DropdownMenu isActive={isActive} ref={wrapperRef}>
-                {endpointoptionsCommand.map((item, index) => (
-                  <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem(e, item.name); }}>
-                    <DropdownItemName id="item_name" itemName={item.name} selectedItem={selectedItem}>{item.name}</DropdownItemName>
-                  </DropdownItemContainer>
-                ))}
-              </DropdownMenu>
-            </DropdownContainer>
-            {/* <ItemInput>
-              <InputForm name="endpoint" onChange={onChange} value={endpoint}/>
-            </ItemInput> */}
+            <DropdownMethod dropdownItems={endpointoptionsCommand} default="엔드포인트 유형" size="large" Command={integration_type} setCommand={setIntegration_type}/>
           </Item>
         </ItemDiv>
         <ItemDiv> 
           <Item>
             <ItemName>Method 종류</ItemName>
-            <DropdownContainer>
-              <DropdownBody onClick={onActiveToggle2}>
-          
-                <ItemName>{selectedItem2}</ItemName>     
-              
-                <IconSVG
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M10 14L16 6H4L10 14Z"
-                  fill="#888888"
-                />
-                </IconSVG>
-              </DropdownBody>
-              <DropdownMenu isActive={isActive2} ref={wrapperRef2}>
-                {props.optionsCommand && props.optionsCommand.map((item, index) => (
-                  <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem2(e, item.name); }}>
-                    <DropdownItemName id="item_name" itemName={item.name} selectedItem={selectedItem2}>{item.name}</DropdownItemName>
-                  </DropdownItemContainer>
-                ))}
-              </DropdownMenu>
-            </DropdownContainer>
+            <DropdownMethod dropdownItems={dropdownItems} default={methodCommand} size="large" Command={method_type} setCommand={setMethod_type}/>
             </Item>
           </ItemDiv>
           <ItemDiv> 
             <Item>
               <ItemName>URL 경로</ItemName>
               <ItemInput>
-                <InputForm name="urlInfo" onChange={onChange} value={urlInfo}/>
+                <InputForm name="url_path" onChange={onChange} value={url_path}/>
               </ItemInput>
           </Item>
         </ItemDiv> 

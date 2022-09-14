@@ -1,8 +1,10 @@
 import React, { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import styled, { css, ThemeProvider } from 'styled-components';
 
+import img2 from "image/Table_Copy.svg";
 import TableLine from '../image/tableline.svg';
 
 import Button from './Button';
@@ -67,6 +69,11 @@ const TD = styled.td`
   text-align: left;
 `;
 
+const CopyButtonDiv = styled.div`
+  margin: 3px 0px 0px 10px;
+  cursor: pointer;
+`;
+
 export default function TableCompAPIKeys({ columns, data, clickData, setClickData }) {
 
   const initialState = {
@@ -84,7 +91,6 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
  
 
   const onClick = e => {
-    console.log(e.target);
     setKey(e.target.value);
     setDialog(true);
   }
@@ -145,7 +151,7 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
                     <TD width='7%'>{item.enabled === true ? "활성":"비활성"}</TD>
                     <TD width='7%'>
                       <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                        <Button size="supersmall" line="outline" onClick={onClick} value={item.api_key}>
+                        <Button size="supersupersmall" line="small" onClick={onClick} value={item.api_key}>
                           {/* { dialog === true ? item.primaryKey : <div>보기</div>} */}
                           보기
                         </Button>
@@ -165,7 +171,12 @@ export default function TableCompAPIKeys({ columns, data, clickData, setClickDat
             onCancel={onCancel}
             visible={dialog}
             >
-            {key}
+            <div style={{display: "flex", justifyContent: "center"}}>
+              {key}
+              <CopyToClipboard text={key} onCopy={()=>alert("API Key가 복사되었습니다")}>
+                <CopyButtonDiv><img src={img2}/></CopyButtonDiv>
+              </CopyToClipboard>
+            </div>
       </ModalAPIKey>
     </React.Fragment>
   );

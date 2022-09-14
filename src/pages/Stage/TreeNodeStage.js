@@ -72,7 +72,7 @@ const PathDiv = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  padding: 20px 20px 0px 20px;
+  padding: 15px 15px 0px 15px;
   /* background:pink; */
   /* background: #d9edf7; */
 `;
@@ -194,6 +194,9 @@ export default function TreeNodeStage(props) {
     const handleExpansionClick = (event) => {
       handleExpansion(event);
       if (doc_type !== "RESOURCE" && doc_type !== "METHOD") {
+        console.log(nodeId);
+        console.log(backend_url);
+        setStageId(nodeId);
         setBackend_url(backend_url);
       }
     };

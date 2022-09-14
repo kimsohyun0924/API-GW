@@ -42,7 +42,6 @@ const colorStyles = css`
           padding: 8px 10px 8px 10px;
           border: 1px solid #333336;
           font-family: Spoqa Han Sans Regular;
-
           &:hover {
             background: white;
             border: 1px solid #03428e;
@@ -78,6 +77,21 @@ const colorStyles = css`
           }
         `}
 
+        ${props =>
+        props.line === "small" &&
+        css`
+          color: #333336;
+          background: none;
+          border-radius: 2px;
+          padding: 5px 9px 5px 9px;
+          border: 1px solid #333336;
+          font-family: Spoqa Han Sans Regular;
+          &:hover {
+            border: 1px solid #03428e;
+            color: #03428e;
+          }    
+        `}
+
     `;
   }}
 `;
@@ -94,6 +108,9 @@ const sizes = {
   },
   supersmall: {
     fontSize: '13px'
+  },
+  supersupersmall: {
+    fontSize: '12px'
   }
 };
 

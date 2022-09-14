@@ -50,7 +50,6 @@ export default function ApiOperation() {
     const [value, setValue] = useState('0');
     const navigate = useNavigate();
     const { state } = useLocation();
-    const [selectItem, setSelectItem] = useState(null);
     const [createDialog, setCreateDialog] = useState(false);
 
     // console.log(state);
@@ -112,8 +111,6 @@ export default function ApiOperation() {
               cancelText="취소"
               onCancel={onCancel}
               serviceId={state.service_id}
-              selectItem={selectItem} 
-              setSelectItem={setSelectItem}
               setCreateDialog={setCreateDialog}
               visible={createDialog}>
             </ModalStageDeploy>

@@ -30,7 +30,6 @@ const DialogBlock = styled.div`
 
 const ImgDiv = styled.div`
     display: flex;
-    margin-left: 530px;
     justify-content: flex-end;
     cursor: pointer;
 `;

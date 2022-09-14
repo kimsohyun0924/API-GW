@@ -162,7 +162,12 @@ export default function MethodComp(props) {
                 <MethodInfoDiv>
                     <MethodInfoType>
                         <MethodInfoName>엔드포인트</MethodInfoName>
-                        <MethodInfoValue>{methodInfo.method_type} {methodInfo.url_path}</MethodInfoValue >
+                        <MethodInfoValue>
+                            { methodInfo.url_path.length < 20 ? 
+                                methodInfo.method_type+'  '+methodInfo.url_path
+                                : methodInfo.method_type+'  '+methodInfo.url_path.slice(0, 15) + '...'
+                            }
+                        </MethodInfoValue >
                     </MethodInfoType>
                     <MethodInfoType>
                         <MethodInfoName>API Key 필요</MethodInfoName>

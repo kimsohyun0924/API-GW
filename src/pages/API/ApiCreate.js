@@ -154,7 +154,7 @@ export default function ApiCreate() {
     };
     createApi();
     setTimeout(()=>{
-      navigate('/myapis');     
+      navigate('/apigw-list');     
     }, 1000);
   };
 

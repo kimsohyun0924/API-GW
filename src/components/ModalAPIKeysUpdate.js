@@ -168,13 +168,14 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
     "api_key": null,
     "created_at": null
   }
-  const [error, setError] = useState(null);
-  const [toggle, setToggle] = useState(clickData.enabled);
+
+  const [toggle, setToggle] = useState(false);
   const [inputs, setInputs] = useState({
-    APIKeyName: clickData.name,
-    APIKeyExplain: clickData.description
+    APIKeyName: '',
+    APIKeyExplain: ''
   });
   const { APIKeyName, APIKeyExplain } = inputs;
+  const [error, setError] = useState(null);
   
   const onChange = e => {
     const { name, value } = e.target;
@@ -184,6 +185,7 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
     });
   };
   // console.log(inputs);
+
 
   const onUpdate = () => {
     //update API Key
@@ -210,8 +212,15 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
 
   const clickedToggle = () => {
     setToggle(!toggle);
-    console.log(toggle);
   };
+
+  useEffect(() => {
+    setToggle(clickData.enabled);
+    setInputs({
+      APIKeyName: clickData.name,
+      APIKeyExplain: clickData.description
+    });
+  }, [clickData]);
 
   if (!visible) return null;
   return (

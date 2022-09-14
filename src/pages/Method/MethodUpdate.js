@@ -1,8 +1,11 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
-import ToggleSwitch from 'components/ToggleSwitch';
-import Button from 'components/Button';
 import axios from 'axios';
+
+import styled, { css, ThemeProvider } from 'styled-components';
+
+import Button from 'components/Button';
+import ToggleSwitch from 'components/ToggleSwitch';
+import DropdownMethod from 'components/DropdownMethod';
 
 const AllDiv = styled.div`
     /* min-height: 100%;
@@ -136,55 +139,16 @@ const ButtonDiv = styled.div`
 
 export default function MethodUpdate(props) {
 
-  const { resourceId, methodCommandValue, isOpen, setIsOpen}= props;
-  const [selectedItem, setSelectedItem] = useState();
-  const [selectedItem2, setSelectedItem2] = useState(methodCommandValue);
-  const [isActive, setIsActive] = useState(false);
-  const [isActive2, setIsActive2] = useState(false);
+  const { resourceId, methodCommand, dropdownItems}= props;
+  const [integration_type, setIntegration_type] = useState(null);
+  const [method_type, setMethod_type] = useState(methodCommand);
   const [toggle, setToggle] = useState(false);
   const [error, setError] = useState(null);
   const [dataTemp, setDataTemp] = useState(null);
   const [inputs, setInputs] = useState({
     url_path: ''
   });
-  const wrapperRef = useRef(null);
-  const wrapperRef2 = useRef(null);
-
-  const methodoptionsCommand = [
-    {
-      "name": "ANY",
-      "value": "ANY"
-    },
-    {
-      "name": "DELETE",
-      "value": "DELETE"
-    },
-    {
-      "name": "GET",
-      "value": "GET"
-    },
-    {
-      "name": "HEAD",
-      "value": "HEAD"
-    },
-    {
-      "name": "OPTIONS",
-      "value": "OPTIONS"
-    },
-    {
-      "name": "PATCH",
-      "value": "PATCH"
-    },
-    {
-      "name": "POST",
-      "value": "POST"
-    },
-    {
-      "name": "PUT",
-      "value": "PUT"
-    }
-  ];
-
+  const { url_path } = inputs;
   const endpointoptionsCommand = [
     {
       "name": "HTTP",
@@ -196,9 +160,6 @@ export default function MethodUpdate(props) {
     }
   ];
 
-  const { url_path } = inputs;
-
-
   const onChange = e => {
     const { name, value } = e.target;
     setInputs({
@@ -206,18 +167,18 @@ export default function MethodUpdate(props) {
       [name]: value
     });
   };
+  // console.log(inputs);
 
   const getMethod = async () => {
-    //get api request
+    //get Method list
     try {
       setError(null);
-
       const response = await axios.get(
         '/v1.0/g1/paas/Memsq07/apigw/method/'+resourceId
       );
       setDataTemp(response.data); // 데이터는 response.data)
-      setSelectedItem(response.data.integration_type);
-      setSelectedItem2(response.data.method_type);
+      setIntegration_type(response.data.integration_type);
+      setMethod_type(response.data.method_type);
       setInputs({
         url_path : response.data.url_path });
       setToggle(response.data.api_key_using);
@@ -230,22 +191,16 @@ export default function MethodUpdate(props) {
     getMethod();
   }, [props.resourceId]);
 
-
-  // console.log(inputs);
-  // console.log(selectedItem);
-  // console.log(selectedItem2);
-  // console.log(resourceId);
-
   const onCreate = () => {
-  
+   //update Method
     const updateMethod = async () => {
       try {
         setError(null);
         await axios.put(
           '/v1.0/g1/paas/Memsq07/apigw/method/'+resourceId,
           {
-              integration_type: selectedItem,
-              method_type: selectedItem2,
+              integration_type: integration_type,
+              method_type: method_type,
               url_path: url_path,
               api_key_using: toggle
           }
@@ -256,134 +211,25 @@ export default function MethodUpdate(props) {
     };
     updateMethod();
     window.location.reload(true);
-
   };
-
-  const onCancel = () => {
-    console.log("취소");
-    // setIsOpen(false);
-    // setMethodCommandValue("");
-  };
-
-  const onActiveToggle = useCallback(() => {
-    // console.log(isActive)
-    setIsActive((prev) => !prev);
-  }, []);
-
-  const onActiveToggle2 = useCallback(() => {
-    // console.log(isActive2)
-    setIsActive2((prev) => !prev);
-  }, []);
-
-  const onSelectItem = useCallback((e, itemName) => {
-
-    // console.log(props);
-    setSelectedItem(itemName);
-    // props.setItem(itemName);
-    // props.setMethodCommandValue(itemName);
-    setIsActive((prev) => !prev);
-
-  }, []);
-
-  const onSelectItem2 = useCallback((e, itemName) => {
-
-    // console.log(props);
-    setSelectedItem2(itemName);
-    // props.setItem(itemName);
-    // props.setMethodCommandValue(itemName);
-    setIsActive2((prev) => !prev);
-
-  }, []);
-
 
   const clickedToggle = () => {
     setToggle(!toggle);
-    console.log(toggle);
   };
-
 
   return (
     <React.Fragment>
       <AllDiv>
-        {/* <ItemDiv>
-          <Item>
-            <ItemName>설명</ItemName>
-            <ItemInput>
-              <InputForm name="explain" onChange={onChange} value={explain}/>
-            </ItemInput>
-          </Item>
-        </ItemDiv> */}
         <ItemDiv>
           <Item>
             <ItemName>엔드포인트 유형</ItemName>
-
-            <DropdownContainer>
-              <DropdownBody onClick={onActiveToggle}>
-
-                { selectedItem && selectedItem ? 
-                  <ItemName>{selectedItem}</ItemName>     
-                  : <DropdownSelect>엔드포인트 유형</DropdownSelect> }
-              
-                <IconSVG
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M10 14L16 6H4L10 14Z"
-                  fill="#888888"
-                />
-                </IconSVG>
-              </DropdownBody>
-              <DropdownMenu isActive={isActive} ref={wrapperRef}>
-                {endpointoptionsCommand.map((item, index) => (
-                  <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem(e, item.name); }}>
-                    <DropdownItemName id="item_name" itemName={item.name} selectedItem={selectedItem}>{item.name}</DropdownItemName>
-                  </DropdownItemContainer>
-                ))}
-              </DropdownMenu>
-            </DropdownContainer>
-
-            {/* <ItemInput>
-              <InputForm name="endpoint" onChange={onChange} value={endpoint}/>
-            </ItemInput> */}
+            <DropdownMethod dropdownItems={endpointoptionsCommand} default="엔드포인트 유형" size="large" Command={integration_type} setCommand={setIntegration_type}/>
           </Item>
         </ItemDiv>
         <ItemDiv> 
           <Item>
             <ItemName>Method 종류</ItemName>
-            <DropdownContainer>
-              <DropdownBody onClick={onActiveToggle2}>
-          
-                <ItemName>{selectedItem2}</ItemName>     
-              
-                <IconSVG
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M10 14L16 6H4L10 14Z"
-                  fill="#888888"
-                />
-                </IconSVG>
-              </DropdownBody>
-              <DropdownMenu isActive={isActive2} ref={wrapperRef2}>
-                {methodoptionsCommand.map((item, index) => (
-                  <DropdownItemContainer id="item" key={index} onClick={(e) => { onSelectItem2(e, item.name); }}>
-                    <DropdownItemName id="item_name" itemName={item.name} selectedItem={selectedItem2}>{item.name}</DropdownItemName>
-                  </DropdownItemContainer>
-                ))}
-              </DropdownMenu>
-            </DropdownContainer>
+            <DropdownMethod dropdownItems={dropdownItems} default={methodCommand} size="large" Command={method_type} setCommand={setMethod_type}/>
             </Item>
           </ItemDiv>
           <ItemDiv> 

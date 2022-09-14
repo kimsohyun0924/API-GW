@@ -75,7 +75,7 @@ export default function APIKeyUsagePlans() {
 
 
   const fetchAPIKeyUsagePlan = async () => {
-    //get api request
+    //get APIKey-UsagePlan Connect list
     try {
       setError(null);
 
