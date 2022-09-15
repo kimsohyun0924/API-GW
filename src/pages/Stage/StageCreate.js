@@ -101,12 +101,15 @@ export default function ResourceCreate(props) {
           setError(null);
          
           await axios.post(
-            '/v1.0/g1/paas/Memsq07/apigw/stage',
+            '/v1.0/g1/paas/apigw/stage',
             {
               service_id: serviceInfo.service_id,
               stage_id: null,
               stage_name: stage_name,
               backend_url: backend_url
+            },
+            {
+              headers: { 'user-id' : 'ksh@gmail.com' }
             }
           );
         } catch (e) {

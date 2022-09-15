@@ -193,11 +193,14 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+clickData.api_key_id,
+          '/v1.0/g1/paas/apigw/api-keys/'+clickData.api_key_id,
           {
             name: APIKeyName,
             description: APIKeyExplain,
             enabled: toggle
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {

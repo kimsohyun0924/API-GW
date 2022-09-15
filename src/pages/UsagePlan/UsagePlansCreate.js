@@ -202,13 +202,16 @@ export default function UsagePlansCreate() {
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/usage-plans',
+          '/v1.0/g1/paas/apigw/usage-plans',
           {
             name: UsagePlanName,
             description: UsagePlanExplain,
             replenish_rate: replenish_rate,
             burst_capacity: burst_capacity,
             requested_tokens: "1"
+          },
+          {
+            headers: { 'user-id' : 'kkk@gmail.com' }
           }
         );
       } catch (e) {

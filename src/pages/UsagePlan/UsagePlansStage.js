@@ -83,7 +83,10 @@ export default function UsagePlanStage() {
     try {
       setError(null);
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'+state.usage_plan_id+'/stages'
+        '/v1.0/g1/paas/apigw/usage-plans/'+state.usage_plan_id+'/stages',
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setDataTemp(response.data); // 데이터는 response.data)
       // console.log(response.data);
@@ -97,7 +100,10 @@ export default function UsagePlanStage() {
     try {
       setError(null);
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+        '/v1.0/g1/paas/apigw/service/user',
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setDataTemp2(response.data);
       // setDataTemp2(response.data.filter((item) => !(DataTemp.some((i) => i.usage_plan_id === item.usage_plan_id))));
@@ -112,7 +118,10 @@ export default function UsagePlanStage() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/stage/'+clickData.stage_id+'/usage-plan/'+state.usage_plan_id
+          '/v1.0/g1/paas/apigw/stage/'+clickData.stage_id+'/usage-plan/'+state.usage_plan_id,
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
       } catch (e) {
         setError(e);

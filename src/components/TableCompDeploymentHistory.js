@@ -127,10 +127,13 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/stage-snapshot/deploy',
+          '/v1.0/g1/paas/apigw/stage-snapshot/deploy',
           {
             stage_id: data.stage_id,
             stage_snapshot_id: snapshotId
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {
@@ -148,7 +151,10 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/stage-snapshot/'+snapshotId,
+          '/v1.0/g1/paas/apigw/stage-snapshot/'+snapshotId,
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
       } catch (e) {
         setError(e);

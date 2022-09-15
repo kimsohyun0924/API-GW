@@ -141,11 +141,14 @@ export default function ApiCreate() {
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/service',
-          {
-            api_name: ApiName,
-            description: ApiExplain
-          }
+          '/v1.0/g1/paas/apigw/service', 
+            {
+              api_name: ApiName,
+              description: ApiExplain 
+            },
+            {
+              headers: { 'user-id' : 'ksh@gmail.com' }
+            }
         );
       } catch (e) {
         setError(e);

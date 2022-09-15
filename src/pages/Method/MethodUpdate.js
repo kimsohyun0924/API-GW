@@ -174,7 +174,10 @@ export default function MethodUpdate(props) {
     try {
       setError(null);
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/method/'+resourceId
+        '/v1.0/g1/paas/apigw/method/'+resourceId,
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setDataTemp(response.data); // 데이터는 response.data)
       setIntegration_type(response.data.integration_type);
@@ -197,12 +200,14 @@ export default function MethodUpdate(props) {
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/method/'+resourceId,
+          '/v1.0/g1/paas/apigw/method/'+resourceId,
           {
               integration_type: integration_type,
               method_type: method_type,
               url_path: url_path,
               api_key_using: toggle
+          },   {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {

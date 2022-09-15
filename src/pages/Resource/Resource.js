@@ -67,7 +67,10 @@ export default function Resource(props) {
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
+        '/v1.0/g1/paas/apigw/resource/'+resourceId,
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       SetAllResource(response.data); // 데이터는 response.data
     } catch (e) {

@@ -97,11 +97,14 @@ export default function ResourceCreate(props) {
       try {
         setError(null);    
         const response = await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/resource',
+          '/v1.0/g1/paas/apigw/resource',
           {
             service_id: serviceId,
             parent_resource_id: resourceId,
             path: resource
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {

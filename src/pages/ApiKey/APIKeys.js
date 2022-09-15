@@ -100,7 +100,10 @@ export default function APIKeys() {
     try {
       setError(null);
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/api-keys'
+        '/v1.0/g1/paas/apigw/api-keys',
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setDataTemp(response.data); // 데이터는 response.data)
       // console.log(response.data);
@@ -115,7 +118,10 @@ export default function APIKeys() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+clickData.api_key_id
+          '/v1.0/g1/paas/apigw/api-keys/'+clickData.api_key_id,
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
       } catch (e) {
         setError(e);

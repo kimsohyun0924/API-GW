@@ -167,7 +167,10 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/stage/service/'+serviceId
+        '/v1.0/g1/paas/apigw/stage/service/'+serviceId,
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setStageOptions(response.data); // 데이터는 response.data)
       // console.log(response.data);
@@ -182,12 +185,15 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/stage',
+          '/v1.0/g1/paas/apigw/stage',
           {
             service_id: serviceId,
             stage_id: stage_id,
             stage_name: null,
             backend_url: null
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {

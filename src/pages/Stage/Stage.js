@@ -66,7 +66,10 @@ export default function Stage(props) {
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/stage/service/'+serviceId
+        '/v1.0/g1/paas/apigw/stage/service/'+serviceId,
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setStageList(response.data); // 데이터는 response.data
       // console.log(AllResource);

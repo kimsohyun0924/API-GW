@@ -193,12 +193,12 @@ export default function TreeNodeStage(props) {
   
     const handleExpansionClick = (event) => {
       handleExpansion(event);
-      if (doc_type !== "RESOURCE" && doc_type !== "METHOD") {
-        console.log(nodeId);
-        console.log(backend_url);
-        setStageId(nodeId);
-        setBackend_url(backend_url);
-      }
+      // if (doc_type !== "RESOURCE" && doc_type !== "METHOD") {
+      //   console.log(nodeId);
+      //   console.log(backend_url);
+      //   setStageId(nodeId);
+      //   setBackend_url(backend_url);
+      // }
     };
   
     const handleSelectionClick = (event) => {
@@ -206,10 +206,12 @@ export default function TreeNodeStage(props) {
       const str = event.target.getAttribute('value').split("!");
 
       if(str[0] === "RESOURCE") {
+        setBackend_url(null);
         setContent("third");
       }
       else if(str[0]=== "METHOD") {
         setContent("fourth");
+        setBackend_url(str[1]);
       } 
       else {
         setStageId(nodeId);
@@ -342,7 +344,7 @@ export default function TreeNodeStage(props) {
 
   const renderTree4 = (nodes) => {
     return (
-          <CustomTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url}}>
+          <CustomTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url, backend_url: nodes.backend_url}}>
             {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
           </CustomTreeItem> 
     );
@@ -362,7 +364,10 @@ export default function TreeNodeStage(props) {
        try {
          setError(null);
          await axios.delete(
-           '/v1.0/g1/paas/Memsq07/apigw/stage/'+resourceId
+           '/v1.0/g1/paas/apigw/stage/'+resourceId,
+           {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
          );
        } catch (e) {
          setError(e);
@@ -397,7 +402,7 @@ export default function TreeNodeStage(props) {
     first: <StageCreate serviceInfo={serviceInfo}/>,
     second: <StageInfo stageId={resourceId} backend_url={backend_url}/>,
     third: <StageResourceInfo resourceId={resourceId}/>,
-    fourth: <StageMethod stageId={stageId} resourceId={resourceId} backend_url={backend_url}/>
+    fourth: <StageMethod stageId={stageId} resourceId={resourceId}/>
   };
 
   return (
@@ -424,13 +429,26 @@ export default function TreeNodeStage(props) {
           </MenuDiv> 
           <ResourceInfoDiv>
             <PathDiv>{label}</PathDiv>
-            { invoke_url &&
-            <InvokeurlDiv>Invoke URL : {invoke_url}
-              <CopyToClipboard text={invoke_url} onCopy={()=>alert("주소가 복사되었습니다")}>
-                <CopyButtonDiv><img src={img2}/></CopyButtonDiv>
-              </CopyToClipboard>
-            </InvokeurlDiv>
-            }
+             { invoke_url && backend_url ?
+                <div style={{display: "block"}}>
+                  <InvokeurlDiv>
+                    Invoke URL : {invoke_url}
+                    <CopyToClipboard text={invoke_url} onCopy={()=>alert("주소가 복사되었습니다")}>
+                      <CopyButtonDiv><img src={img2}/></CopyButtonDiv>
+                    </CopyToClipboard>
+                  </InvokeurlDiv>
+                  <InvokeurlDiv>
+                    Backend URL : {backend_url}
+                  </InvokeurlDiv>
+                </div>
+              :
+                <InvokeurlDiv>
+                  Invoke URL : {invoke_url}
+                  <CopyToClipboard text={invoke_url} onCopy={()=>alert("주소가 복사되었습니다")}>
+                    <CopyButtonDiv><img src={img2}/></CopyButtonDiv>
+                  </CopyToClipboard>
+                </InvokeurlDiv>
+              }
              {content && <Content>{selectComponent[content]}</Content>}
           </ResourceInfoDiv> 
         </ExampleDiv>

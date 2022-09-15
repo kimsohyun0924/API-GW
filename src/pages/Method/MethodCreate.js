@@ -103,7 +103,7 @@ export default function MethodCreate(props) {
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/method',
+          '/v1.0/g1/paas/apigw/method',
           {
             service_id: serviceId,
             resource_id: resourceId,
@@ -111,6 +111,9 @@ export default function MethodCreate(props) {
             method_type: method_type,
             url_path: url_path,
             api_key_using: toggle
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {

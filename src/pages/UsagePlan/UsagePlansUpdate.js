@@ -197,13 +197,16 @@ export default function UsagePlansUpdate() {
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'+state.usage_plan_id,
+          '/v1.0/g1/paas/apigw/usage-plans/'+state.usage_plan_id,
           {
             name: UsagePlanName,
             description: UsagePlanExplain,
             replenish_rate: replenish_rate,
             burst_capacity: burst_capacity,
             requested_tokens: "1"
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {

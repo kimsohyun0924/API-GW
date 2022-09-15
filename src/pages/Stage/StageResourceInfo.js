@@ -26,6 +26,8 @@ const MethodDiv = styled.div`
 
 export default function StageInfo(props) {
 
+  // console.log(props);
+
   const [stageConnect, setStageConnect] = useState(false);
   const resourceId = props.resourceId;
   const [methods, setMethods] = useState([]);
@@ -42,7 +44,10 @@ export default function StageInfo(props) {
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
+        '/v1.0/g1/paas/apigw/resource/'+resourceId,
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setMethods(response.data); // 데이터는 response.data)
       // console.log(response.data);

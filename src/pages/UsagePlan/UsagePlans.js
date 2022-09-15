@@ -100,7 +100,10 @@ export default function UsagePlans() {
     try {
       setError(null);
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/usage-plans'
+        '/v1.0/g1/paas/apigw/usage-plans',
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setDataTemp(response.data); // 데이터는 response.data)
       // console.log(response.data);
@@ -115,7 +118,10 @@ export default function UsagePlans() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'+clickData.usage_plan_id
+          '/v1.0/g1/paas/apigw/usage-plans/'+clickData.usage_plan_id,
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
       } catch (e) {
         setError(e);

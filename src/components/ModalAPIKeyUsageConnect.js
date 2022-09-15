@@ -107,9 +107,12 @@ export default function ModalAPIKeyUsageConnect( { title, confirmText, cancelTex
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id,
+          '/v1.0/g1/paas/apigw/api-keys/'+state.api_key_id,
           {
             usage_plan_id: usage_plan_id
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {

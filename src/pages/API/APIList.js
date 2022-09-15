@@ -43,9 +43,6 @@ export default function MyApis() {
     "created_at": null,
     "updated_at": null,
   }
-  // const [bChecked, setChecked] = useState(false);
-  // const [checkedItems, setCheckedItems] = useState([]); //개별 체크된 아이템을 저장함
-  // const [checkedItemsName, setCheckedItemsName] = useState([]); //개별 체크된 아이템을 저장함
   const [DataTemp, setDataTemp] = useState([]);
   const [clickData, setClickData] = useState(initialState);
   const [deletedialog, setDeleteDialog] = useState(false);
@@ -102,28 +99,15 @@ export default function MyApis() {
     setUpdateDialog(false);
   };
 
-  // const checkHandler = (e) => {
-  //   setChecked(!bChecked);
-  //   const apiid = e.target.getAttribute('apiid');
-  //   const apiname = e.target.getAttribute('apiname');
-
-  //   if (e.target.checked) {
-  //     checkedItems.push(apiid);
-  //     checkedItemsName.push(apiname)
-  //     setCheckedItems(checkedItems);
-  //     setCheckedItemsName(checkedItemsName);
-  //   } else if (!e.target.checked) {
-  //     setCheckedItems(checkedItems.filter(checkedItem => checkedItem !== apiid));
-  //     setCheckedItemsName(checkedItemsName.filter(checkedItemName => checkedItemName !== apiname));
-  //   }
-  // };
-
   const fetchApis = async () => {
     //get API List 
     try {
       setError(null);
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/service/memsq'
+        '/v1.0/g1/paas/apigw/service/user',
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setDataTemp(response.data); // 데이터는 response.data)
       // console.log(response.data);
@@ -138,7 +122,10 @@ export default function MyApis() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+clickData.service_id
+          '/v1.0/g1/paas/apigw/service/'+clickData.service_id,
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
       } catch (e) {
         setError(e);

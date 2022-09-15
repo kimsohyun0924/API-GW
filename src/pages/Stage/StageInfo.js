@@ -146,9 +146,12 @@ export default function StageInfo(props) {
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.stageId,
+          '/v1.0/g1/paas/apigw/stage/'+props.stageId,
           {
             backend_url:backend_url
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {
@@ -167,7 +170,10 @@ export default function StageInfo(props) {
       try {
         setError(null);
         const response = await axios.get(
-          '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.stageId+'/usage-plan'
+          '/v1.0/g1/paas/apigw/stage/'+props.stageId+'/usage-plan',
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
         setDataTemp(response.data); // 데이터는 response.data)
       } catch (e) {
@@ -185,7 +191,10 @@ export default function StageInfo(props) {
       try {
         setError(null);
         const response = await axios.get(
-          '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.stageId+'/snapshots'
+          '/v1.0/g1/paas/apigw/stage/'+props.stageId+'/snapshots',
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
         setDataTemp2(response.data); // 데이터는 response.data)
       } catch (e) {
@@ -204,7 +213,10 @@ export default function StageInfo(props) {
       try {
         setError(null);
         const response = await axios.get(
-          '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'
+          '/v1.0/g1/paas/apigw/usage-plans/',
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
         setDataTemp3(response.data.filter((item) => !(DataTemp.some((i) => i.usage_plan_id === item.usage_plan_id))));
       } catch (e) {
@@ -219,34 +231,16 @@ export default function StageInfo(props) {
     setCreateDialog(false);
   };
 
-  const onCreate = () => {
-    //Create Stage-UsagePlan Connect
-    const createStageUsageConnet = async () => {
-      try {
-        setError(null);
-        await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/stage/usage-plan',
-          {
-            stage_id: props.stageId,
-            usage_plan_id: selectItem
-          }
-        );
-      } catch (e) {
-        setError(e);
-      }
-    };
-    createStageUsageConnet();
-    window.location.reload(true);
-    setCreateDialog(false);
-  };
-
   const onDelete = () => {
     //Delete Stage-UsagePlan Connect
      const deleteStageUsagePlanConnect = async () => {
        try {
          setError(null);
          await axios.delete(
-           '/v1.0/g1/paas/Memsq07/apigw/stage/'+props.stageId+'/usage-plan/'+clickData.usage_plan_id
+           '/v1.0/g1/paas/apigw/stage/'+props.stageId+'/usage-plan/'+clickData.usage_plan_id,
+           {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
          );
        } catch (e) {
          setError(e);
@@ -346,10 +340,10 @@ export default function StageInfo(props) {
           title="Usage Plan과 연결합니다."
           confirmText="연결하기"
           cancelText="취소"
-          onCreate={onCreate}
           onCancel={onCancel}
-          setSelectItem={setSelectItem}
+          stageId={props.stageId}
           UsageList={DataTemp3}
+          setCreateDialog={setCreateDialog}
           visible={createDialog}>
       </ModalUsagePlanConnect>
     </React.Fragment>

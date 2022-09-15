@@ -202,6 +202,7 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
+      console.log(event);
       if(label === "GET" || label === "POST" || label === "DELETE" || label === "PUT" || label === "ANY" || label === "PATCH" || label === "OPTIONS" || label === "HEAD") {
         setContent('third');
         // navigate('/api/operation/methodCreate');
@@ -356,7 +357,10 @@ export default function RecursiveTreeView(props) {
        try {
          setError(null);
          await axios.delete(
-           '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
+          '/v1.0/g1/paas/apigw/resource/'+resourceId,
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
          );
        } catch (e) {
          setError(e);
@@ -374,6 +378,15 @@ export default function RecursiveTreeView(props) {
     third: <MethodUpdate resourceId={resourceId} methodCommand={label} dropdownItems={optionsCommand}/>
   };
 
+  const buttonClick = () => {
+    
+  }
+  <TreeView>
+  <CustomTreeItem 
+    key="6322bbad8bcb9022d20ac39a" nodeId="6322bbad8bcb9022d20ac39a" label="ANY" ContentProps={{doc_type : "METHOD"}}>
+  </CustomTreeItem>
+</TreeView>
+
   return (
     <React.Fragment>
       <AllDiv>
@@ -383,6 +396,13 @@ export default function RecursiveTreeView(props) {
             <Button size="small" line="line" onClick={Delete}>리소스 삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
+        <button >
+          <TreeView>
+            <CustomTreeItem 
+              key="6322bbad8bcb9022d20ac39a" nodeId="6322bbad8bcb9022d20ac39a" label="ANY" ContentProps={{doc_type : "METHOD"}}>
+            </CustomTreeItem>
+          </TreeView>
+        </button >
         <ExampleDiv>
           <MenuDiv>
             { props.data.resource_id ? 

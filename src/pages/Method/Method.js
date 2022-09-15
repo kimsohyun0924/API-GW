@@ -152,7 +152,10 @@ export default function Method(props) {
         setError(null);
   
         const response = await axios.get(
-          '/v1.0/g1/paas/Memsq07/apigw/resource/'+resourceId
+          '/v1.0/g1/paas/apigw/resource/'+resourceId,
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
         setMethods(response.data.method_list); // 데이터는 response.data)
         // console.log(response.data);

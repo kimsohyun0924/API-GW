@@ -119,10 +119,13 @@ export default function ModalStageConnect( { title, confirmText, cancelText, sta
     try {
       setError(null);
       await axios.post(
-        '/v1.0/g1/paas/Memsq07/apigw/stage/usage-plan',
+        '/v1.0/g1/paas//apigw/stage/usage-plan',
         {
           stage_id: stage_id,
           usage_plan_id: state.usage_plan_id
+        },
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
         }
       );
     } catch (e) {

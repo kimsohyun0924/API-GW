@@ -141,7 +141,10 @@ export default function MethodComp(props) {
         try {
           setError(null);
           await axios.delete(
-            '/v1.0/g1/paas/Memsq07/apigw/method/'+methodId
+            '/v1.0/g1/paas/apigw/method/'+methodId,
+            {
+                headers: { 'user-id' : 'ksh@gmail.com' }
+            }
           );
         } catch (e) {
           setError(e);

@@ -80,7 +80,10 @@ export default function APIKeyUsagePlans() {
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id,
+        '/v1.0/g1/paas/apigw/api-keys/'+state.api_key_id,
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setDataTemp(response.data.usage_plan_list); // 데이터는 response.data)
     } catch (e) {
@@ -93,7 +96,10 @@ export default function APIKeyUsagePlans() {
     try {
       setError(null);
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/usage-plans/'
+        '/v1.0/g1/paas/apigw/usage-plans/',
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setDataTemp2(response.data.filter((item) => !(DataTemp.some((i) => i.usage_plan_id === item.usage_plan_id))));
     } catch (e) {
@@ -107,7 +113,10 @@ export default function APIKeyUsagePlans() {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/api-keys/'+state.api_key_id+'/'+clickData.usage_plan_id
+          '/v1.0/g1/paas/apigw/api-keys/'+state.api_key_id+'/'+clickData.usage_plan_id,
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
       } catch (e) {
         setError(e);

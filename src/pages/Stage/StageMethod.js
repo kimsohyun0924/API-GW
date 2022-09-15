@@ -105,11 +105,11 @@ export default function StageMethod_2(props) {
   const [error, setError] = useState(null);
   const [toggle, setToggle] = useState(false);
   const [inputs, setInputs] = useState({
-    backend_url: props.backend_url,
+    custom_backend_url: '',
     replenish_rate: '',
     burst_capacity: ''
   });
-  const { backend_url, replenish_rate, burst_capacity } = inputs;
+  const { custom_backend_url, replenish_rate, burst_capacity } = inputs;
 
   const clickedToggle = () => {
     setToggle((prev) => !prev);
@@ -134,22 +134,43 @@ export default function StageMethod_2(props) {
       setError(null);
 
       const response = await axios.get(
-        '/v1.0/g1/paas/Memsq07/apigw/method/'+props.resourceId
+        '/v1.0/g1/paas/apigw/method/'+props.resourceId,
+        {
+          headers: { 'user-id' : 'ksh@gmail.com' }
+        }
       );
       setDataTemp(response.data); // 데이터는 response.data)
-      if(response.data.backend_url_using === false) {
-        setInputs({
-          backend_url: props.backend_url,
-          replenish_rate: response.data.replenish_rate || '',
-          burst_capacity: response.data.burst_capacity || ''
-        });
+      if(response.data.usage_plan_using === false) {
+        if(response.data.custom_backend_url_using === false) {
+          setInputs({
+            custom_backend_url: '',
+            replenish_rate: '',
+            burst_capacity: ''
+          });
+        }
+        else {
+          setInputs({
+            custom_backend_url: response.data.custom_backend_url,
+            replenish_rate: '',
+            burst_capacity: ''
+          });
+        }
       }
       else {
-        setInputs({
-          backend_url: response.data.backend_url,
-          replenish_rate: response.data.replenish_rate,
-          burst_capacity: response.data.burst_capacity
-        });
+        if(response.data.custom_backend_url_using === false) {
+          setInputs({
+            custom_backend_url: '',
+            replenish_rate: response.data.replenish_rate,
+            burst_capacity: response.data.burst_capacity
+          });
+        }
+        else {
+          setInputs({
+            custom_backend_url: response.data.custom_backend_url,
+            replenish_rate: response.data.replenish_rate,
+            burst_capacity: response.data.burst_capacity
+          });
+        }
       }
       setToggle(response.data.usage_plan_using)
       // console.log(response.data);
@@ -164,13 +185,16 @@ export default function StageMethod_2(props) {
       try {
         setError(null);
         await axios.post(
-          '/v1.0/g1/paas/Memsq07/apigw/method/custom-usage-plan',
+          '/v1.0/g1/paas/apigw/method/custom-usage-plan',
           {
             stage_id: props.stageId,
             method_id: props.resourceId,
             replenish_rate: replenish_rate,
             burst_capacity: burst_capacity,
             requested_tokens: "1"
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {
@@ -183,7 +207,10 @@ export default function StageMethod_2(props) {
       try {
         setError(null);
         await axios.delete(
-          '/v1.0/g1/paas/Memsq07/apigw/method/custom-usage-plan/'+props.resourceId+'/stage/'+props.stageId,
+          '/v1.0/g1/paas/apigw/method/custom-usage-plan/'+props.resourceId+'/stage/'+props.stageId,
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
         );
       } catch (e) {
         setError(e);
@@ -195,11 +222,14 @@ export default function StageMethod_2(props) {
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/method/after-deploy/'+props.resourceId,
+          '/v1.0/g1/paas/apigw/method/after-deploy/'+props.resourceId,
           {
             stage_id: props.stageId,
-            backend_url_using: true,
-            backend_url: backend_url
+            custom_backend_url_using: true,
+            custom_backend_url: custom_backend_url
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {
@@ -229,7 +259,7 @@ export default function StageMethod_2(props) {
           <Item>
             <ItemName>Endpoint 도메인</ItemName>
             <ItemInput2>
-              <InputForm2 name="backend_url" placeholder="Endpoint 도메인" onChange={onChange} value={backend_url}/>
+              <InputForm2 name="custom_backend_url" placeholder="Endpoint 도메인" onChange={onChange} value={custom_backend_url}/>
             </ItemInput2>
           </Item>
         </ItemDiv>

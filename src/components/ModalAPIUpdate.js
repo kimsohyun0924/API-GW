@@ -141,8 +141,8 @@ export default function ModalAPIUpdate( { title,confirmText, cancelText, onCance
 
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
-    ApiName: clickData.name,
-    ApiExplain: clickData.description
+    ApiName: '',
+    ApiExplain: ''
   });
   const { ApiName, ApiExplain } = inputs;
   const onChange = e => {
@@ -160,10 +160,13 @@ export default function ModalAPIUpdate( { title,confirmText, cancelText, onCance
       try {
         setError(null);
         await axios.put(
-          '/v1.0/g1/paas/Memsq07/apigw/service/'+clickData.service_id,
+          '/v1.0/g1/paas/apigw/service/'+clickData.service_id,
           {
             api_name: ApiName,
             description: ApiExplain
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {
@@ -177,9 +180,12 @@ export default function ModalAPIUpdate( { title,confirmText, cancelText, onCance
   };
 
 
-  // useEffect(() => {
-
-  // }, [clickData]);
+  useEffect(() => {
+    setInputs({
+      ApiName: clickData.name,
+      ApiExplain: clickData.description
+    });
+  }, [clickData]);
   
   if (!visible) return null;
   return (
@@ -208,7 +214,7 @@ export default function ModalAPIUpdate( { title,confirmText, cancelText, onCance
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <span style={{padding:"0px 20px 0px 0px"}}><Button size="large" color="gray" line="noline" onClick={onCancel} >{cancelText}</Button></span>
-                    <Button size="large" line="line" Click={onUpdate}>{confirmText}</Button>
+                    <Button size="large" line="line" onClick={onUpdate}>{confirmText}</Button>
                   </ThemeProvider>
               </ButtonGroup>
           </DialogBlock>
