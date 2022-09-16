@@ -179,7 +179,6 @@ export default function RecursiveTreeView(props) {
       preventSelection,
     } = useTreeItem(nodeId);
   
-  
     const icon = iconProp || expansionIcon || displayIcon;
   
     const handleMouseDown = (event) => {
@@ -221,6 +220,7 @@ export default function RecursiveTreeView(props) {
           onClick={handleSelectionClick}
           component="div"
           className={classes.label}
+          label={label}
         >
           {label}
         </TestDiv2>

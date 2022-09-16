@@ -65,6 +65,7 @@ ModalAPIDelete.defaultProps = {
 //제목, 내용, 확인 텍스트, 취소 텍스트
 export default function ModalAPIDelete( { title, children, confirmText, cancelText, onConfirm, onCancel, visible } ) {
   if (!visible) return null;
+  
   return (
       <DarkBackground>
            <DialogBlock>

@@ -213,7 +213,7 @@ export default function StageInfo(props) {
       try {
         setError(null);
         const response = await axios.get(
-          '/v1.0/g1/paas/apigw/usage-plans/',
+          '/v1.0/g1/paas/apigw/usage-plans',
           {
             headers: { 'user-id' : 'ksh@gmail.com' }
           }

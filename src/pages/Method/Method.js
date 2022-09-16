@@ -169,11 +169,12 @@ export default function Method(props) {
 
     const onClick = (e) => {
       console.log("보기");
-      // console.log(e.target);
+      const str = e.target.getAttribute('value').split("!");
+
       // console.log(e.target.getAttribute('value'));
-      // props.setResourceId(e.target.methodInfo.method_id);
-      // props.setLabel(e.target.methodInfo.method_type);
-      // props.setContent('third');
+      props.setResourceId(str[0]);
+      props.setLabel(str[1]);
+      props.setContent('third');
       setUpdate(true);
     }
 

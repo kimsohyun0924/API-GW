@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
+
+import Spinner from 'components/Spinner';
+import SpinnerSmall from 'components/SpinnerSmall';
+
 
 import TableLine from '../image/tableline.svg';
 import Logo from '../image/trash.svg';
@@ -76,6 +80,19 @@ const ImgDiv = styled.div`
     cursor: pointer;
 `;
 
+
+const ItemSpinner = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 0.1rem;
+
+  ${props => props.align === 'center' &&
+    css`
+      justify-content: center;
+    `
+  }
+`;
+
 export default function TableCompDeploymentHistory({ columns, data, clickData, setClickData, setStageConnect3 }) {
 
   // console.log(data.stage_id);
@@ -122,6 +139,9 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
   }
 
   const onCreate = e => {
+
+    console.log(data.stage_id);
+    console.log(snapshotId);
     //Delete Stage Snapshot
     const deployStageSnapshot = async () => {
       try {
@@ -195,7 +215,10 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
                       <input type="checkbox" checked={clickData.stage_snapshot_id === item.stage_snapshot_id ? true : false} onChange={checkHandler}/>
                     </TD> */}
                     <TD style={{ lineHeight: '0.8rem' }} width='20%'>{item.updated_at}</TD>
-                    <TD width='20%'>{item.status === "STAGE_DEPLOYED" ?  <img style={{padding:"0px 0px 0px 5px"}} src={img1}/> : <img style={{padding:"0px 0px 0px 5px"}} src={img2}/>}</TD>
+                    <TD width='20%'>
+                      { item.status === "STAGE_DEPLOYED" ?  <img style={{padding:"0px 0px 0px 5px"}} src={img1}/> 
+                        : item.status === "STAGE_UNDEPLOYED" ? <img style={{padding:"0px 0px 0px 5px"}} src={img2}/>
+                        : item.status === "STAGE_DEPLOYING" ?  <ItemSpinner><SpinnerSmall/> <div style={{padding: "0px 0px 0px 10px"}}>DEPLOYING</div></ItemSpinner>: null } </TD>
                     <TD width='10%'>
                       <ImgDiv onClick={onClick2}>
                         { item.status === "STAGE_DEPLOYED" ?
