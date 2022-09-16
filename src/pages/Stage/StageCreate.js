@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import axios from 'axios';
-import ToggleSwitch from 'components/ToggleSwitch';
+
 import Button from 'components/Button';
 
 const AllDiv = styled.div`

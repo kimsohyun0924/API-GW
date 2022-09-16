@@ -9,6 +9,7 @@ import MethodUpdate from './MethodUpdate';
 
 import DropdownMethod from 'components/DropdownMethod';
 import ResourceMethodComp from 'components/ResourceMethodComp';
+import { ConnectingAirportsOutlined } from '@mui/icons-material';
 
 
 const MethodDiv = styled.div`
@@ -166,8 +167,13 @@ export default function Method(props) {
       // window.location.reload(true);
     };
 
-    const onClick = () => {
+    const onClick = (e) => {
       console.log("보기");
+      // console.log(e.target);
+      // console.log(e.target.getAttribute('value'));
+      // props.setResourceId(e.target.methodInfo.method_id);
+      // props.setLabel(e.target.methodInfo.method_type);
+      // props.setContent('third');
       setUpdate(true);
     }
 

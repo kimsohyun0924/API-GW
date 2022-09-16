@@ -66,7 +66,7 @@ const ButtonDiv = styled.div`
 
 export default function MethodCreate(props) {
 
-  console.log(props);
+  // console.log(props);
 
   const { serviceId, resourceId, setIsOpen, dropdownItems, methodCommand, setMethodCommand } = props;
   const [integration_type, setIntegration_type] = useState(null);

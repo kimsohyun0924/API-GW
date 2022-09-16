@@ -38,7 +38,7 @@ const Content = styled.div`
   height: 100%;
 `;
 
-export default function ToggleSwitch({ clickedToggle, toggle}) {
+export default function ToggleSwitch({ clickedToggle, toggle, value}) {
   
     // const [toggle, setToggle] = useState(false);
     // const [content, setContent] = useState(true);
@@ -62,7 +62,7 @@ export default function ToggleSwitch({ clickedToggle, toggle}) {
 
     return (
      <div>
-        <ToggleBtn onClick={clickedToggle} toggle={toggle} >
+        <ToggleBtn onClick={clickedToggle} toggle={toggle} value={value}>
           <Circle toggle={toggle} />
         </ToggleBtn>
         {/* {content && <Content>{selectComponent[content]}</Content>} */}

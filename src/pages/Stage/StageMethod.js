@@ -23,7 +23,7 @@ const Item = styled.div`
 `;
 
 const ItemName = styled.div`
-  width: 143px;
+  width: 250px;
   height: 45px;
   font-size: 13px;
   padding: 10px 0px 5px 10px;
@@ -32,9 +32,9 @@ const ItemName = styled.div`
 const ItemInput = styled.div`
   display: flex;
   width: 300px;
-  height: 45px;
+  height: 40px;
   font-size: 13px;
-  padding: 10px 0px 5px 0px;
+  padding: 5px 0px 5px 0px;
 `;
 
 const InputForm = styled.input`
@@ -49,10 +49,10 @@ const InputForm = styled.input`
 
 const ItemInput2 = styled.div`
     display: flex;
-    width: 78%;
-    height: 30px;
-    font-size: 14px;
-    /* padding: 10px 0px 5px 0px; */
+    width:74%;
+    height: 40px;
+    font-size: 13px;
+    padding: 5px 0px 5px 0px;
 `;
 
 const InputForm2 = styled.input`
@@ -77,17 +77,17 @@ const ItemNote = styled.div`
 
 const RequestDiv = styled.div`
   margin: 0px 0px 0px 5px;
-  padding: 5px 5px 5px 5px;
+  padding: 10px 5px 10px 5px;
   border: 1px solid #b6b6c3;
 `;
 
 const RequestName = styled.div`
   display: flex;
   width: 143px;
-  height: 45px;
+  height: 40px;
   align-items: center;
   font-size: 13px;
-  padding: 10px 0px 5px 10px;
+  padding: 5px 0px 5px 10px;
 `;
 
 const ButtonDiv = styled.div`
@@ -103,7 +103,8 @@ export default function StageMethod_2(props) {
 
   const [DataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
-  const [toggle, setToggle] = useState(false);
+  const [backend_toggle, setBackend_toggle] = useState(false);
+  const [usage_toggle, setUsage_toggle] = useState(false);
   const [inputs, setInputs] = useState({
     custom_backend_url: '',
     replenish_rate: '',
@@ -111,8 +112,14 @@ export default function StageMethod_2(props) {
   });
   const { custom_backend_url, replenish_rate, burst_capacity } = inputs;
 
-  const clickedToggle = () => {
-    setToggle((prev) => !prev);
+  const clickedToggle = (e) => {
+
+    if(e.target.value === "endpoint") {
+      setBackend_toggle((prev) => !prev);
+    }
+    if(e.target.value === "throttling") {
+      setUsage_toggle((prev) => !prev);
+    }
     // console.log(toggle);
   };
 
@@ -172,7 +179,8 @@ export default function StageMethod_2(props) {
           });
         }
       }
-      setToggle(response.data.usage_plan_using)
+      setBackend_toggle(response.data.custom_backend_url_using);
+      setUsage_toggle(response.data.usage_plan_using);
       // console.log(response.data);
     } catch (e) {
       setError(e);
@@ -237,7 +245,7 @@ export default function StageMethod_2(props) {
       }
     };
 
-    if( toggle === false ) {
+    if( usage_toggle === false ) {
       UpdateEndpoint();
       deleteThrottling();
     }
@@ -257,21 +265,34 @@ export default function StageMethod_2(props) {
       <BodyDiv>
         <ItemDiv> 
           <Item>
-            <ItemName>Endpoint 도메인</ItemName>
-            <ItemInput2>
-              <InputForm2 name="custom_backend_url" placeholder="Endpoint 도메인" onChange={onChange} value={custom_backend_url}/>
-            </ItemInput2>
-          </Item>
-        </ItemDiv>
-        <ItemDiv>
-          <Item>
-            <ItemName>Throttling</ItemName>
+            <ItemName>커스텀 Endpoint 도메인 설정</ItemName>
             <ItemInput>
-              <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+              <ToggleSwitch clickedToggle={clickedToggle} toggle={backend_toggle} value="endpoint"/>
             </ItemInput>
           </Item>
         </ItemDiv>
-        { toggle === true ? 
+        { backend_toggle === true ? 
+          <React.Fragment>
+            <RequestDiv>
+              <Item>
+              <RequestName>Endpoint 도메인</RequestName>
+                <ItemInput2>
+                  <InputForm2 name="custom_backend_url" placeholder="Endpoint 도메인" onChange={onChange} value={custom_backend_url}/>
+                </ItemInput2>
+              </Item>
+            </RequestDiv>
+          </React.Fragment>
+          : null
+        }
+        <ItemDiv>
+          <Item>
+            <ItemName>Throttling 설정</ItemName>
+            <ItemInput>
+              <ToggleSwitch clickedToggle={clickedToggle} toggle={usage_toggle} value="throttling"/>
+            </ItemInput>
+          </Item>
+        </ItemDiv>
+        { usage_toggle === true ? 
           <React.Fragment>
             <RequestDiv>
               <Item>
@@ -294,7 +315,7 @@ export default function StageMethod_2(props) {
         }
         <ButtonDiv>
             <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-              <Button size="large" line="line" onClick={onCreate}>생성하기</Button>
+              <Button size="large" line="line" onClick={onCreate}>변경하기</Button>
             </ThemeProvider>
         </ButtonDiv>
       </BodyDiv>

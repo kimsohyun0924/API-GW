@@ -23,6 +23,7 @@ import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
 const AllDiv = styled.div`
   width: 100%;
   height: 73vh; 
+  /* background: pink;  */
 `;
 
 
@@ -40,7 +41,9 @@ const ExampleDiv = styled.div`
 const MenuDiv = styled.div`
   min-width: 200px;
   min-height: 100%;
-
+  /* background:pink;
+  width: 200px;
+  height: 100%; */
   padding: 15px 15px 0px 15px;
   border: 1px solid #e2e2e2;
 `;
@@ -51,6 +54,8 @@ const ResourceInfoDiv = styled.div`
   border-bottom: 1px solid #e2e2e2;
   border-top: 1px solid #e2e2e2;
   border-right: 1px solid #e2e2e2;
+  /* padding : 15px 15px 15px 15px; */
+  /* background:pink; */
 `;
 
 const PathDiv = styled.div`
@@ -156,6 +161,10 @@ export default function RecursiveTreeView(props) {
   const [faildialog, setFailDialog] = useState(false);
   const [error, setError] = useState(null);
   const [optionsCommand, setOptionsCommand] = useState(optionsinitial);
+  const navigate = useNavigate(); 
+  // const NodeId_array = [props.data.resource_id];
+  const [nodeId_array, setNodeId_array] = useState(null);
+  // const nodeId_array = useMemo(()=> "data",[props.data.resource_id]);
 
   const CustomContent = React.forwardRef(function CustomContent(props, ref) {
     const {
@@ -193,17 +202,23 @@ export default function RecursiveTreeView(props) {
   
     const handleSelectionClick = (event) => {
       handleSelection(event);
-      if(doc_type === "METHOD") {
+      if(label === "GET" || label === "POST" || label === "DELETE" || label === "PUT" || label === "ANY" || label === "PATCH" || label === "OPTIONS" || label === "HEAD") {
         setContent('third');
+        // navigate('/api/operation/methodCreate');
       }
       else {
         setContent('second');
+        // navigate('/api/operation/method');
       }
+
+      // console.log(nodeId)
       setLabel(label);
       setResourceId(nodeId);
+      // console.log();
     };
   
     return (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <TestDiv
         className={clsx(className, classes.root, {
           [classes.expanded]: expanded,
@@ -214,6 +229,7 @@ export default function RecursiveTreeView(props) {
         onMouseDown={handleMouseDown}
         ref={ref}
       >
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
         <div onClick={handleExpansionClick} className={classes.iconContainer}>
           {icon}
         </div>
@@ -221,6 +237,8 @@ export default function RecursiveTreeView(props) {
           onClick={handleSelectionClick}
           component="div"
           className={classes.label}
+          value={doc_type}
+          label={label}
         >
           {label}
         </TestDiv2>
@@ -254,7 +272,6 @@ export default function RecursiveTreeView(props) {
      */
     label: PropTypes.node,
 
-
     doc_type: PropTypes.node,
     /**
      * The id of the node.
@@ -262,9 +279,33 @@ export default function RecursiveTreeView(props) {
     nodeId: PropTypes.string.isRequired,
   };
 
+ 
+  
   const CustomTreeItem = (props) => (
     <TreeItem ContentComponent={CustomContent} {...props} />
   );
+
+  // const StyledTreeItem = styled((props) => {
+  //   // console.log(props);
+  //   return (
+  //   <TreeItem ContentComponent={CustomContent} {...props}/>
+  //   );
+  // })(() => ({
+  //   [`& .${treeItemClasses.content}`]: {
+  //     height: '35px', 
+  //   },
+  //   [`& .${treeItemClasses.label}`]: {
+  //     fontWeight: '500 !important',
+  //     fontFamily: 'Noto Sans KR, sans-serif !important',
+  //     fontSize: '15px !important',
+  //     borderBottom: '1px solid #e2e2e2'
+  //   },
+  // }));
+
+  const test_function = (node) => {
+    console.log(node);
+    setNodeId_array(node);
+  }
 
   const renderTree = (nodes) => {
     return(
@@ -274,6 +315,10 @@ export default function RecursiveTreeView(props) {
     </CustomTreeItem>
     );
   };  
+// (NodeId_array.push(node.resource_id), 
+// ({() => setNodeId_array(node.resoure_id)}, renderTree(node)))
+// () => setNodeId_array(node.resoure_id),
+// console.log(nodeId_array);
 
   const renderTree3 = (nodes) => {
     return(
@@ -285,6 +330,7 @@ export default function RecursiveTreeView(props) {
   
   const Create = e => {
     setContent('first');
+    // navigate('/api/operation/resourceCreate');
   };
 
   const Delete = e => {
@@ -327,7 +373,7 @@ export default function RecursiveTreeView(props) {
 
   const selectComponent = {
     first: <ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>,
-    second: <Method serviceId={serviceInfo.service_id} resourceId={resourceId} lable={label} setContent={setContent} setResourceId={setResourceId} setLabel={setLabel} optionsCommand={optionsCommand} setOptionsCommand={setOptionsCommand}/>, //method list 나태내줌
+    second: <Method serviceId={serviceInfo.service_id} resourceId={resourceId} lable={label} optionsCommand={optionsCommand} setOptionsCommand={setOptionsCommand}/>, //method list 나태내줌
     third: <MethodUpdate resourceId={resourceId} methodCommand={label} dropdownItems={optionsCommand}/>
   };
 
@@ -340,13 +386,13 @@ export default function RecursiveTreeView(props) {
             <Button size="small" line="line" onClick={Delete}>리소스 삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
-        {/* <button >
+        <button >
           <TreeView>
             <CustomTreeItem 
               key="6322bbad8bcb9022d20ac39a" nodeId="6322bbad8bcb9022d20ac39a" label="ANY" ContentProps={{doc_type : "METHOD"}}>
             </CustomTreeItem>
           </TreeView>
-        </button > */}
+        </button >
         <ExampleDiv>
           <MenuDiv>
             { props.data.resource_id ? 
@@ -355,6 +401,7 @@ export default function RecursiveTreeView(props) {
               defaultCollapseIcon={<ExpandMoreIcon />}
               defaultExpanded={[]} //처음 화면이 렌더링 됐을 떄 펼쳐져있을 Tree
               defaultExpandIcon={<ChevronRightIcon />}
+              // defaultSelected={'root'}
               sx={{ height: 440, flexGrow: 1, maxWidth: 400, overflowY: 'auto', backgroud: "pink"}}
               >
                 {renderTree(resourceInfo)}
@@ -364,9 +411,16 @@ export default function RecursiveTreeView(props) {
           <ResourceInfoDiv>
             <PathDiv>{label}</PathDiv>
              {content && <Content>{selectComponent[content]}</Content>}
+              {/* <Routes>
+                <Route path="/" element={<ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>}></Route>
+                <Route path="/resourceCreate" element={<ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>}></Route>
+                <Route path="/resource/:nodeId" element={<Method resourceId={resourceId}/>}></Route>
+                <Route path="/method" element={<MethodUpdate resourceId={resourceId} methodCommandValue={label}/>}></Route>
+              </Routes> */}
           </ResourceInfoDiv> 
         </ExampleDiv>
         <ModalAPIDelete
+              // title="정말로 삭제하시겠습니까?"
               confirmText="삭제하기"
               cancelText="취소"
               onConfirm={onDelete}
@@ -376,6 +430,7 @@ export default function RecursiveTreeView(props) {
               <span style={{fontWeight:"bold"}}>{label}</span><span style={{padding:"0px 0px 0px 10px"}}>리소스를 삭제합니다.</span>
         </ModalAPIDelete> 
         <ModalRootResourceDelete
+              // title="정말로 삭제하시겠습니까?"
               ConfirmText="확인"
               onConfirm={onCancel}
               visible={faildialog}

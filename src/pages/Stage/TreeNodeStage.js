@@ -429,7 +429,7 @@ export default function TreeNodeStage(props) {
           </MenuDiv> 
           <ResourceInfoDiv>
             <PathDiv>{label}</PathDiv>
-             { invoke_url && backend_url ?
+             { content === "fourth" && invoke_url && backend_url ?
                 <div style={{display: "block"}}>
                   <InvokeurlDiv>
                     Invoke URL : {invoke_url}
@@ -441,13 +441,14 @@ export default function TreeNodeStage(props) {
                     Backend URL : {backend_url}
                   </InvokeurlDiv>
                 </div>
-              :
+              : invoke_url ? 
                 <InvokeurlDiv>
                   Invoke URL : {invoke_url}
                   <CopyToClipboard text={invoke_url} onCopy={()=>alert("주소가 복사되었습니다")}>
                     <CopyButtonDiv><img src={img2}/></CopyButtonDiv>
                   </CopyToClipboard>
                 </InvokeurlDiv>
+                : null
               }
              {content && <Content>{selectComponent[content]}</Content>}
           </ResourceInfoDiv> 
