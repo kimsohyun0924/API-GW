@@ -63,11 +63,10 @@ const PathDiv = styled.div`
     width: 100%;
     height: 45px;
     border-bottom: 1px solid #e2e2e2;
-    padding : 10px 10px 0px 10px;
+    padding : 10px 10px 0px 15px;
     font-weight: 500 !important;
     font-family: 'Noto Sans KR', sans-serif !important;
-    font-size: 17px !important;
-    /* background:orange; */
+    font-size: 15px !important;
 `;
 
 const Content = styled.div`
@@ -193,12 +192,9 @@ export default function TreeNodeStage(props) {
   
     const handleExpansionClick = (event) => {
       handleExpansion(event);
-      // if (doc_type !== "RESOURCE" && doc_type !== "METHOD") {
-      //   console.log(nodeId);
-      //   console.log(backend_url);
-      //   setStageId(nodeId);
-      //   setBackend_url(backend_url);
-      // }
+      if (doc_type !== "RESOURCE" && doc_type !== "METHOD") {
+        setStageId(nodeId);
+      }
     };
   
     const handleSelectionClick = (event) => {
@@ -344,9 +340,17 @@ export default function TreeNodeStage(props) {
 
   const renderTree4 = (nodes) => {
     return (
-          <CustomTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url, backend_url: nodes.backend_url}}>
+      <div key={nodes.method_id}>
+        { nodes.custom_backend_url_using === true ?
+          <CustomTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url, backend_url: nodes.custom_backend_url}}>
             {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
           </CustomTreeItem> 
+          : <CustomTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type, invoke_url: nodes.invoke_url, backend_url: nodes.backend_url}}>
+              {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
+            </CustomTreeItem> 
+        }
+      </div>
+         
     );
   };
 
@@ -401,7 +405,7 @@ export default function TreeNodeStage(props) {
   const selectComponent = {
     first: <StageCreate serviceInfo={serviceInfo}/>,
     second: <StageInfo stageId={resourceId} backend_url={backend_url}/>,
-    third: <StageResourceInfo resourceId={resourceId}/>,
+    third: <StageResourceInfo resourceId={resourceId} setResourceId={setResourceId} setLabel={setLabel} setContent={setContent} setBackend_url={setBackend_url}/>,
     fourth: <StageMethod stageId={stageId} resourceId={resourceId}/>
   };
 

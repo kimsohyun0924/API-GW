@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Switch from '@material-ui/core/Switch';
 import styled, { css } from 'styled-components';
-import CORS from '../pages/API/CORS';
 
 const ToggleBtn = styled.button`
   width: 34px;
@@ -15,7 +14,9 @@ const ToggleBtn = styled.button`
   justify-content: center;
   align-items: center;
   transition: all 0.5s ease-in-out;
+
 `;
+
 const Circle = styled.div`
   background-color: white;
   width: 13px;
@@ -31,41 +32,16 @@ const Circle = styled.div`
       transform: translate(16px, 0);
       transition: all 0.5s ease-in-out;
     `}
+
 `;
 
-const Content = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-export default function ToggleSwitch({ clickedToggle, toggle, value}) {
-  
-    // const [toggle, setToggle] = useState(false);
-    // const [content, setContent] = useState(true);
-
-    // const clickedToggle = () => {
-    //   setToggle((prev) => !prev);
-    //   console.log(toggle);
-    //   if(toggle == true) {
-    //     setContent("true");
-    //   }
-    //   else {
-    //     setContent("false");
-    //   }
-    //   console.log(content);
-    // };
-
-    // const selectComponent = {
-    //   false : <CORS/>
-    // };
-
+export default function ToggleSwitch({ clickedToggle, toggle }) {
 
     return (
      <div>
-        <ToggleBtn onClick={clickedToggle} toggle={toggle} value={value}>
-          <Circle toggle={toggle} />
+        <ToggleBtn onClick={clickedToggle} toggle={toggle}>
+        <Circle toggle={toggle}/>
         </ToggleBtn>
-        {/* {content && <Content>{selectComponent[content]}</Content>} */}
      </div>
     );
   }

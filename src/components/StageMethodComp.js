@@ -162,7 +162,10 @@ export default function MethodComp(props) {
                 <MethodValueDiv methodtype={methodInfo.method_type}>
                     <MethodValue>{methodInfo.method_type}</MethodValue>
                     <ButtonDiv>
-                        <Button onClick={props.onClick}>보기</Button>
+                        { methodInfo.custom_backend_url_using === true ?
+                            <Button value={methodInfo.method_id+'!'+methodInfo.method_type+'!'+methodInfo.custom_backend_url} onClick={props.onClick}>보기</Button>
+                            : <Button value={methodInfo.method_id+'!'+methodInfo.method_type+'!'+methodInfo.backend_url} onClick={props.onClick}>보기</Button>
+                        }
                     </ButtonDiv>
                 </MethodValueDiv>
                 <MethodInfoDiv>

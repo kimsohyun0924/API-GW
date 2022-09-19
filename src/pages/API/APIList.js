@@ -11,6 +11,7 @@ import MainHeader from 'components/MainHeader';
 import TableComp from 'components/TableComp';
 import ModalAPIUpdate from 'components/ModalAPIUpdate';
 import ModalAPIDelete from 'components/ModalAPIDelete';
+import { click } from '@testing-library/user-event/dist/click';
 
 const HeadDiv = styled.div`
 `;
@@ -151,9 +152,9 @@ export default function MyApis() {
         </HeadDiv>
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49'}}}>
-            <span style={{padding:"0px 20px 0px 0px"}}><Button size="small" line="line" onClick={Create}>API 생성</Button></span>
-            <span  style={{padding:"0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Update}>변경</Button></span>
-            <Button size="small" line="outline" onClick={Delete}>삭제</Button>
+            <span style={{padding:"0px 20px 0px 0px"}}><Button size="small" line="line" disabled={false} onClick={Create}>API 생성</Button></span>
+            <span  style={{padding:"0px 10px 0px 0px"}}><Button size="small" line="outline" disabled={clickData.service_id === null} onClick={Update}>변경</Button></span>
+            <Button size="small" line="outline" disabled={clickData.service_id === null} onClick={Delete}>삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
         <TableDiv>

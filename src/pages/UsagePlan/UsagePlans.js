@@ -148,9 +148,9 @@ export default function UsagePlans() {
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
             <span style={{padding: "0px 20px 0px 0px"}}><Button size="small" line="line" action={Create}>Usage Plan 생성</Button></span>
-            <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Update}>변경</Button></span>
-            <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Delete}>삭제</Button></span>
-            <Button size="small" line="outline" onClick={StageConncet}>연결된 Stage</Button>
+            <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" disabled={clickData.usage_plan_id === null} onClick={Update}>변경</Button></span>
+            <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" disabled={clickData.usage_plan_id === null} onClick={Delete}>삭제</Button></span>
+            <Button size="small" line="outline" disabled={clickData.usage_plan_id === null} onClick={StageConncet}>연결된 Stage</Button>
           </ThemeProvider>
         </ButtonDiv>
         <TableDiv>

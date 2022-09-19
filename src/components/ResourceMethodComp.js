@@ -158,7 +158,7 @@ export default function MethodComp(props) {
                 <MethodValueDiv methodtype={methodInfo.method_type}>
                     <MethodValue>{methodInfo.method_type}</MethodValue>
                     <ButtonDiv>
-                        <Button value={methodInfo.method_id+'!'+methodInfo.method_type } onClick={props.onClick}>보기</Button>
+                        <Button value={methodInfo.method_id+'!'+methodInfo.method_type} onClick={props.onClick}>보기</Button>
                         <Button onClick={Delete}>삭제</Button>
                     </ButtonDiv>
                 </MethodValueDiv>

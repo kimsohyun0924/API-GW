@@ -139,9 +139,9 @@ const ButtonDiv = styled.div`
 
 export default function MethodUpdate(props) {
 
-  const { resourceId, methodCommand, dropdownItems }= props;
+  const { resourceId, dropdownItems }= props;
   const [integration_type, setIntegration_type] = useState(null);
-  const [method_type, setMethod_type] = useState(methodCommand);
+  const [method_type, setMethod_type] = useState(null);
   const [toggle, setToggle] = useState(false);
   const [error, setError] = useState(null);
   const [dataTemp, setDataTemp] = useState(null);
@@ -234,7 +234,7 @@ export default function MethodUpdate(props) {
         <ItemDiv> 
           <Item>
             <ItemName>Method 종류</ItemName>
-            <DropdownMethod dropdownItems={dropdownItems} default={methodCommand} size="large" Command={method_type} setCommand={setMethod_type}/>
+            <DropdownMethod dropdownItems={dropdownItems} default={method_type} size="large" Command={method_type} setCommand={setMethod_type}/>
             </Item>
           </ItemDiv>
           <ItemDiv> 

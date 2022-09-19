@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useLocation } from "react-router";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import StageMethodComp from 'components/StageMethodComp';
+import { stepButtonClasses } from '@mui/material';
 
 const InvokeurlDiv = styled.div`
   background: #eff4fb;
@@ -33,9 +34,15 @@ export default function StageInfo(props) {
   const [methods, setMethods] = useState([]);
   const [error, setError] = useState(null);
   
-  const onClick = () => {
-    // console.log(isActive2)
-    setStageConnect((prev) => !prev);
+  const onClick = (e) => {
+    console.log("보기");
+    const str = e.target.getAttribute('value').split("!");
+
+    console.log(e.target.getAttribute('value'));
+    props.setResourceId(str[0]);
+    props.setLabel(str[1]);
+    props.setBackend_url(str[2]);
+    props.setContent('fourth');
   }
 
   const fetchMethods = async () => {

@@ -150,9 +150,9 @@ export default function APIKeys() {
         <ButtonDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
             <span style={{padding: "0px 20px 0px 0px"}}><Button size="small" line="line" onClick={Create}>API Key 생성</Button></span>
-            <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Update}>변경</Button></span>
-            <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" onClick={Delete}>삭제</Button></span>
-            <Button size="small" line="outline" onClick={UsagePlanConnect}>연결된 Usage Plan</Button>
+            <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" disabled={clickData.api_key_id === null} onClick={Update}>변경</Button></span>
+            <span style={{padding: "0px 10px 0px 0px"}}><Button size="small" line="outline" disabled={clickData.api_key_id === null} onClick={Delete}>삭제</Button></span>
+            <Button size="small" line="outline" disabled={clickData.api_key_id === null} onClick={UsagePlanConnect}>연결된 Usage Plan</Button>
           </ThemeProvider>
         </ButtonDiv>
         <TableDiv>

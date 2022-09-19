@@ -57,7 +57,10 @@ const PathDiv = styled.div`
     width: 100%;
     height: 45px;
     border-bottom: 1px solid #e2e2e2;
-    padding : 15px 15px 0px 15px;
+    padding : 10px 10px 0px 15px;
+    font-weight: 500 !important;
+    font-family: 'Noto Sans KR', sans-serif !important;
+    font-size: 15px !important;
 `;
 
 const Content = styled.div`
@@ -327,9 +330,13 @@ export default function RecursiveTreeView(props) {
 
   const selectComponent = {
     first: <ResourceCreate serviceInfo={serviceInfo} resourceId={resourceId} label={label}/>,
-    second: <Method serviceId={serviceInfo.service_id} resourceId={resourceId} lable={label} setContent={setContent} setResourceId={setResourceId} setLabel={setLabel} optionsCommand={optionsCommand} setOptionsCommand={setOptionsCommand}/>, //method list 나태내줌
-    third: <MethodUpdate resourceId={resourceId} methodCommand={label} dropdownItems={optionsCommand}/>
+    second: <Method serviceId={serviceInfo.service_id} resourceId={resourceId} setResourceId={setResourceId} setLabel={setLabel} setContent={setContent} optionsCommand={optionsCommand} setOptionsCommand={setOptionsCommand}/>, //method list 나태내줌
+    third: <MethodUpdate resourceId={resourceId} dropdownItems={optionsCommand}/>
   };
+
+  useEffect(() => {
+
+  }, [label]);
 
   return (
     <React.Fragment>

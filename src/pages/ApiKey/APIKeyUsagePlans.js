@@ -145,7 +145,7 @@ export default function APIKeyUsagePlans() {
         <MenuDiv>
           <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
             <span style={{padding: "0px 15px 0px 0px"}}><Button size="small" line="line" onClick={Create}>Usage Plan 연결</Button></span>
-            <Button size="small" line="outline" onClick={Delete}>삭제</Button>
+            <Button size="small" line="outline" disabled={clickData.usage_plan_id === null} onClick={Delete}>삭제</Button>
           </ThemeProvider>
         </MenuDiv>
         <TableDiv>

@@ -116,20 +116,9 @@ export default function ResourceCreate(props) {
   };
 
     const clickedToggle = () => {
+      console.log(toggle);
       setToggle((prev) => !prev);
-      // if(toggle == true) {
-      //   setContent("true");
-      // }
-      // else {
-      //   setContent("false");
-      // }
-      // console.log(content);
     };
-
-    // const selectComponent = {
-    //   false : <CORS/>
-    // };
-
 
     return (
         <React.Fragment>

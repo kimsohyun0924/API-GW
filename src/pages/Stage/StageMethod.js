@@ -49,7 +49,7 @@ const InputForm = styled.input`
 
 const ItemInput2 = styled.div`
     display: flex;
-    width:74%;
+    width: 77%;
     height: 40px;
     font-size: 13px;
     padding: 5px 0px 5px 0px;
@@ -112,15 +112,12 @@ export default function StageMethod_2(props) {
   });
   const { custom_backend_url, replenish_rate, burst_capacity } = inputs;
 
-  const clickedToggle = (e) => {
-
-    if(e.target.value === "endpoint") {
+  const clickedBackendToggle = () => {
       setBackend_toggle((prev) => !prev);
-    }
-    if(e.target.value === "throttling") {
+  };
+
+  const clickedUsageToggle = () => {
       setUsage_toggle((prev) => !prev);
-    }
-    // console.log(toggle);
   };
 
   const onChange = e => {
@@ -233,7 +230,7 @@ export default function StageMethod_2(props) {
           '/v1.0/g1/paas/apigw/method/after-deploy/'+props.resourceId,
           {
             stage_id: props.stageId,
-            custom_backend_url_using: true,
+            custom_backend_url_using: backend_toggle,
             custom_backend_url: custom_backend_url
           },
           {
@@ -249,7 +246,7 @@ export default function StageMethod_2(props) {
       UpdateEndpoint();
       deleteThrottling();
     }
-    else {
+    else if( usage_toggle === true ) {
       UpdateEndpoint();
       createThrottling();
     }
@@ -267,7 +264,7 @@ export default function StageMethod_2(props) {
           <Item>
             <ItemName>커스텀 Endpoint 도메인 설정</ItemName>
             <ItemInput>
-              <ToggleSwitch clickedToggle={clickedToggle} toggle={backend_toggle} value="endpoint"/>
+              <ToggleSwitch clickedToggle={clickedBackendToggle} toggle={backend_toggle}/>
             </ItemInput>
           </Item>
         </ItemDiv>
@@ -288,7 +285,7 @@ export default function StageMethod_2(props) {
           <Item>
             <ItemName>Throttling 설정</ItemName>
             <ItemInput>
-              <ToggleSwitch clickedToggle={clickedToggle} toggle={usage_toggle} value="throttling"/>
+              <ToggleSwitch clickedToggle={clickedUsageToggle} toggle={usage_toggle}/>
             </ItemInput>
           </Item>
         </ItemDiv>

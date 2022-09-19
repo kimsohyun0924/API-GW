@@ -13,7 +13,6 @@ const colorStyles = css`
       &:active {
         background: ${darken(0.1, selected)};
       } */
-
       ${props =>
           props.line === "line"&&
         css`
@@ -32,7 +31,6 @@ const colorStyles = css`
             background: ${darken(0.1, selected)};
           }            
         `}
-
       ${props =>
         props.line === "outline" &&
         css`
@@ -48,7 +46,6 @@ const colorStyles = css`
             color: #03428e;
           }    
         `}
-
         ${props =>
         props.line === "noline" &&
         css`
@@ -63,7 +60,6 @@ const colorStyles = css`
             border: none;
           }
         `}
-
         ${props =>
         props.resource&&
         css`
@@ -76,7 +72,6 @@ const colorStyles = css`
             color: black;
           }
         `}
-
         ${props =>
         props.line === "small" &&
         css`
@@ -91,7 +86,22 @@ const colorStyles = css`
             color: #03428e;
           }    
         `}
-
+        ${props =>
+        props.disabled === true &&
+        css`
+          color: #b6b6c3;
+          background: none;
+          border-radius: 2px;
+          padding: 8px 10px 8px 10px;
+          border: 1px solid #b6b6c3;
+          font-family: Spoqa Han Sans Regular;
+          cursor: default;
+          &:hover {
+            background: white;
+            border: 1px solid #b6b6c3;
+            color: #b6b6c3;
+          }    
+        `}
     `;
   }}
 `;
@@ -134,23 +144,21 @@ const StyledButton = styled.button`
   vertical-align: middle; */
   /* min-width: 200px; */
   box-shadow: none;
-
   /* 크기 */
   ${sizeStyles}
-
   /* 색상 */
   ${colorStyles}
-
   /* 기타 */
 `;
 
-function Button({ children, color, size, line, action, ...rest }) {
+function Button({ children, color, size, line, action, disabled, ...rest }) {
   return (
     <StyledButton
       color={color}
       size={size}
       line={line}
       onClick={action}
+      disabled={disabled}
       {...rest}
     >
       {children}
