@@ -95,6 +95,7 @@ const TableHeaderUsagePlan = [
 
 const TableHeaderDeployHistory = [
   "배포일시",
+  "배포 설명",
   "배포 상태",
   "배포",
   "삭제"

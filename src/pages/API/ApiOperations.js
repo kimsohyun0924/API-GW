@@ -19,6 +19,8 @@ import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
 
+import { useMenuState, useMenuDispatch } from 'hooks/MenuContext'; 
+
 const HeadDiv = styled.div`
   display: flex;
   justify-content: space-between;
@@ -47,16 +49,34 @@ const TS = styled(Tab)`
  
 export default function ApiOperation() {
 
-    const [value, setValue] = useState('0');
+    const menuState = useMenuState();
+    const menuDispatch = useMenuDispatch();
+    const [value, setValue] = useState(menuState.resourceTab);
     const navigate = useNavigate();
     const { state } = useLocation();
     const [createDialog, setCreateDialog] = useState(false);
+
+    // menuDispatch({
+    //   type:'UPDATE',
+    //   data: {
+    //     ...menuState, 
+    //     token : token
+    //   }
+    // });
 
     // console.log(state);
   
     const handleChange = (event, newValue) => {
         // console.log(newValue);
         setValue(newValue);
+        menuDispatch({
+          type:'UPDATE',
+          data: {
+            ...menuState, 
+            resourceTab : newValue
+          }
+        });
+        
     };
 
     const ModalCreateDialog = () => {
@@ -68,10 +88,9 @@ export default function ApiOperation() {
       setCreateDialog(false);
     };
 
-    useEffect(() => {
+    // useEffect(() => {
+    // }, []);
     
-    }, []);
-
     return ( 
         <React.Fragment>
             <MainContainer>

@@ -11,13 +11,12 @@ import MainHeader from 'components/MainHeader';
 import TableComp from 'components/TableComp';
 import ModalAPIUpdate from 'components/ModalAPIUpdate';
 import ModalAPIDelete from 'components/ModalAPIDelete';
-import { click } from '@testing-library/user-event/dist/click';
 
 const HeadDiv = styled.div`
 `;
 
 const ButtonDiv = styled.div`
-/* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */
+  /* flex 아이템들을 왼쪽에서 오른쪽으로 정렬 */
   /* display: flex; */
   position: relative;
   padding: 30px 0px 20px 0px;
@@ -44,10 +43,10 @@ export default function MyApis() {
     "created_at": null,
     "updated_at": null,
   }
-  const [DataTemp, setDataTemp] = useState([]);
+  const [dataTemp, setDataTemp] = useState([]);
   const [clickData, setClickData] = useState(initialState);
-  const [deletedialog, setDeleteDialog] = useState(false);
-  const [updatedialog, setUpdateDialog] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [updateDialog, setUpdateDialog] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const testData = [
@@ -71,17 +70,8 @@ export default function MyApis() {
   }
 ]
   
-  // console.log(DataTemp);
-
-  // const ApiOperation = (e) => {
-  //   const evalue = e.target.getAttribute('value');
-  //   console.log(e);
-  //   // getElementById( 'xyz' ).getAttribute( 'title' );
-  //   navigate('/api/operation', { state: e.target.value });
-  // };
-
-  // console.log(checkedItems);
-
+// e.target.getAttribute('value');
+ 
   const Create = () => {
     navigate('/api/create');
   };
@@ -101,7 +91,7 @@ export default function MyApis() {
   };
 
   const fetchApis = async () => {
-    //get API List 
+    //get API list 
     try {
       setError(null);
       const response = await axios.get(
@@ -134,13 +124,15 @@ export default function MyApis() {
       }
     };
     deleteApi();
-    window.location.reload(true);
-    setDeleteDialog(false);
+    // window.location.reload(true);
+    setTimeout(() => {
+      setDeleteDialog(false);    
+    }, 1000);
   };
 
   useEffect(() => {
     fetchApis();
-  }, []);
+  }, [updateDialog, deleteDialog]);
 
   return (
     <React.Fragment>
@@ -158,7 +150,7 @@ export default function MyApis() {
           </ThemeProvider>
         </ButtonDiv>
         <TableDiv>
-          <TableComp columns={TableHeader} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
+          <TableComp columns={TableHeader} data={dataTemp} clickData={clickData} setClickData={setClickData}/>
         </TableDiv>
       </MainContainer>
       <ModalAPIUpdate
@@ -169,7 +161,7 @@ export default function MyApis() {
             clickData={clickData}
             setClickData={setClickData}
             setUpdateDialog={setUpdateDialog}
-            visible={updatedialog}>
+            visible={updateDialog}>
       </ModalAPIUpdate>
       <ModalAPIDelete
             // title="정말로 삭제하시겠습니까?"
@@ -177,7 +169,7 @@ export default function MyApis() {
             cancelText="취소"
             onConfirm={onDelete}
             onCancel={onCancel}
-            visible={deletedialog}
+            visible={deleteDialog}
             >
             <span style={{fontWeight:"bold"}}>{clickData.name}</span><span style={{padding:"0px 0px 0px 10px"}}>API를 삭제합니다.</span>
       </ModalAPIDelete>

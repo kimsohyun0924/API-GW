@@ -154,6 +154,8 @@ export default function TreeNodeStage(props) {
   const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [error, setError] = useState(null);
+  const nodeId_array = [];
+  const [length, setLength] = useState(null);
   
   // const serviceInfo = props.serviceInfo;
   // const navigate = useNavigate(); 
@@ -337,7 +339,6 @@ export default function TreeNodeStage(props) {
     );
   };
 
-
   const renderTree4 = (nodes) => {
     return (
       <div key={nodes.method_id}>
@@ -354,9 +355,23 @@ export default function TreeNodeStage(props) {
     );
   };
 
-  // console.log(serviceInfo.service_id);
-  // console.log(resourceId);
+  const renderTree5 = (nodes) => {
+    return (
+          <div key={nodes.stage_id+"5"}>
+            { Array.isArray(nodes.stage_snapshot_list) ? nodes.stage_snapshot_list.map((node) => renderTree6(node.root_resource)) : null }
+          </div> 
+    );
+  };
 
+  const renderTree6 = (nodes) => {
+    nodeId_array.push(nodes.resource_id);
+    // console.log(nodeId_array); 
+    return (
+      <div key={nodes.resource_id+"6"}>
+        { Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree6(node)) : null }
+      </div>
+    );
+  };
 
   const Create = e => {
     setContent('first');
@@ -409,6 +424,11 @@ export default function TreeNodeStage(props) {
     fourth: <StageMethod stageId={stageId} resourceId={resourceId}/>
   };
 
+  useEffect(() => {
+    // console.log(nodeId_array);
+    setLength(nodeId_array.length)
+  }, [nodeId_array]);
+
   return (
     <React.Fragment>
       <AllDiv>
@@ -420,16 +440,19 @@ export default function TreeNodeStage(props) {
         </ButtonDiv>
         <ExampleDiv>
           <MenuDiv>
+          { props.stageList && props.stageList.map((node) => renderTree5(node)) }
+          { nodeId_array.length === length ?
             <TreeView
               aria-label="icon expansion"
               defaultCollapseIcon={<ExpandMoreIcon />}
-              // defaultExpanded={['root', '1']} //처음 화면이 렌더링 됐을 떄 펼쳐져있을 Tree
+              defaultExpanded={nodeId_array} //처음 화면이 렌더링 됐을 떄 펼쳐져있을 Tree
               defaultExpandIcon={<ChevronRightIcon />}
               defaultSelected={'root'}
               sx={{ height: 440, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
               >
-                {props.stageList && props.stageList.map((node) => renderTree(node)) }
+                {props.stageList && props.stageList.map((node) => renderTree(node))}
             </TreeView>
+            : null }
           </MenuDiv> 
           <ResourceInfoDiv>
             <PathDiv>{label}</PathDiv>

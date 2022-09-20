@@ -174,9 +174,11 @@ export default function ModalAPIUpdate( { title,confirmText, cancelText, onCance
       }
     };
     updateApi();
-    setClickData(initialState)
-    window.location.reload(true);
-    setUpdateDialog(false);
+    // window.location.reload(true);
+    setTimeout(() => {
+      setClickData(initialState)
+      setUpdateDialog(false);     
+    }, 1000);
   };
 
 

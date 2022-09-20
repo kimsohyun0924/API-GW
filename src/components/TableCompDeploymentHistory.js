@@ -15,6 +15,7 @@ import ModalAPIDelete from './ModalAPIDelete';
 
 import img1 from "image/Circle_Green.svg";
 import img2 from "image/ico_state_stop.png";
+import img3 from "image/Circle_Gray.svg";
 
 const TableWrapper = styled.div`
   padding: 0px 0px 0px 0px;
@@ -102,38 +103,17 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
   const [deletedialog, setDeleteDialog] = useState(false);
   const [snapshotId, setSnapshotId] = useState(null);
   const initialState = {
-    // "name": null,
-    // "description": null,
     "stage_snapshot_id": null,
-    // "enabled": null,
-    // "api_key": null,
-    "updated_at": null
+    "description": null,
+    "created_at": null
   }
 
-  const onClick = (item) => {
-    // setClickId(item.id);
-    if(item.stage_snapshot_id === clickData.stage_snapshot_id) {
-      // setChecked(true);
-      setClickData(initialState);
-    }
-    else {
-      setClickData({
-        // "name": item.name,
-        // "description": item.description,
-        "stage_snapshot_id": item.stage_snapshot_id,
-        // "enabled": item.enabled,
-        // "api_key": item.api_key,
-        "updated_at": item.created_at
-      });
-    }
-  }
-
-  const onClick2 = e => {
+  const onClick2 = (e) => {
     setSnapshotId(e.target.getAttribute('value'));
     setDeployDialog(true);
   }
 
-  const onClick3 = e => {
+  const onClick3 = (e) => {
     setSnapshotId(e.target.getAttribute('value'));
     setDeleteDialog(true);
   }
@@ -211,17 +191,17 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
               return (
                 <React.Fragment key={index}>
                   <TR key={index}>
-                    {/* <TD width='1%'>
-                      <input type="checkbox" checked={clickData.stage_snapshot_id === item.stage_snapshot_id ? true : false} onChange={checkHandler}/>
-                    </TD> */}
-                    <TD style={{ lineHeight: '0.8rem' }} width='20%'>{item.updated_at}</TD>
+                    <TD style={{ lineHeight: '0.8rem' }} width='20%'>{item.created_at}</TD>
+                    <TD style={{ lineHeight: '0.8rem' }} width='20%'>{item.description}</TD>
                     <TD width='20%'>
-                      { item.status === "STAGE_DEPLOYED" ?  <img style={{padding:"0px 0px 0px 5px"}} src={img1}/> 
-                        : item.status === "STAGE_UNDEPLOYED" ? <img style={{padding:"0px 0px 0px 5px"}} src={img2}/>
-                        : item.status === "STAGE_DEPLOYING" ?  <ItemSpinner><SpinnerSmall/> <div style={{padding: "0px 0px 0px 10px"}}>DEPLOYING</div></ItemSpinner>: null } </TD>
+                      { item.status === "STAGE_DEPLOYED" ?  <div style={{display:"flex"}}><img style={{padding:"0px 0px 0px 5px"}} src={img1}/><div style={{padding: "0px 0px 0px 10px"}}>배포 완료</div></div>
+                        : item.status === "STAGE_UNDEPLOYED" ? <div style={{display:"flex"}}><img style={{padding:"0px 0px 0px 5px"}} src={img3}/><div style={{padding: "0px 0px 0px 10px"}}>미배포</div></div>
+                        : item.status === "STAGE_DEPLOYING" ?  <ItemSpinner><SpinnerSmall/> <div style={{padding: "0px 0px 0px 10px"}}>배포 중</div></ItemSpinner> 
+                        : item.status === "STAGE_UNDEPLOYING" ?  <div style={{display:"flex"}}><img style={{padding:"0px 0px 0px 5px"}} src={img2}/><div style={{padding: "0px 0px 0px 10px"}}>배포 오류</div></div>
+                        : null } </TD>
                     <TD width='10%'>
                       <ImgDiv onClick={onClick2}>
-                        { item.status === "STAGE_DEPLOYED" ?
+                        { item.status === "STAGE_DEPLOYED" || item.status === "STAGE_DEPLOYING" ?
                           null
                           : <img value={item.stage_snapshot_id} src={Logo2}/>
                         }

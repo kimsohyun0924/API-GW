@@ -13,13 +13,9 @@ const ResourceContainer = styled.div`
 export default function Resource(props) {
 
   const serviceInfo = props.serviceInfo;
-  const serviceId = serviceInfo.id;
   const resourceId = serviceInfo.root_resource_id;
-  const [AllResource, SetAllResource] = useState({"resource_id": "62becb8438c2e53962ab955c"});
+  const [dataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
-  // const [RootId, SetRootId] = useState(null);
-  // const [data, setData] = useState(); 
-  // const { state } = useLocation();
   const testData = {
                       "resource_id": "62e7767ca5756863db928d40",
                       "doc_type": "RESOURCE",
@@ -61,36 +57,30 @@ export default function Resource(props) {
                   }
     
   //전체 리소스 조회
-  const getAllResource = async () => {
-    //get api request
+  const getResources = async () => {
+    //get Rsource list
     try {
       setError(null);
-
       const response = await axios.get(
         '/v1.0/g1/paas/apigw/resource/'+resourceId,
         {
           headers: { 'user-id' : 'ksh@gmail.com' }
         }
       );
-      SetAllResource(response.data); // 데이터는 response.data
+      setDataTemp(response.data); // 데이터는 response.data
     } catch (e) {
       setError(e);
     }
   };
 
-
   useEffect(() => {
-    getAllResource();
+    getResources();
   }, []);
-
-  // console.log(resourceId);
-  // console.log(AllResource);
-
 
   return (
     <React.Fragment>
       <ResourceContainer>        
-        <TreeNode serviceInfo={serviceInfo} data={AllResource}/>
+        <TreeNode serviceInfo={serviceInfo} data={dataTemp}/>
       </ResourceContainer>
     </React.Fragment>
   );

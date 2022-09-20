@@ -159,6 +159,8 @@ export default function RecursiveTreeView(props) {
   const [faildialog, setFailDialog] = useState(false);
   const [error, setError] = useState(null);
   const [optionsCommand, setOptionsCommand] = useState(optionsinitial);
+  const nodeId_array = [];
+  const [length, setLength] = useState(null);
 
   const CustomContent = React.forwardRef(function CustomContent(props, ref) {
     const {
@@ -265,32 +267,50 @@ export default function RecursiveTreeView(props) {
     nodeId: PropTypes.string.isRequired,
   };
 
-  const CustomTreeItem = (props) => (
+  const CustomTreeItem = (props) => {
+    return (
     <TreeItem ContentComponent={CustomContent} {...props} />
-  );
+    );
+  };
+
+
+    // setNodeId_array({
+    //   ...nodeId_array,
+    //   resource_id
 
   const renderTree = (nodes) => {
     return(
     <CustomTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
-      {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree3(node)) : null}
+      {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree2(node)) : null}
       {Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree(node)) : null}
     </CustomTreeItem>
     );
   };  
 
-  const renderTree3 = (nodes) => {
+  const renderTree2 = (nodes) => {
     return(
     <CustomTreeItem key={nodes.method_id} nodeId={nodes.method_id} label={nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
       {Array.isArray(nodes.method_list) ? nodes.method_list.map((node) => renderTree(node)) : null}
     </CustomTreeItem>
     );
   };
-  
-  const Create = e => {
+
+  const renderTree3 = (nodes) => {
+
+    nodeId_array.push(nodes.resource_id);
+    // console.log(nodeId_array); 
+    return(
+      <div key={nodes.resource_id+"3"}>
+        { Array.isArray(nodes.child_resource_list) ? nodes.child_resource_list.map((node) => renderTree3(node)) : null }
+      </div>
+    );
+  };
+
+  const Create = () => {
     setContent('first');
   };
 
-  const Delete = e => {
+  const Delete = () => {
     if(label !== null) {
       if (label !== '/') {
         setDialog(true);
@@ -335,8 +355,9 @@ export default function RecursiveTreeView(props) {
   };
 
   useEffect(() => {
-
-  }, [label]);
+    // console.log(nodeId_array);
+    setLength(nodeId_array.length)
+  }, [nodeId_array]);
 
   return (
     <React.Fragment>
@@ -347,20 +368,14 @@ export default function RecursiveTreeView(props) {
             <Button size="small" line="line" onClick={Delete}>리소스 삭제</Button>
           </ThemeProvider>
         </ButtonDiv>
-        {/* <button >
-          <TreeView>
-            <CustomTreeItem 
-              key="6322bbad8bcb9022d20ac39a" nodeId="6322bbad8bcb9022d20ac39a" label="ANY" ContentProps={{doc_type : "METHOD"}}>
-            </CustomTreeItem>
-          </TreeView>
-        </button > */}
         <ExampleDiv>
           <MenuDiv>
-            { props.data.resource_id ? 
+            { renderTree3(resourceInfo) }
+            { props.data.resource_id && nodeId_array.length === length ?
             <TreeView
               aria-label="icon expansion"
               defaultCollapseIcon={<ExpandMoreIcon />}
-              defaultExpanded={[]} //처음 화면이 렌더링 됐을 떄 펼쳐져있을 Tree
+              defaultExpanded={nodeId_array} //처음 화면이 렌더링 됐을 떄 펼쳐져있을 Tree
               defaultExpandIcon={<ChevronRightIcon />}
               sx={{ height: 440, flexGrow: 1, maxWidth: 400, overflowY: 'auto', backgroud: "pink"}}
               >

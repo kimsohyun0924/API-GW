@@ -11,6 +11,7 @@ const initialValue = {
   tierId: "",
   accessKey: "",
   secretKey: "",
+  resourceTab: "0",
 }
 
 function menuReducer(state, action) {

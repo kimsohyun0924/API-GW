@@ -21,7 +21,7 @@ const DarkBackground = styled.div`
 const DialogBlock = styled.div`
     display: block;
     width: 600px;
-    height: 220px;
+    height: 320px;
     /* height: 320px; */
     padding: 20px 30px 20px 30px;
     background: white;
@@ -189,6 +189,7 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
           {
             service_id: serviceId,
             stage_id: stage_id,
+            description: StageDescription,
             stage_name: null,
             backend_url: null
           },
@@ -225,14 +226,14 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
                   </ItemInput>
                 </Item>
               </ItemDiv>
-              {/* <ItemDiv>
+              <ItemDiv>
                 <Item>
                   <ItemName>설명</ItemName>
                   <ItemInput2>
                     <InputForm2 name="StageDescription" placeholder="설명을 입력하세요" onChange={onChange} value={StageDescription}/>
                   </ItemInput2>
                 </Item>
-              </ItemDiv> */}
+              </ItemDiv>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                     <span style={{padding: "0px 20px 0px 0px"}}><Button size="large" color="gray" line="noline" onClick={onCancel}>{cancelText}</Button></span>
