@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled, { css, ThemeProvider } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import axios from 'axios';
 
 import Button from 'components/Button';
@@ -7,21 +7,21 @@ import ModalUsagePlanConnect from 'components/ModalUsagePlanConnect';
 import TableCompStageUsage from 'components/TableCompStageUsage';
 import TableCompDeploymentHistory from 'components/TableCompDeploymentHistory';
 
-import img1 from "image/Advanced_pre.svg";
-import img2 from "image/Advanced.svg";
+import Advanced_pre from "image/Advanced_pre.svg";
+import Advanced from "image/Advanced.svg";
 
-const InvokeurlDiv = styled.div`
-  background: #eff4fb;
-  /* #d9edf7 #d7e3f5 */
-  font-size : 16px;
-  font-weight: bold;
-  padding: 15px 20px 15px 20px;
-`;
+// const InvokeurlDiv = styled.div`
+//   background: #eff4fb;
+//   /* #d9edf7 #d7e3f5 */
+//   font-size : 16px;
+//   font-weight: bold;
+//   padding: 15px 20px 15px 20px;
+// `;
 
-const CopyButtonDiv = styled.button`
-  margin: 0px 0px 0px 10px;
-  cursor: pointer;
-`;
+// const CopyButtonDiv = styled.button`
+//   margin: 0px 0px 0px 10px;
+//   cursor: pointer;
+// `;
 
 const VisiablDiv = styled.div`
   margin: 0px 0px 10px 0px;
@@ -36,7 +36,6 @@ const VisiablText = styled.span`
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-
   /* display: inline-block */
 `;
 
@@ -122,7 +121,6 @@ export default function StageInfo(props) {
   const [DataTemp2, setDataTemp2] = useState([]);
   const [DataTemp3, setDataTemp3] = useState([]);
   const [error, setError] = useState(null);
-  const [selectItem, setSelectItem] = useState(null);
   const [inputs, setInputs] = useState({
     backend_url: ''
   });
@@ -142,7 +140,7 @@ export default function StageInfo(props) {
   console.log(inputs);
 
   const onUpdate = () => {
-    //Update stage EndpointUrl
+    //update stage Endpoint_url
     const UpdateEndpointUrl = async () => {
       try {
         setError(null);
@@ -166,7 +164,7 @@ export default function StageInfo(props) {
   
   const onClick2 = e => {
     setStageConnect2((prev) => !prev);
-    //Get Stage-UsagePlan Connect List
+    //get Stage-UsagePlan Connect list
     const fetchConnectUsgaList = async () => {
       try {
         setError(null);
@@ -187,7 +185,7 @@ export default function StageInfo(props) {
 
   const onClick3 = () => {
     setStageConnect3((prev) => !prev);
-    //Get Stage Deployment History List
+    //get Stage Deployment History list
     const fetchStageDeployList = async () => {
       try {
         setError(null);
@@ -210,7 +208,7 @@ export default function StageInfo(props) {
     setCreateDialog(true);
 
     const fetchUsagePlan = async () => {
-      //get UsagePlan
+      //get UsagePlan list
       try {
         setError(null);
         const response = await axios.get(
@@ -222,6 +220,7 @@ export default function StageInfo(props) {
         setDataTemp3(response.data.filter((item) => !(DataTemp.some((i) => i.usage_plan_id === item.usage_plan_id))));
       } catch (e) {
         setError(e);
+        console.log(error);
       }
     };
     fetchUsagePlan();
@@ -233,7 +232,7 @@ export default function StageInfo(props) {
   };
 
   const onDelete = () => {
-    //Delete Stage-UsagePlan Connect
+    //delete Stage-UsagePlan Connect
      const deleteStageUsagePlanConnect = async () => {
        try {
          setError(null);
@@ -263,8 +262,6 @@ export default function StageInfo(props) {
     setDataTemp2([]);
   }, [props.stageId]);
 
-
-
   return (
     <React.Fragment>
       {/* <InvokeurlDiv>{props.stageId}.ktcloud.io
@@ -275,8 +272,8 @@ export default function StageInfo(props) {
       <VisiablDiv>
         <VisiablText onClick={onClick}>Settings 
           { stageConnect === true ?
-            <img style={{padding:"0px 0px 0px 10px"}} src={img2}/>
-            : <img style={{padding:"0px 0px 0px 10px"}} src={img1}/>
+            <img style={{padding:"0px 0px 0px 10px"}} src={Advanced} alt="Advanced"/>
+            : <img style={{padding:"0px 0px 0px 10px"}} src={Advanced_pre} alt="Advanced_pre"/>
           }
         </VisiablText>
       </VisiablDiv>
@@ -300,8 +297,8 @@ export default function StageInfo(props) {
       <VisiablDiv>
         <VisiablText onClick={onClick2}>Usage Plans
           { stageConnect2 === true ?
-            <img style={{padding:"0px 0px 0px 10px"}} src={img2}/>
-            : <img style={{padding:"0px 0px 0px 10px"}} src={img1}/>
+            <img style={{padding:"0px 0px 0px 10px"}} src={Advanced} alt="Advanced"/>
+            : <img style={{padding:"0px 0px 0px 10px"}} src={Advanced_pre} alt="Advanced_pre"/>
           }
         </VisiablText>
       </VisiablDiv>
@@ -323,8 +320,8 @@ export default function StageInfo(props) {
       <VisiablDiv>
         <VisiablText onClick={onClick3}>Deployment History 
           { stageConnect3 === true ?
-            <img style={{padding:"0px 0px 0px 10px"}} src={img2}/>
-            : <img style={{padding:"0px 0px 0px 10px"}} src={img1}/>
+            <img style={{padding:"0px 0px 0px 10px"}} src={Advanced} alt="Advanced"/>
+            : <img style={{padding:"0px 0px 0px 10px"}} src={Advanced_pre} alt="Advanced_pres"/>
           }
         </VisiablText>
       </VisiablDiv>
@@ -332,7 +329,7 @@ export default function StageInfo(props) {
         <React.Fragment>
           <HiddenDiv>
             <TableDiv>
-              <TableCompDeploymentHistory columns={TableHeaderDeployHistory} data={DataTemp2} clickData={clickData} setClickData={setClickData} setStageConnect3={setStageConnect3}/>
+              <TableCompDeploymentHistory columns={TableHeaderDeployHistory} data={DataTemp2} setStageConnect3={setStageConnect3}/>
             </TableDiv>
           </HiddenDiv>
         </React.Fragment>

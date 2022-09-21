@@ -49,26 +49,26 @@ export default function MyApis() {
   const [updateDialog, setUpdateDialog] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const testData = [
-    {
-        "service_id": "62c98e09d7176c1f4f28f463",
-        "mem_sq": "Memsq07",
-        "name": "Sso",
-        "description": "Sso",
-        "root_resource_id": "62c98e09d7176c1f4f28f462",
-        "created_at": "2022-07-09T23:17:45.777",
-        "updated_at": "2022-07-09T23:17:45.777"
-    },
-    {
-      "service_id": "62c98e09d7176c1f4f28f463",
-      "mem_sq": "Memsq07",
-      "name": "test",
-      "description": "test",
-      "root_resource_id": "62c98e09d7176c1f4f28f462",
-      "created_at": "2022-07-09T23:17:45.777",
-      "updated_at": "2022-07-09T23:17:45.777"
-  }
-]
+//   const testData = [
+//     {
+//         "service_id": "62c98e09d7176c1f4f28f463",
+//         "mem_sq": "Memsq07",
+//         "name": "Sso",
+//         "description": "Sso",
+//         "root_resource_id": "62c98e09d7176c1f4f28f462",
+//         "created_at": "2022-07-09T23:17:45.777",
+//         "updated_at": "2022-07-09T23:17:45.777"
+//     },
+//     {
+//       "service_id": "62c98e09d7176c1f4f28f463",
+//       "mem_sq": "Memsq07",
+//       "name": "test",
+//       "description": "test",
+//       "root_resource_id": "62c98e09d7176c1f4f28f462",
+//       "created_at": "2022-07-09T23:17:45.777",
+//       "updated_at": "2022-07-09T23:17:45.777"
+//   }
+// ]
   
 // e.target.getAttribute('value');
  

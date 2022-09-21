@@ -19,7 +19,7 @@ const DropdownContainer = styled.div`
   ${props =>
     props.size === "large" &&
       css`
-      width: 78%;
+      width: 83%;
   `}
 
   &:hover {
@@ -37,13 +37,11 @@ const DropdownBody = styled.div`
   border: 1px solid #b6b6c3;
   /* box-shadow: inset 0 1px 2px rgb(0 0 0 / 8%); */
   background-color: #ffffff;
-  height: 33px;
+  height: 30px;
   font-size: 14px;
 `;
 
 const DropdownSelect = styled.p`
-  
-
 `;
 
 const DropdownMenu = styled.ul`

@@ -11,65 +11,36 @@ const BodyDiv = styled.div`
 
 const ItemDiv = styled.div`
   display: block;
-  /* color: #555555; */
-  /* padding: 10px 0px 10px 0px; */
+    /* color: #555555;
+    padding: 0px 0px 20px 0px; */
 `;
 
 const Item = styled.div`
-  display: flex;
-  /* align-items: center;
-  width: 917px;
-  height: 45px; */
+    display: flex;
+    padding: 0px 0px 15px 0px;  
+    /* align-items: center;  */
 `;
 
 const ItemName = styled.div`
-  width: 250px;
-  height: 45px;
-  font-size: 13px;
-  padding: 10px 0px 5px 10px;
+    width: 200px;
+    height: 30px;
+    color: #333336;
+    font-size: 14px;
+    font-family: Lato Regular;
+    padding: 5px 0px 0px 0px;
 `;
 
 const ItemInput = styled.div`
-  display: flex;
-  width: 300px;
-  height: 40px;
-  font-size: 13px;
-  padding: 5px 0px 5px 0px;
-`;
-
-const InputForm = styled.input`
-  width: 200px;
-  height: 30px;
-  font-size: 14px;
-  border: solid 1px #b6b6c3;
-  box-sizing: border-box;
-  color: #333336;
-  padding: 5px 5px 5px 5px;
-`;
-
-const ItemInput2 = styled.div`
     display: flex;
-    width: 77%;
-    height: 40px;
-    font-size: 13px;
-    padding: 5px 0px 5px 0px;
-`;
-
-const InputForm2 = styled.input`
-    width: 100%;
+    width: 300px;
     height: 30px;
-    font-size: 14px;
-    border: solid 1px #b6b6c3;
-    box-sizing: border-box;
-    color: #333336;
-    padding: 5px 5px 5px 5px;
 `;
 
 const ItemNote = styled.div`
   display : flex;
   height: 30px;
   font-size: 13px;
-  color: black;
+  color: #777777;
   padding: 0px 10px 0px 10px;
   justify-content : center;
   align-items : center;
@@ -77,17 +48,53 @@ const ItemNote = styled.div`
 
 const RequestDiv = styled.div`
   margin: 0px 0px 0px 5px;
-  padding: 10px 5px 10px 5px;
-  border: 1px solid #b6b6c3;
+  padding: 15px 15px 15px 15px;
+  background-color: #f4f4f4;
+  /* border: 1px solid #b6b6c3; */
 `;
 
 const RequestName = styled.div`
-  display: flex;
-  width: 143px;
-  height: 40px;
-  align-items: center;
-  font-size: 13px;
-  padding: 5px 0px 5px 10px;
+    width: 143px;
+    height: 30px;
+    color: #333336;
+    font-size: 13px;
+    font-family: Lato Regular;
+    padding: 5px 0px 0px 0px;
+`;
+
+const RequestInput = styled.div`
+    display: flex;
+    width: 80%;
+    height: 30px;
+    font-size: 14px;
+`;
+
+const RequestForm = styled.input`
+    width: 100%;
+    height: 30px;
+    color: #333333;
+    font-size: 14px;
+    font-family: Lato Regular;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    padding: 3px 5px 3px 5px;
+`;
+
+const RequestInput2 = styled.div`
+    width: 200px;
+    height: 30px;
+    font-size: 14px;
+`;
+
+const RequestForm2 = styled.input`
+    width: 200px;
+    height: 30px;
+    color: #333333;
+    font-size: 14px;
+    font-family: Lato Regular;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    padding: 3px 5px 3px 5px;
 `;
 
 const ButtonDiv = styled.div`
@@ -263,28 +270,26 @@ export default function StageMethod_2(props) {
         <ItemDiv> 
           <Item>
             <ItemName>커스텀 Endpoint 도메인 설정</ItemName>
-            <ItemInput>
+            <ItemInput style={{padding: "15px 0px 0px 0px"}}>
               <ToggleSwitch clickedToggle={clickedBackendToggle} toggle={backend_toggle}/>
             </ItemInput>
           </Item>
-        </ItemDiv>
-        { backend_toggle === true ? 
-          <React.Fragment>
-            <RequestDiv>
-              <Item>
-              <RequestName>Endpoint 도메인</RequestName>
-                <ItemInput2>
-                  <InputForm2 name="custom_backend_url" placeholder="Endpoint 도메인" onChange={onChange} value={custom_backend_url}/>
-                </ItemInput2>
-              </Item>
-            </RequestDiv>
-          </React.Fragment>
-          : null
-        }
-        <ItemDiv>
-          <Item>
+          { backend_toggle === true ? 
+            <React.Fragment>
+              <RequestDiv>
+                <Item style={{padding: "0px 0px 0px 0px"}}>
+                  <RequestName>Endpoint 도메인</RequestName>
+                  <RequestInput>
+                    <RequestForm name="custom_backend_url" placeholder="Endpoint 도메인" onChange={onChange} value={custom_backend_url}/>
+                  </RequestInput>
+                </Item>
+              </RequestDiv>
+            </React.Fragment>
+            : null
+          }
+          <Item style={{padding: "15px 0px 15px 0px"}}>
             <ItemName>Throttling 설정</ItemName>
-            <ItemInput>
+            <ItemInput style={{padding: "15px 0px 0px 0px"}}>
               <ToggleSwitch clickedToggle={clickedUsageToggle} toggle={usage_toggle}/>
             </ItemInput>
           </Item>
@@ -294,17 +299,17 @@ export default function StageMethod_2(props) {
             <RequestDiv>
               <Item>
                 <RequestName>요율</RequestName>
-                <ItemInput>
-                  <InputForm name="replenish_rate" placeholder="초당 요청 수" onChange={onChange} value={replenish_rate}/>
-                  <ItemNote>초당 요청 수</ItemNote>
-                </ItemInput>
+                <RequestInput2>
+                  <RequestForm2 name="replenish_rate" placeholder="초당 요청 수" onChange={onChange} value={replenish_rate}/>
+                </RequestInput2>
+                {/* <ItemNote>초당 요청 수</ItemNote> */}
               </Item>
-              <Item>
+              <Item style={{padding: "0px 0px 0px 0px"}}>
                 <RequestName>버스트</RequestName>
-                <ItemInput>
-                  <InputForm name="burst_capacity" placeholder="요청 건" onChange={onChange} value={burst_capacity}/>
-                  <ItemNote>요청 건</ItemNote>
-                </ItemInput>
+                <RequestInput2>
+                  <RequestForm2 name="burst_capacity" placeholder="요청 건" onChange={onChange} value={burst_capacity}/>
+                </RequestInput2>
+                {/* <ItemNote>요청 건</ItemNote> */}
               </Item>
             </RequestDiv>
           </React.Fragment>

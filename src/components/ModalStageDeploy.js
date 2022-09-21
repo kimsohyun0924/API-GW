@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled, { css, ThemeProvider } from "styled-components";
+import React, { useState, useCallback ,useEffect } from 'react';
 import axios from 'axios';
+
+import styled, { css, ThemeProvider } from "styled-components";
+
 import Button from './Button';
-import Logo from '../image/Cancel.svg';
-import DropdownStage from '../components/DropdownStage';
+import Cancel from 'image/Cancel.svg';
+import DropdownStage from 'components/DropdownStage';
 
 const DarkBackground = styled.div`
     position: fixed;
@@ -19,61 +21,51 @@ const DarkBackground = styled.div`
 `;
 
 const DialogBlock = styled.div`
-    display: block;
-    width: 600px;
-    height: 320px;
-    /* height: 320px; */
-    padding: 20px 30px 20px 30px;
+    width: 620px;
+    height: 350px;
     background: white;
     border-radius: 2px;
     border : 1px solid black;
+    padding: 20px 30px 20px 30px;
 `;
 
 const ImgDiv = styled.div`
     display: flex;
-    margin-left: 530px;
-    justify-content: flex-end;
     cursor: pointer;
+    justify-content: flex-end;
+    /* margin-left: 530px; */
 `;
 
 const TitleDiv = styled.div`
+    color: #333333;
     font-size : 16px;
-    padding : 10px 0px 20px 0px;
+    padding : 15px 0px 20px 0px;
+    font-family: Spoqa Han Sans Regular;
 `;
 
 const ItemDiv = styled.div`
-  display: block;
-  color: #333336;
-  /* padding: 10px 0px 10px 0px; */
+    display: block;
 `;
 
 const Item = styled.div`
     display: flex;
-    /* padding: 0px 0px 20px 0px; */
-    /* align-items: center; */
+    padding: 10px 10px 20px 10px;  
+    /* align-items: center;  */
 `;
 
 const ItemName = styled.div`
-    /* width: 150px;
-    height: 32px;
-    line-height: 32px;
-    font-size: 15px; */
     width: 143px;
-    height: 45px;
+    height: 30px;
+    color: #333336;
     font-size: 14px;
-    padding: 10px 0px 5px 0px;
+    font-family: Lato Regular;
+    padding: 5px 0px 0px 0px;
 `;
 
 const ItemInput = styled.div`
-    /* width: 380px;
-    height: 32px;
-    display: flex;
-    align-items: center; */
-    display: flex;
-    width: 380px;
-    height: 45px;
+    width: 390px;
+    height: 30px;
     font-size: 14px;
-    padding: 10px 0px 5px 0px;
 `;
 
 const ItemNote = styled.div`
@@ -92,47 +84,27 @@ const ItemNote = styled.div`
     }
 `;
 
-const Item2 = styled.div`
-    display: flex;
-    /* width: 917px;
-    height: 90px;
-    padding: 0px 0px 20px 0px; */
-`;
-
 const ItemInput2 = styled.div`
-    /* width: 380;
-    height: 70px;
-    display: flex;
-    align-items: center; */
-    display: flex;
-    width: 380px;
+    width: 390px;
     height: 90px;
     font-size: 14px;
-    padding: 10px 0px 5px 0px;
 `;
 
 const InputForm2 = styled.textarea`
-    /* width: 380px;
-    height: 70px;
-    border: solid 1px #b6b6c3;
-    background: #ffffff;
-    box-sizing: border-box;
-    font-size: 13px;
-    color: #333333; */
-    width: 380px;
-    min-height: 70px;
+    width: 390px;
+    height: 90px; 
+    color: #333333;
     font-size: 14px;
+    font-family: Lato Regular;
     border: solid 1px #b6b6c3;
     box-sizing: border-box;
-    color: #333336;
     padding: 5px 5px 5px 5px;
-    font-family: "Noto Sans KR",sans-serif !important;
 `;
 
 const ButtonGroup = styled.div`
     display: flex;
     justify-content: center;
-    margin: 10px 0px 5px 0px;
+    /* margin: 10px 0px 5px 0px; */
   
 `;
 
@@ -145,7 +117,7 @@ ModalStageDeploy.defaultProps = {
 export default function ModalStageDeploy( { title, confirmText, cancelText, onCancel, serviceId, setCreateDialog, visible } ) {
 
   const [stage_id, setStage_id] = useState(null);
-  const [stageOptions, setStageOptions] = useState();
+  const [stageOptions, setStageOptions] = useState(null);
   const [inputs, setInputs] = useState({
     StageDescription: ''
   });
@@ -161,8 +133,8 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
   };
   // console.log(inputs);
 
-  const fetchApis = async () => {
-    //get api request
+  const fetchApis = useCallback(async () => {
+    //get api list
     try {
       setError(null);
 
@@ -176,11 +148,12 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
       // console.log(response.data);
     } catch (e) {
       setError(e);
+      console.log(error);
     }
-  };
+  }, [serviceId, error]);
 
   const onCreate = () => {
-    //Deploy stage
+    //deploy stage
     const deployStage = async () => {
       try {
         setError(null);
@@ -199,6 +172,7 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
         );
       } catch (e) {
         setError(e);
+        console.log(error);
       }
     };
     deployStage();
@@ -208,14 +182,14 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
 
   useEffect(() => {
     fetchApis();
-  }, []);
+  }, [fetchApis]);
 
   if (!visible) return null;
   return (
       <DarkBackground>
            <DialogBlock>
               <ImgDiv onClick={onCancel}>
-                <img src={Logo}/>
+                <img src={Cancel} alt="Cancel"/>
               </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
               <ItemDiv>
@@ -223,10 +197,8 @@ export default function ModalStageDeploy( { title, confirmText, cancelText, onCa
                   <ItemName>배포할 Stage</ItemName>
                   <ItemInput>
                     <DropdownStage dropdownItems={stageOptions} default="Stage 선택" size="medium" Command={stage_id} setCommand={setStage_id}/> 
-                  </ItemInput>
+                    </ItemInput>
                 </Item>
-              </ItemDiv>
-              <ItemDiv>
                 <Item>
                   <ItemName>설명</ItemName>
                   <ItemInput2>

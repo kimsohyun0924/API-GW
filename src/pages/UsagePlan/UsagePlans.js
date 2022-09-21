@@ -46,29 +46,21 @@ export default function UsagePlans() {
   const [clickData, setClickData] = useState(initialState);
   const [updateDialog, setUpdateDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
-  const [DataTemp, setDataTemp] = useState([]);
+  const [dataTemp, setDataTemp] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const testData = [
     {
-        "usagePlan_id": "62c98e09d7176c1f4f28f464",
-        "mem_sq": "Memsq07",
-        "usagePlan_name": "usagePlan_01",
-        "usagePlan_description": "usagePlan_01",
-        "rateRps" : 10, //초당 요청 처리량
-        "dayQuotaRequest" : 1000, // 일 요청 처리 한도
-        "monthQuotaRequest" : 30000, //월 요청 처리 한도
-        "created_at": "2022-07-09T23:17:45.777",
-    },
-    {
-        "usagePlan_id": "62c98e09d7176c1f4f28f463",
-        "mem_sq": "Memsq07",
-        "usagePlan_name" : "usagePlan_02",
-        "usagePlan_description" : "usagePlan_02",
-        "rateRps" : 1, //초당 요청 처리량
-        "dayQuotaRequest" : 500, // 일 요청 처리 한도
-        "monthQuotaRequest" : 15000, //월 요청 처리 한도
-        "created_at": "2022-07-09T23:17:45.777",
+        "usage_plan_id": "632ac61e438f3f5554e8acf4",
+        "name": "plan01",
+        "description": "정책 01",
+        "user_id": "ksh@gmail.com",
+        "replenish_rate": 200,
+        "burst_capacity": 200,
+        "requested_tokens": 1,
+        "quota": null,
+        "period_type": null,
+        "api_key_list": null
     }
 ]
 
@@ -135,7 +127,7 @@ export default function UsagePlans() {
 
   useEffect(() => {
     fetchUsagePlans();
-  }, [DataTemp]);
+  }, [dataTemp]);
 
   return (
     <React.Fragment>
@@ -154,7 +146,7 @@ export default function UsagePlans() {
           </ThemeProvider>
         </ButtonDiv>
         <TableDiv>
-          <TableCompUsagePlans columns={TableHeader} data={DataTemp} clickData={clickData} setClickData={setClickData}/>
+          <TableCompUsagePlans columns={TableHeader} data={dataTemp} clickData={clickData} setClickData={setClickData}/>
         </TableDiv>
       </MainContainer>
        <ModalAPIDelete

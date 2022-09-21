@@ -95,8 +95,8 @@ export default function UsagePlanStage() {
     }
   };
 
-  const fetchAPI = async () => {
-    //get API list
+  const fetchApis  = async () => {
+    //get api list
     try {
       setError(null);
       const response = await axios.get(
@@ -135,7 +135,7 @@ export default function UsagePlanStage() {
 
   useEffect(() => {
     fetchUsageStageConnect();
-    fetchAPI();
+    fetchApis();
   }, [DataTemp]);
 
   return (

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import styled, { css, ThemeProvider } from 'styled-components';
@@ -17,14 +16,13 @@ import PropTypes from 'prop-types';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
+import TreeItem, { useTreeItem } from '@mui/lab/TreeItem';
 
 
 const AllDiv = styled.div`
   width: 100%;
   height: 73vh; 
 `;
-
 
 const ButtonDiv = styled.div`
   display : flex;
@@ -40,7 +38,6 @@ const ExampleDiv = styled.div`
 const MenuDiv = styled.div`
   min-width: 200px;
   min-height: 100%;
-
   padding: 15px 15px 0px 15px;
   border: 1px solid #e2e2e2;
 `;
@@ -273,11 +270,6 @@ export default function RecursiveTreeView(props) {
     );
   };
 
-
-    // setNodeId_array({
-    //   ...nodeId_array,
-    //   resource_id
-
   const renderTree = (nodes) => {
     return(
     <CustomTreeItem key={nodes.resource_id || nodes.method_id} nodeId={nodes.resource_id || nodes.method_id} label={nodes.path || nodes.method_type} ContentProps={{doc_type : nodes.doc_type}}>
@@ -328,7 +320,7 @@ export default function RecursiveTreeView(props) {
   };
 
   const onDelete = () => {
-    //delete resource request
+    //delete resource 
      const deleteResource = async () => {
        try {
          setError(null);
@@ -377,7 +369,7 @@ export default function RecursiveTreeView(props) {
               defaultCollapseIcon={<ExpandMoreIcon />}
               defaultExpanded={nodeId_array} //처음 화면이 렌더링 됐을 떄 펼쳐져있을 Tree
               defaultExpandIcon={<ChevronRightIcon />}
-              sx={{ height: 440, flexGrow: 1, maxWidth: 400, overflowY: 'auto', backgroud: "pink"}}
+              sx={{ height: 600, flexGrow: 1, maxWidth: 400, overflowY: 'auto', backgroud: "pink"}}
               >
                 {renderTree(resourceInfo)}
             </TreeView>

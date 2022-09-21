@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useLocation } from "react-router";
 
 import styled, { ThemeProvider } from 'styled-components';
@@ -49,22 +48,11 @@ const TS = styled(Tab)`
  
 export default function ApiOperation() {
 
+    const { state } = useLocation();
     const menuState = useMenuState();
     const menuDispatch = useMenuDispatch();
     const [value, setValue] = useState(menuState.resourceTab);
-    const navigate = useNavigate();
-    const { state } = useLocation();
     const [createDialog, setCreateDialog] = useState(false);
-
-    // menuDispatch({
-    //   type:'UPDATE',
-    //   data: {
-    //     ...menuState, 
-    //     token : token
-    //   }
-    // });
-
-    // console.log(state);
   
     const handleChange = (event, newValue) => {
         // console.log(newValue);
@@ -76,7 +64,6 @@ export default function ApiOperation() {
             resourceTab : newValue
           }
         });
-        
     };
 
     const ModalCreateDialog = () => {
@@ -87,9 +74,6 @@ export default function ApiOperation() {
       console.log('취소');
       setCreateDialog(false);
     };
-
-    // useEffect(() => {
-    // }, []);
     
     return ( 
         <React.Fragment>
@@ -104,7 +88,6 @@ export default function ApiOperation() {
                   </div>
                 </HeadDiv>
                 <MainDiv>
-                  {/* <HeadDiv>{state.name}</HeadDiv> */}
                     <Box sx={{ width: '100%' }}>
                       <TabContext value={value}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
@@ -115,7 +98,6 @@ export default function ApiOperation() {
                           </Box>
                           <TabPanel sx={{padding: '5px 0px 0px 0px'}} value="0" >
                               <Resource serviceInfo={state}/>  
-                               {/* { navigate('api/operation/resource', {state : state}) }  */}
                           </TabPanel>
                           <TabPanel sx={{padding: '5px 0px 0px 0px'}} value="1" >
                               <Stage serviceInfo={state}/> 

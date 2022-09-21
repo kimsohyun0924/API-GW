@@ -1,7 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import styled, { css } from 'styled-components';
-import TableLine from '../image/tableline.svg';
+
+import TableLine from 'image/tableline.svg';
 
 const TableWrapper = styled.div`
   padding: 0px 0px 0px 0px;
@@ -140,7 +142,6 @@ export default function TableComp({ columns, data, clickData, setClickData }) {
                       <input type="checkbox" checked={clickData.service_id === item.service_id ? true : false} onChange={checkHandler}/>
                     </TD>
                     <Hov onClick={() => onClick(item)} align='left' width='10%' >{item.name}</Hov>
-                    {/* <TD width='10%'>{item.name}</TD> */}
                     <TD width='10%'>{item.description}</TD>
                     <TD width='20%'>{item.service_id}</TD>
                     <TD width='15%'>{item.created_at}</TD>

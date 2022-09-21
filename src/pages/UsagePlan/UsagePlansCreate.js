@@ -1,59 +1,57 @@
-import React, { useState, useCallback } from 'react';
-import MainContainer from 'layouts/MainContainer';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { PageTitle, PageSubTitle } from 'style/PageStyle';
-import styled, { css, ThemeProvider } from "styled-components";
-import Button from 'components/Button';
 import axios from 'axios';
-import ToggleSwitch from 'components/ToggleSwitch';
-import TableCompUsageStage from 'components/TableCompUsageStage';
-import img1 from "image/Advanced_pre.svg";
-import img2 from "image/Advanced.svg";
-import MainHeader from 'components/MainHeader';
 
+import MainContainer from 'layouts/MainContainer';
+import { PageTitle } from 'style/PageStyle';
+import styled, { css, ThemeProvider } from "styled-components";
+
+import Button from 'components/Button';
+import MainHeader from 'components/MainHeader';
+import ToggleSwitch from 'components/ToggleSwitch';
 
 const HeadDiv = styled.div`
 `;
 
 const BodyDiv = styled.div`
-  display: block;
-  margin: 40px 0px 0px 0px;
+    display: block;
+    margin: 40px 0px 0px 0px;
 `;
 
 const ItemDiv = styled.div`
-  display: block;
-  color: #333336;
-  /* padding: 10px 0px 10px 0px; */
+    display: block;
 `;
 
 const Item = styled.div`
-  display: flex;
-  align-items: center;
+    display: flex;
+    padding: 10px 10px 20px 10px;  
+    /* align-items: center;  */
 `;
 
 const ItemName = styled.div`
-  width: 143px;
-  height: 45px;
-  font-size: 14px;
-  padding: 10px 0px 5px 0px;
+    width: 143px;
+    height: 30px;
+    color: #333336;
+    font-size: 14px;
+    font-family: Lato Regular;
+    padding: 5px 0px 0px 0px;
 `;
 
 const ItemInput = styled.div`
-  display: flex;
-  width: 700px;
-  height: 45px;
-  font-size: 14px;
-  padding: 10px 0px 5px 0px;
+    width: 400px;
+    height: 30px;
+    font-size: 14px;
 `;
 
 const InputForm = styled.input`
-  width: 400px;
-  height: 30px;
-  font-size: 14px;
-  border: solid 1px #b6b6c3;
-  box-sizing: border-box;
-  color: #333336;
-  padding: 5px 5px 5px 5px;
+    width: 400px;
+    height: 30px;
+    color: #333333;
+    font-size: 14px;
+    font-family: Lato Regular;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    padding: 3px 5px 3px 5px;
 `;
 
 const ItemNote = styled.div`
@@ -73,114 +71,67 @@ const ItemNote = styled.div`
   }
 `;
 
-const Item2 = styled.div`
-  display: flex;
-  /* padding: 0px 0px 20px 0px; */
-`;
-
 const ItemInput2 = styled.div`
-    display: flex;
-    width: 700px;
+    width: 400px;
     height: 90px;
     font-size: 14px;
-    padding: 10px 0px 5px 0px;
 `;
 
 const InputForm2 = styled.textarea`
-  width: 400px;
-  min-height: 70px;
-  font-size: 14px;
-  border: solid 1px #b6b6c3;
-  box-sizing: border-box;
-  color: #333336;
-  padding: 5px 5px 5px 5px;
-  font-family: "Noto Sans KR",sans-serif !important; 
+    width: 400px;
+    height: 90px; 
+    color: #333333;
+    font-size: 14px;
+    font-family: Lato Regular;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    padding: 5px 5px 5px 5px; 
 `;
 
 const RequestDiv = styled.div`
-  margin: 0px 0px 0px 138px;
-  padding: 5px 5px 5px 5px;
+    margin: 0px 0px 0px 150px;
+    padding: 5px 5px 5px 5px;
+    background-color: #f4f4f4;
 `;
 
 const RequestInput = styled.div`
-  display: flex;
-  width: 300px;
-  height: 45px;
-  font-size: 14px;
-  padding: 10px 0px 5px 0px;
+    width: 200px;
+    height: 30px;
+    font-size: 14px;
 `;
 
 const RequestForm = styled.input`
-  width: 200px;
-  height: 30px;
-  font-size: 14px;
-  border: solid 1px #b6b6c3;
-  box-sizing: border-box;
-  color: #333336;
-  padding: 5px 5px 5px 5px;
-`;
-
-const VisiablDiv = styled.div`
-  padding: 10px 0px 0px 0px;
-  /* background: pink; */
-`;
-
-const VisiablText = styled.span`
-  border-bottom: 1px solid black;
-  font-size: 20px;
-  cursor: pointer;
+    width: 200px;
+    height: 30px;
+    color: #333333;
+    font-size: 14px;
+    font-family: Lato Regular;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    padding: 3px 5px 3px 5px;
 `;
 
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin: 15px 0px 5px 0px;
   /* align-items: center; */
-  margin: 10px 0px 5px 0px;
 `;
-
-const TableHeader = [
-  "API 이름",
-  "Stage 이름",
-];
-
-const testData = [
-  {
-    "api_name": "api_test1",
-    "stage_name": "stage_test1",
-  },
-  {
-    "api_name": "api_test2",
-    "stage_name": "stage_test2",
-  },
-]
 
 export default function UsagePlansCreate() {
   
   const navigate = useNavigate();
+  const [throttling_toggle, setThrottling_toggle] = useState(false);
+  const [quota_toggle, setQuota_toggle] = useState(false);
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
     UsagePlanName: '',
-    UsagePlanExplain: '',
+    UsageDescription: '',
     replenish_rate: '',
-    burst_capacity: ''
+    burst_capacity: '',
+    quota: ''
   });
-  const { UsagePlanName, UsagePlanExplain, replenish_rate, burst_capacity } = inputs;
-  const [toggle, setToggle] = useState(false);
-  const [toggle2, setToggle2] = useState(false);
-  const [stageConnect, setStageConnect] = useState(false);
-  const [APIKeyConnect, setAPIKeyConnect] = useState(false);
-  const [usageStageConnect, setUsageStageConnect] = useState(false);
-  const [APIKeyStageConnect, setAPIKeyStageConnect] = useState(false);
-  
-  // const onClick = () => {
-  //   // console.log(isActive2)
-  //   setStageConnect((prev) => !prev);
-  // }
-
-  // onst onClick = () => {
-  //   // console.log(isActive2)
-  //   setStageConnect((prev) => !prev);
-  // }
+  const { UsagePlanName, UsageDescription, replenish_rate, burst_capacity, quota } = inputs;
 
   const onCancel = (e) => {
     console.log("onCancel");    
@@ -196,8 +147,18 @@ export default function UsagePlansCreate() {
   };
   console.log(inputs);
 
+  const clickedThrottlingToggle = () => {
+    setThrottling_toggle((prev) => !prev);
+    // console.log(throttling_toggle);
+  };    
+
+  const clickedQuotaToggle = () => {
+    setQuota_toggle((prev) => !prev);
+    // console.log(quota_toggle);
+  };    
+
   const onCreate = () => {
-    //Create UsagePlan
+    //create UsagePlan
     const createUsagePlan = async () => {
       try {
         setError(null);
@@ -205,17 +166,18 @@ export default function UsagePlansCreate() {
           '/v1.0/g1/paas/apigw/usage-plans',
           {
             name: UsagePlanName,
-            description: UsagePlanExplain,
+            description: UsageDescription,
             replenish_rate: replenish_rate,
             burst_capacity: burst_capacity,
             requested_tokens: "1"
           },
           {
-            headers: { 'user-id' : 'kkk@gmail.com' }
+            headers: { 'user-id' : 'ksh@gmail.com' }
           }
         );
       } catch (e) {
         setError(e);
+        console.log(error);
       }
     };
     createUsagePlan();
@@ -224,109 +186,87 @@ export default function UsagePlansCreate() {
     }, 1000);
   };
 
-
-  const clickedToggle = () => {
-    setToggle((prev) => !prev);
-    console.log(toggle);
-  };
-
-  const clickedToggle2 = () => {
-    setToggle2((prev) => !prev);
-    console.log(toggle2);
-  };
-
-  const onClick = () => {
-    // console.log(isActive2)
-    setStageConnect((prev) => !prev);
-  }
-
-  const onClick2 = () => {
-    // console.log(isActive2)
-    setAPIKeyConnect((prev) => !prev);
-  }
-    
-
   return (
     <React.Fragment>
-        <MainContainer>
-            <HeadDiv>
-              <MainHeader location={"Usage Plans"}/>
-              <PageTitle>Usage Plans 생성</PageTitle>
-            </HeadDiv>
-            <BodyDiv>
-              <ItemDiv>
-                <Item>
-                  <ItemName>이름</ItemName>
-                  <ItemInput>
-                    <InputForm name="UsagePlanName" placeholder="Usage Plan의 이름을 입력하세요" onChange={onChange} value={UsagePlanName}/>
-                  </ItemInput>
-                  <ItemNote></ItemNote>
-                </Item>
-              </ItemDiv>
-              <ItemDiv>
-                <Item2>
-                  <ItemName>설명</ItemName>
-                    <ItemInput2>
-                      <InputForm2 name="UsagePlanExplain" placeholder="Usage Plan의 설명을 입력하세요" onChange={onChange} value={UsagePlanExplain}/>
-                    </ItemInput2>
-                    <ItemNote></ItemNote>
-                </Item2>
-              </ItemDiv>
-              <ItemDiv>
-                <Item>
-                  <ItemName>Throttling</ItemName>
-                  <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
-                  <ItemNote></ItemNote>
-                </Item>
-              </ItemDiv>
-              { toggle === true ? 
-                <React.Fragment>
-                  <RequestDiv>
-                    <Item>
-                      <ItemName>요율</ItemName>
-                      <RequestInput>
-                        <RequestForm name="replenish_rate" placeholder="초당 요청 수" onChange={onChange} value={replenish_rate}/>
-                        <ItemNote>초당 요청 수</ItemNote>
-                      </RequestInput>
-                    </Item>
-                    <Item>
-                      <ItemName>버스트</ItemName>
-                      <RequestInput>
-                        <RequestForm name="burst_capacity" placeholder="요청 건" onChange={onChange} value={burst_capacity}/>
-                        <ItemNote>요청 건</ItemNote>
-                      </RequestInput>
-                    </Item>
-                  </RequestDiv>
-                </React.Fragment>
-                : null
-              }
-              {/* <VisiablDiv>
-                <VisiablText onClick={onClick}>Stage 연결
-                    { stageConnect === true ?
-                      <img style={{padding:"0px 0px 0px 10px"}} src={img2}/>
-                        : <img style={{padding:"0px 0px 0px 10px"}} src={img1}/>
-                    }
-                </VisiablText>
-              </VisiablDiv>
-                { stageConnect === true ?
-                  <div>
-                    <div style={{padding:"10px 0px 10px 0px"}}>
-                      <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                        <Button size="small" line="line">Stage 연결 추가</Button>
-                      </ThemeProvider>
-                    </div>
-                    <TableCompUsageStage columns={TableHeader} data={testData}/>
-                  </div>    
-                  : null
-                } */}
-                </BodyDiv>
-                <ButtonDiv>
-                  <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
-                    <span style={{padding: "0px 15px 0px 0px"}}><Button size="large" line="noline" onClick={onCancel}>취소</Button></span>
-                    <Button size="large" line="line" onClick={onCreate}>생성하기</Button>
-                  </ThemeProvider>
-                </ButtonDiv>
-        </MainContainer>
+      <MainContainer>
+        <HeadDiv>
+          <MainHeader location={"Usage Plans"}/>
+          <PageTitle>Usage Plans 생성</PageTitle>
+        </HeadDiv>
+        <BodyDiv>
+          <ItemDiv>
+            <Item>
+              <ItemName>이름</ItemName>
+              <ItemInput>
+                <InputForm name="UsagePlanName" placeholder="Usage Plan의 이름을 입력하세요" onChange={onChange} value={UsagePlanName}/>
+              </ItemInput>
+              <ItemNote></ItemNote>
+            </Item> 
+            <Item>
+              <ItemName>설명</ItemName>
+              <ItemInput2>
+                <InputForm2 name="UsageDescription" placeholder="Usage Plan의 설명을 입력하세요" onChange={onChange} value={UsageDescription}/>
+              </ItemInput2>
+              <ItemNote></ItemNote>
+            </Item>
+            <Item style={{padding: "0px 10px 10px 10px"}}>
+              <ItemName>Throttling</ItemName>
+              <ItemInput style={{padding: "15px 0px 0px 0px"}}>
+                <ToggleSwitch clickedToggle={clickedThrottlingToggle} toggle={throttling_toggle}/>
+            </ItemInput>
+            <ItemNote></ItemNote>
+          </Item>
+          { throttling_toggle === true ? 
+              <React.Fragment>
+                <RequestDiv>
+                  <Item style={{padding: "5px 10px 5px 10px"}}>
+                    <ItemName>요율</ItemName>
+                    <RequestInput>
+                      <RequestForm name="replenish_rate" placeholder="초당 요청 수" onChange={onChange} value={replenish_rate}/>
+                    </RequestInput>
+                    {/* <ItemNote>초당 요청 수</ItemNote> */}
+                  </Item>
+                  <Item style={{padding: "5px 10px 5px 10px"}}>
+                    <ItemName>버스트</ItemName>
+                    <RequestInput>
+                      <RequestForm name="burst_capacity" placeholder="요청 건" onChange={onChange} value={burst_capacity}/>
+                    </RequestInput>
+                    {/* <ItemNote>요청 건</ItemNote> */}
+                  </Item>
+                </RequestDiv>
+              </React.Fragment>
+            : null
+          }
+          <Item style={{padding: "px 10px 10px 10px"}}>
+            <ItemName>Quota</ItemName>
+            <ItemInput style={{padding: "15px 0px 0px 0px"}}>
+              <ToggleSwitch clickedToggle={clickedQuotaToggle} toggle={quota_toggle}/>
+            </ItemInput>
+            <ItemNote></ItemNote>
+          </Item>
+          { quota_toggle === true ? 
+              <React.Fragment>
+                <RequestDiv>
+                  <Item style={{padding: "5px 10px 5px 10px"}}>
+                    <ItemName>요율</ItemName>
+                    <RequestInput>
+                      <RequestForm name="quota" placeholder="초당 요청 수" onChange={onChange} value={quota}/>
+                    </RequestInput>
+                    <ItemNote>초당 요청 수</ItemNote>
+                  </Item>
+                </RequestDiv>
+              </React.Fragment>
+            : null
+          }
+          </ItemDiv>
+        </BodyDiv>
+        <ButtonDiv>
+          <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
+            <span style={{padding: "0px 15px 0px 0px"}}><Button size="large" line="noline" onClick={onCancel}>취소</Button></span>
+            <Button size="large" line="line" onClick={onCreate}>생성하기</Button>
+          </ThemeProvider>
+        </ButtonDiv>
+      </MainContainer>
     </React.Fragment>
   );
 }

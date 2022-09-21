@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import styled, { css, ThemeProvider } from 'styled-components';
-import img2 from "image/Table_Copy.svg";
+import Table_Copy from "image/Table_Copy.svg";
 
 import StageInfo from "./StageInfo";
 import StageCreate from './StageCreate';
@@ -19,14 +18,13 @@ import PropTypes from 'prop-types';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem, { useTreeItem, treeItemClasses} from '@mui/lab/TreeItem';
+import TreeItem, { useTreeItem } from '@mui/lab/TreeItem';
 
 const AllDiv = styled.div`
   width: 100%;
   height: 73vh; 
   /* background: pink;  */
 `;
-
 
 const ButtonDiv = styled.div`
   display : flex;
@@ -127,22 +125,22 @@ const TestDiv = styled.div`
 
 export default function TreeNodeStage(props) {
 
-  const testData = {
-    "method_id": "630d60094020810f037c67c3",
-    "url_path": "test_method",
-    "doc_type": "METHOD",
-    "method_type": "GET",
-    "integration_type": "HTTP",
-    "api_key_using": true,
-    "usage_plan_using": true,
-    "replenish_rate": 500,
-    "burst_capacity": 500,
-    "requested_tokens": 1,
-    "backend_url_using": false,
-    "backend_url": null,
-    "created_at": "2022-08-30T09:55:37.218",
-    "updated_at": "2022-08-30T11:14:46.529"
-}
+//   const testData = {
+//     "method_id": "630d60094020810f037c67c3",
+//     "url_path": "test_method",
+//     "doc_type": "METHOD",
+//     "method_type": "GET",
+//     "integration_type": "HTTP",
+//     "api_key_using": true,
+//     "usage_plan_using": true,
+//     "replenish_rate": 500,
+//     "burst_capacity": 500,
+//     "requested_tokens": 1,
+//     "backend_url_using": false,
+//     "backend_url": null,
+//     "created_at": "2022-08-30T09:55:37.218",
+//     "updated_at": "2022-08-30T11:14:46.529"
+// }
 
   const serviceInfo = props.serviceInfo;
   const [content, setContent] = useState(null);
@@ -151,7 +149,6 @@ export default function TreeNodeStage(props) {
   const [label, setLabel] = useState();
   const [invoke_url, setInvoke_url] = useState(null);
   const [backend_url, setBackend_url] = useState(null);
-  const [resource, setResource] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [error, setError] = useState(null);
   const nodeId_array = [];
@@ -322,13 +319,13 @@ export default function TreeNodeStage(props) {
   };
 
 
-  const renderTree2 = (nodes) => {
-    return (
-          <CustomTreeItem key={nodes.stage_snapshot_id} nodeId={nodes.stage_snapshot_id}>
-            { renderTree3(nodes.root_resource) }   
-          </CustomTreeItem> 
-    );
-  };
+  // const renderTree2 = (nodes) => {
+  //   return (
+  //         <CustomTreeItem key={nodes.stage_snapshot_id} nodeId={nodes.stage_snapshot_id}>
+  //           { renderTree3(nodes.root_resource) }   
+  //         </CustomTreeItem> 
+  //   );
+  // };
 
   const renderTree3 = (nodes) => {
     return (
@@ -378,7 +375,7 @@ export default function TreeNodeStage(props) {
   };
 
   const onDelete = () => {
-    //delete stage request
+    //delete stage
      const deleteStage = async () => {
        try {
          setError(null);
@@ -395,7 +392,7 @@ export default function TreeNodeStage(props) {
      };
      deleteStage();
      setDialog(false);
-    window.location.reload(true);
+     window.location.reload(true);
    };
 
    const Delete = e => {
@@ -408,14 +405,6 @@ export default function TreeNodeStage(props) {
     console.log('취소');
     setDialog(false);
   };
-
-  const copy = () => {
-    const el = textInput.current
-    el.select()
-    document.execCommand("copy")
-  }   
-
-  const textInput = useRef();
 
   const selectComponent = {
     first: <StageCreate serviceInfo={serviceInfo}/>,
@@ -461,18 +450,21 @@ export default function TreeNodeStage(props) {
                   <InvokeurlDiv>
                     Invoke URL : {invoke_url}
                     <CopyToClipboard text={invoke_url} onCopy={()=>alert("주소가 복사되었습니다")}>
-                      <CopyButtonDiv><img src={img2}/></CopyButtonDiv>
+                      <CopyButtonDiv><img src={Table_Copy} alt="Table_Copy"/></CopyButtonDiv>
                     </CopyToClipboard>
                   </InvokeurlDiv>
                   <InvokeurlDiv>
                     Backend URL : {backend_url}
+                    <CopyToClipboard text={backend_url} onCopy={()=>alert("주소가 복사되었습니다")}>
+                      <CopyButtonDiv><img src={Table_Copy} alt="Table_Copy"/></CopyButtonDiv>
+                    </CopyToClipboard>
                   </InvokeurlDiv>
                 </div>
               : invoke_url ? 
                 <InvokeurlDiv>
                   Invoke URL : {invoke_url}
                   <CopyToClipboard text={invoke_url} onCopy={()=>alert("주소가 복사되었습니다")}>
-                    <CopyButtonDiv><img src={img2}/></CopyButtonDiv>
+                    <CopyButtonDiv><img src={Table_Copy} alt="Table_Copy"/></CopyButtonDiv>
                   </CopyToClipboard>
                 </InvokeurlDiv>
                 : null

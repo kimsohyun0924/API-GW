@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
+import React, { useState } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
 import axios from 'axios';
 
 import Button from 'components/Button';
@@ -15,54 +15,48 @@ const AllDiv = styled.div`
 
 const ItemDiv = styled.div`
     display: block;
-    color: #555555;
-    padding: 0px 0px 20px 0px;
-    /* background:pink; */
+    /* color: #555555;
+    padding: 0px 0px 20px 0px; */
 `;
 
 const Item = styled.div`
     display: flex;
+    padding: 0px 0px 20px 0px;  
+    /* align-items: center;  */
 `;
 
 const ItemName = styled.div`
+    min-width: 143px;
     width: 17%;
-    min-width: 100px;
     height: 30px;
-    line-height: 15px;
+    color: #333336;
     font-size: 14px;
-    margin-right: 50px;
-    padding: 6px 12px 6px 0px;
-    /* min-width: 18px; */
-    /* margin-right: 50px; */
+    font-family: Lato Regular;
+    padding: 5px 0px 0px 0px;
 `;
 
 const ItemInput = styled.div`
     display: flex;
-    width: 78%;
+    width: 83%;
     height: 30px;
-    /* min-width: 220px; */
-    /* align-items: center; */
+    font-size: 14px;
 `;
 
 const InputForm = styled.input`
     width: 100%;
     height: 30px;
+    color: #333333;
     font-size: 14px;
+    font-family: Lato Regular;
     border: solid 1px #b6b6c3;
     box-sizing: border-box;
-    color: #333333;
-    padding: 5px 5px 5px 5px;
-    background: #ffffff;
+    padding: 3px 5px 3px 5px;
 `;
 
 const ButtonDiv = styled.div`
     display: flex;
     justify-content: flex-end;
-    margin: 10px 0px 5px 0px;
-    /* align-items: center; */
-`;
-
-const Content = styled.div`
+    margin: 10px 0px 0px 0px;
 `;
 
 export default function ResourceCreate(props) {
@@ -75,7 +69,7 @@ export default function ResourceCreate(props) {
     });
     const { stage_name, backend_url } = inputs;
     
-    const onChange = e => {
+    const onChange = (e) => {
 
       const { name, value } = e.target;
       setInputs({
@@ -93,8 +87,8 @@ export default function ResourceCreate(props) {
       window.location.reload(true);
     };
 
-    const onCreate = e => {
-    
+    const onCreate = (e) => {
+      //create stage
       const createStage = async () => {
         try {
           
@@ -114,14 +108,13 @@ export default function ResourceCreate(props) {
           );
         } catch (e) {
           setError(e);
+          console.log(error);
         }
       
       };
       createStage();
       window.location.reload(true);
     };
-
-
 
     return (
         <React.Fragment>
@@ -133,8 +126,6 @@ export default function ResourceCreate(props) {
                   <InputForm name="stage_name" placeholder="스테이지 이름" onChange={onChange} />
                 </ItemInput>
               </Item>
-            </ItemDiv>
-            <ItemDiv>
               <Item>
                 <ItemName>Endpoint 도메인</ItemName>
                 <ItemInput>

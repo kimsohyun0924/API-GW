@@ -3,19 +3,16 @@ import axios from 'axios';
 
 import styled, {css} from 'styled-components';
 
-import Spinner from 'components/Spinner';
 import SpinnerSmall from 'components/SpinnerSmall';
 
-
+import trash from 'image/trash.svg';
+import Circle_Gray from "image/Circle_Gray.svg";
+import deployment from 'image/deployment.svg';
+import Circle_Green from "image/Circle_Green.svg";
+import Circle_Red from "image/Circle_Red.png";
 import TableLine from '../image/tableline.svg';
-import Logo from '../image/trash.svg';
-import Logo2 from '../image/deployment.svg';
 
 import ModalAPIDelete from './ModalAPIDelete';
-
-import img1 from "image/Circle_Green.svg";
-import img2 from "image/ico_state_stop.png";
-import img3 from "image/Circle_Gray.svg";
 
 const TableWrapper = styled.div`
   padding: 0px 0px 0px 0px;
@@ -94,19 +91,14 @@ const ItemSpinner = styled.div`
   }
 `;
 
-export default function TableCompDeploymentHistory({ columns, data, clickData, setClickData, setStageConnect3 }) {
+export default function TableCompDeploymentHistory({ columns, data, setStageConnect3 }) {
 
   // console.log(data.stage_id);
 
-  const [error, setError] = useState(null);
+  const [snapshotId, setSnapshotId] = useState(null);
   const [deploydialog, setDeployDialog] = useState(false);
   const [deletedialog, setDeleteDialog] = useState(false);
-  const [snapshotId, setSnapshotId] = useState(null);
-  const initialState = {
-    "stage_snapshot_id": null,
-    "description": null,
-    "created_at": null
-  }
+  const [error, setError] = useState(null);
 
   const onClick2 = (e) => {
     setSnapshotId(e.target.getAttribute('value'));
@@ -158,6 +150,7 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
         );
       } catch (e) {
         setError(e);
+        console.log(error);
       }
     };
     deleteStageSnapshot();
@@ -194,16 +187,16 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
                     <TD style={{ lineHeight: '0.8rem' }} width='20%'>{item.created_at}</TD>
                     <TD style={{ lineHeight: '0.8rem' }} width='20%'>{item.description}</TD>
                     <TD width='20%'>
-                      { item.status === "STAGE_DEPLOYED" ?  <div style={{display:"flex"}}><img style={{padding:"0px 0px 0px 5px"}} src={img1}/><div style={{padding: "0px 0px 0px 10px"}}>배포 완료</div></div>
-                        : item.status === "STAGE_UNDEPLOYED" ? <div style={{display:"flex"}}><img style={{padding:"0px 0px 0px 5px"}} src={img3}/><div style={{padding: "0px 0px 0px 10px"}}>미배포</div></div>
+                      { item.status === "STAGE_DEPLOYED" ?  <div style={{display:"flex"}}><img style={{padding:"0px 0px 0px 5px"}} src={Circle_Green} alt="Circle_Green"/><div style={{padding: "0px 0px 0px 10px"}}>배포 완료</div></div>
+                        : item.status === "STAGE_UNDEPLOYED" ? <div style={{display:"flex"}}><img style={{padding:"0px 0px 0px 5px"}} src={Circle_Gray} alt="Circle_Gray"/><div style={{padding: "0px 0px 0px 10px"}}>미배포</div></div>
                         : item.status === "STAGE_DEPLOYING" ?  <ItemSpinner><SpinnerSmall/> <div style={{padding: "0px 0px 0px 10px"}}>배포 중</div></ItemSpinner> 
-                        : item.status === "STAGE_UNDEPLOYING" ?  <div style={{display:"flex"}}><img style={{padding:"0px 0px 0px 5px"}} src={img2}/><div style={{padding: "0px 0px 0px 10px"}}>배포 오류</div></div>
+                        : item.status === "STAGE_UNDEPLOYING" ?  <div style={{display:"flex"}}><img style={{padding:"0px 0px 0px 5px"}} src={Circle_Red} alt="Circle_Red"/><div style={{padding: "0px 0px 0px 10px"}}>배포 오류</div></div>
                         : null } </TD>
                     <TD width='10%'>
                       <ImgDiv onClick={onClick2}>
                         { item.status === "STAGE_DEPLOYED" || item.status === "STAGE_DEPLOYING" ?
                           null
-                          : <img value={item.stage_snapshot_id} src={Logo2}/>
+                          : <img value={item.stage_snapshot_id} src={deployment} alt="deployment"/>
                         }
                       </ImgDiv>
                     </TD>
@@ -211,7 +204,7 @@ export default function TableCompDeploymentHistory({ columns, data, clickData, s
                       <ImgDiv onClick={onClick3}>
                       { item.status === "STAGE_DEPLOYED" ?
                           null
-                          : <img value={item.stage_snapshot_id} src={Logo}/>
+                          : <img value={item.stage_snapshot_id} src={trash} alt="trash"/>
                         }
                       </ImgDiv>
                     </TD>

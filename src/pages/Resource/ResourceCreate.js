@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
+import React, { useState } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
 import ToggleSwitch from 'components/ToggleSwitch';
-import CORS from 'pages/API/CORS';
+import CORS from 'pages/Resource/CORS';
 import Button from 'components/Button';
-import { useNavigate } from 'react-router';
 import axios from 'axios';
 
 
@@ -15,50 +14,48 @@ const BodyDiv = styled.div`
 
 const ItemDiv = styled.div`
     display: block;
-    color: #555555;
-    padding: 0px 0px 20px 0px;
+    /* color: #555555;
+    padding: 0px 0px 20px 0px; */
 `;
 
 const Item = styled.div`
     display: flex;
-    /* align-items: center;
-    width: 100%;
-    height: 45px; */
+    padding: 0px 0px 20px 0px;  
+    /* align-items: center;  */
 `;
 
 const ItemName = styled.div`
+    min-width: 143px;
     width: 17%;
-    min-width: 100px;
     height: 30px;
-    line-height: 15px;
+    color: #333336;
     font-size: 14px;
-    margin-right: 50px;
-    padding: 6px 12px 6px 0px;
-    /* padding: 10px 0px 5px 10px; */
+    font-family: Lato Regular;
+    padding: 5px 0px 0px 0px;
 `;
 
 const ItemInput = styled.div`
     display: flex;
-    width: 78%;
+    width: 83%;
     height: 30px;
     font-size: 14px;
-    /* padding: 10px 0px 5px 0px; */
 `;
 
 const InputForm = styled.input`
     width: 100%;
     height: 30px;
+    color: #333333;
     font-size: 14px;
+    font-family: Lato Regular;
     border: solid 1px #b6b6c3;
     box-sizing: border-box;
-    color: #333336;
-    padding: 5px 5px 5px 5px;
+    padding: 3px 5px 3px 5px;
 `;
 
 const ButtonDiv = styled.div`
     display: flex;
     justify-content: flex-end;
-    margin: 10px 0px 5px 0px;
+    margin: 10px 0px 0px 0px;
 `;
 
 
@@ -67,10 +64,7 @@ export default function ResourceCreate(props) {
   const serviceInfo = props.serviceInfo;
   const serviceId = serviceInfo.service_id;
   const resourceId = props.resourceId;
-  const label = props.label;
-  const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
-  const [content, setContent] = useState(true);
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({
     resource: '',
@@ -92,11 +86,11 @@ export default function ResourceCreate(props) {
   }
 
   const onCreate = () => {
-    
+    //create resource
     const createResource = async () => {
       try {
         setError(null);    
-        const response = await axios.post(
+        await axios.post(
           '/v1.0/g1/paas/apigw/resource',
           {
             service_id: serviceId,
@@ -109,6 +103,7 @@ export default function ResourceCreate(props) {
         );
       } catch (e) {
           setError(e);
+          console.log(error);
       }
     };
     createResource();
@@ -130,11 +125,11 @@ export default function ResourceCreate(props) {
                   <InputForm name="resource" placeholder="리소스 경로 입력" onChange={onChange} value={resource}/>
                 </ItemInput>
               </Item>
-            </ItemDiv>
-            <ItemDiv>
-              <Item>
+              <Item style={{padding: "0px 10px 10px 0px"}}>
                 <ItemName>CORS 활성화</ItemName>
-                  <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+                  <ItemInput style={{padding: "15px 0px 0px 0px"}}>
+                    <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+                  </ItemInput>
               </Item>
             </ItemDiv>
             {
@@ -142,7 +137,6 @@ export default function ResourceCreate(props) {
               <CORS/>
               : null
             }
-            {/* {content && <Content>{selectComponent[content]}</Content>} */}
             <ButtonDiv>
               <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                 <span style={{padding:"0px 10px 0px 0px"}}><Button size="small" line="noline" onClick={onCancel}>취소</Button></span>

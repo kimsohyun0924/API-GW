@@ -14,46 +14,68 @@ const HeadDiv = styled.div`
 `;
 
 const BodyDiv = styled.div`
-  display: block;
-  margin: 40px 0px 0px 0px;
+    display: block;
+    margin: 40px 0px 0px 0px;
 `;
 
 const ItemDiv = styled.div`
-  display: block;
-  color: #333336;
-  /* padding: 10px 0px 10px 0px; */
+    display: block;
 `;
 
 const Item = styled.div`
-  display: flex;
-  align-items: center;
-  /* width: 917px;
-  height: 45px; */
+    display: flex;
+    padding: 10px 10px 20px 10px;  
+    /* align-items: center;  */
 `;
 
 const ItemName = styled.div`
-  width: 143px;
-  height: 45px;
-  font-size: 14px;
-  padding: 10px 0px 5px 0px;
+    width: 143px;
+    height: 30px;
+    color: #333336;
+    font-size: 14px;
+    font-family: Lato Regular;
+    padding: 5px 0px 0px 0px;
 `;
 
 const ItemInput = styled.div`
-  display: flex;
-  width: 784px;
-  height: 45px;
-  font-size: 14px;
-  padding: 10px 0px 5px 0px;
+    width: 400px;
+    height: 30px;
+    font-size: 14px;
 `;
 
 const InputForm = styled.input`
-  width: 400px;
-  height: 30px;
-  font-size: 14px;
-  border: solid 1px #b6b6c3;
-  box-sizing: border-box;
-  color: #333336;
-  padding: 5px 5px 5px 5px;
+    width: 400px;
+    height: 30px;
+    color: #333333;
+    font-size: 14px;
+    font-family: Lato Regular;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    padding: 3px 5px 3px 5px;
+`;
+
+const ItemInput2 = styled.div`
+    width: 400px;
+    height: 90px;
+    font-size: 14px;
+`;
+
+const InputForm2 = styled.textarea`
+    width: 400px;
+    height: 90px; 
+    color: #333333;
+    font-size: 14px;
+    font-family: Lato Regular;
+    border: solid 1px #b6b6c3;
+    box-sizing: border-box;
+    padding: 5px 5px 5px 5px; 
+`;
+
+const ButtonDiv = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin: 15px 0px 5px 0px;
+    /* align-items: center; */
 `;
 
 const ItemNote = styled.div`
@@ -71,44 +93,6 @@ const ItemNote = styled.div`
       color: red;
     `
   }
-`;
-
-const Item2 = styled.div`
-  display: flex;
-  /* width: 917px;
-  height: 90px; */
-  /* padding: 0px 0px 20px 0px; */
-`;
-
-const ItemInput2 = styled.div`
-  display: flex;
-  width: 784px;
-  height: 90px;
-  font-size: 14px;
-  padding: 10px 0px 5px 0px;
-`;
-
-const InputForm2 = styled.textarea`
-  width: 400px;
-  min-height: 70px;
-  font-size: 14px;
-  border: solid 1px #b6b6c3;
-  box-sizing: border-box;
-  color: #333336;
-  padding: 5px 5px 5px 5px;
-  font-family: "Noto Sans KR",sans-serif !important;
-`;
-
-const ItemText = styled.span`
-  padding-right: 1rem;
-  padding-left: 0.3rem;
-`;
-
-const ButtonDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  /* align-items: center; */
-  margin: 10px 0px 5px 0px;
 `;
 
 export default function ApiCreate() {
@@ -191,14 +175,12 @@ export default function ApiCreate() {
                     <InputForm name="ApiName" placeholder="API 이름을 입력하세요" onChange={onChange} value={ApiName}/>
                   </ItemInput>
               </Item>
-            </ItemDiv>
-            <ItemDiv>
-              <Item2>
+              <Item>
                 <ItemName>API 설명</ItemName>
                 <ItemInput2>
                   <InputForm2 name="ApiExplain" placeholder="API 설명을 입력하세요" onChange={onChange} value={ApiExplain}/>
                 </ItemInput2>
-              </Item2>
+              </Item>
             </ItemDiv>
             <ButtonDiv>
                 <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>

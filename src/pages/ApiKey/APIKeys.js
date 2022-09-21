@@ -136,7 +136,7 @@ export default function APIKeys() {
 
   useEffect(() => {
     fetchAPIKeys();
-  }, [DataTemp]);
+  }, [createDialog, updateDialog, deleteDialog]);
 
 
   return (

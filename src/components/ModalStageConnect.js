@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import styled, { css, ThemeProvider } from "styled-components";
 import axios from 'axios';
 import Button from './Button';
-import Logo from '../image/Cancel.svg';
+import Cancel from 'image/Cancel.svg';
 import DropdownMethod from 'components/DropdownMethod';
 // import DropdownStageConnect from '../components/DropdownStageConnect';
 
@@ -112,39 +112,37 @@ export default function ModalStageConnect( { title, confirmText, cancelText, sta
   // const [apiOptions, setApiOptions] = useState(null);
   // const [stageOptions, setStageOptions] = useState(null);
 
-
   const onCreate = () => {
     //create UsagePlan-Stage Connect
-  const createUsageStageConnect = async () => {
-    try {
-      setError(null);
-      await axios.post(
-        '/v1.0/g1/paas//apigw/stage/usage-plan',
-        {
-          stage_id: stage_id,
-          usage_plan_id: state.usage_plan_id
-        },
-        {
-          headers: { 'user-id' : 'ksh@gmail.com' }
-        }
-      );
-    } catch (e) {
-      setError(e);
-    }
+    const createUsageStageConnect = async () => {
+      try {
+        setError(null);
+        await axios.post(
+          '/v1.0/g1/paas//apigw/stage/usage-plan',
+          {
+            stage_id: stage_id,
+            usage_plan_id: state.usage_plan_id
+          },
+          {
+            headers: { 'user-id' : 'ksh@gmail.com' }
+          }
+        );
+      } catch (e) {
+        setError(e);
+        console.log(error);
+      }
+    };
+    createUsageStageConnect();
+    // window.location.reload(true);
+    setCreateDialog(false);
   };
-  createUsageStageConnect();
-  // window.location.reload(true);
-  setCreateDialog(false);
-};
-
-// console.log(APIList);
 
   if (!visible) return null;
   return (
       <DarkBackground>
            <DialogBlock>
               <ImgDiv onClick={onCancel}>
-                <img src={Logo}/>
+                <img src={Cancel} alt="Cancel"/>
               </ImgDiv>
               <TitleDiv>{title}</TitleDiv>
               <Item>

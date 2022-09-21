@@ -1,160 +1,126 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styled, { css, ThemeProvider } from "styled-components";
-import ToggleSwitch from './ToggleSwitch';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+import styled, { ThemeProvider } from "styled-components";
+
 import Button from './Button';
-import Logo from '../image/Cancel.svg';
-import { checkboxClasses } from '@mui/material';
+import ToggleSwitch from './ToggleSwitch';
+import Cancel from 'image/Cancel.svg';
 
 const DarkBackground = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 99;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(153,153,153,0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(153,153,153,0.5);
 `;
 
 const DialogBlock = styled.div`
-  width: 600px;
-  height: 370px;
-  padding: 20px 30px 20px 30px;
-  background: white;
-  border-radius: 2px;
-  border : 1px solid black;
+    display: block;
+    width: 620px;
+    height: 390px;
+    background: white;
+    border-radius: 2px;
+    border : 1px solid black;
+    padding: 20px 30px 20px 30px;
 `;
 
 const ImgDiv = styled.div`
-  display: flex;
-  margin-left: 530px;
-  justify-content: flex-end;
-  cursor: pointer;
+    display: flex;
+    cursor: pointer;
+    justify-content: flex-end;
+    /* margin-left: 530px; */
 `;
 
 const TitleDiv = styled.div`
-  font-size : 16px;
-  padding : 10px 0px 30px 0px;
+    color: #333333;
+    font-size : 16px;
+    padding : 15px 0px 20px 0px;
+    font-family: Spoqa Han Sans Regular;
 `;
 
 const ItemDiv = styled.div`
-  display: block;
-  color: #333336;
-  /* padding: 10px 0px 10px 0px; */
+    display: block;
 `;
 
 const Item = styled.div`
-    /* display: flex;
-    padding: 0px 0px 20px 0px; */
     display: flex;
-    align-items: center;
+    padding: 10px 10px 20px 10px;  
+    /* align-items: center;  */
 `;
 
 const ItemName = styled.div`
-    /* width: 150px;
-    height: 32px;
-    line-height: 32px;
-    font-size: 15px; */
     width: 143px;
-    height: 45px;
+    height: 30px;
+    color: #333333;
     font-size: 14px;
-    padding: 10px 0px 5px 0px;
+    font-family: Lato Regular;
+    padding: 5px 0px 0px 0px;
 `;
 
 const ItemInput = styled.div`
-    /* width: 380px;
-    height: 32px;
-    display: flex;
-    align-items: center; */
-    display: flex;
-    width: 380px;
-    height: 45px;
+    width: 390px;
+    height: 30px;
     font-size: 14px;
-    padding: 10px 0px 5px 0px;
 `;
 
 const InputForm = styled.input`
-    /* width: 380px;
-    height: 32px;
-    border: solid 1px #b6b6c3;
-    background: #ffffff;
-    box-sizing: border-box;
-    font-size: 13px;
-    color: #333333; */
-    width: 380px;
+    width: 390px;
     height: 30px;
+    color: #333333;
     font-size: 14px;
+    font-family: Lato Regular;
     border: solid 1px #b6b6c3;
     box-sizing: border-box;
-    color: #333336;
-    padding: 5px 5px 5px 5px;
-`;
-
-const ItemNote = styled.div`
-    font-size: 12px;
-    color: #777777;
-    height: 32px;
-    text-align: left;
-    display : flex;
-    justify-content : center;
-    align-items : center;
-
-    ${props => props.state &&
-      css`
-        color: red;
-      `
-    }
-`;
-
-const Item2 = styled.div`
-    display: flex;
-    /* width: 917px;
-    height: 90px;
-    padding: 0px 0px 20px 0px; */
+    padding: 3px 5px 3px 5px;
 `;
 
 const ItemInput2 = styled.div`
-    /* width: 380;
-    height: 70px;
-    display: flex;
-    align-items: center; */
-    display: flex;
-    width: 380px;
+    width: 390px;
     height: 90px;
     font-size: 14px;
-    padding: 10px 0px 5px 0px;
 `;
 
 const InputForm2 = styled.textarea`
-    /* width: 380px;
-    height: 70px;
-    border: solid 1px #b6b6c3;
-    background: #ffffff;
-    box-sizing: border-box;
-    font-size: 13px;
-    color: #333333; */
-    width: 380px;
-    min-height: 70px;
+    width: 390px;
+    height: 90px; 
+    color: #333333;
     font-size: 14px;
+    font-family: Lato Regular;
     border: solid 1px #b6b6c3;
     box-sizing: border-box;
-    color: #333336;
     padding: 5px 5px 5px 5px;
-    font-family: "Noto Sans KR",sans-serif !important;
 `;
 
 const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 10px 0px 5px 0px;
+    display: flex;
+    justify-content: center;
 `;
 
 ModalAPIKeysCreate.defaultProps = {
-  confirmText: '확인'
+    confirmText: '확인'
 };
+
+// const ItemNote = styled.div`
+//     font-size: 12px;
+//     color: #777777;
+//     height: 32px;
+//     text-align: left;
+//     display : flex;
+//     justify-content : center;
+//     align-items : center;
+
+//     ${props => props.state &&
+//       css`
+//         color: red;
+//       `
+//     }
+// `;
 
 
 //제목, 내용, 확인 텍스트, 취소 텍스트
@@ -205,12 +171,15 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
         );
       } catch (e) {
         setError(e);
+        console.log(error);
       }
     };
     updateAPIKey();
-    setClickData(initialState)
+    setTimeout(() => {
+      setClickData(initialState);
+      setUpdateDialog(false);
+    }, 1000);
     // window.location.reload(true);
-    setUpdateDialog(false);
   };
 
   const clickedToggle = () => {
@@ -230,30 +199,32 @@ export default function ModalAPIKeysCreate( { title, confirmText, cancelText, on
       <DarkBackground>
            <DialogBlock>
               <ImgDiv onClick={onCancel}>
-                <img src={Logo}/>
+                <img src={Cancel} alt="Cancel"/>
               </ImgDiv>
               <TitleDiv><span style={{padding:"0px 10px 0px 0px", fontWeight:"bold"}}>{clickData.name}</span>{title}</TitleDiv>
-              <Item>
-                  <ItemName>API Key 이름</ItemName>
-                  <ItemInput>
-                      <InputForm name="APIKeyName" placeholder="API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName || ''}/>
-                  </ItemInput>
-                  <ItemNote></ItemNote>
-              </Item>
-              <Item2>
-                  <ItemName>API Key 설명</ItemName>
-                  <ItemInput2>
-                      <InputForm2 name="APIKeyExplain" placeholder="API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain || ''}/>
-                  </ItemInput2>
-                  <ItemNote></ItemNote>
-              </Item2>
-              <Item>
-                  <ItemName>API Key 활성화</ItemName>
-                  <ItemInput>
-                      <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
-                  </ItemInput>
-                  <ItemNote></ItemNote>
-              </Item>
+              <ItemDiv>
+                <Item>
+                    <ItemName>API Key 이름</ItemName>
+                    <ItemInput>
+                        <InputForm name="APIKeyName" placeholder="API Key 이름을 입력하세요" onChange={onChange} value={APIKeyName || ''}/>
+                    </ItemInput>
+                    {/* <ItemNote></ItemNote> */}
+                </Item>
+                <Item>
+                    <ItemName>API Key 설명</ItemName>
+                    <ItemInput2>
+                        <InputForm2 name="APIKeyExplain" placeholder="API Key 설명을 입력하세요" onChange={onChange} value={APIKeyExplain || ''}/>
+                    </ItemInput2>
+                    {/* <ItemNote></ItemNote> */}
+                </Item>
+                <Item style={{padding: "0px 10px 10px 10px"}}>
+                    <ItemName>API Key 활성화</ItemName>
+                    <ItemInput style={{padding: "15px 0px 0px 0px"}}>
+                        <ToggleSwitch clickedToggle={clickedToggle} toggle={toggle}/>
+                    </ItemInput>
+                    {/* <ItemNote></ItemNote> */}
+                </Item>
+              </ItemDiv>
               <ButtonGroup>
                   <ThemeProvider theme={{ palette: { blue: '#141e49', gray: '#495057', pink: '#f06595' }}}>
                   <span style={{padding:"0px 15px 0px 0px"}}><Button size="large" color="gray" line="noline" onClick={onCancel}>{cancelText}</Button></span>
